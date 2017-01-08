@@ -22,7 +22,22 @@ describe('NavComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it ('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it ('should have title ', () => {
+    expect(component.title).toEqual('EloRating');
+  });
+
+  it ('should render title in navbar header', () => {
+    let debugElement = fixture.debugElement.query(By.css('nav div.navbar-header a.navbar-brand'));
+    expect(debugElement.nativeElement.textContent).toEqual('EloRating');
+  });
+
+  it ('should render nav elements', () => {
+    let debugElement = fixture.debugElement.queryAll(By.css('nav ul.navbar-nav li a'));
+    expect(debugElement[0].nativeElement.textContent).toEqual('Dashboard');
+    expect(debugElement[1].nativeElement.textContent).toEqual('Rating');    
   });
 });
