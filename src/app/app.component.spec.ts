@@ -1,13 +1,16 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
+import { NavComponent } from './core/nav/nav.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [
-        AppComponent
+        AppComponent, 
+        NavComponent
       ],
     });
     TestBed.compileComponents();
@@ -19,16 +22,15 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it(`should have as title 'app works!'`, async(() => {
+  it ('should contain NavComponent', () => {
     let fixture = TestBed.createComponent(AppComponent);
-    let app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app works!');
-  }));
+    let debugElement = fixture.debugElement.query(By.directive(NavComponent))
+    expect(debugElement).toBeTruthy();
+  });
 
-  it('should render title in a h1 tag', async(() => {
+  it ('should have main-container div tag', () => {
     let fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    let compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('app works!');
-  }));
+    let debugElement = fixture.debugElement.query(By.css('div#main-container.container'));
+    expect(debugElement).toBeTruthy();
+  });
 });
