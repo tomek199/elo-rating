@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './core/nav/nav.component';
 import { TournamentAddComponent } from './tournaments/tournament-add/tournament-add.component';
 import { TournamentDetailComponent } from './tournaments/tournament-detail/tournament-detail.component';
+import { TournamentService } from './tournaments/shared/tournament.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { TournamentDetailComponent } from './tournaments/tournament-detail/tourn
     HttpModule,
     RoutingModule
   ],
-  providers: [],
+  providers: [TournamentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
