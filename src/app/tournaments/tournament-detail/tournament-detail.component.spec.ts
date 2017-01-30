@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -26,23 +26,26 @@ describe('TournamentDetailComponent', () => {
     .compileComponents();
   }));
 
-  beforeEach(() => {
+  function createComponent(TournamentId: String) {
     fixture = TestBed.createComponent(TournamentDetailComponent);
     component = fixture.componentInstance;
-    activatedRoute.testParams = {tournament_id: '123'}
+    activatedRoute.testParams = {tournament_id: TournamentId}
     fixture.detectChanges();
-  });
+    tick();
+  }
 
-  it('should create', () => {
+  it('should create', fakeAsync(() => {
+    createComponent('123');
     expect(component).toBeTruthy();
-  });
+  }));
 
-  it('should display tournament details', () => {
+  it('should display tournament details', fakeAsync(() => {
+    createComponent('123');
     expect(component.tournament).toBeTruthy();
-  });
+  }));
 
-  it('should has empty tournament variable if tournamet does not exist', () => {
-    activatedRoute.testParams = {tournament_id: '456'}
+  it('should has empty tournament variable if tournamet does not exist', fakeAsync(() => {
+    createComponent('456');
     expect(component.tournament).toBeFalsy();
-  });
+  }));
 });
