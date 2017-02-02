@@ -3,6 +3,7 @@ import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { TournamentDetailComponent } from './tournament-detail.component';
 import { TournamentService } from '../shared/tournament.service';
@@ -18,6 +19,7 @@ describe('TournamentDetailComponent', () => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
       declarations: [ TournamentDetailComponent ], 
+      imports: [ RouterTestingModule ],
       providers: [
         {provide: TournamentService, useClass: TournamentServiceStub},
         {provide: ActivatedRoute, useValue: activatedRoute}
@@ -42,6 +44,7 @@ describe('TournamentDetailComponent', () => {
   it('should display tournament details', fakeAsync(() => {
     createComponent('123');
     expect(component.tournament).toBeTruthy();
+    expect(component.tournament.name).toEqual('Tournament name');
   }));
 
   it('should has empty tournament variable if tournamet does not exist', fakeAsync(() => {
