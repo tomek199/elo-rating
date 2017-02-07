@@ -8,6 +8,6 @@ export class TournamentService {
   constructor() { }
 
   getTournament(id: string): Promise<Tournament> {
-    return Promise.resolve(TOURNAMENTS[id]);
+    return Promise.resolve(TOURNAMENTS.find(tournament => tournament.id === id));
   }
 }
