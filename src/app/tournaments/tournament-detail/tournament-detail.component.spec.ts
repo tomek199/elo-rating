@@ -51,4 +51,18 @@ describe('TournamentDetailComponent', () => {
     createComponent('456');
     expect(component.tournament).toBeFalsy();
   }));
+
+  it('should display tournament ', fakeAsync(() => {
+    createComponent('123');
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.query(By.css('div.page-header h2'));
+    expect(debugElement.nativeElement.textContent).toEqual('Tournament name');
+  }));
+
+  it('should display alert if tournament does not exist', fakeAsync(() => {
+    createComponent('456');
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.query(By.css('div.alert.alert-warning'));
+    expect(debugElement.nativeElement).toBeTruthy();
+  }));
 });
