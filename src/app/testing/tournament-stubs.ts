@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Tournament } from '../tournaments/shared/tournament.model';
 
-export const TOURNAMENTS = [
+export const TOURNAMENTS: Tournament[] = [
   {id: '123', name: 'Tournament name'}
 ]
 
