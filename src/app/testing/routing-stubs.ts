@@ -35,4 +35,8 @@ export class RouterStub {
     observer.next(this.ne);
     observer.complete();
   });
+
+  navigate(commands: any[]) {
+    return commands;
+  }
 }
