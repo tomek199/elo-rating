@@ -46,7 +46,7 @@ describe('TournamentAddComponent', () => {
     let debugElement = fixture.debugElement.query(By.css('div form button[type=submit]'));
     debugElement.triggerEventHandler('click', null);
     tick();
-    expect(spy.calls.first().args[0][0]).toEqual('/tournament');
+    expect(spy.calls.first().args[0][0]).toEqual('/tournaments');
     expect(spy.calls.first().args[0][1]).toBeTruthy();
   })));
 });

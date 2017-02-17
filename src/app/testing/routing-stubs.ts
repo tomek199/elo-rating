@@ -30,7 +30,7 @@ export class ActivatedRouteStub {
 
 @Injectable()
 export class RouterStub {
-  public ne = new NavigationEnd(0, '/tournament/123', '/tournament/123');
+  public ne = new NavigationEnd(0, '/tournaments/123', '/tournaments/123');
   public events = new Observable(observer => {
     observer.next(this.ne);
     observer.complete();

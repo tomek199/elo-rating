@@ -30,7 +30,7 @@ export class NavComponent implements OnInit {
 
   private getTournamentId(url: String): String {
     let splitted = url.split('/');
-    if (splitted[1] == 'tournament') {
+    if (splitted[1] == 'tournaments') {
       return splitted[2];
     }
     return undefined;
@@ -38,14 +38,14 @@ export class NavComponent implements OnInit {
 
   private getStandardNavbar(id: String): void {
     this.navbar = [
-      {url: '/tournament/' + id, title: 'Dashboard'},
+      {url: '/tournaments/' + id, title: 'Dashboard'},
       {url: '/rating', title: 'Rating'}
     ]
   }
 
   private getGuestNavbar(): void {
     this.navbar = [
-      {url: '/tournament', title: 'Tournament'}
+      {url: '/tournaments', title: 'Tournament'}
     ]
   }
 }

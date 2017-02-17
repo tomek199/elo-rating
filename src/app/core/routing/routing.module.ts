@@ -5,9 +5,9 @@ import { TournamentAddComponent } from '../../tournaments/tournament-add/tournam
 import { TournamentDetailComponent }  from '../../tournaments/tournament-detail/tournament-detail.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/tournament', pathMatch: 'full'},
-  {path: 'tournament', component: TournamentAddComponent},
-  {path: 'tournament/:tournament_id', component: TournamentDetailComponent}
+  {path: '', redirectTo: '/tournaments', pathMatch: 'full'},
+  {path: 'tournaments', component: TournamentAddComponent},
+  {path: 'tournaments/:tournament_id', component: TournamentDetailComponent}
 ];
 
 @NgModule({

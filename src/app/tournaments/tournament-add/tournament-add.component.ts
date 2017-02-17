@@ -21,7 +21,7 @@ export class TournamentAddComponent implements OnInit {
   addTournament() {
     this.tournamentService.create(this.tournament)
       .then(tournament => {
-        this.router.navigate(['/tournament', tournament.id]);
+        this.router.navigate(['/tournaments', tournament.id]);
       });
   }
 }
