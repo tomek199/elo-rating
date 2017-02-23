@@ -38,8 +38,9 @@ export class NavComponent implements OnInit {
 
   private getStandardNavbar(id: String): void {
     this.navbar = [
-      {url: '/tournaments/' + id, title: 'Dashboard'},
-      {url: '/rating', title: 'Rating'}
+      {url: `/tournaments/${id}`, title: 'Dashboard'},
+      {url: `/rating`, title: 'Rating'},
+      {url: `/tournaments/${id}/players`, title: 'Players'}
     ]
   }
 
