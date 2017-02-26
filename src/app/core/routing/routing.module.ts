@@ -1,3 +1,4 @@
+import { PlayerAddComponent } from './../../players/player-add/player-add.component';
 import { PlayerListComponent } from './../../players/player-list/player-list.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -9,7 +10,8 @@ const routes: Routes = [
   {path: '', redirectTo: '/tournaments', pathMatch: 'full'},
   {path: 'tournaments', component: TournamentAddComponent},
   {path: 'tournaments/:tournament_id', component: TournamentDetailComponent},
-  {path: 'tournaments/:tournament_id/players', component: PlayerListComponent}
+  {path: 'tournaments/:tournament_id/players', component: PlayerListComponent},
+  {path: 'tournaments/:tournament_id/players/add', component: PlayerAddComponent}
 ];
 
 @NgModule({

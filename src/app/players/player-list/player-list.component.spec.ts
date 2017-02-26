@@ -1,3 +1,4 @@
+import { RouterTestingModule } from '@angular/router/testing';
 import { PlayerServiceStub } from './../../testing/player-stubs';
 import { PlayerService } from './../shared/player.service';
 import { ActivatedRoute } from '@angular/router';
@@ -18,6 +19,7 @@ describe('PlayerListComponent', () => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
       declarations: [ PlayerListComponent ],
+      imports: [ RouterTestingModule ],
       providers: [
         {provide: PlayerService, useClass: PlayerServiceStub},
         {provide: ActivatedRoute, useValue: activatedRoute}
@@ -39,8 +41,15 @@ describe('PlayerListComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should has tournaments list', fakeAsync(() => {
+  it('should has players list', fakeAsync(() => {
     createComponent();
     expect(component.players.length).toBeGreaterThan(0);
+  }));
+
+  it('should present players in table', fakeAsync(() => {
+    createComponent();
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.queryAll(By.css('table tbody tr'));
+    expect(debugElement.length).toBeGreaterThan(0);
   }));
 });
