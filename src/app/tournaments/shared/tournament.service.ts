@@ -9,22 +9,21 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class TournamentService {
 
-  private tournamentsUrl = environment.serverUrl + '/tournaments';
-
+  private url = environment.serverUrl + '/tournaments';
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) { }
 
-  getTournament(id: string) {
-    let url = `${this.tournamentsUrl}/${id}`;
+  getTournament(id: string): Promise<Tournament> {
+    let url = `${this.url}/${id}`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as Tournament)
       .catch(this.handleError);
   }
 
-  create(tournament: Tournament) {
-    let url = this.tournamentsUrl;
+  create(tournament: Tournament): Promise<Tournament> {
+    let url = this.url;
     return this.http.post(url, JSON.stringify(tournament), {headers: this.headers})
       .toPromise()
       .then(response => response.json() as Tournament)
