@@ -1,12 +1,9 @@
 <div class="jumbotron">
-  <h1>EloRating</h1>
+  <h1 class="display-4">EloRating</h1>
   <p>Application for managing your tournament's payers ranking.</p>
-  <form class="form-horizontal" #tournamentAdd="ngForm">
-    <div class="form-group">
-      <div class="col-md-6">
-        <input type="text" name="name" [(ngModel)]="tournament.name" #name="ngModel" class="form-control input-lg" placeholder="Tournament name" required>
-      </div>
-    </div>
-    <button type="submit" class="btn btn-lg btn-success" [disabled]="!tournamentAdd.form.valid" (click)="addTournament()">Create tournament</button>
+  <hr>
+  <form class="form-inline" #tournamentAdd="ngForm">
+    <input type="text" name="name" [(ngModel)]="tournament.name" #name="ngModel" class="form-control form-control-lg mr-2" placeholder="Tournament name" required>
+    <button type="submit" class="btn btn-success btn-lg" [disabled]="!tournamentAdd.form.valid" (click)="addTournament()">Create tournament</button>
   </form>
 </div>

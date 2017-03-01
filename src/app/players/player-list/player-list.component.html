@@ -1,23 +1,23 @@
-<div class="page-header">
-  <h1>Players list</h1>
-</div>
+<h1>Players list</h1>
 <table class="table">
-  <thead>
-    <th>#</th>
-    <th>Username</th>
-    <th>Points</th>
-    <th class="pull-right">Actions</th>
+  <thead class="thead-default">
+    <tr>
+      <th>#</th>
+      <th>Username</th>
+      <th>Points</th>
+      <th class="text-right">Actions</th>
+    </tr>
   </thead>
   <tbody>
     <tr *ngFor="let player of players; let i=index">
       <td>{{i + 1}}</td>
       <td>{{player.username}}</td>
       <td>{{player.points}}</td>
-      <td></td>
+      <td class="text-right"></td>
     </tr>
   </tbody>
 </table>
-<ul class="nav nav-pills pull-right">
+<ul class="nav justify-content-end">
   <li>
     <a [routerLink]="['/tournaments', tournamentId, 'players', 'add']">Add player</a>
   </li>

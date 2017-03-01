@@ -1,10 +1,10 @@
-<div class="page-header">
-  <h1>Add player</h1>
-</div>
-<form #playerAdd="ngForm" class="col-md-6">
-  <div class="form-group">
-    <label for="username">Username</label>
-    <input type="text" name="username" [(ngModel)]="player.username" #username="ngModel" class="form-control" required>
+<h1>Add player</h1>
+<form #playerAdd="ngForm" class="col-6">
+  <div class="form-group row">
+    <label for="username" class="col-2 col-form-label">Username</label>
+    <div class="col-10">
+      <input type="text" name="username" [(ngModel)]="player.username" #username="ngModel" class="form-control" required>
+    </div>
   </div>
-  <button type="submit" class="btn btn-success" [disabled]="!playerAdd.form.valid" (click)="addPlayer()">Create</button>
+  <button type="submit" class="btn btn-success float-right" [disabled]="!playerAdd.form.valid" (click)="addPlayer()">Create</button>
 </form>

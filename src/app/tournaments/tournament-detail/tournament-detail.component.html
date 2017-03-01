@@ -1,7 +1,5 @@
 <div *ngIf="!tournament" class="alert alert-warning">
   Tournament doesn't exist!  
-  <a [routerLink]="['/tournament']" class="alert-link">Create new tournament</a>
+  <a [routerLink]="['/tournaments']" class="alert-link">Create new tournament</a>
 </div>
-<div *ngIf="tournament" class="page-header">
-  <h2>{{tournament.name}}</h2>
-</div>
+<h1 *ngIf="tournament">{{tournament.name}}</h1>

@@ -55,7 +55,7 @@ describe('TournamentDetailComponent', () => {
   it('should display tournament ', fakeAsync(() => {
     createComponent('123');
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.query(By.css('div.page-header h2'));
+    let debugElement = fixture.debugElement.query(By.css('h1'));
     expect(debugElement.nativeElement.textContent).toEqual('Tournament name');
   }));
 

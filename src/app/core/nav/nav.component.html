@@ -1,12 +1,12 @@
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-toggleable-sm navbar-inverse bg-inverse">
   <div class="container">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">{{title}}</a>
+    <a class="navbar-brand" href="#">{{title}}</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav" *ngFor="let nav of navbar">
+        <li class="nav-item">
+          <a class="nav-link" href="{{nav.url}}">{{nav.title}}</a>
+        </li>
+      </ul>
     </div>
-    <ul class="nav navbar-nav" *ngFor="let nav of navbar">
-      <li>
-        <a href="{{nav.url}}">{{nav.title}}</a>
-      </li>
-    </ul>
   </div>
 </nav>

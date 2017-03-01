@@ -38,7 +38,7 @@ describe('NavComponent', () => {
   });
 
   it ('should render title in navbar header', () => {
-    let debugElement = fixture.debugElement.query(By.css('nav div.navbar-header a.navbar-brand'));
+    let debugElement = fixture.debugElement.query(By.css('nav div.container a.navbar-brand'));
     expect(debugElement.nativeElement.textContent).toEqual('EloRating');
   });
 
