@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { RoutingModule } from './core/routing/routing.module';
 import { AppComponent } from './app.component';
@@ -26,7 +27,8 @@ import { PlayerAddComponent } from './players/player-add/player-add.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    RoutingModule
+    RoutingModule,
+    NgbModule.forRoot()
   ],
   providers: [TournamentService, PlayerService],
   bootstrap: [AppComponent]
