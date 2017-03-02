@@ -13,6 +13,7 @@ import { TournamentDetailComponent } from './tournaments/tournament-detail/tourn
 import { TournamentService } from './tournaments/shared/tournament.service';
 import { PlayerListComponent } from './players/player-list/player-list.component';
 import { PlayerAddComponent } from './players/player-add/player-add.component';
+import { DailyQueueComponent } from './daily-queue/daily-queue.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PlayerAddComponent } from './players/player-add/player-add.component';
     TournamentAddComponent,
     TournamentDetailComponent,
     PlayerListComponent,
-    PlayerAddComponent
+    PlayerAddComponent,
+    DailyQueueComponent
   ],
   imports: [
     BrowserModule,
