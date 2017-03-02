@@ -1,0 +1,18 @@
+#daily-queue {
+    font-size: 14px;
+}
+
+#daily-queue h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#daily-queue table {
+    margin-left: 0;
+    margin-right: 0;
+    text-align: center;
+}
+
+#daily-queue table thead th {
+    text-align: center;
+}
