@@ -1,3 +1,4 @@
+import { DailyQueueService } from './daily-queue/daily-queue.service';
 import { PlayerService } from './players/shared/player.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -32,7 +33,11 @@ import { DailyQueueComponent } from './daily-queue/daily-queue.component';
     RoutingModule,
     NgbModule.forRoot()
   ],
-  providers: [TournamentService, PlayerService],
+  providers: [
+    TournamentService, 
+    PlayerService, 
+    DailyQueueService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

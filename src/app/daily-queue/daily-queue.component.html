@@ -1,4 +1,4 @@
-<div id="daily-queue" class="jumbotron">
+<div id="daily-queue">
     <h2>Daily queue</h2>
     <hr/>
     <table class="table table-hover">
@@ -10,10 +10,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Tomek</td>
+            <tr *ngFor="let queueElement of dailyQueue">
+                <td>{{ queueElement.player1 }}</td>
                 <td>vs</td>
-                <td>Tomek</td>
+                <td>{{ queueElement.player2 }}</td>
             </tr>
         </tbody>
     </table>
