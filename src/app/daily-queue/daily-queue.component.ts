@@ -10,13 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DailyQueueComponent implements OnInit {
 
-  dailyQueue: QueueElement[];
+  dailyQueue: Array<QueueElement>;
 
   constructor(private dailyQueueService: DailyQueueService) {
   }
 
   ngOnInit() {
     this.dailyQueue = this.dailyQueueService.getQueue();
+  }
+
+  deleteElement(index: number) {
+    this.dailyQueue.splice(index, 1);
   }
 
 }
