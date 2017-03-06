@@ -13,6 +13,7 @@ import { TournamentDetailComponent } from './tournaments/tournament-detail/tourn
 import { TournamentService } from './tournaments/shared/tournament.service';
 import { PlayerListComponent } from './players/player-list/player-list.component';
 import { PlayerAddComponent } from './players/player-add/player-add.component';
+import { ConfirmModalComponent } from './core/utils/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PlayerAddComponent } from './players/player-add/player-add.component';
     TournamentAddComponent,
     TournamentDetailComponent,
     PlayerListComponent,
-    PlayerAddComponent
+    PlayerAddComponent,
+    ConfirmModalComponent
   ],
   imports: [
     BrowserModule,
@@ -31,6 +33,7 @@ import { PlayerAddComponent } from './players/player-add/player-add.component';
     NgbModule.forRoot()
   ],
   providers: [TournamentService, PlayerService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ConfirmModalComponent]
 })
 export class AppModule { }
