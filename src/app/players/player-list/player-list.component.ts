@@ -25,4 +25,8 @@ export class PlayerListComponent implements OnInit {
           .then(players => this.players = players);
       });
   }
+
+  hasPlayers(): boolean {
+    return (this.players != undefined && this.players.length > 0);
+  }
 }

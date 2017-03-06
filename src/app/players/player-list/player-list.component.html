@@ -1,5 +1,9 @@
 <h1>Players list</h1>
-<table class="table">
+<div class="alert alert-info" *ngIf="!hasPlayers()">
+  Players list is empty!  
+  <a [routerLink]="['/tournaments', tournamentId, 'players', 'add']" class="alert-link">Add player</a>
+</div>
+<table class="table" *ngIf="hasPlayers()">
   <thead class="thead-default">
     <tr>
       <th>#</th>

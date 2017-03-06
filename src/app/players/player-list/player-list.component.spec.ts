@@ -52,4 +52,12 @@ describe('PlayerListComponent', () => {
     let debugElement = fixture.debugElement.queryAll(By.css('table tbody tr'));
     expect(debugElement.length).toBeGreaterThan(0);
   }));
+
+  it('should display alert if players list is empty', fakeAsync(() => {
+    createComponent();
+    component.players = [];
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.query(By.css('div.alert.alert-info'));
+    expect(debugElement.nativeElement).toBeTruthy();
+  }));
 });
