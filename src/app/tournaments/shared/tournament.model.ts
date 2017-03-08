@@ -1,8 +1,8 @@
 export class Tournament {
-  id: String;
-  name: String;
+  id: string;
+  name: string;
 
-  constructor(id?: String, name?: String) {
+  constructor(id?: string, name?: string) {
     this.id = id;
     this.name = name;
   }

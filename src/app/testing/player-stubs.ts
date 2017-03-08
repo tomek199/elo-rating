@@ -20,4 +20,9 @@ export class PlayerServiceStub {
     PLAYERS.push(player);
     return Promise.resolve(player);
   }
+
+  delete(id: string): Promise<boolean> {
+    PLAYERS.splice(0, 1);
+    return Promise.resolve(true);
+  }
 }

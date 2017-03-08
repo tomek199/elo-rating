@@ -9,13 +9,13 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class PlayerService {
 
-  private url = environment.serverUrl + '/tournaments/';
+  private url = environment.serverUrl;
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) { }
 
   getPlayers(tournamentId: string): Promise<Player[]> {
-    let url = `${this.url}/${tournamentId}/players`;
+    let url = `${this.url}/tournaments/${tournamentId}/players`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as Player[])
@@ -23,10 +23,18 @@ export class PlayerService {
   }
 
   addPlayer(tournamentId: string, player: Player): Promise<Player> {
-    let url = `${this.url}/${tournamentId}/players`;
+    let url = `${this.url}/tournaments/${tournamentId}/players`;
     return this.http.post(url, JSON.stringify(player), {headers: this.headers})
       .toPromise()
       .then(response => response.json() as Player)
+      .catch(this.handleError);
+  }
+
+  delete(id: string): Promise<boolean> {
+    const url = `${this.url}/players/${id}`;
+    return this.http.delete(url)
+      .toPromise()
+      .then(response => response.ok)
       .catch(this.handleError);
   }
 

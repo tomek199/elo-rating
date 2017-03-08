@@ -1,5 +1,5 @@
 export class Player {
-  id: String;
-  username: String;
+  id: string;
+  username: string;
   points: number;
 }

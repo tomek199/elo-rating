@@ -17,7 +17,9 @@
       <td>{{i + 1}}</td>
       <td>{{player.username}}</td>
       <td>{{player.points}}</td>
-      <td class="text-right"></td>
+      <td class="text-right">
+        <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(i)">Delete</button>
+      </td>
     </tr>
   </tbody>
 </table>
