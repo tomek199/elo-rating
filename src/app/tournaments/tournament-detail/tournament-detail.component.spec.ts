@@ -41,7 +41,7 @@ describe('TournamentDetailComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should display tournament details', fakeAsync(() => {
+  it('should has tournament name field', fakeAsync(() => {
     createComponent('123');
     expect(component.tournament).toBeTruthy();
     expect(component.tournament.name).toEqual('Tournament name');
@@ -52,10 +52,10 @@ describe('TournamentDetailComponent', () => {
     expect(component.tournament).toBeFalsy();
   }));
 
-  it('should display tournament ', fakeAsync(() => {
+  it('should display tournament name in header', fakeAsync(() => {
     createComponent('123');
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.query(By.css('h1'));
+    let debugElement = fixture.debugElement.query(By.css('h1 small'));
     expect(debugElement.nativeElement.textContent).toEqual('Tournament name');
   }));
 
