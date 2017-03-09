@@ -14,6 +14,7 @@ import { TournamentService } from './tournaments/shared/tournament.service';
 import { PlayerListComponent } from './players/player-list/player-list.component';
 import { PlayerAddComponent } from './players/player-add/player-add.component';
 import { ConfirmModalComponent } from './core/utils/confirm-modal/confirm-modal.component';
+import { PlayerDetailComponent } from './players/player-detail/player-detail.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ConfirmModalComponent } from './core/utils/confirm-modal/confirm-modal.
     TournamentDetailComponent,
     PlayerListComponent,
     PlayerAddComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    PlayerDetailComponent
   ],
   imports: [
     BrowserModule,

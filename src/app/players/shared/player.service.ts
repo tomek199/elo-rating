@@ -22,6 +22,14 @@ export class PlayerService {
       .catch(this.handleError);
   }
 
+  getPlayer(id: string): Promise<Player> {
+    let url = `${this.url}/players/${id}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as Player)
+      .catch(this.handleError);
+  }
+
   addPlayer(tournamentId: string, player: Player): Promise<Player> {
     let url = `${this.url}/tournaments/${tournamentId}/players`;
     return this.http.post(url, JSON.stringify(player), {headers: this.headers})
