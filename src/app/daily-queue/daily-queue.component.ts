@@ -12,7 +12,10 @@ export class DailyQueueComponent implements OnInit {
 
   dailyQueue: Array<QueueElement>;
 
+  queueElement: QueueElement;
+
   constructor(private dailyQueueService: DailyQueueService) {
+    this.queueElement = new QueueElement();
   }
 
   ngOnInit() {
@@ -21,6 +24,11 @@ export class DailyQueueComponent implements OnInit {
 
   deleteElement(index: number) {
     this.dailyQueue.splice(index, 1);
+  }
+  
+  addMatch() {
+    this.dailyQueue.push(this.queueElement);
+    this.queueElement = new QueueElement();
   }
 
 }

@@ -23,15 +23,15 @@
     <div>
         <div class="collapse" id="addQueueElementFormToggleContent">
             <div>
-                <form>
+                <form id="addQueueElementQueue">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="queuePlayer1" placeholder="Player 1">
+                        <input type="text" class="form-control" id="queuePlayer1" placeholder="Player 1" [(ngModel)]="queueElement.player1" [ngModelOptions]="{standalone: true}" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="queuePlayer2" placeholder="Player 2">
+                        <input type="text" class="form-control" id="queuePlayer2" placeholder="Player 2" [(ngModel)]="queueElement.player2" [ngModelOptions]="{standalone: true}" required>
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block">Add match to queue</button>
+                        <button type="submit" class="btn btn-primary btn-block" (click)="addMatch()">Add match to queue</button>
                     </div>
                 </form>
             </div>

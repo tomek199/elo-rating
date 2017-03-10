@@ -1,12 +1,10 @@
 export class QueueElement {
 
-    constructor(private player1: string, private player2: string) {}
+    public player1: string;
+    public player2: string;
 
-    getPlayer1(): string {
-        return this.player1;
-    }
-
-    getPlayer2(): string {
-        return this.player2;
+    constructor(player1?: string, player2?: string) {
+        this.player1 = player1;
+        this.player2 = player2;
     }
 }
