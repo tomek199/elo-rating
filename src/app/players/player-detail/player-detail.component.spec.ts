@@ -1,3 +1,4 @@
+import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRouteStub } from './../../testing/routing-stubs';
@@ -40,12 +41,21 @@ describe('PlayerDetailComponent', () => {
   }));
 
   it('should display player details', fakeAsync(() => {
-    createComponent('456');
+    createComponent('123');
     expect(component.player).toBeTruthy();
+    expect(component.player.username).toEqual('Player 1')
+    expect(component.player.points).toEqual(1000);
   }));
 
   it('should has tournamentId property', fakeAsync(() => {
     createComponent('456');
     expect(component.tournamentId).toEqual('123');
+  }));
+
+  it('should display player username in header', fakeAsync(() => {
+    createComponent('123');
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.query(By.css('h1 small'));
+    expect(debugElement.nativeElement.textContent).toBe('Player 1');
   }));
 });
