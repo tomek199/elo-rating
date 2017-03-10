@@ -3,7 +3,7 @@
   <p>Application for managing your tournament's players ranking.</p>
   <hr>
   <form class="form-inline" #tournamentAdd="ngForm">
-    <input type="text" name="name" [(ngModel)]="tournament.name" #name="ngModel" class="form-control form-control-lg mr-2" placeholder="Tournament name" required>
+    <input type="text" name="name" [(ngModel)]="tournament.name" class="form-control form-control-lg mr-2" placeholder="Tournament name" required>
     <button type="submit" class="btn btn-success btn-lg" [disabled]="!tournamentAdd.form.valid" (click)="addTournament()">Create tournament</button>
   </form>
 </div>
