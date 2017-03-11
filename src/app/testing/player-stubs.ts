@@ -29,4 +29,11 @@ export class PlayerServiceStub {
     PLAYERS.splice(0, 1);
     return Promise.resolve(true);
   }
+
+  update(player: Player): Promise<Player> {
+    let playerToUpdate = PLAYERS.find(p => p.id == player.id)
+    playerToUpdate.username = player.username;
+    playerToUpdate.points = player.points;
+    return Promise.resolve(playerToUpdate);
+  }
 }

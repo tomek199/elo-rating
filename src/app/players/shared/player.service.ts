@@ -39,10 +39,18 @@ export class PlayerService {
   }
 
   delete(id: string): Promise<boolean> {
-    const url = `${this.url}/players/${id}`;
+    let url = `${this.url}/players/${id}`;
     return this.http.delete(url)
       .toPromise()
       .then(response => response.ok)
+      .catch(this.handleError);
+  }
+
+  update(player: Player): Promise<Player> {
+    let url = `${this.url}/players/${player.id}`;
+    return this.http.put(url, JSON.stringify(player))
+      .toPromise()
+      .then(response => response.json() as Player)
       .catch(this.handleError);
   }
 

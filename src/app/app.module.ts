@@ -15,6 +15,7 @@ import { PlayerListComponent } from './players/player-list/player-list.component
 import { PlayerAddComponent } from './players/player-add/player-add.component';
 import { ConfirmModalComponent } from './core/utils/confirm-modal/confirm-modal.component';
 import { PlayerDetailComponent } from './players/player-detail/player-detail.component';
+import { PlayerEditComponent } from './players/player-edit/player-edit.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { PlayerDetailComponent } from './players/player-detail/player-detail.com
     PlayerListComponent,
     PlayerAddComponent,
     ConfirmModalComponent,
-    PlayerDetailComponent
+    PlayerDetailComponent,
+    PlayerEditComponent
   ],
   imports: [
     BrowserModule,
