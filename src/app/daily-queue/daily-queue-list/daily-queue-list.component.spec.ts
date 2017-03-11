@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { DailyQueueComponent } from './daily-queue.component';
+import { DailyQueueListComponent } from './daily-queue-list.component';
 
 describe('DailyQueueComponent', () => {
-  let component: DailyQueueComponent;
-  let fixture: ComponentFixture<DailyQueueComponent>;
+  let component: DailyQueueListComponent;
+  let fixture: ComponentFixture<DailyQueueListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DailyQueueComponent ]
+      declarations: [ DailyQueueListComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DailyQueueComponent);
+    fixture = TestBed.createComponent(DailyQueueListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

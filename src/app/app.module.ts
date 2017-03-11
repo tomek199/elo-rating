@@ -1,4 +1,4 @@
-import { DailyQueueService } from './daily-queue/daily-queue.service';
+import { DailyQueueService } from './daily-queue/shared/daily-queue.service';
 import { PlayerService } from './players/shared/player.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -14,7 +14,7 @@ import { TournamentDetailComponent } from './tournaments/tournament-detail/tourn
 import { TournamentService } from './tournaments/shared/tournament.service';
 import { PlayerListComponent } from './players/player-list/player-list.component';
 import { PlayerAddComponent } from './players/player-add/player-add.component';
-import { DailyQueueComponent } from './daily-queue/daily-queue.component';
+import { DailyQueueListComponent } from './daily-queue/daily-queue-list/daily-queue-list.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { DailyQueueComponent } from './daily-queue/daily-queue.component';
     TournamentDetailComponent,
     PlayerListComponent,
     PlayerAddComponent,
-    DailyQueueComponent
+    DailyQueueListComponent
   ],
   imports: [
     BrowserModule,
