@@ -48,7 +48,7 @@ export class PlayerService {
 
   update(player: Player): Promise<Player> {
     let url = `${this.url}/players/${player.id}`;
-    return this.http.put(url, JSON.stringify(player))
+    return this.http.put(url, JSON.stringify(player), {headers: this.headers})
       .toPromise()
       .then(response => response.json() as Player)
       .catch(this.handleError);
