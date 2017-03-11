@@ -33,4 +33,8 @@ export class PlayerAddComponent implements OnInit {
         this.router.navigate(['/tournaments', this.tournamentId, 'players']);
       });
   }
+
+  goToList() {
+    this.router.navigate(['/tournaments', this.tournamentId, 'players']);  
+  }
 }
