@@ -7,7 +7,7 @@ export class DailyQueueService {
     dailyQueue: QueueElement[];
 
     constructor() {
-        this.dailyQueue = this.mockQueue();
+        //this.dailyQueue = this.mockQueue();
     }
 
     getQueue(): QueueElement[] {
@@ -24,6 +24,7 @@ export class DailyQueueService {
             var queueElement = new QueueElement(player1, player2);
             mockQueue.push(queueElement);
         }
+
 
         return mockQueue;
     }

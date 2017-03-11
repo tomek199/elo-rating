@@ -1,3 +1,4 @@
+import { DailyQueueAddComponent } from './daily-queue/daily-queue-add/daily-queue-add.component';
 import { TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -12,7 +13,8 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         NavComponent,
-        DailyQueueListComponent
+        DailyQueueListComponent,
+        DailyQueueAddComponent
       ],
       imports: [
         RouterTestingModule
@@ -45,9 +47,15 @@ describe('AppComponent', () => {
     expect(debugElement).toBeTruthy();
   });
 
-  it('should have app-daily-queue component', () => {
+  it('should have app-daily-queue-list component', () => {
     let fixture = TestBed.createComponent(AppComponent);
     let debugElement = fixture.debugElement.query(By.directive(DailyQueueListComponent))
+    expect(debugElement).toBeTruthy();
+  })
+
+  it('should have app-daily-queue-add component', () => {
+    let fixture = TestBed.createComponent(AppComponent);
+    let debugElement = fixture.debugElement.query(By.directive(DailyQueueAddComponent))
     expect(debugElement).toBeTruthy();
   })
 });

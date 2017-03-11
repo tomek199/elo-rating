@@ -25,22 +25,4 @@ export class DailyQueueListComponent implements OnInit {
   deleteElement(index: number) {
     this.dailyQueue.splice(index, 1);
   }
-  
-  onSubmit() {
-    if (this.isFormValid()) {
-      this.dailyQueue.push(this.queueElement);
-      this.queueElement = new QueueElement();
-    }
-  }
-
-  isFormValid() : boolean {
-    
-    var valid = true;
-    if (true) {
-
-    }
-
-    return valid;
-  }
-
 }

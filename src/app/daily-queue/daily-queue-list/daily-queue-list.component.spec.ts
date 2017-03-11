@@ -1,3 +1,4 @@
+import { DailyQueueAddComponent } from './../daily-queue-add/daily-queue-add.component';
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -11,7 +12,10 @@ describe('DailyQueueComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DailyQueueListComponent ]
+      declarations: [ 
+        DailyQueueListComponent,
+        DailyQueueAddComponent
+      ]
     })
     .compileComponents();
   }));

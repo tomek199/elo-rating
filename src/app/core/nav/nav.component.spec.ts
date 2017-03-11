@@ -1,4 +1,3 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
@@ -6,8 +5,8 @@ import { Router } from '@angular/router';
 import { RouterStub } from '../../testing/routing-stubs';
 
 import { NavComponent } from './nav.component';
-import { DailyQueueComponent } from './../../daily-queue/daily-queue.component';
-
+import { DailyQueueListComponent } from './../../daily-queue/daily-queue-list/daily-queue-list.component';
+import { DailyQueueAddComponent } from './../../daily-queue/daily-queue-add/daily-queue-add.component';
 
 describe('NavComponent', () => {
   let component: NavComponent;
@@ -18,7 +17,9 @@ describe('NavComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ 
         NavComponent,
-        DailyQueueComponent ], 
+        DailyQueueListComponent,
+        DailyQueueAddComponent
+      ], 
       providers: [
         {provide: Router, useClass: RouterStub}
       ]
@@ -55,9 +56,15 @@ describe('NavComponent', () => {
 
   });
 
-  it('should have app-daily-queue component', () => {
+  it('should have app-daily-queue-list component', () => {
     let fixture = TestBed.createComponent(NavComponent);
-    let debugElement = fixture.debugElement.query(By.directive(DailyQueueComponent))
+    let debugElement = fixture.debugElement.query(By.directive(DailyQueueListComponent))
+    expect(debugElement).toBeTruthy();
+  })
+  
+  it('should have app-daily-queue-add component', () => {
+    let fixture = TestBed.createComponent(NavComponent);
+    let debugElement = fixture.debugElement.query(By.directive(DailyQueueAddComponent))
     expect(debugElement).toBeTruthy();
   })
 });
