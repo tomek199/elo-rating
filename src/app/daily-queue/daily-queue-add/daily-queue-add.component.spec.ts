@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpModule } from '@angular/http';
 
 import { DailyQueueAddComponent } from './daily-queue-add.component';
+import { DailyQueueService } from './../shared/daily-queue.service';
+import { DailyQueueServiceStub } from './../../testing/dailyQueue-stubs';
 
 describe('DailyQueueAddComponent', () => {
   let component: DailyQueueAddComponent;
@@ -8,7 +11,13 @@ describe('DailyQueueAddComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DailyQueueAddComponent ]
+      declarations: [ DailyQueueAddComponent ],
+      imports: [
+        HttpModule
+      ],
+      providers: [
+       { provide: DailyQueueService, useClass: DailyQueueServiceStub }
+      ]
     })
     .compileComponents();
   }));

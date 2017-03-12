@@ -1,3 +1,4 @@
+import { Http, Headers } from '@angular/http';
 import { Queue } from './queue.model';
 import { environment } from './../../../environments/environment.prod';
 import { Injectable } from '@angular/core';
@@ -7,30 +8,40 @@ import { QueueElement } from './queueElement.model';
 export class DailyQueueService {
 
     private url = environment.serverUrl + "/queue";
+    private headers = new Headers({'Content-Type': 'application/json'});
 
     dailyQueue: Queue;
 
-    constructor() {
-        this.dailyQueue = this.mockQueue();
+    constructor(private http: Http) {
+        //this.dailyQueue = this.mockQueue();
     }
 
-    getDailyQueue(): Queue {
-        return this.dailyQueue;
+    getDailyQueue(): Promise<Queue> {
+        let url = this.url + '/name/dailyQueue';
+        return this.http.get(url)
+            .toPromise()
+            .then(response => response.json() as Queue)
+            .catch(this.handleError);
+    }
+
+    private handleError(error: any): Promise<any> {
+        console.error('An error occured', error);
+        return Promise.reject(error.message || error);
     }
 
     mockQueue(): Queue {
-        var queue: Queue = new Queue();
+        let queue: Queue = new Queue();
         queue.id = "0";
         queue.name = "mockQueue";
         queue.description = "Mocked Queue";
 
-        var matches: QueueElement[] = new Array<QueueElement>();
-        var i:number = 0;
+        let matches: QueueElement[] = new Array<QueueElement>();
+        let i:number = 0;
 
         for (i = 0; i < 4; i++) {
-            var player1 = "PlayerA" + i;
-            var player2 = "PlayerB" + i;
-            var queueElement = new QueueElement(player1, player2);
+            let player1 = "PlayerA" + i;
+            let player2 = "PlayerB" + i;
+            let queueElement = new QueueElement(player1, player2);
             matches.push(queueElement);
         }
 

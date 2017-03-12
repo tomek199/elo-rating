@@ -1,3 +1,4 @@
+import { HttpModule } from '@angular/http';
 import { DailyQueueAddComponent } from './daily-queue/daily-queue-add/daily-queue-add.component';
 import { TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -17,7 +18,8 @@ describe('AppComponent', () => {
         DailyQueueAddComponent
       ],
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        HttpModule
       ]
     });
     TestBed.compileComponents();

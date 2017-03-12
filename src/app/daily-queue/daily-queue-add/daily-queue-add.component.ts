@@ -6,13 +6,13 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-daily-queue-add',
   templateUrl: './daily-queue-add.component.html',
   styleUrls: ['./daily-queue-add.component.css'],
-  providers: [ DailyQueueService ]
+  //providers: [ DailyQueueService ]
 })
 export class DailyQueueAddComponent implements OnInit {
 
   queueElement: QueueElement;
 
-  constructor(private dailyQueueService: DailyQueueService) {}
+  constructor() {}
 
   ngOnInit() {
   }
