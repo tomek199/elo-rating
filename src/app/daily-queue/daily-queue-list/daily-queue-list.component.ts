@@ -1,3 +1,4 @@
+import { Queue } from './../shared/queue.model';
 import { DailyQueueService } from '../shared/daily-queue.service';
 import { QueueElement } from '../shared/queueElement.model';
 import { Component, OnInit } from '@angular/core';
@@ -10,19 +11,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DailyQueueListComponent implements OnInit {
 
-  dailyQueue: Array<QueueElement>;
-
-  queueElement: QueueElement;
+  dailyQueue: Queue;
 
   constructor(private dailyQueueService: DailyQueueService) {
-    this.queueElement = new QueueElement();
+    this.dailyQueue = new Queue();
   }
 
   ngOnInit() {
-    this.dailyQueue = this.dailyQueueService.getQueue();
+    this.dailyQueue = this.dailyQueueService.getDailyQueue();
   }
 
   deleteElement(index: number) {
-    this.dailyQueue.splice(index, 1);
+    this.dailyQueue.matches.splice(index, 1);
   }
 }
