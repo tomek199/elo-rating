@@ -1,3 +1,4 @@
+import { MatchAddComponent } from './../../matches/match-add/match-add.component';
 import { PlayerEditComponent } from './../../players/player-edit/player-edit.component';
 import { PlayerDetailComponent } from './../../players/player-detail/player-detail.component';
 import { PlayerAddComponent } from './../../players/player-add/player-add.component';
@@ -15,7 +16,8 @@ const routes: Routes = [
   {path: 'tournaments/:tournament_id/players', component: PlayerListComponent},
   {path: 'tournaments/:tournament_id/players/add', component: PlayerAddComponent},
   {path: 'tournaments/:tournament_id/players/:player_id', component: PlayerDetailComponent},
-  {path: 'tournaments/:tournament_id/players/:player_id/edit', component: PlayerEditComponent}
+  {path: 'tournaments/:tournament_id/players/:player_id/edit', component: PlayerEditComponent},
+  {path: 'tournaments/:tournament_id/matches/add', component: MatchAddComponent}
 ];
 
 @NgModule({
