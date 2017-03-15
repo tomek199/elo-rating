@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./match-add.component.css']
 })
 export class MatchAddComponent implements OnInit {
+  tournamentId: string;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+  ) { }
 
   ngOnInit() {
+    this.route.params.map(p => p)
+      .forEach(param => {
+        this.tournamentId = param['tournament_id'];
+      });
   }
-
 }
