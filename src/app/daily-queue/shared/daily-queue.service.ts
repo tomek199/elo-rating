@@ -1,3 +1,5 @@
+import { Player } from './../../players/shared/player.model';
+import { Match } from './../../matches/shared/match.model';
 import { Http, Headers } from '@angular/http';
 import { Queue } from './queue.model';
 import { environment } from './../../../environments/environment.prod';
@@ -13,7 +15,7 @@ export class DailyQueueService {
     dailyQueue: Queue;
 
     constructor(private http: Http) {
-        //this.dailyQueue = this.mockQueue();
+        this.dailyQueue = this.mockQueue();
     }
 
     getDailyQueue(): Promise<Queue> {
@@ -35,18 +37,28 @@ export class DailyQueueService {
         queue.name = "mockQueue";
         queue.description = "Mocked Queue";
 
-        let matches: QueueElement[] = new Array<QueueElement>();
+        let matches: Match[] = new Array<Match>();
         let i:number = 0;
 
         for (i = 0; i < 4; i++) {
-            let player1 = "PlayerA" + i;
-            let player2 = "PlayerB" + i;
-            let queueElement = new QueueElement(player1, player2);
-            matches.push(queueElement);
+            let match = new Match();
+            match.id = i.toString();
+            match.playerOne = this.generatePlayer(i.toString());
+            match.playerTwo = this.generatePlayer(i.toString() + "0");
+            matches.push(match);
         }
 
         queue.matches = matches;
 
         return queue;
+    }
+
+    private generatePlayer(id: string): Player {
+        let player = new Player();
+        player.id = id;
+        player.username = "Player" + id;
+        player.points = 0;
+
+        return player;
     }
 }

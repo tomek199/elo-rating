@@ -11,10 +11,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let queueElement of dailyQueue.matches; let i = index" (click)="deleteElement(i)">
-                    <td>{{ queueElement.player1 }}</td>
+                <tr *ngFor="let match of dailyQueue.matches; let i = index" (click)="deleteElement(i)">
+                    <td>{{ match.playerOne.username }}</td>
                     <td>vs</td>
-                    <td>{{ queueElement.player2 }}</td>
+                    <td>{{ match.playerTwo.username }}</td>
                 </tr>
             </tbody>
         </table>

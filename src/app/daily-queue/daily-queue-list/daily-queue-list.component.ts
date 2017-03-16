@@ -17,9 +17,9 @@ export class DailyQueueListComponent implements OnInit {
 
   ngOnInit() {
     this.dailyQueue = new Queue();
-    this.dailyQueueService.getDailyQueue()
-      .then(dailyQueue => this.dailyQueue = dailyQueue);
-    //this.dailyQueue = this.dailyQueueService.mockQueue();
+    //this.dailyQueueService.getDailyQueue()
+     // .then(dailyQueue => this.dailyQueue = dailyQueue);
+    this.dailyQueue = this.dailyQueueService.mockQueue();
   }
 
   deleteElement(index: number) {

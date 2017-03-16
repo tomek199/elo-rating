@@ -1,8 +1,8 @@
-import { QueueElement } from './queueElement.model';
+import { Match } from './../../matches/shared/match.model';
 export class Queue {
     
     id: string;
     name: string; 
     description?: string;
-    matches: QueueElement[];
+    matches: Match[];
 }

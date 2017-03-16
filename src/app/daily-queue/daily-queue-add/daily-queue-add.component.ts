@@ -1,5 +1,5 @@
+import { Match } from './../../matches/shared/match.model';
 import { DailyQueueService } from './../shared/daily-queue.service';
-import { QueueElement } from './../shared/queueElement.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -10,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DailyQueueAddComponent implements OnInit {
 
-  queueElement: QueueElement;
+  match: Match;
 
   constructor() {}
 
@@ -19,6 +19,6 @@ export class DailyQueueAddComponent implements OnInit {
 
   onSubmit() {
     //this.dailyQueue.push(this.queueElement);
-    this.queueElement = new QueueElement();
+    this.match = new Match();
   }
 }
