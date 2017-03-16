@@ -1,5 +1,9 @@
 <h1>Add match</h1>
-<form #matchAdd="ngForm" class="col-10">
+<div class="alert alert-info" *ngIf="!hasMinTwoPlayers()">
+  At least two players are needed to create the match!  
+  <a [routerLink]="['/tournaments', tournamentId, 'players']" class="alert-link">Manage players</a>
+</div>
+<form #matchAdd="ngForm" class="col-10" *ngIf="hasMinTwoPlayers()">
   <div class="form-group row">
     <label for="player-one" class="col-2 col-form-label">Player one</label>
     <div class="col-4">

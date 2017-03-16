@@ -48,6 +48,14 @@ export class MatchAddComponent implements OnInit {
     return player.username? player.username : '';
   }
 
+  hasMinTwoPlayers(): boolean {
+    if (this.players) {
+      return this.players.length > 1;
+    } else {
+      return false;
+    }
+  }
+
   formValid(): boolean {
     return this.match.playerOne.id
       && this.match.playerTwo.id
