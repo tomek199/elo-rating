@@ -1,3 +1,5 @@
+import { Tournament } from './../../tournaments/shared/tournament.model';
+import { TournamentService } from './../../tournaments/shared/tournament.service';
 import { Component, OnInit} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import 'rxjs/add/operator/filter';
@@ -14,7 +16,9 @@ export class NavComponent implements OnInit {
 
   private sub: any;
 
-  constructor(private router: Router) { }
+  tournaments: Tournament[];
+
+  constructor(private router: Router, private tournamentService: TournamentService) { }
 
   ngOnInit() {
     this.router.events.filter(event => event instanceof NavigationEnd)
@@ -26,6 +30,8 @@ export class NavComponent implements OnInit {
           this.getGuestNavbar();
         }
       })
+    
+    this.tournamentService.getAllTournaments().then(tournaments => this.tournaments = tournaments);
   }
 
   private getTournamentId(url: String): String {
