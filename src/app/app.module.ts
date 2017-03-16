@@ -1,3 +1,4 @@
+import { MatchService } from './matches/shared/match.service';
 import { PlayerService } from './players/shared/player.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -38,7 +39,7 @@ import { MatchAddComponent } from './matches/match-add/match-add.component';
     RoutingModule,
     NgbModule.forRoot()
   ],
-  providers: [TournamentService, PlayerService],
+  providers: [TournamentService, PlayerService, MatchService],
   bootstrap: [AppComponent],
   entryComponents: [ConfirmModalComponent]
 })

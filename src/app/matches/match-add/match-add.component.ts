@@ -1,8 +1,9 @@
+import { MatchService } from './../shared/match.service';
 import { Observable } from 'rxjs/Observable';
 import { Match } from './../shared/match.model';
 import { PlayerService } from './../../players/shared/player.service';
 import { Player } from './../../players/shared/player.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import 'rxjs/add/operator/debounceTime';
 
@@ -19,7 +20,9 @@ export class MatchAddComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private playerService: PlayerService
+    private router: Router,
+    private playerService: PlayerService,
+    private matchService: MatchService
   ) {
     this.match = new Match();
    }
@@ -66,6 +69,13 @@ export class MatchAddComponent implements OnInit {
   }
 
   create() {
-    
+    this.matchService.add(this.tournamentId, this.match)
+      .then(match => {
+        this.goToList();
+      });
+  }
+
+  goToList() {
+    this.router.navigate(['/tournaments', this.tournamentId, 'matches']);  
   }
 }
