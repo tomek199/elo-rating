@@ -30,7 +30,7 @@ export class PlayerAddComponent implements OnInit {
   addPlayer() {
     this.playerService.addPlayer(this.tournamentId, this.player)
       .then(player => {
-        this.router.navigate(['/tournaments', this.tournamentId, 'players']);
+        this.goToList();
       });
   }
 
