@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  serverUrl: 'http://elo-rating-core.herokuapp.com'
+  //serverUrl: 'http://elo-rating-core.herokuapp.com',
+  serverUrl: 'http://localhost:8080',
 };

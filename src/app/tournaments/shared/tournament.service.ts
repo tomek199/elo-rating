@@ -22,6 +22,13 @@ export class TournamentService {
       .catch(this.handleError);
   }
 
+  getAllTournaments(): Promise<Tournament[]> {
+    return this.http.get(this.url)
+      .toPromise()
+      .then(response => response.json() as Tournament[])
+      .catch(this.handleError);
+  }
+
   create(tournament: Tournament): Promise<Tournament> {
     let url = this.url;
     return this.http.post(url, JSON.stringify(tournament), {headers: this.headers})

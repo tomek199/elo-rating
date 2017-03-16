@@ -1,12 +1,15 @@
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouterStub } from '../../testing/routing-stubs';
+import { HttpModule } from '@angular/http';
 
 import { NavComponent } from './nav.component';
-
+import { DailyQueueListComponent } from './../../daily-queue/daily-queue-list/daily-queue-list.component';
+import { DailyQueueAddComponent } from './../../daily-queue/daily-queue-add/daily-queue-add.component';
+import { QueueService } from './../../daily-queue/shared/queue.service';
+import { QueueServiceStub } from './../../testing/queue-stubs';
 
 describe('NavComponent', () => {
   let component: NavComponent;
@@ -15,9 +18,17 @@ describe('NavComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NavComponent ], 
+      declarations: [ 
+        NavComponent,
+        DailyQueueListComponent,
+        DailyQueueAddComponent
+      ], 
+      imports: [
+        HttpModule
+      ],
       providers: [
-        {provide: Router, useClass: RouterStub}
+        { provide: Router, useClass: RouterStub },
+        { provide: QueueService, useClass: QueueServiceStub }
       ]
     })
     .compileComponents();
@@ -44,9 +55,24 @@ describe('NavComponent', () => {
 
   it ('should render navbar for user which selected tournament', () => {
     let debugElement = fixture.debugElement.queryAll(By.css('nav ul.navbar-nav li a'));
-    expect(debugElement.length).toEqual(3);
+    expect(debugElement.length).toEqual(5);
     expect(debugElement[0].nativeElement.textContent).toEqual('Dashboard');
     expect(debugElement[1].nativeElement.textContent).toEqual('Rating');    
     expect(debugElement[2].nativeElement.textContent).toEqual('Players');
+    expect(debugElement[3].nativeElement.textContent).toEqual('Tournaments');
+    expect(debugElement[4].nativeElement.textContent).toEqual('Queue');
+
   });
+
+  it('should have app-daily-queue-list component', () => {
+    let fixture = TestBed.createComponent(NavComponent);
+    let debugElement = fixture.debugElement.query(By.directive(DailyQueueListComponent))
+    expect(debugElement).toBeTruthy();
+  })
+  
+  it('should have app-daily-queue-add component', () => {
+    let fixture = TestBed.createComponent(NavComponent);
+    let debugElement = fixture.debugElement.query(By.directive(DailyQueueAddComponent))
+    expect(debugElement).toBeTruthy();
+  })
 });

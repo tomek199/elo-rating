@@ -1,0 +1,22 @@
+<div>
+  <div class="collapse" id="addQueueElementFormToggleContent">
+    <div>
+      <form id="addQueueElementQueue">
+        <div class="form-group">
+          <input type="text" class="form-control" id="queuePlayer1" placeholder="Player 1" required>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" id="queuePlayer2" placeholder="Player 2" required>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary btn-block" (click)="onSubmit()">Add match to queue</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div>
+    <button class="btn btn-secondary dropdown-toggle btn-block" type="button" data-toggle="collapse" data-target="#addQueueElementFormToggleContent" aria-controls="addQueueElementFormToggleContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="glyphicon glyphicon-plus"></span>
+    </button>
+  </div>
+</div>
