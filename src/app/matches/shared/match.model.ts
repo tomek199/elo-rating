@@ -11,4 +11,17 @@ export class Match {
     this.playerOne = new Player();
     this.playerTwo = new Player();
   }
+
+  isValid(validateScore: boolean): boolean {
+    let playersValidation = this.playerOne.id
+      && this.playerTwo.id
+      && this.playerOne.id != this.playerTwo.id;
+    if (validateScore) {
+      return playersValidation 
+        && this.playerOneScore != undefined
+        && this.playerTwoScore != undefined;
+    } else {
+      return playersValidation;
+    }
+  }
 }

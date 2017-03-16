@@ -15,14 +15,13 @@ export class MatchAddComponent implements OnInit {
   tournamentId: string;
   players: Player[];
   match: Match;
+  score: string;
 
   constructor(
     private route: ActivatedRoute,
     private playerService: PlayerService
   ) {
     this.match = new Match();
-    this.match.playerOneScore = -1;
-    this.match.playerTwoScore = -1;
    }
 
   ngOnInit() {
@@ -56,17 +55,17 @@ export class MatchAddComponent implements OnInit {
     }
   }
 
+  setMatchScore() {
+    let scores = this.score.split('-');
+    this.match.playerOneScore = +scores[0];
+    this.match.playerTwoScore = +scores[1];
+  }
+
   formValid(): boolean {
-    return this.match.playerOne.id
-      && this.match.playerTwo.id
-      && this.match.playerOne.id != this.match.playerTwo.id
-      && this.match.playerOneScore != -1
-      && this.match.playerTwoScore != -1
-      && this.match.playerOneScore == 2 || this.match.playerTwoScore == 2
-      && this.match.playerOneScore + this.match.playerTwoScore != 4;
+    return this.match.isValid(true);
   }
 
   create() {
-    // TODO
+    
   }
 }

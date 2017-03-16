@@ -1,3 +1,4 @@
+import { Player } from './../../players/shared/player.model';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { NgbTypeahead, NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -10,7 +11,7 @@ import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core
 
 import { MatchAddComponent } from './match-add.component';
 
-fdescribe('MatchAddComponent', () => {
+describe('MatchAddComponent', () => {
   let component: MatchAddComponent;
   let fixture: ComponentFixture<MatchAddComponent>;
   let activatedRoute: ActivatedRouteStub;
@@ -55,10 +56,24 @@ fdescribe('MatchAddComponent', () => {
   it('should display alert if players are less than two', fakeAsync(() => {
     createComponent();
     let playersCount = component.players.length;
-    component.players.splice(1, playersCount - 1);
+    component.players = [new Player()];
     fixture.detectChanges();
     let debugElement = fixture.debugElement.query(By.css('div.alert.alert-info'));
     expect(component.hasMinTwoPlayers()).toBeFalsy();
     expect(debugElement.nativeElement).toBeTruthy();
+  }));
+
+  it ('should validate Match model', fakeAsync(() => {
+    createComponent();
+    expect(component.formValid()).toBeFalsy();
+    component.match.playerOne = component.players[0];
+    component.match.playerTwo = component.players[0];
+    component.score = '2-1';
+    fixture.detectChanges();
+    expect(component.formValid()).toBeFalsy();
+    component.match.playerTwo = component.players[1];
+    component.setMatchScore();
+    fixture.detectChanges();
+    expect(component.formValid()).toBeTruthy();
   }));
 });
