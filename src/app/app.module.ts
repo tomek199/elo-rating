@@ -1,3 +1,4 @@
+import { DailyQueueService } from './daily-queue/shared/daily-queue.service';
 import { PlayerService } from './players/shared/player.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -17,6 +18,8 @@ import { ConfirmModalComponent } from './core/utils/confirm-modal/confirm-modal.
 import { PlayerDetailComponent } from './players/player-detail/player-detail.component';
 import { PlayerEditComponent } from './players/player-edit/player-edit.component';
 import { MatchAddComponent } from './matches/match-add/match-add.component';
+import { DailyQueueListComponent } from './daily-queue/daily-queue-list/daily-queue-list.component';
+import { DailyQueueAddComponent } from './daily-queue/daily-queue-add/daily-queue-add.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,9 @@ import { MatchAddComponent } from './matches/match-add/match-add.component';
     ConfirmModalComponent,
     PlayerDetailComponent,
     PlayerEditComponent,
-    MatchAddComponent
+    MatchAddComponent,
+    DailyQueueListComponent,
+    DailyQueueAddComponent
   ],
   imports: [
     BrowserModule,
@@ -38,8 +43,13 @@ import { MatchAddComponent } from './matches/match-add/match-add.component';
     RoutingModule,
     NgbModule.forRoot()
   ],
-  providers: [TournamentService, PlayerService],
+  providers: [
+    TournamentService, 
+    PlayerService, 
+    DailyQueueService
+  ],
   bootstrap: [AppComponent],
-  entryComponents: [ConfirmModalComponent]
+  entryComponents: [ConfirmModalComponent],
+  
 })
 export class AppModule { }

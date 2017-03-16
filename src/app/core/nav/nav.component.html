@@ -7,6 +7,14 @@
           <a class="nav-link" href="{{nav.url}}">{{nav.title}}</a>
         </li>
       </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Queue</a>
+          <div id="queue-dropdown" class="dropdown-menu">
+            <app-daily-queue-list></app-daily-queue-list>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </nav>
