@@ -8,8 +8,8 @@ import { HttpModule } from '@angular/http';
 import { NavComponent } from './nav.component';
 import { DailyQueueListComponent } from './../../daily-queue/daily-queue-list/daily-queue-list.component';
 import { DailyQueueAddComponent } from './../../daily-queue/daily-queue-add/daily-queue-add.component';
-import { DailyQueueServiceStub } from './../../testing/dailyQueue-stubs';
-import { DailyQueueService } from './../../daily-queue/shared/daily-queue.service';
+import { QueueService } from './../../daily-queue/shared/queue.service';
+import { QueueServiceStub } from './../../testing/queue-stubs';
 
 describe('NavComponent', () => {
   let component: NavComponent;
@@ -28,7 +28,7 @@ describe('NavComponent', () => {
       ],
       providers: [
         { provide: Router, useClass: RouterStub },
-        { provide: DailyQueueService, useClass: DailyQueueServiceStub }
+        { provide: QueueService, useClass: QueueServiceStub }
       ]
     })
     .compileComponents();

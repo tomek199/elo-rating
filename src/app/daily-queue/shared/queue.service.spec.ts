@@ -1,4 +1,4 @@
-import { DailyQueueService } from './daily-queue.service';
+import { QueueService } from './queue.service';
 import { HttpModule } from '@angular/http';
 /* tslint:disable:no-unused-variable */
 
@@ -8,11 +8,11 @@ describe('DailyQueueService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
-      providers: [DailyQueueService]
+      providers: [QueueService]
     });
   });
 
-  it('should ...', inject([DailyQueueService], (service: DailyQueueService) => {
+  it('should ...', inject([QueueService], (service: QueueService) => {
     expect(service).toBeTruthy();
   }));
 });

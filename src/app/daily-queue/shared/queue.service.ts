@@ -4,10 +4,9 @@ import { Http, Headers } from '@angular/http';
 import { Queue } from './queue.model';
 import { environment } from './../../../environments/environment.prod';
 import { Injectable } from '@angular/core';
-import { QueueElement } from './queueElement.model';
 
 @Injectable()
-export class DailyQueueService {
+export class QueueService {
 
     private url = environment.serverUrl + "/queue";
     private headers = new Headers({'Content-Type': 'application/json'});
