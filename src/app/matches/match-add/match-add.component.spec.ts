@@ -1,4 +1,4 @@
-import { NgbTypeahead } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTypeahead, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerServiceStub } from './../../testing/player-stubs';
@@ -17,7 +17,7 @@ describe('MatchAddComponent', () => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
       declarations: [ MatchAddComponent ], 
-      imports: [ FormsModule ],
+      imports: [ FormsModule, NgbModule.forRoot() ],
       providers: [
         {provide: PlayerService, useClass: PlayerServiceStub},
         {provide: ActivatedRoute, useValue: activatedRoute},
