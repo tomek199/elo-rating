@@ -1,6 +1,5 @@
 import { Queue } from './../shared/queue.model';
 import { DailyQueueService } from '../shared/daily-queue.service';
-import { QueueElement } from '../shared/queueElement.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
