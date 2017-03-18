@@ -22,6 +22,7 @@ import { MatchAddComponent } from './matches/match-add/match-add.component';
 import { DailyQueueListComponent } from './queue/daily-queue-list/daily-queue-list.component';
 import { DailyQueueAddComponent } from './queue/daily-queue-add/daily-queue-add.component';
 import { LeagueSearchComponent } from './leagues/league-search/league-search.component';
+import { MatchListComponent } from './matches/match-list/match-list.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LeagueSearchComponent } from './leagues/league-search/league-search.com
     MatchAddComponent,
     DailyQueueListComponent,
     DailyQueueAddComponent,
-    LeagueSearchComponent
+    LeagueSearchComponent,
+    MatchListComponent
   ],
   imports: [
     BrowserModule,

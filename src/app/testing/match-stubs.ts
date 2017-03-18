@@ -1,15 +1,17 @@
+import { Player } from './../players/shared/player.model';
+import { PLAYERS } from './player-stubs';
 import { Match } from './../matches/shared/match.model';
 import { Injectable } from '@angular/core';
 
 export const MATCHES: Match[] = [
+  new Match(), new Match(), new Match()
 ]
 
 @Injectable()
 export class MatchServiceStub {
 
   getMatches(league_id: string): Promise<Match[]> {
-    // todo
-    return Promise.resolve([]);
+    return Promise.resolve(MATCHES);
   }
 
   getMatch(id: string): Promise<Match> {

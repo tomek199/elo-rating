@@ -1,3 +1,4 @@
+import { MatchListComponent } from './../../matches/match-list/match-list.component';
 import { MatchAddComponent } from './../../matches/match-add/match-add.component';
 import { PlayerEditComponent } from './../../players/player-edit/player-edit.component';
 import { PlayerDetailComponent } from './../../players/player-detail/player-detail.component';
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path: 'leagues/:league_id/players/add', component: PlayerAddComponent},
   {path: 'leagues/:league_id/players/:player_id', component: PlayerDetailComponent},
   {path: 'leagues/:league_id/players/:player_id/edit', component: PlayerEditComponent},
-  {path: 'leagues/:league_id/matches/add', component: MatchAddComponent}
+  {path: 'leagues/:league_id/matches/add', component: MatchAddComponent},
+  {path: 'leagues/:league_id/matches', component: MatchListComponent}
 ];
 
 @NgModule({
