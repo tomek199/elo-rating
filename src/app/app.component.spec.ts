@@ -1,3 +1,7 @@
+import { LeagueServiceStub } from './testing/league-stubs';
+import { LeagueService } from './leagues/shared/league.service';
+import { FormsModule } from '@angular/forms';
+import { LeagueSearchComponent } from './leagues/league-search/league-search.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpModule } from '@angular/http';
 import { DailyQueueAddComponent } from './queue/daily-queue-add/daily-queue-add.component';
@@ -16,12 +20,17 @@ describe('AppComponent', () => {
         AppComponent,
         NavComponent,
         DailyQueueListComponent,
-        DailyQueueAddComponent
+        DailyQueueAddComponent,
+        LeagueSearchComponent
       ],
       imports: [
+        FormsModule,
         RouterTestingModule,
         HttpModule,
         NgbModule.forRoot()
+      ],
+      providers: [
+        { provide: LeagueService, useClass: LeagueServiceStub }
       ]
     });
     TestBed.compileComponents();
@@ -60,6 +69,12 @@ describe('AppComponent', () => {
   it('should have app-daily-queue-add component', () => {
     let fixture = TestBed.createComponent(AppComponent);
     let debugElement = fixture.debugElement.query(By.directive(DailyQueueAddComponent))
+    expect(debugElement).toBeTruthy();
+  })
+
+  it('should have app-league-search component', () => {
+    let fixture = TestBed.createComponent(AppComponent);
+    let debugElement = fixture.debugElement.query(By.directive(LeagueSearchComponent))
     expect(debugElement).toBeTruthy();
   })
 });

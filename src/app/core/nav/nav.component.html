@@ -2,7 +2,7 @@
   <div class="container">
     <a class="navbar-brand" href="#">{{title}}</a>
     <div class="collapse navbar-collapse">
-      <ul class="navbar-nav" *ngFor="let nav of navbar">
+      <ul class="navbar-nav mr-auto" *ngFor="let nav of navbar">
         <li class="nav-item">
           <a class="nav-link" href="{{nav.url}}">{{nav.title}}</a>
         </li>
@@ -15,6 +15,7 @@
           </div>
         </li>
       </ul>
+      <app-league-search></app-league-search>
     </div>
   </div>
 </nav>

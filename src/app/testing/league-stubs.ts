@@ -12,6 +12,10 @@ export class LeagueServiceStub {
     return Promise.resolve(LEAGUES.find(league => league.id === id));
   }
 
+  getAllLeagues(): Promise<League[]> {
+    return Promise.resolve(LEAGUES);
+  }
+
   create(league: League) {
     let lastId = LEAGUES[LEAGUES.length - 1].id;
     league.id = String(+lastId + 1);
