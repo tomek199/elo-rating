@@ -1,3 +1,4 @@
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpModule } from '@angular/http';
 import { DailyQueueAddComponent } from './daily-queue/daily-queue-add/daily-queue-add.component';
 import { TestBed, async } from '@angular/core/testing';
@@ -19,7 +20,8 @@ describe('AppComponent', () => {
       ],
       imports: [
         RouterTestingModule,
-        HttpModule
+        HttpModule,
+        NgbModule.forRoot()
       ]
     });
     TestBed.compileComponents();

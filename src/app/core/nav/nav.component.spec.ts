@@ -1,3 +1,4 @@
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
@@ -24,7 +25,8 @@ describe('NavComponent', () => {
         DailyQueueAddComponent
       ], 
       imports: [
-        HttpModule
+        HttpModule,
+        NgbModule.forRoot()
       ],
       providers: [
         { provide: Router, useClass: RouterStub },
