@@ -6,18 +6,18 @@ import { PlayerListComponent } from './../../players/player-list/player-list.com
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { TournamentAddComponent } from '../../tournaments/tournament-add/tournament-add.component';
-import { TournamentDetailComponent }  from '../../tournaments/tournament-detail/tournament-detail.component';
+import { LeagueAddComponent } from '../../leagues/league-add/league-add.component';
+import { LeagueDetailComponent }  from '../../leagues/league-detail/league-detail.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/tournaments', pathMatch: 'full'},
-  {path: 'tournaments', component: TournamentAddComponent},
-  {path: 'tournaments/:tournament_id', component: TournamentDetailComponent},
-  {path: 'tournaments/:tournament_id/players', component: PlayerListComponent},
-  {path: 'tournaments/:tournament_id/players/add', component: PlayerAddComponent},
-  {path: 'tournaments/:tournament_id/players/:player_id', component: PlayerDetailComponent},
-  {path: 'tournaments/:tournament_id/players/:player_id/edit', component: PlayerEditComponent},
-  {path: 'tournaments/:tournament_id/matches/add', component: MatchAddComponent}
+  {path: '', redirectTo: '/leagues', pathMatch: 'full'},
+  {path: 'leagues', component: LeagueAddComponent},
+  {path: 'leagues/:league_id', component: LeagueDetailComponent},
+  {path: 'leagues/:league_id/players', component: PlayerListComponent},
+  {path: 'leagues/:league_id/players/add', component: PlayerAddComponent},
+  {path: 'leagues/:league_id/players/:player_id', component: PlayerDetailComponent},
+  {path: 'leagues/:league_id/players/:player_id/edit', component: PlayerEditComponent},
+  {path: 'leagues/:league_id/matches/add', component: MatchAddComponent}
 ];
 
 @NgModule({

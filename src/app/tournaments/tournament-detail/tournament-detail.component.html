@@ -1,8 +1,0 @@
-<div *ngIf="!tournament" class="alert alert-warning">
-  Tournament doesn't exist!  
-  <a [routerLink]="['/tournaments']" class="alert-link">Create new tournament</a>
-</div>
-<h1 *ngIf="tournament">
-  Tournament
-  <small class="text-muted">{{tournament.name}}</small>
-</h1>

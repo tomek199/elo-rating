@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
   styleUrls: ['./player-detail.component.css']
 })
 export class PlayerDetailComponent implements OnInit {
-  tournamentId: string;
+  leagueId: string;
   player: Player;
   
   constructor(
@@ -23,7 +23,7 @@ export class PlayerDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.map(p => p)
       .forEach(param => {
-        this.tournamentId = param['tournament_id'];
+        this.leagueId = param['league_id'];
         this.getPlayer(param['player_id']);    
       });
   }

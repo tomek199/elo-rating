@@ -1,5 +1,5 @@
-import { Tournament } from './../../tournaments/shared/tournament.model';
-import { TournamentService } from './../../tournaments/shared/tournament.service';
+import { League } from './../../leagues/shared/league.model';
+import { LeagueService } from './../../leagues/shared/league.service';
 import { Component, OnInit} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import 'rxjs/add/operator/filter';
@@ -19,18 +19,18 @@ export class NavComponent implements OnInit {
   ngOnInit() {
     this.router.events.filter(event => event instanceof NavigationEnd)
       .subscribe((event: NavigationEnd) => {
-        let tournament_id = this.getTournamentId(event.urlAfterRedirects);
-        if (tournament_id) {
-          this.getStandardNavbar(tournament_id);
+        let league_id = this.getLeagueId(event.urlAfterRedirects);
+        if (league_id) {
+          this.getStandardNavbar(league_id);
         } else {
           this.getGuestNavbar();
         }
       })
   }
 
-  private getTournamentId(url: String): String {
+  private getLeagueId(url: String): String {
     let splitted = url.split('/');
-    if (splitted[1] == 'tournaments') {
+    if (splitted[1] == 'leagues') {
       return splitted[2];
     }
     return undefined;
@@ -38,15 +38,15 @@ export class NavComponent implements OnInit {
 
   private getStandardNavbar(id: String): void {
     this.navbar = [
-      {url: `/tournaments/${id}`, title: 'Dashboard'},
+      {url: `/leagues/${id}`, title: 'Dashboard'},
       {url: `/rating`, title: 'Rating'},
-      {url: `/tournaments/${id}/players`, title: 'Players'}
+      {url: `/leagues/${id}/players`, title: 'Players'}
     ]
   }
 
   private getGuestNavbar(): void {
     this.navbar = [
-      {url: '/tournaments', title: 'Tournament'}
+      {url: '/leagues', title: 'League'}
     ]
   }
 }

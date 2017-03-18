@@ -1,7 +1,7 @@
 <h1>Players list</h1>
 <div class="alert alert-info" *ngIf="!hasPlayers()">
   Players list is empty!  
-  <a [routerLink]="['/tournaments', tournamentId, 'players', 'add']" class="alert-link">Add player</a>
+  <a [routerLink]="['/leagues', leagueId, 'players', 'add']" class="alert-link">Add player</a>
 </div>
 <table class="table" *ngIf="hasPlayers()">
   <thead class="thead-default">
@@ -16,11 +16,11 @@
     <tr *ngFor="let player of players; let i=index">
       <td>{{i + 1}}</td>
       <td>
-        <a [routerLink]="['/tournaments', tournamentId, 'players', player.id]">{{player.username}}</a>
+        <a [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.username}}</a>
       </td>
       <td>{{player.points}}</td>
       <td class="text-right">
-        <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/tournaments', tournamentId, 'players', player.id, 'edit']">Edit</a>
+        <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/leagues', leagueId, 'players', player.id, 'edit']">Edit</a>
         <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(i)">Delete</button>
       </td>
     </tr>
@@ -28,6 +28,6 @@
 </table>
 <ul class="nav justify-content-end">
   <li>
-    <a [routerLink]="['/tournaments', tournamentId, 'players', 'add']">Add player</a>
+    <a [routerLink]="['/leagues', leagueId, 'players', 'add']">Add player</a>
   </li>
 </ul>

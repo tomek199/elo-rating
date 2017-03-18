@@ -1,4 +1,4 @@
-export class Tournament {
+export class League {
   id: string;
   name: string;
 

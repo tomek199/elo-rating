@@ -30,7 +30,7 @@ describe('PlayerEditComponent', () => {
   function createComponent() {
     fixture = TestBed.createComponent(PlayerEditComponent);
     component = fixture.componentInstance;
-    activatedRoute.testParams = {tournament_id: '123', player_id: '456'}
+    activatedRoute.testParams = {league_id: '123', player_id: '456'}
     fixture.detectChanges();
     tick();
   }
@@ -40,9 +40,9 @@ describe('PlayerEditComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should have tournament id', fakeAsync(() => {
+  it('should have league id', fakeAsync(() => {
     createComponent();
-    expect(component.tournamentId).toEqual('123');
+    expect(component.leagueId).toEqual('123');
   }));
 
   it('should have player details', fakeAsync(() => {
@@ -68,7 +68,7 @@ describe('PlayerEditComponent', () => {
     let debugElement = fixture.debugElement.query(By.css('form button[type=submit]'));
     debugElement.triggerEventHandler('click', null);
     tick();
-    expect(spy.calls.first().args[0][0]).toEqual('/tournaments');
+    expect(spy.calls.first().args[0][0]).toEqual('/leagues');
     expect(spy.calls.first().args[0][1]).toEqual('123');    
     expect(spy.calls.first().args[0][2]).toEqual('players');
   })));

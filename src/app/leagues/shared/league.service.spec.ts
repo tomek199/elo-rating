@@ -3,17 +3,17 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 import { Http } from '@angular/http';
 import { HttpModule } from '@angular/http';
-import { TournamentService } from './tournament.service';
+import { LeagueService } from './league.service';
 
-describe('TournamentService', () => {
+describe('LeagueService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
-      providers: [TournamentService]
+      providers: [LeagueService]
     });
   });
 
-  it('should ...', inject([TournamentService], (service: TournamentService) => {
+  it('should ...', inject([LeagueService], (service: LeagueService) => {
     expect(service).toBeTruthy();
   }));
 });

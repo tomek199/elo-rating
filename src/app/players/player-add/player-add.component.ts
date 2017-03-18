@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./player-add.component.css']
 })
 export class PlayerAddComponent implements OnInit {
-  tournamentId: string;
+  leagueId: string;
   player: Player;
 
   constructor(
@@ -21,20 +21,20 @@ export class PlayerAddComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.route.params.map(p => p['tournament_id'])
+    this.route.params.map(p => p['league_id'])
       .forEach(id => {
-        this.tournamentId = id;
+        this.leagueId = id;
       });
   }
 
   addPlayer() {
-    this.playerService.addPlayer(this.tournamentId, this.player)
+    this.playerService.addPlayer(this.leagueId, this.player)
       .then(player => {
         this.goToList();
       });
   }
 
   goToList() {
-    this.router.navigate(['/tournaments', this.tournamentId, 'players']);  
+    this.router.navigate(['/leagues', this.leagueId, 'players']);  
   }
 }

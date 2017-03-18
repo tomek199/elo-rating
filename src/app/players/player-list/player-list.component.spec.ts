@@ -34,7 +34,7 @@ describe('PlayerListComponent', () => {
   function createComponent() {
     fixture = TestBed.createComponent(PlayerListComponent);
     component = fixture.componentInstance;
-    activatedRoute.testParams = {tournament_id: '123'}
+    activatedRoute.testParams = {league_id: '123'}
     fixture.detectChanges();
     tick();
   }

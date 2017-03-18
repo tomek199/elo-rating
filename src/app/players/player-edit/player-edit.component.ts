@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
   styleUrls: ['./player-edit.component.css']
 })
 export class PlayerEditComponent implements OnInit {
-  tournamentId: string;
+  leagueId: string;
   player: Player;
 
   constructor(
@@ -24,7 +24,7 @@ export class PlayerEditComponent implements OnInit {
   ngOnInit() {
     this.route.params.map(p => p)
       .forEach(param => {
-        this.tournamentId = param['tournament_id'];
+        this.leagueId = param['league_id'];
         this.getPlayer(param['player_id']);
       });
   }
@@ -43,6 +43,6 @@ export class PlayerEditComponent implements OnInit {
   }
 
   goToList() {
-    this.router.navigate(['/tournaments', this.tournamentId, 'players']);  
+    this.router.navigate(['/leagues', this.leagueId, 'players']);  
   }
 }

@@ -36,7 +36,7 @@ describe('MatchAddComponent', () => {
   function createComponent() {
     fixture = TestBed.createComponent(MatchAddComponent);
     component = fixture.componentInstance;
-    activatedRoute.testParams = {tournament_id: '123'}
+    activatedRoute.testParams = {league_id: '123'}
     fixture.detectChanges();
     tick();
   }
@@ -46,9 +46,9 @@ describe('MatchAddComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should have tournament id', fakeAsync(() => {
+  it('should have league id', fakeAsync(() => {
     createComponent();
-    expect(component.tournamentId).toEqual('123');
+    expect(component.leagueId).toEqual('123');
   }));
 
   it('should have players list', fakeAsync(() => {
@@ -91,7 +91,7 @@ describe('MatchAddComponent', () => {
     let debugElement = fixture.debugElement.query(By.css('form button[type=submit]'));
     debugElement.triggerEventHandler('click', null);
     tick();
-    expect(spy.calls.first().args[0][0]).toEqual('/tournaments');
+    expect(spy.calls.first().args[0][0]).toEqual('/leagues');
     expect(spy.calls.first().args[0][1]).toEqual('123');
     expect(spy.calls.first().args[0][2]).toEqual('matches');
   })));

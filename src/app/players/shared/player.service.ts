@@ -14,8 +14,8 @@ export class PlayerService {
 
   constructor(private http: Http) { }
 
-  getPlayers(tournamentId: string): Promise<Player[]> {
-    let url = `${this.url}/tournaments/${tournamentId}/players`;
+  getPlayers(leagueId: string): Promise<Player[]> {
+    let url = `${this.url}/leagues/${leagueId}/players`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as Player[])
@@ -30,8 +30,8 @@ export class PlayerService {
       .catch(this.handleError);
   }
 
-  addPlayer(tournamentId: string, player: Player): Promise<Player> {
-    let url = `${this.url}/tournaments/${tournamentId}/players`;
+  addPlayer(leagueId: string, player: Player): Promise<Player> {
+    let url = `${this.url}/leagues/${leagueId}/players`;
     return this.http.post(url, JSON.stringify(player), {headers: this.headers})
       .toPromise()
       .then(response => response.json() as Player)

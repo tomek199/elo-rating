@@ -1,39 +1,39 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
-import { Tournament } from './tournament.model';
-import { TOURNAMENTS } from '../../testing/tournament-stubs';
+import { League } from './league.model';
+import { LEAGUES } from '../../testing/league-stubs';
 import { environment } from '../../../environments/environment';
 import 'rxjs/add/operator/toPromise';
 
 
 @Injectable()
-export class TournamentService {
+export class LeagueService {
 
-  private url = environment.serverUrl + '/tournaments';
+  private url = environment.serverUrl + '/leagues';
   private headers = new Headers({'Content-Type': 'application/json'});
 
   constructor(private http: Http) { }
 
-  getTournament(id: string): Promise<Tournament> {
+  getLeague(id: string): Promise<League> {
     let url = `${this.url}/${id}`;
     return this.http.get(url)
       .toPromise()
-      .then(response => response.json() as Tournament)
+      .then(response => response.json() as League)
       .catch(this.handleError);
   }
 
-  getAllTournaments(): Promise<Tournament[]> {
+  getAllLeagues(): Promise<League[]> {
     return this.http.get(this.url)
       .toPromise()
-      .then(response => response.json() as Tournament[])
+      .then(response => response.json() as League[])
       .catch(this.handleError);
   }
 
-  create(tournament: Tournament): Promise<Tournament> {
+  create(league: League): Promise<League> {
     let url = this.url;
-    return this.http.post(url, JSON.stringify(tournament), {headers: this.headers})
+    return this.http.post(url, JSON.stringify(league), {headers: this.headers})
       .toPromise()
-      .then(response => response.json() as Tournament)
+      .then(response => response.json() as League)
       .catch(this.handleError);
   }
 

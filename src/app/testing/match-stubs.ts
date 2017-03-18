@@ -7,7 +7,7 @@ export const MATCHES: Match[] = [
 @Injectable()
 export class MatchServiceStub {
 
-  getMatches(tournament_id: string): Promise<Match[]> {
+  getMatches(league_id: string): Promise<Match[]> {
     // todo
     return Promise.resolve([]);
   }
@@ -17,7 +17,7 @@ export class MatchServiceStub {
     return Promise.resolve(new Match());
   }
 
-  add(tournamentId: string, match: Match): Promise<Match> {
+  add(leagueId: string, match: Match): Promise<Match> {
     match.id = '111';
     MATCHES.push(match);
     return Promise.resolve(match);

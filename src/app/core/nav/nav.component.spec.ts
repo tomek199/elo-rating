@@ -55,7 +55,7 @@ describe('NavComponent', () => {
     expect(debugElement.nativeElement.textContent).toEqual('EloRating');
   });
 
-  it ('should render navbar for user which selected tournament', () => {
+  it ('should render navbar for user which selected league', () => {
     let debugElement = fixture.debugElement.queryAll(By.css('nav ul.navbar-nav li a'));
     expect(debugElement[0].nativeElement.textContent).toEqual('Dashboard');
     expect(debugElement[1].nativeElement.textContent).toEqual('Rating');    

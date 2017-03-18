@@ -1,0 +1,8 @@
+<div *ngIf="!league" class="alert alert-warning">
+  League doesn't exist!  
+  <a [routerLink]="['/leagues']" class="alert-link">Create new league</a>
+</div>
+<h1 *ngIf="league">
+  League
+  <small class="text-muted">{{league.name}}</small>
+</h1>

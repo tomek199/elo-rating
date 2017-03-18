@@ -13,8 +13,8 @@ export class MatchService {
 
   constructor(private http: Http) { }
 
-  add(tournamentId: string, match: Match): Promise<Match> {
-    let url = `${this.url}/tournaments/${tournamentId}/matches`;
+  add(leagueId: string, match: Match): Promise<Match> {
+    let url = `${this.url}/leagues/${leagueId}/matches`;
     return this.http.post(url, JSON.stringify(match), {headers: this.headers})
       .toPromise()
       .then(response => response.json() as Match)

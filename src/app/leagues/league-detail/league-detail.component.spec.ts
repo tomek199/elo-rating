@@ -5,33 +5,33 @@ import { DebugElement } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { TournamentDetailComponent } from './tournament-detail.component';
-import { TournamentService } from '../shared/tournament.service';
-import { TournamentServiceStub } from '../../testing/tournament-stubs';
+import { LeagueDetailComponent } from './league-detail.component';
+import { LeagueService } from '../shared/league.service';
+import { LeagueServiceStub } from '../../testing/league-stubs';
 import { ActivatedRouteStub } from '../../testing/routing-stubs';
 
-describe('TournamentDetailComponent', () => {
-  let component: TournamentDetailComponent;
-  let fixture: ComponentFixture<TournamentDetailComponent>;
+describe('LeagueDetailComponent', () => {
+  let component: LeagueDetailComponent;
+  let fixture: ComponentFixture<LeagueDetailComponent>;
   let activatedRoute: ActivatedRouteStub;
 
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ TournamentDetailComponent ], 
+      declarations: [ LeagueDetailComponent ], 
       imports: [ RouterTestingModule ],
       providers: [
-        {provide: TournamentService, useClass: TournamentServiceStub},
+        {provide: LeagueService, useClass: LeagueServiceStub},
         {provide: ActivatedRoute, useValue: activatedRoute}
       ]
     })
     .compileComponents();
   }));
 
-  function createComponent(TournamentId: String) {
-    fixture = TestBed.createComponent(TournamentDetailComponent);
+  function createComponent(LeagueId: String) {
+    fixture = TestBed.createComponent(LeagueDetailComponent);
     component = fixture.componentInstance;
-    activatedRoute.testParams = {tournament_id: TournamentId}
+    activatedRoute.testParams = {league_id: LeagueId}
     fixture.detectChanges();
     tick();
   }
@@ -41,25 +41,25 @@ describe('TournamentDetailComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should has tournament name field', fakeAsync(() => {
+  it('should has league name field', fakeAsync(() => {
     createComponent('123');
-    expect(component.tournament).toBeTruthy();
-    expect(component.tournament.name).toEqual('Tournament name');
+    expect(component.league).toBeTruthy();
+    expect(component.league.name).toEqual('League name');
   }));
 
-  it('should has empty tournament variable if tournamet does not exist', fakeAsync(() => {
+  it('should has empty league variable if tournamet does not exist', fakeAsync(() => {
     createComponent('456');
-    expect(component.tournament).toBeFalsy();
+    expect(component.league).toBeFalsy();
   }));
 
-  it('should display tournament name in header', fakeAsync(() => {
+  it('should display league name in header', fakeAsync(() => {
     createComponent('123');
     fixture.detectChanges();
     let debugElement = fixture.debugElement.query(By.css('h1 small'));
-    expect(debugElement.nativeElement.textContent).toEqual('Tournament name');
+    expect(debugElement.nativeElement.textContent).toEqual('League name');
   }));
 
-  it('should display alert if tournament does not exist', fakeAsync(() => {
+  it('should display alert if league does not exist', fakeAsync(() => {
     createComponent('456');
     fixture.detectChanges();
     let debugElement = fixture.debugElement.query(By.css('div.alert.alert-warning'));

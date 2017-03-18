@@ -10,7 +10,7 @@ export const PLAYERS: Player[] = [
 @Injectable()
 export class PlayerServiceStub {
 
-  getPlayers(tournament_id: string): Promise<Player[]> {
+  getPlayers(league_id: string): Promise<Player[]> {
     return Promise.resolve(PLAYERS);
   }
 
@@ -18,7 +18,7 @@ export class PlayerServiceStub {
     return Promise.resolve(PLAYERS.find(player => player.id === id));
   }
 
-  addPlayer(tournamentId: string, player: Player): Promise<Player> {
+  addPlayer(leagueId: string, player: Player): Promise<Player> {
     player.id = '111';
     player.points = 1000;
     PLAYERS.push(player);

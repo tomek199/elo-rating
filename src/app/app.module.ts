@@ -10,9 +10,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RoutingModule } from './core/routing/routing.module';
 import { AppComponent } from './app.component';
 import { NavComponent } from './core/nav/nav.component';
-import { TournamentAddComponent } from './tournaments/tournament-add/tournament-add.component';
-import { TournamentDetailComponent } from './tournaments/tournament-detail/tournament-detail.component';
-import { TournamentService } from './tournaments/shared/tournament.service';
+import { LeagueAddComponent } from './leagues/league-add/league-add.component';
+import { LeagueDetailComponent } from './leagues/league-detail/league-detail.component';
+import { LeagueService } from './leagues/shared/league.service';
 import { PlayerListComponent } from './players/player-list/player-list.component';
 import { PlayerAddComponent } from './players/player-add/player-add.component';
 import { ConfirmModalComponent } from './core/utils/confirm-modal/confirm-modal.component';
@@ -26,8 +26,8 @@ import { DailyQueueAddComponent } from './daily-queue/daily-queue-add/daily-queu
   declarations: [
     AppComponent,
     NavComponent,
-    TournamentAddComponent,
-    TournamentDetailComponent,
+    LeagueAddComponent,
+    LeagueDetailComponent,
     PlayerListComponent,
     PlayerAddComponent,
     ConfirmModalComponent,
@@ -45,7 +45,7 @@ import { DailyQueueAddComponent } from './daily-queue/daily-queue-add/daily-queu
     NgbModule.forRoot()
   ],
   providers: [
-    TournamentService, 
+    LeagueService, 
     PlayerService, 
     QueueService,
     MatchService

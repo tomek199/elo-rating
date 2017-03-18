@@ -30,7 +30,7 @@ describe('PlayerDetailComponent', () => {
   function createComponent(playerId: string) {
     fixture = TestBed.createComponent(PlayerDetailComponent);
     component = fixture.componentInstance;
-    activatedRoute.testParams = {tournament_id: '123', player_id: playerId};
+    activatedRoute.testParams = {league_id: '123', player_id: playerId};
     fixture.detectChanges();
     tick();
   }
@@ -47,9 +47,9 @@ describe('PlayerDetailComponent', () => {
     expect(component.player.points).toEqual(1000);
   }));
 
-  it('should has tournamentId property', fakeAsync(() => {
+  it('should has leagueId property', fakeAsync(() => {
     createComponent('456');
-    expect(component.tournamentId).toEqual('123');
+    expect(component.leagueId).toEqual('123');
   }));
 
   it('should display player username in header', fakeAsync(() => {

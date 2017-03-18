@@ -11,7 +11,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./player-list.component.css']
 })
 export class PlayerListComponent implements OnInit {
-  tournamentId: string;
+  leagueId: string;
   players: Player[];
 
   constructor(
@@ -21,10 +21,10 @@ export class PlayerListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.params.map(p => p['tournament_id'])
-      .forEach(tournament_id => {
-        this.tournamentId = tournament_id;
-        this.playerService.getPlayers(tournament_id)
+    this.route.params.map(p => p['league_id'])
+      .forEach(league_id => {
+        this.leagueId = league_id;
+        this.playerService.getPlayers(league_id)
           .then(players => this.players = players);
       });
   }

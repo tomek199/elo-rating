@@ -13,7 +13,7 @@ import 'rxjs/add/operator/debounceTime';
   styleUrls: ['./match-add.component.css']
 })
 export class MatchAddComponent implements OnInit {
-  tournamentId: string;
+  leagueId: string;
   players: Player[];
   match: Match;
   score: string;
@@ -30,13 +30,13 @@ export class MatchAddComponent implements OnInit {
   ngOnInit() {
     this.route.params.map(p => p)
       .forEach(param => {
-        this.tournamentId = param['tournament_id'];
+        this.leagueId = param['league_id'];
         this.getPlayers();
       });
   }
 
   getPlayers() {
-    this.playerService.getPlayers(this.tournamentId)
+    this.playerService.getPlayers(this.leagueId)
       .then(players => this.players = players);
   }
 
@@ -69,13 +69,13 @@ export class MatchAddComponent implements OnInit {
   }
 
   create() {
-    this.matchService.add(this.tournamentId, this.match)
+    this.matchService.add(this.leagueId, this.match)
       .then(match => {
         this.goToList();
       });
   }
 
   goToList() {
-    this.router.navigate(['/tournaments', this.tournamentId, 'matches']);  
+    this.router.navigate(['/leagues', this.leagueId, 'matches']);  
   }
 }
