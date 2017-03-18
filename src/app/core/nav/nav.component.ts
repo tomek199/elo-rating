@@ -14,11 +14,7 @@ export class NavComponent implements OnInit {
 
   navbar;
 
-  private sub: any;
-
-  tournaments: Tournament[];
-
-  constructor(private router: Router, private tournamentService: TournamentService) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.router.events.filter(event => event instanceof NavigationEnd)
@@ -30,8 +26,6 @@ export class NavComponent implements OnInit {
           this.getGuestNavbar();
         }
       })
-    
-    this.tournamentService.getAllTournaments().then(tournaments => this.tournaments = tournaments);
   }
 
   private getTournamentId(url: String): String {
