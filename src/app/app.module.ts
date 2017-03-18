@@ -21,6 +21,7 @@ import { PlayerEditComponent } from './players/player-edit/player-edit.component
 import { MatchAddComponent } from './matches/match-add/match-add.component';
 import { DailyQueueListComponent } from './daily-queue/daily-queue-list/daily-queue-list.component';
 import { DailyQueueAddComponent } from './daily-queue/daily-queue-add/daily-queue-add.component';
+import { MatchListComponent } from './matches/match-list/match-list.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { DailyQueueAddComponent } from './daily-queue/daily-queue-add/daily-queu
     PlayerEditComponent,
     MatchAddComponent,
     DailyQueueListComponent,
-    DailyQueueAddComponent
+    DailyQueueAddComponent,
+    MatchListComponent
   ],
   imports: [
     BrowserModule,
