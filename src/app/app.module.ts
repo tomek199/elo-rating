@@ -1,4 +1,4 @@
-import { QueueService } from './daily-queue/shared/queue.service';
+import { QueueService } from './queue/shared/queue.service';
 import { MatchService } from './matches/shared/match.service';
 import { PlayerService } from './players/shared/player.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,8 +19,8 @@ import { ConfirmModalComponent } from './core/utils/confirm-modal/confirm-modal.
 import { PlayerDetailComponent } from './players/player-detail/player-detail.component';
 import { PlayerEditComponent } from './players/player-edit/player-edit.component';
 import { MatchAddComponent } from './matches/match-add/match-add.component';
-import { DailyQueueListComponent } from './daily-queue/daily-queue-list/daily-queue-list.component';
-import { DailyQueueAddComponent } from './daily-queue/daily-queue-add/daily-queue-add.component';
+import { DailyQueueListComponent } from './queue/daily-queue-list/daily-queue-list.component';
+import { DailyQueueAddComponent } from './queue/daily-queue-add/daily-queue-add.component';
 
 @NgModule({
   declarations: [

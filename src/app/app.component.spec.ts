@@ -1,13 +1,13 @@
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpModule } from '@angular/http';
-import { DailyQueueAddComponent } from './daily-queue/daily-queue-add/daily-queue-add.component';
+import { DailyQueueAddComponent } from './queue/daily-queue-add/daily-queue-add.component';
 import { TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RouterOutlet } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavComponent } from './core/nav/nav.component';
-import { DailyQueueListComponent } from './daily-queue/daily-queue-list/daily-queue-list.component';
+import { DailyQueueListComponent } from './queue/daily-queue-list/daily-queue-list.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {

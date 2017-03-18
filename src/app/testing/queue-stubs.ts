@@ -1,4 +1,4 @@
-import { Queue } from './../daily-queue/shared/queue.model';
+import { Queue } from './../queue/shared/queue.model';
 import { Injectable } from '@angular/core';
 
 export const QUEUE: Queue = {

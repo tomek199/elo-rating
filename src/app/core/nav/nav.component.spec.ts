@@ -7,9 +7,9 @@ import { RouterStub } from '../../testing/routing-stubs';
 import { HttpModule } from '@angular/http';
 
 import { NavComponent } from './nav.component';
-import { DailyQueueListComponent } from './../../daily-queue/daily-queue-list/daily-queue-list.component';
-import { DailyQueueAddComponent } from './../../daily-queue/daily-queue-add/daily-queue-add.component';
-import { QueueService } from './../../daily-queue/shared/queue.service';
+import { DailyQueueListComponent } from './../../queue/daily-queue-list/daily-queue-list.component';
+import { DailyQueueAddComponent } from './../../queue/daily-queue-add/daily-queue-add.component';
+import { QueueService } from './../../queue/shared/queue.service';
 import { QueueServiceStub } from './../../testing/queue-stubs';
 
 describe('NavComponent', () => {
