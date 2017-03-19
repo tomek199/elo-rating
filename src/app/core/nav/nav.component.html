@@ -2,12 +2,10 @@
   <div class="container">
     <a class="navbar-brand" href="#">{{title}}</a>
     <div class="collapse navbar-collapse">
-      <ul class="navbar-nav mr-auto" *ngFor="let nav of navbar">
-        <li class="nav-item">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" *ngFor="let nav of navbar">
           <a class="nav-link" href="{{nav.url}}">{{nav.title}}</a>
         </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
         <li class="nav-item dropdown" ngbDropdown [autoClose]="false">
           <a class="nav-link dropdown-toggle" ngbDropdownToggle  role="button">Queue</a>
           <div id="queue-dropdown" class="dropdown-menu">
