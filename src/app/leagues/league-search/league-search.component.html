@@ -3,6 +3,6 @@
     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
       <input type="text" name="leagueToSearch" class="form-control" id="leagueToSearchForm" [(ngModel)]="leagueToSearch" [ngbTypeahead]="searchLeague" [inputFormatter]="leagueFormatter" [resultFormatter]="leagueFormatter" placeholder="League">
     </div>
-    <button type="submit" class="btn btn-primary" (click)="goToLeague()">Search</button>
+    <button type="submit" class="btn btn-primary" (click)="goToLeague()" [disabled]="!leagueFound()">Go to</button>
   </form>
 </div>

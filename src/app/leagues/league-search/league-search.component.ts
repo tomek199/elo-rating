@@ -49,4 +49,8 @@ export class LeagueSearchComponent implements OnInit {
       this.url = ["/leagues"];
     }
   }
+
+  leagueFound() {
+    return this.leagueToSearch.name != null ? true : false;
+  }
 }
