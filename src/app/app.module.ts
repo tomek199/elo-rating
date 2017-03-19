@@ -19,8 +19,8 @@ import { ConfirmModalComponent } from './core/utils/confirm-modal/confirm-modal.
 import { PlayerDetailComponent } from './players/player-detail/player-detail.component';
 import { PlayerEditComponent } from './players/player-edit/player-edit.component';
 import { MatchAddComponent } from './matches/match-add/match-add.component';
-import { DailyQueueListComponent } from './queue/daily-queue-list/daily-queue-list.component';
-import { DailyQueueAddComponent } from './queue/daily-queue-add/daily-queue-add.component';
+import { QueueListComponent } from './queue/queue-list/queue-list.component';
+import { QueueAddComponent } from './queue/queue-add/queue-add.component';
 import { LeagueSearchComponent } from './leagues/league-search/league-search.component';
 import { MatchListComponent } from './matches/match-list/match-list.component';
 
@@ -36,8 +36,8 @@ import { MatchListComponent } from './matches/match-list/match-list.component';
     PlayerDetailComponent,
     PlayerEditComponent,
     MatchAddComponent,
-    DailyQueueListComponent,
-    DailyQueueAddComponent,
+    QueueListComponent,
+    QueueAddComponent,
     LeagueSearchComponent,
     MatchListComponent
   ],

@@ -11,8 +11,8 @@ import { RouterStub } from '../../testing/routing-stubs';
 import { HttpModule } from '@angular/http';
 
 import { NavComponent } from './nav.component';
-import { DailyQueueListComponent } from './../../queue/daily-queue-list/daily-queue-list.component';
-import { DailyQueueAddComponent } from './../../queue/daily-queue-add/daily-queue-add.component';
+import { QueueListComponent } from './../../queue/queue-list/queue-list.component';
+import { QueueAddComponent } from './../../queue/queue-add/queue-add.component';
 import { QueueService } from './../../queue/shared/queue.service';
 import { QueueServiceStub } from './../../testing/queue-stubs';
 
@@ -25,8 +25,8 @@ describe('NavComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ 
         NavComponent,
-        DailyQueueListComponent,
-        DailyQueueAddComponent,
+        QueueListComponent,
+        QueueAddComponent,
         LeagueSearchComponent
       ], 
       imports: [
@@ -70,15 +70,15 @@ describe('NavComponent', () => {
     expect(debugElement[3].nativeElement.textContent).toEqual('Queue');
   });
 
-  it('should have app-daily-queue-list component', () => {
+  it('should have app-queue-list component', () => {
     let fixture = TestBed.createComponent(NavComponent);
-    let debugElement = fixture.debugElement.query(By.directive(DailyQueueListComponent))
+    let debugElement = fixture.debugElement.query(By.directive(QueueListComponent))
     expect(debugElement).toBeTruthy();
   })
   
-  it('should have app-daily-queue-add component', () => {
+  it('should have app-queue-add component', () => {
     let fixture = TestBed.createComponent(NavComponent);
-    let debugElement = fixture.debugElement.query(By.directive(DailyQueueAddComponent))
+    let debugElement = fixture.debugElement.query(By.directive(QueueAddComponent))
     expect(debugElement).toBeTruthy();
   })
 

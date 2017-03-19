@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 
 import { TestBed, async, inject } from '@angular/core/testing';
 
-describe('DailyQueueService', () => {
+describe('QueueService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],

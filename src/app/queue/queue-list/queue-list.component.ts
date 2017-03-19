@@ -3,12 +3,12 @@ import { Queue } from './../shared/queue.model';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-daily-queue-list',
-  templateUrl: './daily-queue-list.component.html',
-  styleUrls: ['./daily-queue-list.component.css'],
+  selector: 'app-queue-list',
+  templateUrl: './queue-list.component.html',
+  styleUrls: ['./queue-list.component.css'],
   providers: [QueueService]
 })
-export class DailyQueueListComponent implements OnInit {
+export class QueueListComponent implements OnInit {
 
   dailyQueue: Queue;
 

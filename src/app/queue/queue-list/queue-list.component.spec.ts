@@ -5,21 +5,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { DailyQueueAddComponent } from './../daily-queue-add/daily-queue-add.component';
-import { DailyQueueListComponent } from './daily-queue-list.component';
+import { QueueAddComponent } from './../queue-add/queue-add.component';
+import { QueueListComponent } from './queue-list.component';
 import { QueueService } from './../shared/queue.service';
 import { QueueServiceStub } from './../../testing/queue-stubs';
 
 
-describe('DailyQueueComponent', () => {
-  let component: DailyQueueListComponent;
-  let fixture: ComponentFixture<DailyQueueListComponent>;
+describe('QueueComponent', () => {
+  let component: QueueListComponent;
+  let fixture: ComponentFixture<QueueListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        DailyQueueListComponent,
-        DailyQueueAddComponent
+        QueueListComponent,
+        QueueAddComponent
       ],
       imports: [
         HttpModule
@@ -32,7 +32,7 @@ describe('DailyQueueComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DailyQueueListComponent);
+    fixture = TestBed.createComponent(QueueListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

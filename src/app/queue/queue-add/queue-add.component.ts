@@ -1,19 +1,19 @@
-import { DailyQueueListComponent } from './../daily-queue-list/daily-queue-list.component';
+import { QueueListComponent } from './../queue-list/queue-list.component';
 import { Player } from './../../players/shared/player.model';
 import { Match } from './../../matches/shared/match.model';
 import { QueueService } from './../shared/queue.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-daily-queue-add',
-  templateUrl: './daily-queue-add.component.html',
-  styleUrls: ['./daily-queue-add.component.css'],
+  selector: 'app-queue-add',
+  templateUrl: './queue-add.component.html',
+  styleUrls: ['./queue-add.component.css'],
   providers: [QueueService]
 })
-export class DailyQueueAddComponent implements OnInit {
+export class QueueAddComponent implements OnInit {
 
   match: Match;
-  dailyQueueComponent: DailyQueueListComponent;
+  dailyQueueComponent: QueueListComponent;
 
   constructor() { }
 

@@ -4,14 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { LeagueSearchComponent } from './leagues/league-search/league-search.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpModule } from '@angular/http';
-import { DailyQueueAddComponent } from './queue/daily-queue-add/daily-queue-add.component';
+import { QueueAddComponent } from './queue/queue-add/queue-add.component';
 import { TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { RouterOutlet } from '@angular/router';
 import { AppComponent } from './app.component';
 import { NavComponent } from './core/nav/nav.component';
-import { DailyQueueListComponent } from './queue/daily-queue-list/daily-queue-list.component';
+import { QueueListComponent } from './queue/queue-list/queue-list.component';
 
 describe('AppComponent', () => {
   beforeEach(() => {
@@ -19,8 +19,8 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         NavComponent,
-        DailyQueueListComponent,
-        DailyQueueAddComponent,
+        QueueListComponent,
+        QueueAddComponent,
         LeagueSearchComponent
       ],
       imports: [
@@ -60,15 +60,15 @@ describe('AppComponent', () => {
     expect(debugElement).toBeTruthy();
   });
 
-  it('should have app-daily-queue-list component', () => {
+  it('should have app-queue-list component', () => {
     let fixture = TestBed.createComponent(AppComponent);
-    let debugElement = fixture.debugElement.query(By.directive(DailyQueueListComponent))
+    let debugElement = fixture.debugElement.query(By.directive(QueueListComponent))
     expect(debugElement).toBeTruthy();
   })
 
-  it('should have app-daily-queue-add component', () => {
+  it('should have app-queue-add component', () => {
     let fixture = TestBed.createComponent(AppComponent);
-    let debugElement = fixture.debugElement.query(By.directive(DailyQueueAddComponent))
+    let debugElement = fixture.debugElement.query(By.directive(QueueAddComponent))
     expect(debugElement).toBeTruthy();
   })
 
