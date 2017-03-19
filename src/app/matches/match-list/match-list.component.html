@@ -6,6 +6,7 @@
 <table class="table table-bordered" *ngIf="hasMatches()">
   <thead class="thead-default">
     <tr>
+      <th>Date</th>
       <th>First player</th>
       <th>Score</th>
       <th>Second player</th>
@@ -14,6 +15,11 @@
   </thead>
   <tbody>
     <tr *ngFor="let match of matches; let i=index">
+      <td>
+        <span ngbTooltip="{{match.date | date:'HH:mm'}}">
+          {{match.date | date:"yyyy-MM-dd"}}
+        </span>
+      </td>
       <td [ngClass]="{'table-success': isWinner(match.playerOneScore)}">
         {{match.playerOne.username}}
       </td>

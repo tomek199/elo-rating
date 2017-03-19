@@ -1,3 +1,4 @@
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { By } from '@angular/platform-browser';
 import { MatchServiceStub } from './../../testing/match-stubs';
 import { MatchService } from './../shared/match.service';
@@ -17,7 +18,7 @@ describe('MatchListComponent', () => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
       declarations: [ MatchListComponent ],
-      imports: [ RouterTestingModule ],
+      imports: [ RouterTestingModule, NgbModule.forRoot() ],
       providers: [
         {provide: MatchService, useClass: MatchServiceStub},
         {provide: ActivatedRoute, useValue: activatedRoute},
