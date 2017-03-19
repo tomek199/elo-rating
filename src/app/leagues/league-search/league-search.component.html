@@ -1,8 +1,8 @@
 <div>
-  <form class="form-inline" *ngIf="leagueValidation()">
+  <form class="form-inline">
     <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-      <input type="text" name="leagueToSearch" class="form-control" id="leagueToSearchForm" [(ngModel)]="leagueToSearch" [ngbTypeahead]="searchLeague" [inputFormatter]="leagueFormatter" [resultFormatter]="leagueFormatter" (selected)="itemSelected($event)" placeholder="League">
+      <input type="text" name="leagueToSearch" class="form-control" id="leagueToSearchForm" [(ngModel)]="leagueToSearch" [ngbTypeahead]="searchLeague" [inputFormatter]="leagueFormatter" [resultFormatter]="leagueFormatter" placeholder="League">
     </div>
-    <button type="submit" class="btn btn-primary" (click)="goToLeague()" [disabled]="!leagueValidation()">Search</button>
+    <button type="submit" class="btn btn-primary" (click)="goToLeague()">Search</button>
   </form>
 </div>

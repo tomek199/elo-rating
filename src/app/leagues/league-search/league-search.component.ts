@@ -14,7 +14,7 @@ export class LeagueSearchComponent implements OnInit {
 
   url: string[];
   
-  @Input() leagueToSearch: League;
+  leagueToSearch: League;
   leagueName: string;
 
   leagues: League[];
@@ -27,6 +27,8 @@ export class LeagueSearchComponent implements OnInit {
   }
 
   goToLeague() {
+    let league = this.leagues.find(x => x.name == this.leagueToSearch.name);
+    this.setLeagueUrl(league);
     this.router.navigate(this.url);
   }
 
@@ -44,16 +46,7 @@ export class LeagueSearchComponent implements OnInit {
     if (league != null) {
       this.url = ["/leagues", league.id];
     } else {
-      this.url = ["/"];
+      this.url = ["/leagues"];
     }
-  }
-
-  leagueValidation() {
-    if (this.leagueToSearch.id != '') {
-      this.setLeagueUrl(this.leagueToSearch);
-      return true;
-    }
-    this.setLeagueUrl(null);
-    return false;
   }
 }
