@@ -56,7 +56,7 @@ export class QueueService {
         let player = new Player();
         player.id = id;
         player.username = "Player" + id;
-        player.points = 0;
+        player.rating = 0;
 
         return player;
     }

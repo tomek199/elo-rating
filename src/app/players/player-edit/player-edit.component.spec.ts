@@ -48,18 +48,18 @@ describe('PlayerEditComponent', () => {
   it('should have player details', fakeAsync(() => {
     createComponent();
     expect(component.player.username).toEqual('Player 2');
-    expect(component.player.points).toEqual(500);
+    expect(component.player.rating).toEqual(500);
   }));
 
   it('should update player details',fakeAsync(() => {
     createComponent();
     component.player.username = 'Player 2 updated';
-    component.player.points = 1500;
+    component.player.rating = 1500;
     let debugElement = fixture.debugElement.query(By.css('form button[type=submit]'));
     debugElement.triggerEventHandler('click', null);
     tick();
     expect(component.player.username).toEqual('Player 2 updated');
-    expect(component.player.points ).toEqual(1500);    
+    expect(component.player.rating ).toEqual(1500);    
   }));
 
   it('should redirect to players list', inject([Router], fakeAsync((router: Router) => {

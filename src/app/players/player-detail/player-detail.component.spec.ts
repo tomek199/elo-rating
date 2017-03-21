@@ -44,7 +44,7 @@ describe('PlayerDetailComponent', () => {
     createComponent('123');
     expect(component.player).toBeTruthy();
     expect(component.player.username).toEqual('Player 1')
-    expect(component.player.points).toEqual(1000);
+    expect(component.player.rating).toEqual(1000);
   }));
 
   it('should has leagueId property', fakeAsync(() => {

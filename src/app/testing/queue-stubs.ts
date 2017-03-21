@@ -12,12 +12,12 @@ export const QUEUE: Queue = {
             playerOne: {
                 id: "0",
                 username: "Test Player 1",
-                points: 0
+                rating: 0
             }, 
             playerTwo: {
                 id: "1",
                 username: "Test Player 2",
-                points: 0
+                rating: 0
             }, 
             playerOneScore: 100,
             playerTwoScore: 200,

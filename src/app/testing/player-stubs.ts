@@ -2,9 +2,9 @@ import { Player } from './../players/shared/player.model';
 import { Injectable } from '@angular/core';
 
 export const PLAYERS: Player[] = [
-  {id: '123', username: 'Player 1', points: 1000},
-  {id: '456', username: 'Player 2', points: 500},
-  {id: '789', username: 'Player 3', points: 1000}
+  {id: '123', username: 'Player 1', rating: 1000},
+  {id: '456', username: 'Player 2', rating: 500},
+  {id: '789', username: 'Player 3', rating: 1000}
 ]
 
 @Injectable()
@@ -20,7 +20,7 @@ export class PlayerServiceStub {
 
   addPlayer(leagueId: string, player: Player): Promise<Player> {
     player.id = '111';
-    player.points = 1000;
+    player.rating = 1000;
     PLAYERS.push(player);
     return Promise.resolve(player);
   }
@@ -33,7 +33,7 @@ export class PlayerServiceStub {
   update(player: Player): Promise<Player> {
     let playerToUpdate = PLAYERS.find(p => p.id == player.id)
     playerToUpdate.username = player.username;
-    playerToUpdate.points = player.points;
+    playerToUpdate.rating = player.rating;
     return Promise.resolve(playerToUpdate);
   }
 }

@@ -8,7 +8,7 @@
     <tr>
       <th>#</th>
       <th>Username</th>
-      <th>Points</th>
+      <th>Rating</th>
       <th class="text-right">Actions</th>
     </tr>
   </thead>
@@ -18,7 +18,7 @@
       <td>
         <a [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.username}}</a>
       </td>
-      <td>{{player.points}}</td>
+      <td>{{player.rating}}</td>
       <td class="text-right">
         <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/leagues', leagueId, 'players', player.id, 'edit']">Edit</a>
         <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(i)">Delete</button>
