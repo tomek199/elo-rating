@@ -1,7 +1,7 @@
 <h1>Matches list</h1>
 <div class="alert alert-info" *ngIf="!hasMatches()">
   Matches list is empty!
-  <a [routerLink]="['leagues', leagueId, 'matches', 'add']" class="alert-link">Add match</a>
+  <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="alert-link">Add match</a>
 </div>
 <table class="table table-bordered" *ngIf="hasMatches()">
   <thead class="thead-default">
