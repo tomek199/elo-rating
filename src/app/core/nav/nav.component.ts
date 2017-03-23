@@ -1,3 +1,5 @@
+import { Queue } from './../../queue/shared/queue.model';
+import { QueueService } from './../../queue/shared/queue.service';
 import { League } from './../../leagues/shared/league.model';
 import { LeagueService } from './../../leagues/shared/league.service';
 import { Component, OnInit} from '@angular/core';
@@ -14,7 +16,10 @@ export class NavComponent implements OnInit {
 
   navbar;
 
-  constructor(private router: Router) { }
+  queue = new Queue();
+
+  constructor(private router: Router, private queueService: QueueService) { 
+  }
 
   ngOnInit() {
     this.router.events.filter(event => event instanceof NavigationEnd)
@@ -22,13 +27,14 @@ export class NavComponent implements OnInit {
         let league_id = this.getLeagueId(event.urlAfterRedirects);
         if (league_id) {
           this.getStandardNavbar(league_id);
+          this.getQueue(league_id);
         } else {
           this.getGuestNavbar();
         }
       })
   }
 
-  private getLeagueId(url: String): String {
+  private getLeagueId(url: string): string {
     let splitted = url.split('/');
     if (splitted[1] == 'leagues') {
       return splitted[2];
@@ -48,5 +54,10 @@ export class NavComponent implements OnInit {
     this.navbar = [
       {url: '/leagues', title: 'League'}
     ]
+  }
+
+  private getQueue(leagueId: string) {
+    this.queueService.getQueueByLeagueId(leagueId).then(
+      queue => this.queue = queue);
   }
 }

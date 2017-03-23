@@ -7,9 +7,6 @@ import { DebugElement } from '@angular/core';
 
 import { QueueAddComponent } from './../queue-add/queue-add.component';
 import { QueueListComponent } from './queue-list.component';
-import { QueueService } from './../shared/queue.service';
-import { QueueServiceStub } from './../../testing/queue-stubs';
-
 
 describe('QueueComponent', () => {
   let component: QueueListComponent;
@@ -19,14 +16,7 @@ describe('QueueComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         QueueListComponent,
-        QueueAddComponent
-      ],
-      imports: [
-        HttpModule
-      ],
-      providers: [
-        { provide: QueueService, useClass: QueueServiceStub }
-      ]
+        QueueAddComponent ]
     })
     .compileComponents();
   }));

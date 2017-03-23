@@ -1,27 +1,23 @@
 import { QueueService } from './../shared/queue.service';
 import { Queue } from './../shared/queue.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-queue-list',
   templateUrl: './queue-list.component.html',
-  styleUrls: ['./queue-list.component.css'],
-  providers: [QueueService]
+  styleUrls: ['./queue-list.component.css']
 })
 export class QueueListComponent implements OnInit {
 
-  dailyQueue: Queue;
+  @Input("queue") queue: Queue;
 
-  constructor(private queueService: QueueService) {}
+  constructor() {
+  }
 
   ngOnInit() {
-    this.dailyQueue = new Queue();
-    //this.dailyQueueService.getDailyQueue()
-     // .then(dailyQueue => this.dailyQueue = dailyQueue);
-    this.dailyQueue = this.queueService.mockQueue();
   }
 
   deleteElement(index: number) {
-    this.dailyQueue.matches.splice(index, 1);
+    this.queue.matches.splice(index, 1);
   }
 }

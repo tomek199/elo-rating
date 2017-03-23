@@ -1,9 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpModule } from '@angular/http';
-
 import { QueueAddComponent } from './queue-add.component';
-import { QueueService } from './../shared/queue.service';
-import { QueueServiceStub } from './../../testing/queue-stubs';
 
 describe('QueueAddComponent', () => {
   let component: QueueAddComponent;
@@ -11,13 +7,7 @@ describe('QueueAddComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QueueAddComponent ],
-      imports: [
-        HttpModule
-      ],
-      providers: [
-       { provide: QueueService, useClass: QueueServiceStub }
-      ]
+      declarations: [ QueueAddComponent ]
     })
     .compileComponents();
   }));

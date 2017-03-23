@@ -12,8 +12,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QueueAddComponent implements OnInit {
 
-  match: Match;
-  dailyQueueComponent: QueueListComponent;
+  //match: Match;
+  queueComponent: QueueListComponent;
 
   constructor() { }
 
@@ -22,14 +22,14 @@ export class QueueAddComponent implements OnInit {
   }
 
   onSubmit() {
-    this.match = new Match();
-    this.match.playerOne = new Player();
-    this.match.playerOne.username = "aaa";
-    this.match.playerTwo = new Player();
-    this.match.playerTwo.username = "bbb";
+  //   this.match = new Match();
+  //   this.match.playerOne = new Player();
+  //   this.match.playerOne.username = "aaa";
+  //   this.match.playerTwo = new Player();
+  //   this.match.playerTwo.username = "bbb";
 
-    this.match.date = new Date();
+  //   this.match.date = new Date();
 
-    this.dailyQueueComponent.dailyQueue.matches.push(this.match);
+  //   this.queueComponent.queue.matches.push(this.match);
   }
 }

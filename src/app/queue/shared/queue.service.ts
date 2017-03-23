@@ -8,17 +8,16 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class QueueService {
 
-    private url = environment.serverUrl + "/queue";
+    private url = environment.serverUrl;
     private headers = new Headers({'Content-Type': 'application/json'});
 
-    dailyQueue: Queue;
+    queue: Queue;
 
     constructor(private http: Http) {
-        this.dailyQueue = this.mockQueue();
     }
 
-    getDailyQueue(): Promise<Queue> {
-        let url = this.url + '/name/dailyQueue';
+    getQueueByLeagueId(id: string): Promise<Queue> {
+        let url = this.url + "/leagues/" + id + "/queue"
         return this.http.get(url)
             .toPromise()
             .then(response => response.json() as Queue)

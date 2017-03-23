@@ -32,4 +32,8 @@ export class QueueServiceStub {
     getDailyQueue(): Promise<Queue> {
         return Promise.resolve(QUEUE);
     }
+
+    getQueueByLeagueId(id: string): Promise<Queue> {
+        return Promise.resolve(QUEUE);
+    }
 }

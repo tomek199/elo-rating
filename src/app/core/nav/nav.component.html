@@ -6,10 +6,10 @@
         <li class="nav-item" *ngFor="let nav of navbar">
           <a class="nav-link" href="{{nav.url}}">{{nav.title}}</a>
         </li>
-        <li class="nav-item dropdown" ngbDropdown [autoClose]="false">
+        <li class="nav-item dropdown" ngbDropdown [autoClose]="false" *ngIf="queue.id != null">
           <a class="nav-link dropdown-toggle" ngbDropdownToggle  role="button">Queue</a>
           <div id="queue-dropdown" class="dropdown-menu">
-            <app-queue-list></app-queue-list>
+            <app-queue-list [queue]="queue"></app-queue-list>
           </div>
         </li>
       </ul>

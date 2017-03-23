@@ -75,12 +75,6 @@ describe('NavComponent', () => {
     let debugElement = fixture.debugElement.query(By.directive(QueueListComponent))
     expect(debugElement).toBeTruthy();
   })
-  
-  it('should have app-queue-add component', () => {
-    let fixture = TestBed.createComponent(NavComponent);
-    let debugElement = fixture.debugElement.query(By.directive(QueueAddComponent))
-    expect(debugElement).toBeTruthy();
-  })
 
   it('should have app-league-search component', () => {
     let fixture = TestBed.createComponent(NavComponent);

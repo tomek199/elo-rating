@@ -59,22 +59,4 @@ describe('AppComponent', () => {
     let debugElement = fixture.debugElement.query(By.directive(RouterOutlet))
     expect(debugElement).toBeTruthy();
   });
-
-  it('should have app-queue-list component', () => {
-    let fixture = TestBed.createComponent(AppComponent);
-    let debugElement = fixture.debugElement.query(By.directive(QueueListComponent))
-    expect(debugElement).toBeTruthy();
-  })
-
-  it('should have app-queue-add component', () => {
-    let fixture = TestBed.createComponent(AppComponent);
-    let debugElement = fixture.debugElement.query(By.directive(QueueAddComponent))
-    expect(debugElement).toBeTruthy();
-  })
-
-  it('should have app-league-search component', () => {
-    let fixture = TestBed.createComponent(AppComponent);
-    let debugElement = fixture.debugElement.query(By.directive(LeagueSearchComponent))
-    expect(debugElement).toBeTruthy();
-  })
 });
