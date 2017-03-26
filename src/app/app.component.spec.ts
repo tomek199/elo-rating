@@ -1,3 +1,5 @@
+import { QueueServiceStub } from './testing/queue-stubs';
+import { QueueService } from './queue/shared/queue.service';
 import { LeagueServiceStub } from './testing/league-stubs';
 import { LeagueService } from './leagues/shared/league.service';
 import { FormsModule } from '@angular/forms';
@@ -30,7 +32,8 @@ describe('AppComponent', () => {
         NgbModule.forRoot()
       ],
       providers: [
-        { provide: LeagueService, useClass: LeagueServiceStub }
+          { provide: LeagueService, useClass: LeagueServiceStub },
+          { provide: QueueService, useClass: QueueServiceStub }
       ]
     });
     TestBed.compileComponents();

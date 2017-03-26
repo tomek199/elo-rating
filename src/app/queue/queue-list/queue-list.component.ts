@@ -9,7 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class QueueListComponent implements OnInit {
 
-  @Input("queue") queue: Queue;
+  @Input("queue") queue: Queue = new Queue();
 
   constructor() {
   }
