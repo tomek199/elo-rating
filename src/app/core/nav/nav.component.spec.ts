@@ -49,38 +49,35 @@ describe('NavComponent', () => {
   function createComponent(leagueId : string) {
     fixture = TestBed.createComponent(NavComponent);
     component = fixture.componentInstance;
-    if (leagueId != "") {
-      activatedRoute.testParams = { league_id: leagueId }
-      queueService = fixture.debugElement.injector.get(QueueService);
-      fixture.detectChanges();
-      tick();
-    }
+    activatedRoute.testParams = { league_id: leagueId }
+    queueService = fixture.debugElement.injector.get(QueueService);
+    fixture.detectChanges();
   }
 
   it ('should create', () => {
-    createComponent("");
+    createComponent('123');
     expect(component).toBeTruthy();
   });
 
   it ('should have title ', () => {
-    createComponent("");
+    createComponent('123');
     expect(component.title).toEqual('EloRating');
   });
 
   it ('should render title in navbar header', () => {
-    createComponent("");
+    createComponent('123');
     let debugElement = fixture.debugElement.query(By.css('nav div.container a.navbar-brand'));
     expect(debugElement.nativeElement.textContent).toEqual('EloRating');
   });
 
-  it ('should render navbar for user which selected league', fakeAsync(() => {
+  it ('should render navbar for user which selected league', () => {
     createComponent('123');
     let debugElement = fixture.debugElement.queryAll(By.css('nav ul.navbar-nav li a'));
     expect(debugElement[0].nativeElement.textContent).toEqual('Dashboard');
     expect(debugElement[1].nativeElement.textContent).toEqual('Matches');    
     expect(debugElement[2].nativeElement.textContent).toEqual('Players');
     //expect(debugElement[3].nativeElement.textContent).toEqual('Queue');
-  }));
+  });
 
   // it('should have app-queue-list component', fakeAsync(() => {
   //   createComponent('123');
@@ -90,7 +87,8 @@ describe('NavComponent', () => {
   // }));
 
   it('should have app-league-search component', () => {
-    let fixture = TestBed.createComponent(NavComponent);
+    // let fixture = TestBed.createComponent(NavComponent);
+    createComponent('123');
     let debugElement = fixture.debugElement.query(By.directive(LeagueSearchComponent))
     expect(debugElement).toBeTruthy();
   })
