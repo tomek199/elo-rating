@@ -44,9 +44,10 @@ describe('PlayerListComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should has players list', fakeAsync(() => {
+  it('should has active players list', fakeAsync(() => {
     createComponent();
-    expect(component.players.length).toBeGreaterThan(0);
+    let playersCount = component.activePlayers.length + component.inactivePlayers.length;
+    expect(playersCount).toBeGreaterThan(0);
   }));
 
   it('should present players in table', fakeAsync(() => {
@@ -58,7 +59,8 @@ describe('PlayerListComponent', () => {
 
   it('should display alert if players list is empty', fakeAsync(() => {
     createComponent();
-    component.players = [];
+    component.activePlayers = [];
+    component.inactivePlayers = [];
     fixture.detectChanges();
     let debugElement = fixture.debugElement.query(By.css('div.alert.alert-info'));
     expect(debugElement.nativeElement).toBeTruthy();
@@ -67,10 +69,12 @@ describe('PlayerListComponent', () => {
   it('should delete player from list', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
-    let playerCount = component.players.length;
+    let playersCount = component.activePlayers.length + component.inactivePlayers.length;    
     let debugElement = fixture.debugElement.queryAll(By.css('table tbody tr td button'));
     debugElement[0].triggerEventHandler('click', null);
     component.delete(0); // Called manually because of comment in bootstrap-stubs
-    expect(component.players.length).toEqual(playerCount - 1);
+    tick();
+    let playersCountAfterDelete = component.activePlayers.length + component.inactivePlayers.length;        
+    expect(playersCountAfterDelete).toEqual(playersCount - 1);
   }))
 });

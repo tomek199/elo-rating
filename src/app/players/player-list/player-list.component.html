@@ -6,19 +6,30 @@
 <table class="table" *ngIf="hasPlayers()">
   <thead class="thead-default">
     <tr>
-      <th>#</th>
       <th>Username</th>
       <th>Rating</th>
       <th class="text-right">Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let player of players; let i=index">
-      <td>{{i + 1}}</td>
+    <tr *ngFor="let player of activePlayers; let i=index">
       <td>
         <a [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.username}}</a>
       </td>
       <td>{{player.rating}}</td>
+      <td class="text-right">
+        <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/leagues', leagueId, 'players', player.id, 'edit']">Edit</a>
+      </td>
+    </tr>
+    <tr *ngFor="let player of inactivePlayers; let i=index" class="table-warning">
+      <td>
+        <a [routerLink]="['/leagues', leagueId, 'players', player.id]">
+          <del class="font-italic">{{player.username}}</del>
+        </a>
+      </td>
+      <td>
+        <del class="font-italic">{{player.rating}}</del>
+      </td>
       <td class="text-right">
         <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/leagues', leagueId, 'players', player.id, 'edit']">Edit</a>
         <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(i)">Delete</button>

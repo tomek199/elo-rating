@@ -12,7 +12,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlayerListComponent implements OnInit {
   leagueId: string;
-  players: Player[];
+  activePlayers: Player[];
+  inactivePlayers: Player[];
 
   constructor(
     private playerService: PlayerService,
@@ -24,17 +25,25 @@ export class PlayerListComponent implements OnInit {
     this.route.params.map(p => p['league_id'])
       .forEach(league_id => {
         this.leagueId = league_id;
-        this.playerService.getPlayers(league_id)
-          .then(players => this.players = players);
+        this.getPlayers();
+      });
+  }
+
+  getPlayers() {
+    this.playerService.getPlayers(this.leagueId)
+      .then(players => {
+        this.activePlayers = players.filter(p => p.active == true);
+        this.inactivePlayers = players.filter(p => p.active == false);
       });
   }
 
   hasPlayers(): boolean {
-    return (this.players != undefined && this.players.length > 0);
+    return (this.activePlayers != undefined && this.activePlayers.length > 0)
+      || (this.inactivePlayers != undefined && this.inactivePlayers.length > 0);
   }
 
   openDeleteModal(index: number): void {
-    let player = this.players[index];
+    let player = this.activePlayers[index];
     let modal = this.modalService.open(ConfirmModalComponent);
     modal.componentInstance.text = `Are you sure you want to delete player ${player.username}?`;
     modal.result.then((result) => {
@@ -45,11 +54,11 @@ export class PlayerListComponent implements OnInit {
   }
 
   delete(index: number): void {
-    let id = this.players[index].id;
+    let id = this.activePlayers[index].id;
     this.playerService.delete(id)
       .then(result => {
         if (result) {
-          this.players.splice(index, 1)
+          this.getPlayers();
         }
       });    
   }
