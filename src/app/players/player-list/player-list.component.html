@@ -19,6 +19,7 @@
       <td>{{player.rating}}</td>
       <td class="text-right">
         <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/leagues', leagueId, 'players', player.id, 'edit']">Edit</a>
+        <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDisableModal(i)">Disable</button>
       </td>
     </tr>
     <tr *ngFor="let player of inactivePlayers; let i=index" class="table-warning">

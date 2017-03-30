@@ -43,7 +43,7 @@ export class PlayerListComponent implements OnInit {
   }
 
   openDeleteModal(index: number): void {
-    let player = this.activePlayers[index];
+    let player = this.inactivePlayers[index];
     let modal = this.modalService.open(ConfirmModalComponent);
     modal.componentInstance.text = `Are you sure you want to delete player ${player.username}?`;
     modal.result.then((result) => {
@@ -54,12 +54,34 @@ export class PlayerListComponent implements OnInit {
   }
 
   delete(index: number): void {
-    let id = this.activePlayers[index].id;
+    let id = this.inactivePlayers[index].id;
     this.playerService.delete(id)
       .then(result => {
         if (result) {
           this.getPlayers();
         }
       });    
+  }
+
+  openDisableModal(index: number): void {
+    let player = this.activePlayers[index];
+    let modal = this.modalService.open(ConfirmModalComponent);
+    modal.componentInstance.text = `Are you sure you want to disable player ${player.username}`;
+    modal.result.then((result) => {
+      if (result) {
+        this.disable(index);
+      }
+    })
+  }
+
+  disable(index: number): void {
+    let player = this.activePlayers[index];
+    player.active = false;
+    this.playerService.update(player)
+      .then(result => {
+        if (result) {
+          this.getPlayers();
+        }
+      })
   }
 }

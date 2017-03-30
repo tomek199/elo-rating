@@ -66,6 +66,17 @@ describe('PlayerListComponent', () => {
     expect(debugElement.nativeElement).toBeTruthy();
   }));
 
+  it('should disable player', fakeAsync(() => {
+    createComponent();
+    fixture.detectChanges();
+    let activePlayersCount = component.activePlayers.length;
+    let inactivePlayersCount = component.inactivePlayers.length;
+    component.disable(0);
+    tick();
+    expect(component.activePlayers.length).toEqual(activePlayersCount - 1);
+    expect(component.inactivePlayers.length).toEqual(inactivePlayersCount + 1);
+  }));
+
   it('should delete player from list', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
