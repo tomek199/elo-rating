@@ -21,7 +21,15 @@
         </span>
       </td>
       <td [ngClass]="{'table-success': isWinner(match.playerOneScore)}">
-        {{match.playerOne.username}}
+        <span *ngIf="!match.playerOne">
+          <em class="text-warning">deleted player</em>
+        </span>
+        <span *ngIf="match.playerOne?.active == false">
+          <del class="text-muted">{{match.playerOne.username}}</del>
+        </span>
+        <span *ngIf="match.playerOne?.active == true">
+          {{match.playerOne.username}}
+        </span>
       </td>
       <td>
         <span class="badge badge-default">{{match.playerOneScore}}</span>
@@ -29,7 +37,15 @@
         <span class="badge badge-default">{{match.playerTwoScore}}</span>        
       </td>
       <td [ngClass]="{'table-success': isWinner(match.playerTwoScore)}">      
-        {{match.playerTwo.username}}
+        <span *ngIf="!match.playerTwo">
+          <em class="text-warning">deleted player</em>
+        </span>
+        <span *ngIf="match.playerTwo?.active == false">
+          <del class="text-muted">{{match.playerTwo.username}}</del>
+        </span>
+        <span *ngIf="match.playerTwo?.active == true">
+          {{match.playerTwo.username}}
+        </span>
       </td>
       <td class="text-right"></td>
     </tr>
