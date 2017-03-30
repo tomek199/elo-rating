@@ -22,7 +22,7 @@ describe('NavComponent', () => {
   let routerStub;
   let activatedRoute: ActivatedRouteStub;
   let queueService: QueueService;
-
+  
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
@@ -46,49 +46,55 @@ describe('NavComponent', () => {
     .compileComponents();
   }));
 
-  function createComponent(leagueId : string) {
+  function createComponent(leagueId? : string) {
     fixture = TestBed.createComponent(NavComponent);
     component = fixture.componentInstance;
-    activatedRoute.testParams = { league_id: leagueId }
-    queueService = fixture.debugElement.injector.get(QueueService);
     fixture.detectChanges();
+    if (leagueId != null) {
+      activatedRoute.testParams = { league_id: leagueId }
+      queueService = fixture.debugElement.injector.get(QueueService);
+      fixture.detectChanges();
+      tick();
+    }
   }
 
   it ('should create', () => {
-    createComponent('123');
+    createComponent();
     expect(component).toBeTruthy();
   });
 
   it ('should have title ', () => {
-    createComponent('123');
+    createComponent();
     expect(component.title).toEqual('EloRating');
   });
 
   it ('should render title in navbar header', () => {
-    createComponent('123');
+    createComponent();
     let debugElement = fixture.debugElement.query(By.css('nav div.container a.navbar-brand'));
     expect(debugElement.nativeElement.textContent).toEqual('EloRating');
   });
 
-  it ('should render navbar for user which selected league', () => {
+  it ('should render navbar for user which selected league', fakeAsync(() => {
     createComponent('123');
+    component.ngOnInit();
+    fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('nav ul.navbar-nav li a'));
     expect(debugElement[0].nativeElement.textContent).toEqual('Dashboard');
     expect(debugElement[1].nativeElement.textContent).toEqual('Matches');    
     expect(debugElement[2].nativeElement.textContent).toEqual('Players');
-    //expect(debugElement[3].nativeElement.textContent).toEqual('Queue');
-  });
+    expect(debugElement[3].nativeElement.textContent).toEqual('Queue');
+  }));
 
-  // it('should have app-queue-list component', fakeAsync(() => {
-  //   createComponent('123');
-  //   let fixture = TestBed.createComponent(NavComponent);
-  //   let debugElement = fixture.debugElement.query(By.directive(QueueListComponent))
-  //   expect(debugElement).toBeTruthy();
-  // }));
+  it('should have app-queue-list component', fakeAsync(() => {
+     createComponent('123');
+     component.ngOnInit();
+     fixture.detectChanges();
+     let debugElement = fixture.debugElement.query(By.directive(QueueListComponent))
+     expect(debugElement).toBeTruthy();
+  }));
 
   it('should have app-league-search component', () => {
-    // let fixture = TestBed.createComponent(NavComponent);
-    createComponent('123');
+    createComponent();
     let debugElement = fixture.debugElement.query(By.directive(LeagueSearchComponent))
     expect(debugElement).toBeTruthy();
   })
