@@ -37,12 +37,12 @@ export class MatchAddComponent implements OnInit {
 
   getPlayers() {
     this.playerService.getPlayers(this.leagueId)
-      .then(players => this.players = players);
+      .then(players => this.players = players.filter(p => p.active == true));
   }
 
   searchPlayer = (text$: Observable<string>) =>
     text$
-      .debounceTime(200)
+      .debounceTime(100)
       .map(term => term === '' ? []
         : this.players.filter(player => player.username.includes(term)));
   
