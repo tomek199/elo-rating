@@ -15,6 +15,12 @@
       <input type="text" name="rating" [(ngModel)]="player.rating" class="form-control" disabled required>
     </div>
   </div>
+  <div class="form-check">
+    <label class="form-check-label">
+      <input type="checkbox" name="active" [(ngModel)]="player.active" class="form-check-input">
+      Active
+    </label>
+  </div>
   <button type="submit" class="btn btn-success float-right" [disabled]="!playerEdit.form.valid" (click)="save()">Save</button>
   <button type="button" class="btn btn-link float-right" (click)="goToList()">Back to list</button>
 </form>

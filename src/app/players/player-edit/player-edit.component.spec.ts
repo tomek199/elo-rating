@@ -54,12 +54,12 @@ describe('PlayerEditComponent', () => {
   it('should update player details',fakeAsync(() => {
     createComponent();
     component.player.username = 'Player 2 updated';
-    component.player.rating = 1500;
+    component.player.active = false;
     let debugElement = fixture.debugElement.query(By.css('form button[type=submit]'));
     debugElement.triggerEventHandler('click', null);
     tick();
     expect(component.player.username).toEqual('Player 2 updated');
-    expect(component.player.rating ).toEqual(1500);    
+    expect(component.player.active).toEqual(false);
   }));
 
   it('should redirect to players list', inject([Router], fakeAsync((router: Router) => {
