@@ -23,6 +23,7 @@ import { QueueListComponent } from './queue/queue-list/queue-list.component';
 import { QueueAddComponent } from './queue/queue-add/queue-add.component';
 import { LeagueSearchComponent } from './leagues/league-search/league-search.component';
 import { MatchListComponent } from './matches/match-list/match-list.component';
+import { PlayerRankingComponent } from './players/player-ranking/player-ranking.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MatchListComponent } from './matches/match-list/match-list.component';
     QueueListComponent,
     QueueAddComponent,
     LeagueSearchComponent,
-    MatchListComponent
+    MatchListComponent,
+    PlayerRankingComponent
   ],
   imports: [
     BrowserModule,

@@ -4,9 +4,9 @@ import { Injectable } from '@angular/core';
 export const PLAYERS: Player[] = [
   {id: '123', username: 'Player 1', rating: 1000, active: true},
   {id: '456', username: 'Player 2', rating: 500, active: true},
-  {id: '789', username: 'Player 3', rating: 1000, active: true},
-  {id: '987', username: 'Player 4', rating: 1000, active: false},
-  {id: '654', username: 'Player 5', rating: 1000, active: false},
+  {id: '789', username: 'Player 3', rating: 1200, active: true},
+  {id: '987', username: 'Player 4', rating: 2100, active: false},
+  {id: '654', username: 'Player 5', rating: 700, active: false},
   
 ]
 
@@ -19,6 +19,12 @@ export class PlayerServiceStub {
 
   getPlayer(id: string): Promise<Player> {
     return Promise.resolve(PLAYERS.find(player => player.id === id));
+  }
+
+  getRanking(leagueId: string): Promise<Player[]> {
+    return Promise.resolve(PLAYERS
+      .sort((playerOne, playerTwo) => playerTwo.rating - playerOne.rating)
+      .filter(player => player.active == true));
   }
 
   addPlayer(leagueId: string, player: Player): Promise<Player> {

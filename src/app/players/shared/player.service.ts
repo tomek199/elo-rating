@@ -38,6 +38,14 @@ export class PlayerService {
       .catch(this.handleError);
   }
 
+  getRanking(leagueId: string): Promise<Player[]> {
+    let url = `${this.url}/leagues/${leagueId}/players/ranking`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as Player[])
+      .catch(this.handleError);
+  }
+
   delete(id: string): Promise<boolean> {
     let url = `${this.url}/players/${id}`;
     return this.http.delete(url)

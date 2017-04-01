@@ -1,0 +1,27 @@
+<h1>Players ranking</h1>
+<div class="alert alert-info" *ngIf="!hasRankedPlayers()">
+  Active players not found! 
+  <a [routerLink]="['/leagues', leagueId, 'players']" class="alert-link">Manage players</a>
+</div>
+<table class="table" *ngIf="hasRankedPlayers()">
+  <thead class="thead-default">
+    <tr>
+      <th>Position</th>
+      <th>Username</th>
+      <th>Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let player of rankedPlayers; let i=index">
+      <td>
+        {{i + 1}}
+      </td>
+      <td>
+        <a [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.username}}</a>
+      </td>
+      <td>
+        {{player.rating}}
+      </td>
+    </tr>
+  </tbody>
+</table>
