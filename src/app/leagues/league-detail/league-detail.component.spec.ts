@@ -1,3 +1,6 @@
+import { PlayerServiceStub } from './../../testing/player-stubs';
+import { PlayerService } from './../../players/shared/player.service';
+import { PlayerRankingComponent } from './../../players/player-ranking/player-ranking.component';
 /* tslint:disable:no-unused-variable */
 import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -18,11 +21,15 @@ describe('LeagueDetailComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ LeagueDetailComponent ], 
+      declarations: [ 
+        LeagueDetailComponent,
+        PlayerRankingComponent
+      ], 
       imports: [ RouterTestingModule ],
       providers: [
         {provide: LeagueService, useClass: LeagueServiceStub},
-        {provide: ActivatedRoute, useValue: activatedRoute}
+        {provide: ActivatedRoute, useValue: activatedRoute},
+        {provide: PlayerService, useClass: PlayerServiceStub}
       ]
     })
     .compileComponents();
@@ -47,7 +54,7 @@ describe('LeagueDetailComponent', () => {
     expect(component.league.name).toEqual('League name');
   }));
 
-  it('should has empty league variable if tournamet does not exist', fakeAsync(() => {
+  it('should has empty league variable if league does not exist', fakeAsync(() => {
     createComponent('456');
     expect(component.league).toBeFalsy();
   }));
@@ -64,5 +71,12 @@ describe('LeagueDetailComponent', () => {
     fixture.detectChanges();
     let debugElement = fixture.debugElement.query(By.css('div.alert.alert-warning'));
     expect(debugElement.nativeElement).toBeTruthy();
+  }));
+
+  it('should contains player-ranking component', fakeAsync(() => {
+    createComponent('123');
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.query(By.directive(PlayerRankingComponent));
+    expect(debugElement).toBeTruthy();
   }));
 });
