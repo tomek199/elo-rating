@@ -4,7 +4,7 @@ import { PlayerService } from './../../players/shared/player.service';
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 import { QueueAddComponent } from './queue-add.component';
 
-fdescribe('QueueAddComponent', () => {
+describe('QueueAddComponent', () => {
   let component: QueueAddComponent;
   let fixture: ComponentFixture<QueueAddComponent>;
 
