@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { Queue } from './../shared/queue.model';
 import { PlayerService } from './../../players/shared/player.service';
 import { QueueListComponent } from './../queue-list/queue-list.component';
@@ -19,8 +20,16 @@ export class QueueAddComponent implements OnInit {
 
   players = new Array<Player>();
 
-  constructor(
-    private playerService: PlayerService) { }
+  playerOne: Player;
+  playerTwo: Player;
+
+  match: Match;
+
+  constructor(private playerService: PlayerService) {
+    this.playerOne = new Player();
+    this.playerTwo = new Player();
+    this.match = new Match();
+  }
 
   ngOnInit() {
     this.getPlayers(this.leagueId);
@@ -29,9 +38,26 @@ export class QueueAddComponent implements OnInit {
   onSubmit() {
   }
 
+  searchPlayer = (text$: Observable<string>) =>
+    text$
+      .debounceTime(100)
+      .map(term => term === '' ? []
+        : this.players.filter(player => player.username.includes(term)));
+
+  formValid(): boolean {
+    if (this.playerOne.username == '' || this.playerTwo.username == '') {
+      return false;
+    }
+    if (this.playerOne.username == this.playerTwo.username) {
+      return false;
+    }
+
+    return true;
+  }
+
   private getPlayers(leagueId: string) {
     this.playerService.getPlayers(leagueId).then(
-      players => this.players = players
+      players => this.players = players.filter(p => p.active == true)
     );
   }
 

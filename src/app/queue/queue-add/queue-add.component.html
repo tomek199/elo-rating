@@ -1,15 +1,15 @@
 <div>
   <div id="addQueueElementFormToggleContent">
     <div>
-      <form id="addQueueElementQueue">
+      <form #queueMatchAdd="ngForm" id="addQueueElementQueue">
         <div class="form-group">
-          <input type="text" class="form-control" id="queuePlayer1" placeholder="Player 1" required>
+          <input type="text" name="player-one" [(ngModel)]="playerOne" [ngbTypeahead]="searchPlayer" [inputFormatter]="playerFormatter" [resultFormatter]="playerFormatter" class="form-control" id="queuePlayer1" placeholder="Player 1">
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" id="queuePlayer2" placeholder="Player 2" required>
+          <input type="text" name="player-two" [(ngModel)]="playerTwo" [ngbTypeahead]="searchPlayer" [inputFormatter]="playerFormatter" [resultFormatter]="playerFormatter" class="form-control" id="queuePlayer2" placeholder="Player 2" required>
         </div>
         <div class="form-group">
-          <button type="submit" class="btn btn-primary btn-block" (click)="onSubmit()">Add match to queue</button>
+          <button type="submit" class="btn btn-primary btn-block" (click)="onSubmit()" [disabled]="!formValid()">Add match to queue</button>
         </div>
       </form>
     </div>
