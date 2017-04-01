@@ -55,7 +55,7 @@ describe('PlayerDetailComponent', () => {
   it('should display player username in header', fakeAsync(() => {
     createComponent('123');
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.query(By.css('h1 small'));
+    let debugElement = fixture.debugElement.query(By.css('h2 small'));
     expect(debugElement.nativeElement.textContent).toBe('Player 1');
   }));
 });
