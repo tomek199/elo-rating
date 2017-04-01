@@ -22,16 +22,21 @@ export class PlayerEditComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.route.params.map(p => p)
-      .forEach(param => {
-        this.leagueId = param['league_id'];
-        this.getPlayer(param['player_id']);
-      });
+    this.getLeagueId();
+    this.getPlayer();
   }
 
-  getPlayer(playerId: string) {
-    this.playerService.getPlayer(playerId)
-      .then(player => this.player = player);
+  getLeagueId() {
+    this.route.params.map(param => param['league_id'])
+      .forEach(league_id => this.leagueId = league_id);
+  }
+
+  getPlayer() {
+    this.route.params.map(param => param['player_id'])
+      .forEach(playerId => {
+        this.playerService.getPlayer(playerId)
+          .then(player => this.player = player);     
+      });
   }
 
   save() {

@@ -21,10 +21,12 @@ export class PlayerAddComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.route.params.map(p => p['league_id'])
-      .forEach(id => {
-        this.leagueId = id;
-      });
+    this.getLeagueId();
+  }
+
+  getLeagueId() {
+    this.route.params.map(param => param['league_id'])
+      .forEach(league_id => this.leagueId = league_id);
   }
 
   addPlayer() {

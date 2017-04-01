@@ -18,11 +18,13 @@ export class MatchListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.params.map(p => p['league_id'])
-      .forEach(league_id => {
-        this.leagueId = league_id;
-        this.getMatches();
-      });
+    this.getLeagueId();
+    this.getMatches();
+  }
+
+  getLeagueId() {
+    this.route.params.map(param => param['league_id'])
+      .forEach(league_id => this.leagueId = league_id);
   }
 
   getMatches() {

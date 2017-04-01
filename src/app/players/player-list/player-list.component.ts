@@ -22,11 +22,13 @@ export class PlayerListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.params.map(p => p['league_id'])
-      .forEach(league_id => {
-        this.leagueId = league_id;
-        this.getPlayers();
-      });
+    this.getLeagueId();
+    this.getPlayers();
+  }
+
+  getLeagueId() {
+    this.route.params.map(param => param['league_id'])
+      .forEach(league_id => this.leagueId = league_id);
   }
 
   getPlayers() {
