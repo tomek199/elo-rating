@@ -1,8 +1,10 @@
+import { Queue } from './../shared/queue.model';
+import { PlayerService } from './../../players/shared/player.service';
 import { QueueListComponent } from './../queue-list/queue-list.component';
 import { Player } from './../../players/shared/player.model';
 import { Match } from './../../matches/shared/match.model';
 import { QueueService } from './../shared/queue.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-queue-add',
@@ -12,24 +14,28 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QueueAddComponent implements OnInit {
 
-  //match: Match;
-  queueComponent: QueueListComponent;
+  @Input("queue") queue: Queue;
+  @Input("leagueId") leagueId: string;
 
-  constructor() { }
+  players = new Array<Player>();
+
+  constructor(
+    private playerService: PlayerService) { }
 
   ngOnInit() {
-
+    this.getPlayers(this.leagueId);
   }
 
   onSubmit() {
-  //   this.match = new Match();
-  //   this.match.playerOne = new Player();
-  //   this.match.playerOne.username = "aaa";
-  //   this.match.playerTwo = new Player();
-  //   this.match.playerTwo.username = "bbb";
+  }
 
-  //   this.match.date = new Date();
+  private getPlayers(leagueId: string) {
+    this.playerService.getPlayers(leagueId).then(
+      players => this.players = players
+    );
+  }
 
-  //   this.queueComponent.queue.matches.push(this.match);
+  playerFormatter(player: Player): string {
+    return player.username? player.username : '';
   }
 }

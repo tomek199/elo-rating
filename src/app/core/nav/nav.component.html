@@ -9,7 +9,7 @@
         <li class="nav-item dropdown" ngbDropdown [autoClose]="false" *ngIf="queue.id != null">
           <a class="nav-link dropdown-toggle" ngbDropdownToggle  role="button">Queue</a>
           <div id="queue-dropdown" class="dropdown-menu">
-            <app-queue-list [queue]="queue"></app-queue-list>
+            <app-queue-list [queue]="queue" [leagueId]="leagueId"></app-queue-list>
           </div>
         </li>
       </ul>

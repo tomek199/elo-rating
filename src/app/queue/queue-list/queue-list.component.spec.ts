@@ -1,3 +1,8 @@
+import { ActivatedRouteStub } from './../../testing/routing-stubs';
+import { ActivatedRoute } from '@angular/router';
+import { PlayerServiceStub } from './../../testing/player-stubs';
+import { PlayerService } from './../../players/shared/player.service';
+import { QueueServiceStub, QUEUE } from './../../testing/queue-stubs';
 import { HttpModule } from '@angular/http';
 import { AppModule } from './../../app.module';
 /* tslint:disable:no-unused-variable */
@@ -12,11 +17,18 @@ describe('QueueComponent', () => {
   let component: QueueListComponent;
   let fixture: ComponentFixture<QueueListComponent>;
 
+  let playerService: PlayerService;
+  let activatedRoute: ActivatedRoute;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
         QueueListComponent,
-        QueueAddComponent ]
+        QueueAddComponent 
+      ],
+      providers: [
+        { provide: PlayerService, useClass: PlayerServiceStub }
+      ]
     })
     .compileComponents();
   }));
@@ -30,4 +42,12 @@ describe('QueueComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should have queue', () => {
+    component.queue = QUEUE
+    fixture.detectChanges();
+    expect(component).toBeTruthy();
+    let debugElement = fixture.debugElement.query(By.css('div#daily-queue h2'));
+    expect(debugElement.nativeElement.textContent).toEqual('testQueue');
+  })
 });

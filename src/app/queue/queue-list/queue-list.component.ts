@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { QueueService } from './../shared/queue.service';
 import { Queue } from './../shared/queue.model';
 import { Component, OnInit, Input } from '@angular/core';
@@ -10,6 +11,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class QueueListComponent implements OnInit {
 
   @Input("queue") queue: Queue = new Queue();
+  @Input("leagueId") leagueId: string;
 
   constructor() {
   }

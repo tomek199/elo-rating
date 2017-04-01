@@ -1,3 +1,5 @@
+import { PlayerServiceStub } from './../../testing/player-stubs';
+import { PlayerService } from './../../players/shared/player.service';
 import { FormsModule } from '@angular/forms';
 import { LeagueSearchComponent } from './../../leagues/league-search/league-search.component';
 import { LeagueServiceStub } from './../../testing/league-stubs';
@@ -40,7 +42,8 @@ describe('NavComponent', () => {
       providers: [
         { provide: Router, useClass: RouterStub },
         { provide: QueueService, useClass: QueueServiceStub },
-        { provide: LeagueService, useClass: LeagueServiceStub }
+        { provide: LeagueService, useClass: LeagueServiceStub },
+        { provide: PlayerService, useClass: PlayerServiceStub}
       ]
     })
     .compileComponents();
