@@ -31,6 +31,8 @@ export class QueueAddComponent implements OnInit {
   }
 
   onSubmit() {
+    this.queue.matches.push(this.match);
+    this.match = new Match();
   }
 
   searchPlayer = (text$: Observable<string>) =>
