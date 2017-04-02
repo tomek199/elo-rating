@@ -20,14 +20,9 @@ export class QueueAddComponent implements OnInit {
 
   players = new Array<Player>();
 
-  playerOne: Player;
-  playerTwo: Player;
-
   match: Match;
 
   constructor(private playerService: PlayerService) {
-    this.playerOne = new Player();
-    this.playerTwo = new Player();
     this.match = new Match();
   }
 
@@ -45,14 +40,7 @@ export class QueueAddComponent implements OnInit {
         : this.players.filter(player => player.username.includes(term)));
 
   formValid(): boolean {
-    if (this.playerOne.username == '' || this.playerTwo.username == '') {
-      return false;
-    }
-    if (this.playerOne.username == this.playerTwo.username) {
-      return false;
-    }
-
-    return true;
+    return this.match.isValid(false);
   }
 
   private getPlayers(leagueId: string) {

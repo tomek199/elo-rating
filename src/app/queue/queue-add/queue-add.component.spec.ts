@@ -52,13 +52,14 @@ describe('QueueAddComponent', () => {
     playerOne.id = '1';
     playerOne.username = 'PlayerOne';
     let playerTwo = new Player();
-    playerTwo.id = '2';
+    playerTwo.id = '1';
     playerTwo.username = 'PlayerOne';
-    component.playerOne = playerOne;
-    component.playerTwo = playerTwo;
+    component.match.playerOne = playerOne;
+    component.match.playerTwo = playerTwo;
     fixture.detectChanges();
     expect(component.formValid()).toBeFalsy();
-    component.playerTwo.username = 'PlayerTwo';
+    component.match.playerTwo.id = '2';
+    component.match.playerTwo.id = 'PlayerTwo';
     fixture.detectChanges();
     expect(component.formValid()).toBeTruthy();
   }));

@@ -1,3 +1,5 @@
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRouteStub } from './../../testing/routing-stubs';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerServiceStub } from './../../testing/player-stubs';
@@ -26,6 +28,10 @@ describe('QueueComponent', () => {
         QueueListComponent,
         QueueAddComponent 
       ],
+      imports: [ 
+        FormsModule, 
+        NgbModule.forRoot() 
+      ], 
       providers: [
         { provide: PlayerService, useClass: PlayerServiceStub }
       ]
