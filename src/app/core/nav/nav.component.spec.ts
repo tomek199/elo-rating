@@ -14,7 +14,6 @@ import { HttpModule } from '@angular/http';
 
 import { NavComponent } from './nav.component';
 import { QueueListComponent } from './../../queue/queue-list/queue-list.component';
-import { QueueAddComponent } from './../../queue/queue-add/queue-add.component';
 import { QueueService } from './../../queue/shared/queue.service';
 import { QueueServiceStub } from './../../testing/queue-stubs';
 

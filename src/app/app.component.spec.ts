@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { LeagueSearchComponent } from './leagues/league-search/league-search.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpModule } from '@angular/http';
-import { QueueAddComponent } from './queue/queue-add/queue-add.component';
 import { TestBed, async } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
