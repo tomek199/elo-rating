@@ -22,7 +22,6 @@ describe('AppComponent', () => {
         AppComponent,
         NavComponent,
         QueueListComponent,
-        QueueAddComponent,
         LeagueSearchComponent
       ],
       imports: [

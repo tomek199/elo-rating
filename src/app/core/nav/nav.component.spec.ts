@@ -31,7 +31,6 @@ describe('NavComponent', () => {
       declarations: [ 
         NavComponent,
         QueueListComponent,
-        QueueAddComponent,
         LeagueSearchComponent
       ], 
       imports: [

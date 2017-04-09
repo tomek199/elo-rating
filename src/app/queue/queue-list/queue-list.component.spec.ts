@@ -14,14 +14,11 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { QueueAddComponent } from './../queue-add/queue-add.component';
 import { QueueListComponent } from './queue-list.component';
 
-describe('QueueComponent', () => {
+fdescribe('QueueComponent', () => {
   let component: QueueListComponent;
   let fixture: ComponentFixture<QueueListComponent>;
-  let componentAdd: QueueAddComponent;
-  let fixtureAdd: ComponentFixture<QueueAddComponent>;
 
   let playerService: PlayerService;
   let activatedRoute: ActivatedRoute;
@@ -29,8 +26,7 @@ describe('QueueComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        QueueListComponent,
-        QueueAddComponent 
+        QueueListComponent
       ],
       imports: [ 
         FormsModule, 
@@ -65,9 +61,7 @@ describe('QueueComponent', () => {
     component.queue = QUEUE;
     expect(component.queue.matches.length).toEqual(1);
 
-    fixtureAdd = TestBed.createComponent(QueueAddComponent);
-    componentAdd = fixtureAdd.componentInstance;
-    let formButton = fixtureAdd.debugElement.query(By.css('div form div button'));
+    let formButton = fixture.debugElement.query(By.css('div form div button'));
     expect(formButton.nativeElement.textContent).toEqual('Add match to queue');
 
     let playerOne = PLAYERS[0];
@@ -75,11 +69,13 @@ describe('QueueComponent', () => {
     let match = MATCHES[0];
     match.playerOne = playerOne;
     match.playerTwo = playerTwo;
-    componentAdd.match = match;
-    // TODO: Test adding match to queue
-    // formButton.triggerEventHandler('click', null);
-    // fixture.detectChanges();
-    // tick();
-    // expect(component.queue.matches.length).toEqual(2);
+
+    component.match = match;
+
+    formButton.triggerEventHandler('click', null);
+
+    expect(component.queue.matches.length).toEqual(2);
+    expect(component.queue.matches[1].playerOne.username).toEqual(playerOne.username);
+    expect(component.queue.matches[1].playerTwo.username).toEqual(playerTwo.username);
   }));
 });

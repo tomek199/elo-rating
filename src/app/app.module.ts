@@ -20,7 +20,6 @@ import { PlayerDetailComponent } from './players/player-detail/player-detail.com
 import { PlayerEditComponent } from './players/player-edit/player-edit.component';
 import { MatchAddComponent } from './matches/match-add/match-add.component';
 import { QueueListComponent } from './queue/queue-list/queue-list.component';
-import { QueueAddComponent } from './queue/queue-add/queue-add.component';
 import { LeagueSearchComponent } from './leagues/league-search/league-search.component';
 import { MatchListComponent } from './matches/match-list/match-list.component';
 import { PlayerRankingComponent } from './players/player-ranking/player-ranking.component';
@@ -38,7 +37,6 @@ import { PlayerRankingComponent } from './players/player-ranking/player-ranking.
     PlayerEditComponent,
     MatchAddComponent,
     QueueListComponent,
-    QueueAddComponent,
     LeagueSearchComponent,
     MatchListComponent,
     PlayerRankingComponent
