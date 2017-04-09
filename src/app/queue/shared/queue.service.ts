@@ -17,38 +17,24 @@ export class QueueService {
     }
 
     getQueueByLeagueId(id: string): Promise<Queue> {
-        let url = this.url + "/leagues/" + id + "/queue"
+        let url = `${this.url}/leagues/${id}/queue`;
         return this.http.get(url)
             .toPromise()
             .then(response => response.json() as Queue)
             .catch(this.handleError);
     }
 
+    addMatchToQueue(match: Match, queueId: string): Promise<Queue> {
+        let url = `${this.url}/queue/${queueId}/addMatch`;
+        return this.http.post(url, JSON.stringify(match), {headers: this.headers})
+            .toPromise()
+            .then(queue => queue.json() as Queue)
+            .catch(this.handleError);
+    }
+
     private handleError(error: any): Promise<any> {
         console.error('An error occured', error);
         return Promise.reject(error.message || error);
-    }
-
-    mockQueue(): Queue {
-        let queue: Queue = new Queue();
-        queue.id = "0";
-        queue.name = "mockQueue";
-        queue.description = "Mocked Queue";
-
-        let matches: Match[] = new Array<Match>();
-        let i:number = 0;
-
-        for (i = 0; i < 4; i++) {
-            let match = new Match();
-            match.id = i.toString();
-            match.playerOne = this.generatePlayer(i.toString());
-            match.playerTwo = this.generatePlayer(i.toString() + "0");
-            matches.push(match);
-        }
-
-        queue.matches = matches;
-
-        return queue;
     }
 
     private generatePlayer(id: string): Player {

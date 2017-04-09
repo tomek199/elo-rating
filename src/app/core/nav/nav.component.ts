@@ -16,10 +16,10 @@ export class NavComponent implements OnInit {
 
   navbar;
 
-  queue = new Queue();
   leagueId: string;
 
   constructor(private router: Router, private queueService: QueueService) { 
+    this.ngOnInit();
   }
 
   ngOnInit() {
@@ -28,7 +28,6 @@ export class NavComponent implements OnInit {
         this.leagueId = this.getLeagueId(event.urlAfterRedirects);
         if (this.leagueId) {
           this.getStandardNavbar(this.leagueId);
-          this.getQueue(this.leagueId);
         } else {
           this.getGuestNavbar();
         }
@@ -55,10 +54,5 @@ export class NavComponent implements OnInit {
     this.navbar = [
       {url: '/leagues', title: 'League'}
     ]
-  }
-
-  private getQueue(leagueId: string) {
-    this.queueService.getQueueByLeagueId(leagueId).then(
-      queue => this.queue = queue);
   }
 }

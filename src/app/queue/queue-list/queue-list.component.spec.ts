@@ -1,3 +1,4 @@
+import { QueueService } from './../shared/queue.service';
 import { MATCHES } from './../../testing/match-stubs';
 import { Player } from './../../players/shared/player.model';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -21,6 +22,7 @@ fdescribe('QueueComponent', () => {
   let fixture: ComponentFixture<QueueListComponent>;
 
   let playerService: PlayerService;
+  let queueService: QueueService;
   let activatedRoute: ActivatedRoute;
 
   beforeEach(async(() => {
@@ -29,11 +31,13 @@ fdescribe('QueueComponent', () => {
         QueueListComponent
       ],
       imports: [ 
+        HttpModule,
         FormsModule, 
         NgbModule.forRoot() 
       ], 
       providers: [
-        { provide: PlayerService, useClass: PlayerServiceStub }
+        { provide: PlayerService, useClass: PlayerServiceStub },
+        { provide: QueueService, useClass: QueueServiceStub }
       ]
     })
     .compileComponents();

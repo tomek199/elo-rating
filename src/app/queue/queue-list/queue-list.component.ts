@@ -5,33 +5,42 @@ import { Player } from './../../players/shared/player.model';
 import { ActivatedRoute } from '@angular/router';
 import { QueueService } from './../shared/queue.service';
 import { Queue } from './../shared/queue.model';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChange, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-queue-list',
   templateUrl: './queue-list.component.html',
   styleUrls: ['./queue-list.component.css'],
-  providers: [QueueService]
+  providers: [PlayerService, QueueService]
 })
-export class QueueListComponent implements OnInit {
-
-  @Input("queue") queue: Queue = new Queue();
+export class QueueListComponent implements OnInit, OnChanges {
+  
   @Input("leagueId") leagueId: string;
-
+  
+  queue: Queue;
   players = new Array<Player>();
-
   match: Match;
 
-  constructor(private playerService: PlayerService) {
+  constructor(private playerService: PlayerService, private queueService: QueueService) {
+    this.queue = new Queue();
     this.match = new Match();
   }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add 'implements OnChanges' to the class.
+    this.leagueId = changes["leagueId"].currentValue;
+    //this.getQueue(this.leagueId);
     this.getPlayers(this.leagueId);
   }
 
   onSubmit() {
     this.queue.matches.push(this.match);
+    //this.queueService.addMatchToQueue(this.match, this.leagueId).then(
+    //  queue => this.queue = queue
+    //);
     this.match = new Match();
   }
 
@@ -47,6 +56,12 @@ export class QueueListComponent implements OnInit {
 
   formValid(): boolean {
     return this.match.isValid(false);
+  }
+
+  private getQueue(leagueId: string) {
+    this.queueService.getQueueByLeagueId(leagueId).then(
+      queue => this.queue = queue
+    );
   }
 
   private getPlayers(leagueId: string) {
