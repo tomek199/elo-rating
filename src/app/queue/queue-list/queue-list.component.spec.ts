@@ -17,7 +17,7 @@ import { DebugElement } from '@angular/core';
 
 import { QueueListComponent } from './queue-list.component';
 
-fdescribe('QueueComponent', () => {
+describe('QueueComponent', () => {
   let component: QueueListComponent;
   let fixture: ComponentFixture<QueueListComponent>;
 
