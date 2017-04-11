@@ -19,7 +19,6 @@ export class NavComponent implements OnInit {
   leagueId: string;
 
   constructor(private router: Router, private queueService: QueueService) { 
-    this.ngOnInit();
   }
 
   ngOnInit() {
