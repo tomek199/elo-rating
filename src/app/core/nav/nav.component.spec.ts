@@ -13,7 +13,7 @@ import { RouterStub, ActivatedRouteStub } from '../../testing/routing-stubs';
 import { HttpModule } from '@angular/http';
 
 import { NavComponent } from './nav.component';
-import { QueueListComponent } from './../../queue/queue-list/queue-list.component';
+import { QueueListComponent } from './../../testing/queue-stubs';
 import { QueueService } from './../../queue/shared/queue.service';
 import { QueueServiceStub } from './../../testing/queue-stubs';
 
@@ -22,7 +22,6 @@ describe('NavComponent', () => {
   let fixture: ComponentFixture<NavComponent>;
   let routerStub;
   let activatedRoute: ActivatedRouteStub;
-  let queueService: QueueService;
   
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
@@ -53,7 +52,6 @@ describe('NavComponent', () => {
     fixture.detectChanges();
     if (leagueId != null) {
       activatedRoute.testParams = { league_id: leagueId }
-      queueService = fixture.debugElement.injector.get(QueueService);
       fixture.detectChanges();
       tick();
     }
@@ -77,8 +75,6 @@ describe('NavComponent', () => {
 
   it ('should render navbar for user which selected league', fakeAsync(() => {
     createComponent('123');
-    component.ngOnInit();
-    fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('nav ul.navbar-nav li a'));
     expect(debugElement[0].nativeElement.textContent).toEqual('Dashboard');
     expect(debugElement[1].nativeElement.textContent).toEqual('Matches');    
@@ -88,8 +84,6 @@ describe('NavComponent', () => {
 
   it('should have app-queue-list component', fakeAsync(() => {
      createComponent('123');
-     component.ngOnInit();
-     fixture.detectChanges();
      let debugElement = fixture.debugElement.query(By.directive(QueueListComponent))
      expect(debugElement).toBeTruthy();
   }));
