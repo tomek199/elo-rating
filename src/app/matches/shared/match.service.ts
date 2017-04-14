@@ -22,7 +22,7 @@ export class MatchService {
   }
 
   getPlayerMatches(playerId: string): Promise<Match[]> {
-    let url = `${this.url}/player/${playerId}/matches`;
+    let url = `${this.url}/players/${playerId}/matches`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as Match[]);
