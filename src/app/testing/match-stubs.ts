@@ -14,6 +14,10 @@ export class MatchServiceStub {
     return Promise.resolve(MATCHES);
   }
 
+  getPlayerMatches(playerId: string): Promise<Match[]> {
+    return Promise.resolve(MATCHES);
+  }
+
   getMatch(id: string): Promise<Match> {
     // todo
     return Promise.resolve(new Match());
