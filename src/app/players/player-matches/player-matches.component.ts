@@ -1,3 +1,4 @@
+import { Player } from './../shared/player.model';
 import { MatchService } from './../../matches/shared/match.service';
 import { Match } from './../../matches/shared/match.model';
 import { ActivatedRoute } from '@angular/router';
@@ -36,7 +37,17 @@ export class PlayerMatchesComponent implements OnInit {
     return (this.matches != undefined && this.matches.length > 0);
   }
 
-  isWinner(score: number): boolean {
-    return score == 2;
+  isWinner(player: Player, score: number): boolean {
+    if (player.id == this.playerId) {
+      return score == 2;
+    }
+    return false;
+  }
+
+  isLooser(player: Player, score: number): boolean {
+    if (player.id == this.playerId) {
+      return score != 2;
+    }
+    return false;
   }
 }

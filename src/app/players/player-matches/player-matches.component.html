@@ -18,7 +18,7 @@
           {{match.date | date:"yyyy-MM-dd"}}
         </span>
       </td>
-      <td [ngClass]="{'table-success': isWinner(match.playerOneScore)}">
+      <td [ngClass]="{'table-success': isWinner(match.playerOne, match.playerOneScore), 'table-danger': isLooser(match.playerOne, match.playerOneScore)}">
         <span *ngIf="!match.playerOne">
           <em class="text-warning">deleted player</em>
         </span>
@@ -34,7 +34,7 @@
         :
         <span class="badge badge-default">{{match.playerTwoScore}}</span>        
       </td>
-      <td [ngClass]="{'table-success': isWinner(match.playerTwoScore)}">      
+      <td [ngClass]="{'table-success': isWinner(match.playerTwo, match.playerTwoScore), 'table-danger': isLooser(match.playerTwo, match.playerTwoScore)}">      
         <span *ngIf="!match.playerTwo">
           <em class="text-warning">deleted player</em>
         </span>
