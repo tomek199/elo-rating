@@ -1,3 +1,6 @@
+import { MatchService } from './../../matches/shared/match.service';
+import { Match } from './../../matches/shared/match.model';
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +9,34 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./player-matches.component.css']
 })
 export class PlayerMatchesComponent implements OnInit {
+  playerId: string;
+  matches: Match[];
 
-  constructor() { }
+  constructor(
+    private matchService: MatchService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit() {
+    this.getPlayerId();
+    this.getMatches();
   }
 
+  getPlayerId() {
+    this.route.params.map(param => param['player_id'])
+      .forEach(player_id => this.playerId = player_id);
+  }
+
+  getMatches() {
+    this.matchService.getPlayerMatches(this.playerId)
+      .then(matches => this.matches = matches);
+  }
+
+  hasMatches(): boolean {
+    return (this.matches != undefined && this.matches.length > 0);
+  }
+
+  isWinner(score: number): boolean {
+    return score == 2;
+  }
 }

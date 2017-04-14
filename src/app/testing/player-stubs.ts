@@ -1,5 +1,5 @@
 import { Player } from './../players/shared/player.model';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit, Component } from '@angular/core';
 
 export const PLAYERS: Player[] = [
   {id: '123', username: 'Player 1', rating: 1000, active: true},
@@ -45,4 +45,13 @@ export class PlayerServiceStub {
     playerToUpdate.rating = player.rating;
     return Promise.resolve(playerToUpdate);
   }
+}
+
+@Component({
+  selector: 'app-player-matches',
+  template: ''
+})
+export class PlayerMatchesComponent implements OnInit {
+  constructor() { }
+  ngOnInit() { }
 }

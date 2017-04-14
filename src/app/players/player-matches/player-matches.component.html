@@ -1,3 +1,50 @@
-<p>
-  player-matches works!
-</p>
+<h2>Player matches list</h2>
+<div class="alert alert-info" *ngIf="!hasMatches()">
+  Player didn't play any matches yet!
+</div>
+<table class="table table-bordered" *ngIf="hasMatches()">
+  <thead class="thead-default">
+    <tr>
+      <th>Date</th>
+      <th>First player</th>
+      <th>Score</th>
+      <th>Second player</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let match of matches; let i=index">
+      <td>
+        <span ngbTooltip="{{match.date | date:'HH:mm'}}">
+          {{match.date | date:"yyyy-MM-dd"}}
+        </span>
+      </td>
+      <td [ngClass]="{'table-success': isWinner(match.playerOneScore)}">
+        <span *ngIf="!match.playerOne">
+          <em class="text-warning">deleted player</em>
+        </span>
+        <span *ngIf="match.playerOne?.active == false">
+          <del class="text-muted">{{match.playerOne.username}}</del>
+        </span>
+        <span *ngIf="match.playerOne?.active == true">
+          {{match.playerOne.username}}
+        </span>
+      </td>
+      <td>
+        <span class="badge badge-default">{{match.playerOneScore}}</span>
+        :
+        <span class="badge badge-default">{{match.playerTwoScore}}</span>        
+      </td>
+      <td [ngClass]="{'table-success': isWinner(match.playerTwoScore)}">      
+        <span *ngIf="!match.playerTwo">
+          <em class="text-warning">deleted player</em>
+        </span>
+        <span *ngIf="match.playerTwo?.active == false">
+          <del class="text-muted">{{match.playerTwo.username}}</del>
+        </span>
+        <span *ngIf="match.playerTwo?.active == true">
+          {{match.playerTwo.username}}
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>

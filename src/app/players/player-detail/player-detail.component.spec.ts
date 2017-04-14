@@ -1,3 +1,4 @@
+import { PlayerMatchesComponent } from './../../testing/player-stubs';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -17,8 +18,11 @@ describe('PlayerDetailComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ PlayerDetailComponent ],
-      imports: [ RouterTestingModule, FormsModule ],
+      declarations: [ 
+        PlayerDetailComponent, 
+        PlayerMatchesComponent 
+      ],
+      imports: [ RouterTestingModule, FormsModule],
       providers: [
         {provide: PlayerService, useClass: PlayerServiceStub},
         {provide: ActivatedRoute, useValue: activatedRoute}
