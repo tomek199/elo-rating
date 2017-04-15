@@ -57,7 +57,7 @@ export class QueueListComponent implements OnInit, OnChanges {
         : this.players.filter(player => player.username.includes(term)));
 
   formValid(): boolean {
-    return this.match.isValid(false);
+    return this.match.isPlayersValid();
   }
 
   private getQueue(leagueId: string) {

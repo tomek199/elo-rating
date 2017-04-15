@@ -18,32 +18,28 @@
           {{match.date | date:"yyyy-MM-dd"}}
         </span>
       </td>
-      <td [ngClass]="{'table-success': isWinner(match.playerOne, match.playerOneScore), 'table-danger': isLooser(match.playerOne, match.playerOneScore)}">
+      <td [ngClass]="{'table-success': isWinner(i, match.playerOne), 'table-danger': isLooser(i, match.playerOne)}">
         <span *ngIf="!match.playerOne">
           <em class="text-warning">deleted player</em>
         </span>
         <span *ngIf="match.playerOne?.active == false">
           <del class="text-muted">{{match.playerOne.username}}</del>
         </span>
-        <span *ngIf="match.playerOne?.active == true">
-          {{match.playerOne.username}}
-        </span>
+        <span *ngIf="match.playerOne?.active == true">{{match.playerOne.username}}</span>
       </td>
       <td>
-        <span class="badge badge-default">{{match.playerOneScore}}</span>
+        <span class="badge badge-default">{{getScore(i, match.playerOne)}}</span>
         :
-        <span class="badge badge-default">{{match.playerTwoScore}}</span>        
+        <span class="badge badge-default">{{getScore(i, match.playerTwo)}}</span>        
       </td>
-      <td [ngClass]="{'table-success': isWinner(match.playerTwo, match.playerTwoScore), 'table-danger': isLooser(match.playerTwo, match.playerTwoScore)}">      
+      <td [ngClass]="{'table-success': isWinner(i, match.playerTwo), 'table-danger': isLooser(i, match.playerTwo)}">   
         <span *ngIf="!match.playerTwo">
           <em class="text-warning">deleted player</em>
         </span>
         <span *ngIf="match.playerTwo?.active == false">
           <del class="text-muted">{{match.playerTwo.username}}</del>
         </span>
-        <span *ngIf="match.playerTwo?.active == true">
-          {{match.playerTwo.username}}
-        </span>
+        <span *ngIf="match.playerTwo?.active == true">{{match.playerTwo.username}}</span>
       </td>
     </tr>
   </tbody>

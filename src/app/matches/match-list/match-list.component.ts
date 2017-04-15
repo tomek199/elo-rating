@@ -1,3 +1,4 @@
+import { Player } from './../../players/shared/player.model';
 import { ActivatedRoute } from '@angular/router';
 import { MatchService } from './../shared/match.service';
 import { Match } from './../shared/match.model';
@@ -36,7 +37,29 @@ export class MatchListComponent implements OnInit {
     return (this.matches != undefined && this.matches.length > 0);
   }
 
-  isWinner(score: number): boolean {
-    return score == 2;
+  getScore(index: number, player: Player): number {
+    if (player) {
+      return this.matches[index].scores[player.id];
+    } else {
+      return 0;
+    }
+  }
+
+  isWinner(index: number, player: Player) {
+    if (player) {
+      return this.matches[index].scores[player.id] == 2;
+    } else {
+      return this.checkIfDeletedIsWinner(index);
+    }
+  }
+
+  private checkIfDeletedIsWinner(index: number) {
+    let match = this.matches[index];
+    let player = [match.playerOne, match.playerTwo].find(player => player != undefined);
+    if (player != undefined) {
+      return match.scores[player.id] != 2;
+    } else {
+      return false;
+    }
   }
 }

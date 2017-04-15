@@ -66,4 +66,20 @@ describe('MatchListComponent', () => {
     let debugElement = fixture.debugElement.query(By.css('div.alert.alert-info'));
     expect(debugElement.nativeElement).toBeTruthy();
   }));
+
+  it('should present winner in green background', fakeAsync(() => {
+    createComponent();
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.queryAll(By.css('table tbody tr'));
+    expect(debugElement[0].query(By.css('td.table-success span')).nativeElement.textContent).toEqual('Player 1');
+    expect(debugElement[1].query(By.css('td.table-success span')).nativeElement.textContent).toEqual('Player 2');    
+  }));
+
+  it('should present disabled player in "<del>" tag and deleted in <em> tag', fakeAsync(() => {
+    createComponent();
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.queryAll(By.css('table tbody tr'));
+    expect(debugElement[2].query(By.css('td span del')).nativeElement.textContent).toEqual('Player 3');
+    expect(debugElement[2].query(By.css('td span em')).nativeElement.textContent).toEqual('deleted player');    
+  }));
 });

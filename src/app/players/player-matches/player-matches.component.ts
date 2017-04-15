@@ -37,16 +37,24 @@ export class PlayerMatchesComponent implements OnInit {
     return (this.matches != undefined && this.matches.length > 0);
   }
 
-  isWinner(player: Player, score: number): boolean {
-    if (player.id == this.playerId) {
-      return score == 2;
+  getScore(index: number, player: Player): number {
+    if (player) {
+      return this.matches[index].scores[player.id];
+    } else {
+      return 0;
+    }
+  }
+
+  isWinner(index: number, player: Player): boolean {
+    if (player && player.id == this.playerId) {
+      return this.matches[index].scores[player.id] == 2;
     }
     return false;
   }
 
-  isLooser(player: Player, score: number): boolean {
-    if (player.id == this.playerId) {
-      return score != 2;
+  isLooser(index: number, player: Player): boolean {
+    if (player && player.id == this.playerId) {
+      return this.matches[index].scores[player.id] != 2;
     }
     return false;
   }

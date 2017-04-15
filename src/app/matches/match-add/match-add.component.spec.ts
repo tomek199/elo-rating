@@ -85,8 +85,8 @@ describe('MatchAddComponent', () => {
     const spy = spyOn(router, 'navigate');
     component.match.playerOne = component.players[0];
     component.match.playerTwo = component.players[1];
-    component.match.playerOneScore = 2;
-    component.match.playerTwoScore = 2;
+    component.score = '2-1';
+    component.setMatchScore();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.query(By.css('form button[type=submit]'));
     debugElement.triggerEventHandler('click', null);

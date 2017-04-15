@@ -62,12 +62,12 @@ export class MatchAddComponent implements OnInit {
 
   setMatchScore() {
     let scores = this.score.split('-');
-    this.match.playerOneScore = +scores[0];
-    this.match.playerTwoScore = +scores[1];
+    this.match.scores[this.match.playerOne.id] = +scores[0];
+    this.match.scores[this.match.playerTwo.id] = +scores[1];
   }
 
   formValid(): boolean {
-    return this.match.isValid(true);
+    return this.match.isValid();
   }
 
   create() {

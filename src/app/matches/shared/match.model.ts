@@ -3,25 +3,29 @@ export class Match {
   id: string;
   playerOne: Player;
   playerTwo: Player;
-  playerOneScore: number;
-  playerTwoScore: number;
+  scores: {[id: string] : number;}
+  ratings: {[id: string] : number;}
   date: Date;
 
   constructor() {
     this.playerOne = new Player();
     this.playerTwo = new Player();
+    this.scores = {};
+    this.ratings = {};
   }
 
-  isValid(validateScore: boolean): boolean {
-    let playersValidation = this.playerOne.id
+  isValid(): boolean {
+    return this.isPlayersValid() && this.isScoreValid();
+  }
+
+  isPlayersValid(): boolean {
+    return this.playerOne.id
       && this.playerTwo.id
       && this.playerOne.id != this.playerTwo.id;
-    if (validateScore) {
-      return playersValidation 
-        && this.playerOneScore != undefined
-        && this.playerTwoScore != undefined;
-    } else {
-      return playersValidation;
-    }
+  }
+
+  isScoreValid(): boolean {
+    return this.scores[this.playerOne.id] != undefined
+      && this.scores[this.playerTwo.id] != undefined;
   }
 }
