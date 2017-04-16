@@ -26,7 +26,7 @@ export class QueueService {
 
     addMatchToQueue(match: Match, queueId: string): Promise<Queue> {
         let url = `${this.url}/queue/${queueId}/addMatch`;
-        return this.http.post(url, JSON.stringify(match), {headers: this.headers})
+        return this.http.put(url, JSON.stringify(match), {headers: this.headers})
             .toPromise()
             .then(queue => queue.json() as Queue)
             .catch(this.handleError);

@@ -40,9 +40,9 @@ export class QueueListComponent implements OnInit, OnChanges {
 
   onSubmit() {
     this.queue.matches.push(this.match);
-    //this.queueService.addMatchToQueue(this.match, this.leagueId).then(
-    //  queue => this.queue = queue
-    //);
+    this.queueService.addMatchToQueue(this.match, this.queue.id).then(
+      queue => this.queue = queue
+    );
     this.match = new Match();
   }
 
