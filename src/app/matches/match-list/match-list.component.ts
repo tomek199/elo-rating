@@ -11,7 +11,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MatchListComponent implements OnInit {
   leagueId: string;
-  matches: Match[];
+  playedMatches: Match[];
+  scheduledMatches: Match[];
 
   constructor(
     private matchService: MatchService,
@@ -30,16 +31,31 @@ export class MatchListComponent implements OnInit {
 
   getMatches() {
     this.matchService.getMatches(this.leagueId)
-      .then(matches => this.matches = matches);
+      .then(matches => {
+        this.playedMatches = matches.filter(m => this.isComplete(m.scores));
+        this.scheduledMatches = matches.filter(m => !this.isComplete(m.scores));
+      });
+  }
+
+  isComplete(scores: {[id: string] : number;}): boolean {
+    return Object.keys(scores).length == 2;
   }
 
   hasMatches(): boolean {
-    return (this.matches != undefined && this.matches.length > 0);
+    return this.hasPlayedMatches() || this.hasScheduledMatches();
+  }
+
+  hasPlayedMatches(): boolean {
+    return (this.playedMatches != undefined && this.playedMatches.length > 0);    
+  }
+
+  hasScheduledMatches(): boolean {
+    return (this.scheduledMatches != undefined && this.scheduledMatches.length > 0);    
   }
 
   getScore(index: number, player: Player): number {
     if (player) {
-      return this.matches[index].scores[player.id];
+      return this.playedMatches[index].scores[player.id];
     } else {
       return 0;
     }
@@ -47,14 +63,14 @@ export class MatchListComponent implements OnInit {
 
   isWinner(index: number, player: Player) {
     if (player) {
-      return this.matches[index].scores[player.id] == 2;
+      return this.playedMatches[index].scores[player.id] == 2;
     } else {
       return this.checkIfDeletedIsWinner(index);
     }
   }
 
   private checkIfDeletedIsWinner(index: number) {
-    let match = this.matches[index];
+    let match = this.playedMatches[index];
     let player = [match.playerOne, match.playerTwo].find(player => player != undefined);
     if (player != undefined) {
       return match.scores[player.id] != 2;

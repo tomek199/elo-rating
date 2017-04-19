@@ -45,13 +45,19 @@ describe('MatchListComponent', () => {
     expect(component.leagueId).toEqual('123');
   }));
 
-  it('should have matches list', fakeAsync(() => {
+  it('should have played matches list', fakeAsync(() => {
     createComponent();
-    expect(component.matches.length).toBeGreaterThan(0);
-    expect(component.hasMatches()).toBeTruthy();
+    expect(component.playedMatches.length).toBeGreaterThan(0);
+    expect(component.hasPlayedMatches()).toBeTruthy();
   }));
 
-  it('should display matches in table', fakeAsync(() => {
+  it('should have scheduled matches list', fakeAsync(() => {
+    createComponent();
+    expect(component.scheduledMatches.length).toBeGreaterThan(0);
+    expect(component.hasScheduledMatches()).toBeTruthy();
+  }));
+
+  it('should display played matches in table', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('table tbody tr'));
@@ -60,7 +66,8 @@ describe('MatchListComponent', () => {
 
   it('should display alert if matches list is empty', fakeAsync(() => {
     createComponent();
-    component.matches = [];
+    component.playedMatches = [];
+    component.scheduledMatches = [];
     fixture.detectChanges();
     expect(component.hasMatches()).toBeFalsy();
     let debugElement = fixture.debugElement.query(By.css('div.alert.alert-info'));
