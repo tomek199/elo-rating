@@ -60,7 +60,7 @@ describe('MatchListComponent', () => {
   it('should display played matches in table', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.queryAll(By.css('table tbody tr'));
+    let debugElement = fixture.debugElement.queryAll(By.css('table#playedMatches tbody tr'));
     expect(debugElement.length).toBeGreaterThan(0);
   }));
 
@@ -74,19 +74,26 @@ describe('MatchListComponent', () => {
     expect(debugElement.nativeElement).toBeTruthy();
   }));
 
-  it('should present winner in green background', fakeAsync(() => {
+  it('should present winner on green background in played matches table', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.queryAll(By.css('table tbody tr'));
+    let debugElement = fixture.debugElement.queryAll(By.css('table#playedMatches tbody tr'));
     expect(debugElement[0].query(By.css('td.table-success span')).nativeElement.textContent).toEqual('Player 1');
     expect(debugElement[1].query(By.css('td.table-success span')).nativeElement.textContent).toEqual('Player 2');    
   }));
 
-  it('should present disabled player in "<del>" tag and deleted in <em> tag', fakeAsync(() => {
+  it('should present disabled player in "<del>" tag and deleted in <em> tag in played matches table', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.queryAll(By.css('table tbody tr'));
+    let debugElement = fixture.debugElement.queryAll(By.css('table#playedMatches tbody tr'));
     expect(debugElement[2].query(By.css('td span del')).nativeElement.textContent).toEqual('Player 3');
     expect(debugElement[2].query(By.css('td span em')).nativeElement.textContent).toEqual('deleted player');    
+  }));
+
+  it('should display scheduled matches in table', fakeAsync(() => {
+    createComponent();
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.queryAll(By.css('table#scheduledMatches tbody tr'));
+    expect(debugElement.length).toBeGreaterThan(0);
   }));
 });

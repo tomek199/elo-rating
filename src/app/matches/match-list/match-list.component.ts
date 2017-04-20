@@ -38,11 +38,11 @@ export class MatchListComponent implements OnInit {
   }
 
   isComplete(scores: {[id: string] : number;}): boolean {
-    return Object.keys(scores).length == 2;
+    return Object.keys(scores).length > 0;
   }
 
   hasMatches(): boolean {
-    return this.hasPlayedMatches() || this.hasScheduledMatches();
+    return (this.hasPlayedMatches() || this.hasScheduledMatches());
   }
 
   hasPlayedMatches(): boolean {

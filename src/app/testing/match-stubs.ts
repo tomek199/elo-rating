@@ -77,8 +77,8 @@ match4.playerOne = playerOne;
 match4.playerTwo = playerTwo;
 
 let match5 = new Match();
-match5.playerOne = playerOne;
-match5.playerTwo = playerThree;
+match5.playerOne = playerThree;
+match5.playerTwo = playerOne;
 
 export const MATCHES: Match[] = [
   match1, match2, match3, match4, match5  
