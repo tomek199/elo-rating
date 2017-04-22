@@ -4,6 +4,9 @@ import { League } from './../shared/league.model';
 import { LeagueService } from './../shared/league.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { environment } from '../../../environments/environment';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-league-search',
@@ -11,46 +14,34 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./league-search.component.css']
 })
 export class LeagueSearchComponent implements OnInit {
+  league: League;
+  leagues: Observable<League[]>;
 
-  url: string[];
-  
-  leagueToSearch: League;
-  leagueName: string;
-
-  leagues: League[];
-
-  constructor(private leagueService: LeagueService, private router: Router) { }
+  constructor(
+    private leagueService: LeagueService, 
+    private router: Router) { }
 
   ngOnInit() {
-    this.leagueToSearch = new League();
-    this.leagueService.getAllLeagues().then(response => this.leagues = response);
+    this.league = new League();
   }
 
   goToLeague() {
-    let league = this.leagues.find(x => x.name == this.leagueToSearch.name);
-    this.setLeagueUrl(league);
-    this.router.navigate(this.url);
+    let url = ["/leagues", this.league.id];
+    this.router.navigate(url);
+    this.league = new League();
   }
 
   searchLeague = (text$: Observable<string>) => 
     text$
-      .debounceTime(200)
-      .map(term => term === '' ? []
-        : this.leagues.filter(league => league.name.includes(term)));
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .switchMap(term => this.leagueService.findByName(term));
 
   leagueFormatter(league: League) : string {
     return league.name ? league.name : '';
   }
 
-  setLeagueUrl(league: League) : void {
-    if (league != null) {
-      this.url = ["/leagues", league.id];
-    } else {
-      this.url = ["/leagues"];
-    }
-  }
-
   leagueFound() {
-    return this.leagueToSearch.name != null ? true : false;
+    return this.league.name != null ? true : false;
   }
 }

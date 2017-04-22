@@ -1,7 +1,7 @@
+import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, Response } from '@angular/http';
 import { League } from './league.model';
-import { LEAGUES } from '../../testing/league-stubs';
 import { environment } from '../../../environments/environment';
 import 'rxjs/add/operator/toPromise';
 
@@ -27,6 +27,12 @@ export class LeagueService {
       .toPromise()
       .then(response => response.json() as League[])
       .catch(this.handleError);
+  }
+
+  findByName(name: string): Observable<League[]> {
+    let url = `${this.url}/find-by-name?name=${name}`;
+    return this.http.get(url)
+      .map(response => response.json() as League[]);
   }
 
   create(league: League): Promise<League> {

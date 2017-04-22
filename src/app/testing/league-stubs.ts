@@ -1,8 +1,13 @@
+import { League } from './../leagues/shared/league.model';
+import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
-import { League } from '../leagues/shared/league.model';
+import { Response } from '@angular/http'
+import 'rxjs/add/observable/of';
 
 export const LEAGUES: League[] = [
-  {id: '123', name: 'League name'}
+  {id: '123', name: 'League name'},
+  {id: '222', name: 'League two'},
+  {id: '333', name: 'League three'}
 ]
 
 @Injectable()
@@ -14,6 +19,10 @@ export class LeagueServiceStub {
 
   getAllLeagues(): Promise<League[]> {
     return Promise.resolve(LEAGUES);
+  }
+
+  findByName(name: string): Observable<League[]> {
+    return Observable.of(LEAGUES.filter(league => league.name.includes(name)));
   }
 
   create(league: League) {
