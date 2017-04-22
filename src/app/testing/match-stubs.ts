@@ -70,7 +70,7 @@ match2.scores = {'111': 1, '222': 2};
 let match3 = new Match();
 match3.playerOne = playerThree;
 match3.playerTwo = undefined;
-match3.scores = {'333': 1, '222': 2}; 
+match3.scores = {'333': 1, '': 2}; 
 
 let match4 = new Match();
 match4.playerOne = playerOne;

@@ -38,11 +38,8 @@ export class PlayerMatchesComponent implements OnInit {
   }
 
   getScore(index: number, player: Player): number {
-    if (player) {
-      return this.matches[index].scores[player.id];
-    } else {
-      return 0;
-    }
+    let key = player ? player.id : '';
+    return this.matches[index].scores[key];
   }
 
   isWinner(index: number, player: Player): boolean {

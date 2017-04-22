@@ -54,11 +54,8 @@ export class MatchListComponent implements OnInit {
   }
 
   getScore(index: number, player: Player): number {
-    if (player) {
-      return this.playedMatches[index].scores[player.id];
-    } else {
-      return 0;
-    }
+    let key = player ? player.id : '';
+    return this.playedMatches[index].scores[key];
   }
 
   isWinner(index: number, player: Player) {
