@@ -9,7 +9,7 @@ import { Injectable } from '@angular/core';
 export class QueueService {
 
     private url = environment.serverUrl;
-    private headers = new Headers({'Content-Type': 'application/json'});
+    private headers = new Headers({ 'Content-Type': 'application/json' });
 
     queue: Queue;
 
@@ -26,7 +26,7 @@ export class QueueService {
 
     addMatchToQueue(match: Match, queueId: string): Promise<Queue> {
         let url = `${this.url}/queue/${queueId}/addMatch`;
-        return this.http.put(url, JSON.stringify(match), {headers: this.headers})
+        return this.http.put(url, JSON.stringify(match), { headers: this.headers })
             .toPromise()
             .then(queue => queue.json() as Queue)
             .catch(this.handleError);
@@ -40,7 +40,7 @@ export class QueueService {
     private generatePlayer(id: string): Player {
         let player = new Player();
         player.id = id;
-        player.username = "Player" + id;
+        player.username = 'Player' + id;
         player.rating = 0;
 
         return player;

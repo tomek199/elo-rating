@@ -18,7 +18,7 @@ export class LeagueSearchComponent implements OnInit {
   leagues: Observable<League[]>;
 
   constructor(
-    private leagueService: LeagueService, 
+    private leagueService: LeagueService,
     private router: Router) { }
 
   ngOnInit() {
@@ -26,18 +26,18 @@ export class LeagueSearchComponent implements OnInit {
   }
 
   goToLeague() {
-    let url = ["/leagues", this.league.id];
+    let url = ['/leagues', this.league.id];
     this.router.navigate(url);
     this.league = new League();
   }
 
-  searchLeague = (text$: Observable<string>) => 
+  searchLeague = (text$: Observable<string>) =>
     text$
       .debounceTime(300)
       .distinctUntilChanged()
       .switchMap(term => this.leagueService.findByName(term));
 
-  leagueFormatter(league: League) : string {
+  leagueFormatter(league: League): string {
     return league.name ? league.name : '';
   }
 

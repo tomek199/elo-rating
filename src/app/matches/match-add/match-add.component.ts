@@ -25,11 +25,11 @@ export class MatchAddComponent implements OnInit {
     private matchService: MatchService
   ) {
     this.match = new Match();
-   }
+  }
 
   ngOnInit() {
     this.getLeagueId();
-    this.getPlayers();        
+    this.getPlayers();
   }
 
   getLeagueId() {
@@ -39,7 +39,7 @@ export class MatchAddComponent implements OnInit {
 
   getPlayers() {
     this.playerService.getPlayers(this.leagueId)
-      .then(players => this.players = players.filter(p => p.active == true));
+      .then(players => this.players = players.filter(p => p.active === true));
   }
 
   searchPlayer = (text$: Observable<string>) =>
@@ -47,9 +47,9 @@ export class MatchAddComponent implements OnInit {
       .debounceTime(100)
       .map(term => term === '' ? []
         : this.players.filter(player => player.username.includes(term)));
-  
+
   playerFormatter(player: Player): string {
-    return player.username? player.username : '';
+    return player.username ? player.username : '';
   }
 
   hasMinTwoPlayers(): boolean {
@@ -78,6 +78,6 @@ export class MatchAddComponent implements OnInit {
   }
 
   goToList() {
-    this.router.navigate(['/leagues', this.leagueId, 'matches']);  
+    this.router.navigate(['/leagues', this.leagueId, 'matches']);
   }
 }
