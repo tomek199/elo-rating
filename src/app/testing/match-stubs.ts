@@ -26,7 +26,8 @@ export class MatchServiceStub {
   }
 
   delete(id: string): Promise<boolean> {
-    MATCHES.splice(0, 1);
+    let index = MATCHES.findIndex(match => match.id == id);
+    MATCHES.splice(index, 1);
     return Promise.resolve(true);
   }
 
@@ -80,6 +81,11 @@ let match5 = new Match();
 match5.playerOne = playerThree;
 match5.playerTwo = playerOne;
 
+let match6 = new Match();
+match6.playerOne = undefined;
+match6.playerTwo = undefined;
+match6.scores = {'': 2};
+
 export const MATCHES: Match[] = [
-  match1, match2, match3, match4, match5  
+  match1, match2, match3, match4, match5, match6
 ]

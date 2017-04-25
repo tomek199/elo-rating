@@ -36,6 +36,14 @@ export class MatchService {
       .catch(this.handleError);
   }
 
+  delete(id: string): Promise<boolean> {
+    let url = `${this.url}/matches/${id}`;
+    return this.http.delete(url)
+      .toPromise()
+      .then(response => response.ok)
+      .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);
