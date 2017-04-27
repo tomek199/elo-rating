@@ -2,7 +2,7 @@ import { Player } from './../shared/player.model';
 import { MatchService } from './../../matches/shared/match.service';
 import { Match } from './../../matches/shared/match.model';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-player-matches',
@@ -10,6 +10,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./player-matches.component.css']
 })
 export class PlayerMatchesComponent implements OnInit {
+  leagueId: string;
   playerId: string;
   matches: Match[];
 
@@ -19,8 +20,14 @@ export class PlayerMatchesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getLeagueId();
     this.getPlayerId();
     this.getMatches();
+  }
+
+  getLeagueId() {
+    this.route.params.map(param => param['league_id'])
+      .forEach(league_id => this.leagueId = league_id);
   }
 
   getPlayerId() {

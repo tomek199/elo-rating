@@ -1,3 +1,4 @@
+import { League } from './../../leagues/shared/league.model';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { By } from '@angular/platform-browser';
 import { MatchServiceStub } from './../../testing/match-stubs';
@@ -30,7 +31,7 @@ describe('PlayerMatchesComponent', () => {
   function createComponent() {
     fixture = TestBed.createComponent(PlayerMatchesComponent);
     component = fixture.componentInstance;
-    activatedRoute.testParams = {player_id: '111'}
+    activatedRoute.testParams = {player_id: '111', league_id: '123'}
     fixture.detectChanges();
     tick();
   };
@@ -43,6 +44,11 @@ describe('PlayerMatchesComponent', () => {
   it('should have player id', fakeAsync(() => {
     createComponent();
     expect(component.playerId).toEqual('111');
+  }));
+
+  it('should have league id', fakeAsync(() => {
+    createComponent();
+    expect(component.leagueId).toEqual('123');
   }));
 
   it('should have matches list', fakeAsync(() => {
