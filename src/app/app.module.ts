@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { RoutingModule } from './core/routing/routing.module';
 import { AppComponent } from './app.component';
@@ -48,7 +49,8 @@ import { PlayerMatchesComponent } from './players/player-matches/player-matches.
     FormsModule,
     HttpModule,
     RoutingModule,
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    ChartsModule
   ],
   providers: [
     LeagueService, 
