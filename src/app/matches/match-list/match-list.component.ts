@@ -1,3 +1,5 @@
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmModalComponent } from './../../core/utils/confirm-modal/confirm-modal.component';
 import { Player } from './../../players/shared/player.model';
 import { ActivatedRoute } from '@angular/router';
 import { MatchService } from './../shared/match.service';
@@ -16,7 +18,8 @@ export class MatchListComponent implements OnInit {
 
   constructor(
     private matchService: MatchService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -74,5 +77,31 @@ export class MatchListComponent implements OnInit {
     } else {
       return false;
     }
+  }
+
+  hasBothPlayersDeleted(index: number) {
+    let match = this.playedMatches[index];
+    return !match.playerOne && !match.playerTwo;
+  }
+
+  openDeleteModal(index: number): void {
+    let player = this.playedMatches[index];
+    let modal = this.modalService.open(ConfirmModalComponent);
+    modal.componentInstance.text = `Are you sure you want to delete match?`;
+    modal.result.then((result) => {
+      if (result) {
+        this.delete(index);
+      }
+    })
+  }
+
+  delete(index) {
+    let id = this.playedMatches[index].id;
+    this.matchService.delete(id)
+      .then(result => {
+        if (result) {
+          this.getMatches();
+        }
+      });
   }
 }

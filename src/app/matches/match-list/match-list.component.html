@@ -43,7 +43,9 @@
         </span>
         <span *ngIf="match.playerTwo?.active == true">{{match.playerTwo.username}}</span>
       </td>
-      <td class="text-right"></td>
+      <td class="text-right">
+        <button type="button" class="btn btn-outline-danger btn-sm" *ngIf="hasBothPlayersDeleted(i)" (click)="openDeleteModal(i)">Delete</button>
+      </td>
     </tr>
   </tbody>
 </table>

@@ -90,6 +90,23 @@ describe('MatchListComponent', () => {
     expect(debugElement[2].query(By.css('td span em')).nativeElement.textContent).toEqual('deleted player');    
   }));
 
+  it('should display delete button for matches where both players are deleted', fakeAsync(() => {
+    createComponent();
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.queryAll(By.css('table#playedMatches tbody tr td.text-right button'));
+    expect(debugElement.length).toEqual(1);
+  }));
+
+  it('should delete match where both players are deleted', fakeAsync(() => {
+    createComponent();
+    fixture.detectChanges();
+    let playedMatchesCount = component.playedMatches.length;
+    component.delete(3); // 3 is index of match with both players deleted
+    tick();
+    let playedMatchesCountAfterDelete = component.playedMatches.length;
+    expect(playedMatchesCountAfterDelete).toEqual(playedMatchesCount - 1);
+  }));
+
   it('should display scheduled matches in table', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
