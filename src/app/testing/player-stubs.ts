@@ -1,5 +1,5 @@
 import { Player } from './../players/shared/player.model';
-import { Injectable, OnInit, Component } from '@angular/core';
+import { Injectable, OnInit, Component, Input } from '@angular/core';
 
 export const PLAYERS: Player[] = [
   {id: '123', username: 'Player 1', rating: 1000, active: true},
@@ -52,6 +52,9 @@ export class PlayerServiceStub {
   template: ''
 })
 export class PlayerMatchesComponent implements OnInit {
+  @Input() leagueId: string;
+  @Input() playerId: string;
+  
   constructor() { }
   ngOnInit() { }
 }

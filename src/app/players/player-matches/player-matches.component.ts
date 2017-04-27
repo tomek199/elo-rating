@@ -2,16 +2,16 @@ import { Player } from './../shared/player.model';
 import { MatchService } from './../../matches/shared/match.service';
 import { Match } from './../../matches/shared/match.model';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-player-matches',
   templateUrl: './player-matches.component.html',
   styleUrls: ['./player-matches.component.css']
 })
-export class PlayerMatchesComponent implements OnInit {
-  leagueId: string;
-  playerId: string;
+export class PlayerMatchesComponent implements OnInit, OnChanges {
+  @Input() leagueId: string;
+  @Input() playerId: string;
   matches: Match[];
 
   constructor(
@@ -26,13 +26,22 @@ export class PlayerMatchesComponent implements OnInit {
   }
 
   getLeagueId() {
-    this.route.params.map(param => param['league_id'])
-      .forEach(league_id => this.leagueId = league_id);
+    if (!this.leagueId) {
+      this.route.params.map(param => param['league_id'])
+        .forEach(league_id => this.leagueId = league_id);
+    }
   }
 
   getPlayerId() {
-    this.route.params.map(param => param['player_id'])
-      .forEach(player_id => this.playerId = player_id);
+    if (!this.playerId) {
+      this.route.params.map(param => param['player_id'])
+        .forEach(player_id => this.playerId = player_id);
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.matches = [];
+    this.getMatches();
   }
 
   getMatches() {
