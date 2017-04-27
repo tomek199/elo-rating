@@ -12,7 +12,8 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/cor
 export class PlayerMatchesComponent implements OnInit, OnChanges {
   @Input() leagueId: string;
   @Input() playerId: string;
-  matches: Match[];
+  playedMatches: Match[];
+  scheduledMatches: Match[];
 
   constructor(
     private matchService: MatchService,
@@ -40,22 +41,37 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.matches = [];
+    this.playedMatches = [];
     this.getMatches();
   }
 
   getMatches() {
     this.matchService.getPlayerMatches(this.playerId)
-      .then(matches => this.matches = matches);
+      .then(matches => {
+        this.playedMatches = matches.filter(match => this.isComplete(match.scores));
+        this.scheduledMatches = matches.filter(match => !this.isComplete(match.scores));
+      });
+  }
+
+  isComplete(scores: {[id: string] : number;}): boolean {
+    return Object.keys(scores).length > 0;
   }
 
   hasMatches(): boolean {
-    return (this.matches != undefined && this.matches.length > 0);
+    return this.hasPlayedMatches();
+  }
+
+  hasPlayedMatches(): boolean {
+    return (this.playedMatches != undefined && this.playedMatches.length > 0);    
+  }
+
+  hasScheduledMatches(): boolean {
+    return (this.scheduledMatches != undefined && this.scheduledMatches.length > 0);
   }
 
   getScore(index: number, player: Player): number {
     let key = player ? player.id : '';
-    return this.matches[index].scores[key];
+    return this.playedMatches[index].scores[key];
   }
 
   isCurrent(player: Player): boolean {
@@ -64,14 +80,14 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
 
   isWinner(index: number, player: Player): boolean {
     if (player && player.id == this.playerId) {
-      return this.matches[index].scores[player.id] == 2;
+      return this.playedMatches[index].scores[player.id] == 2;
     }
     return false;
   }
 
   isLooser(index: number, player: Player): boolean {
     if (player && player.id == this.playerId) {
-      return this.matches[index].scores[player.id] != 2;
+      return this.playedMatches[index].scores[player.id] != 2;
     }
     return false;
   }

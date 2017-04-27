@@ -51,22 +51,35 @@ describe('PlayerMatchesComponent', () => {
     expect(component.leagueId).toEqual('123');
   }));
 
-  it('should have matches list', fakeAsync(() => {
+  it('should have played matches list', fakeAsync(() => {
     createComponent();    
-    expect(component.matches.length).toBeGreaterThan(0);
-    expect(component.hasMatches()).toBeTruthy();
+    expect(component.playedMatches.length).toBeGreaterThan(0);
+    expect(component.hasPlayedMatches()).toBeTruthy();
   }));
 
-  it('should display matches in table', fakeAsync(() => {
+  it('should have scheduled matches list', fakeAsync(() => {
+    createComponent();
+    expect(component.scheduledMatches.length).toBeGreaterThan(0);
+    expect(component.hasScheduledMatches()).toBeTruthy();
+  }));
+
+  it('should display played matches in table', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.queryAll(By.css('table tbody tr'));
+    let debugElement = fixture.debugElement.queryAll(By.css('table#playedMatches tbody tr'));
+    expect(debugElement.length).toBeGreaterThan(0);
+  }));
+
+  it('should display scheduled matches in table', fakeAsync(() => {
+    createComponent();
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.queryAll(By.css('table#scheduledMatches tbody tr'));
     expect(debugElement.length).toBeGreaterThan(0);
   }));
 
   it('should display alert if matches list is empty', fakeAsync(() => {
     createComponent();
-    component.matches = [];
+    component.playedMatches = [];
     fixture.detectChanges();
     expect(component.hasMatches()).toBeFalsy();
     let debugElement = fixture.debugElement.query(By.css('div.alert.alert-info'));
@@ -79,5 +92,13 @@ describe('PlayerMatchesComponent', () => {
     let debugElement = fixture.debugElement.queryAll(By.css('table tbody tr'));
     expect(debugElement[0].query(By.css('td.table-success')).nativeElement.textContent).toEqual('Player 1');
     expect(debugElement[1].query(By.css('td.table-danger')).nativeElement.textContent).toEqual('Player 1');    
+  }));
+
+  it('should present current player in blue background', fakeAsync(() => {
+    createComponent();
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.queryAll(By.css('table#scheduledMatches tbody tr'));
+    expect(debugElement[0].query(By.css('td.table-info')).nativeElement.textContent).toEqual('Player 1');
+    expect(debugElement[1].query(By.css('td.table-info')).nativeElement.textContent).toEqual('Player 1');    
   }));
 });
