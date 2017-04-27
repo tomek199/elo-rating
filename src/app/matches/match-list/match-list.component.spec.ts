@@ -78,16 +78,16 @@ describe('MatchListComponent', () => {
     createComponent();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('table#playedMatches tbody tr'));
-    expect(debugElement[0].query(By.css('td.table-success span')).nativeElement.textContent).toEqual('Player 1');
-    expect(debugElement[1].query(By.css('td.table-success span')).nativeElement.textContent).toEqual('Player 2');    
+    expect(debugElement[0].query(By.css('td.table-success a')).nativeElement.textContent).toEqual('Player 1');
+    expect(debugElement[1].query(By.css('td.table-success a')).nativeElement.textContent).toEqual('Player 2');    
   }));
 
   it('should present disabled player in "<del>" tag and deleted in <em> tag in played matches table', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('table#playedMatches tbody tr'));
-    expect(debugElement[2].query(By.css('td span del')).nativeElement.textContent).toEqual('Player 3');
-    expect(debugElement[2].query(By.css('td span em')).nativeElement.textContent).toEqual('deleted player');    
+    expect(debugElement[2].query(By.css('td a del')).nativeElement.textContent).toEqual('Player 3');
+    expect(debugElement[2].query(By.css('td em')).nativeElement.textContent).toEqual('deleted player');    
   }));
 
   it('should display delete button for matches where both players are deleted', fakeAsync(() => {

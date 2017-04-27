@@ -21,13 +21,11 @@
         </span>
       </td>
       <td [ngClass]="{'table-success': isWinner(i, match.playerOne)}">
-        <span *ngIf="!match.playerOne">
-          <em class="text-warning">deleted player</em>
-        </span>
-        <span *ngIf="match.playerOne?.active == false">
+        <em *ngIf="!match.playerOne" class="text-warning">deleted player</em>
+        <a *ngIf="match.playerOne?.active == false" [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">          
           <del class="text-muted">{{match.playerOne.username}}</del>
-        </span>
-        <span *ngIf="match.playerOne?.active == true">{{match.playerOne.username}}</span>
+        </a>            
+        <a *ngIf="match.playerOne?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
       </td>
       <td>
         <span class="badge badge-default">{{getScore(i, match.playerOne)}}</span>
@@ -35,13 +33,11 @@
         <span class="badge badge-default">{{getScore(i, match.playerTwo)}}</span>        
       </td>
       <td [ngClass]="{'table-success': isWinner(i, match.playerTwo)}">      
-        <span *ngIf="!match.playerTwo">
-          <em class="text-warning">deleted player</em>
-        </span>
-        <span *ngIf="match.playerTwo?.active == false">
+        <em *ngIf="!match.playerTwo" class="text-warning">deleted player</em>
+        <a *ngIf="match.playerTwo?.active == false" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">          
           <del class="text-muted">{{match.playerTwo.username}}</del>
-        </span>
-        <span *ngIf="match.playerTwo?.active == true">{{match.playerTwo.username}}</span>
+        </a>            
+        <a *ngIf="match.playerTwo?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
       </td>
       <td class="text-right">
         <button type="button" class="btn btn-outline-danger btn-sm" *ngIf="hasBothPlayersDeleted(i)" (click)="openDeleteModal(i)">Delete</button>
@@ -67,8 +63,12 @@
   <tbody>
     <tr *ngFor="let match of scheduledMatches; let i=index">
       <td>{{match.date | date: "yyyy-MM-dd HH:mm"}}</td>
-      <td>{{match.playerOne.username}}</td>
-      <td>{{match.playerTwo.username}}</td>
+      <td>
+        <a [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
+      </td>
+      <td>
+        <a [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
+      </td>
     </tr>
   </tbody>
 </table>
