@@ -11,7 +11,13 @@ export class MatchServiceStub {
   }
 
   getPlayerMatches(playerId: string): Promise<Match[]> {
-    return Promise.resolve(MATCHES);
+    let matches = MATCHES.filter(match => this.hasPlayer(match, playerId));
+    return Promise.resolve(matches);
+  }
+
+  private hasPlayer(match: Match, id: string) {
+    return (match.playerOne != undefined && match.playerOne.id == id) 
+      || (match.playerTwo != undefined && match.playerTwo.id == id);
   }
 
   getMatch(id: string): Promise<Match> {
@@ -59,29 +65,35 @@ let playerThree = {
 }
 
 let match1 = new Match();
+match1.id = '111';
 match1.playerOne = playerOne;
 match1.playerTwo = playerTwo;
 match1.scores = {'111': 2, '222': 0}; 
 
 let match2 = new Match();
+match2.id = '222';
 match2.playerOne = playerOne;
 match2.playerTwo = playerTwo;
 match2.scores = {'111': 1, '222': 2}; 
 
 let match3 = new Match();
+match3.id = '333';
 match3.playerOne = playerThree;
 match3.playerTwo = undefined;
 match3.scores = {'333': 1, '': 2}; 
 
 let match4 = new Match();
+match4.id = '444';
 match4.playerOne = playerOne;
 match4.playerTwo = playerTwo;
 
 let match5 = new Match();
+match5.id = '555';
 match5.playerOne = playerThree;
 match5.playerTwo = playerOne;
 
 let match6 = new Match();
+match6.id = '666';
 match6.playerOne = undefined;
 match6.playerTwo = undefined;
 match6.scores = {'': 2};
