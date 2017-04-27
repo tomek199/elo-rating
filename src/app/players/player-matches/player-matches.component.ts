@@ -42,6 +42,10 @@ export class PlayerMatchesComponent implements OnInit {
     return this.matches[index].scores[key];
   }
 
+  isCurrent(player: Player): boolean {
+    return player && player.id == this.playerId;
+  }
+
   isWinner(index: number, player: Player): boolean {
     if (player && player.id == this.playerId) {
       return this.matches[index].scores[player.id] == 2;

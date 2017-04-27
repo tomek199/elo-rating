@@ -18,28 +18,26 @@
           {{match.date | date:"yyyy-MM-dd"}}
         </span>
       </td>
-      <td [ngClass]="{'table-success': isWinner(i, match.playerOne), 'table-danger': isLooser(i, match.playerOne)}">
-        <span *ngIf="!match.playerOne">
-          <em class="text-warning">deleted player</em>
-        </span>
-        <span *ngIf="match.playerOne?.active == false">
+      <td *ngIf="isCurrent(match.playerOne)" [ngClass]="{'table-success': isWinner(i, match.playerOne), 'table-danger': isLooser(i, match.playerOne)}">{{match.playerOne.username}}</td>
+      <td *ngIf="!isCurrent(match.playerOne)">
+        <em *ngIf="!match.playerOne" class="text-warning">deleted player</em>
+        <a *ngIf="match.playerOne?.active == false" [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">
           <del class="text-muted">{{match.playerOne.username}}</del>
-        </span>
-        <span *ngIf="match.playerOne?.active == true">{{match.playerOne.username}}</span>
+        </a>
+        <a *ngIf="match.playerOne?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
       </td>
       <td>
         <span class="badge badge-default">{{getScore(i, match.playerOne)}}</span>
         :
         <span class="badge badge-default">{{getScore(i, match.playerTwo)}}</span>        
       </td>
-      <td [ngClass]="{'table-success': isWinner(i, match.playerTwo), 'table-danger': isLooser(i, match.playerTwo)}">   
-        <span *ngIf="!match.playerTwo">
-          <em class="text-warning">deleted player</em>
-        </span>
-        <span *ngIf="match.playerTwo?.active == false">
+      <td *ngIf="isCurrent(match.playerTwo)" [ngClass]="{'table-success': isWinner(i, match.playerTwo), 'table-danger': isLooser(i, match.playerTwo)}">{{match.playerTwo.username}}</td>
+      <td *ngIf="!isCurrent(match.playerTwo)">
+        <em *ngIf="!match.playerTwo" class="text-warning">deleted player</em>
+        <a *ngIf="match.playerTwo?.active == false" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">
           <del class="text-muted">{{match.playerTwo.username}}</del>
-        </span>
-        <span *ngIf="match.playerTwo?.active == true">{{match.playerTwo.username}}</span>
+        </a>
+        <a *ngIf="match.playerTwo?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
       </td>
     </tr>
   </tbody>

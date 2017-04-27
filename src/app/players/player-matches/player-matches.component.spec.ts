@@ -71,7 +71,7 @@ describe('PlayerMatchesComponent', () => {
     createComponent();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('table tbody tr'));
-    expect(debugElement[0].query(By.css('td.table-success span')).nativeElement.textContent).toEqual('Player 1');
-    expect(debugElement[1].query(By.css('td.table-danger span')).nativeElement.textContent).toEqual('Player 1');    
+    expect(debugElement[0].query(By.css('td.table-success')).nativeElement.textContent).toEqual('Player 1');
+    expect(debugElement[1].query(By.css('td.table-danger')).nativeElement.textContent).toEqual('Player 1');    
   }));
 });
