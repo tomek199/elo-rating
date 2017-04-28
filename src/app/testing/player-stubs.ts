@@ -51,7 +51,19 @@ export class PlayerServiceStub {
   selector: 'app-player-matches',
   template: ''
 })
-export class PlayerMatchesComponent implements OnInit {
+export class PlayerMatchesStubComponent implements OnInit {
+  @Input() leagueId: string;
+  @Input() playerId: string;
+  
+  constructor() { }
+  ngOnInit() { }
+}
+
+@Component({
+  selector: 'app-player-statistics',
+  template: ''
+})
+export class PlayerStatisticsStubComponent implements OnInit {
   @Input() leagueId: string;
   @Input() playerId: string;
   

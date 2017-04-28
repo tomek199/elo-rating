@@ -32,4 +32,14 @@ describe('PlayerStatisticsComponent', () => {
     createComponent();
     expect(component).toBeTruthy();
   }));
+
+  it('should have player id', fakeAsync(() => {
+    createComponent();
+    expect(component.playerId).toEqual('111');
+  }));
+
+  it('should have league id', fakeAsync(() => {
+    createComponent();
+    expect(component.leagueId).toEqual('123');
+  }));
 });
