@@ -6,7 +6,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { ChartModule } from 'angular2-highcharts';
 
 import { RoutingModule } from './core/routing/routing.module';
 import { AppComponent } from './app.component';
@@ -26,6 +26,7 @@ import { MatchListComponent } from './matches/match-list/match-list.component';
 import { PlayerRankingComponent } from './players/player-ranking/player-ranking.component';
 import { PlayerMatchesComponent } from './players/player-matches/player-matches.component';
 import { PlayerStatisticsComponent } from './players/player-statistics/player-statistics.component';
+import { HighchartsStatic } from "angular2-highcharts/dist/HighchartsService";
 
 @NgModule({
   declarations: [
@@ -52,16 +53,25 @@ import { PlayerStatisticsComponent } from './players/player-statistics/player-st
     HttpModule,
     RoutingModule,
     NgbModule.forRoot(),
-    ChartsModule
+    ChartModule
   ],
   providers: [
     LeagueService, 
     PlayerService, 
     QueueService,
-    MatchService
+    MatchService, 
+    {
+      provide: HighchartsStatic, 
+      useFactory: highchartsFactory
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [ConfirmModalComponent],
   
 })
 export class AppModule { }
+
+export function highchartsFactory() {
+  const highcharts = require('highcharts');
+  return highcharts;
+}

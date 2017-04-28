@@ -5,14 +5,14 @@ import { ChartDirector } from './../../core/utils/charts/chart-director';
 import { Chart } from './../../core/utils/charts/chart.model';
 import { Match } from './../../matches/shared/match.model';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-player-statistics',
   templateUrl: './player-statistics.component.html',
   styleUrls: ['./player-statistics.component.css']
 })
-export class PlayerStatisticsComponent implements OnInit {
+export class PlayerStatisticsComponent implements OnInit, OnChanges {
   @Input() leagueId: string;
   @Input() playerId: string;
   private matches: Match[];
