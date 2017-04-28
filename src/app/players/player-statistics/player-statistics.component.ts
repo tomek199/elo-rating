@@ -33,8 +33,7 @@ export class PlayerStatisticsComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // todo
-    // console.log(changes['playerId'].firstChange);
+    this.getMatches();
   }
 
   getLeagueId() {

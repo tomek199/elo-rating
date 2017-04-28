@@ -6,24 +6,19 @@ export class RatingHistoryChart extends ChartBuilder {
     super();
   }
 
-  public buildType() {
-    this.chart.type = 'line';
-  }
-  public buildData() { }
-
-  public buildDataSet() {
-    let rates = [];
-    this.matches.forEach(match => {
-      rates.push(match.ratings[this.playerId]);
-    });    
-    this.chart.datasets.push({data: rates, label: 'Rating'});
+  public buildTitle() {
+    this.chart.title = {text: 'Rating history'};
   }
 
-  public buildLabels() {
+  public buildSeries() {
+    let data = [];
     this.matches.forEach(match => {
-      this.chart.labels.push(this.getOpponent(match));
-    })
-  }
+      let opponent = this.getOpponent(match);
+      let rating = match.ratings[this.playerId];
+      data.push([opponent, rating]);
+    });
+    this.chart.series.push({type: 'spline', name: 'Rating', data: data});
+  }  
 
   private getOpponent(match: Match): string {
     if (match.playerOne == undefined || match.playerTwo == undefined) return 'deleted player';

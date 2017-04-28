@@ -10,8 +10,6 @@ export abstract class ChartBuilder {
     return this.chart;
   }
 
-  public abstract buildType();
-  public abstract buildData();
-  public abstract buildDataSet();
-  public abstract buildLabels();
+  public abstract buildTitle();
+  public abstract buildSeries();
 }

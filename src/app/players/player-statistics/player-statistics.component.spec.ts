@@ -1,3 +1,4 @@
+import { ChartComponentStub } from './../../testing/chart-stubs';
 import { MatchServiceStub } from './../../testing/match-stubs';
 import { MatchService } from './../../matches/shared/match.service';
 import { ActivatedRouteStub } from './../../testing/routing-stubs';
@@ -14,7 +15,7 @@ describe('PlayerStatisticsComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ PlayerStatisticsComponent],
+      declarations: [ PlayerStatisticsComponent, ChartComponentStub ],
       providers: [
         {provide: ActivatedRoute, useValue: activatedRoute},
         {provide: MatchService, useClass: MatchServiceStub}
@@ -49,9 +50,8 @@ describe('PlayerStatisticsComponent', () => {
   it('should have rating history chart', fakeAsync(() => {
     createComponent();
     let ratingHistory = component.ratingHistory;
-    // expect(ratingHistory).toBeTruthy();
-    // expect(ratingHistory.type).toEqual('line');
-    // expect(ratingHistory.datasets[0].data.length).toEqual(2);
-    // expect(ratingHistory.labels.length).toEqual(2);
+    expect(ratingHistory).toBeTruthy();
+    expect(ratingHistory.title.text).toEqual('Rating history');
+    expect(ratingHistory.series[0].data.length).toEqual(2);
   }));
 });

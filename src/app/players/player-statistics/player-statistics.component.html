@@ -1,1 +1,4 @@
 <h2>Player statistics</h2>
+<div *ngIf="ratingHistory">
+  <chart [options]="ratingHistory"></chart>
+</div>

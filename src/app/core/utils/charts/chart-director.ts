@@ -9,10 +9,8 @@ export class ChartDirector {
   }
 
   public build(): Chart {
-    this.builder.buildType();
-    this.builder.buildData();
-    this.builder.buildDataSet();
-    this.builder.buildLabels();
+    this.builder.buildTitle();
+    this.builder.buildSeries();
     return this.builder.getChart();
   }
 }
