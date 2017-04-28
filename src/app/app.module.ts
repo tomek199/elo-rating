@@ -25,6 +25,7 @@ import { LeagueSearchComponent } from './leagues/league-search/league-search.com
 import { MatchListComponent } from './matches/match-list/match-list.component';
 import { PlayerRankingComponent } from './players/player-ranking/player-ranking.component';
 import { PlayerMatchesComponent } from './players/player-matches/player-matches.component';
+import { PlayerStatisticsComponent } from './players/player-statistics/player-statistics.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { PlayerMatchesComponent } from './players/player-matches/player-matches.
     LeagueSearchComponent,
     MatchListComponent,
     PlayerRankingComponent,
-    PlayerMatchesComponent
+    PlayerMatchesComponent,
+    PlayerStatisticsComponent
   ],
   imports: [
     BrowserModule,
