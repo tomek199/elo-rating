@@ -1,3 +1,6 @@
-<p>
-  player-statistics works!
-</p>
+<h2>Player statistics</h2>
+<div class="col-md-12" *ngIf="ratingHistory">
+  <div class="d-block">
+    <canvas baseChart [chartType]="ratingHistory.type" [datasets]="ratingHistory.datasets" [labels]="ratingHistory.labels" [options]="ratingHistory.options"></canvas>
+  </div>
+</div>

@@ -68,19 +68,22 @@ let match1 = new Match();
 match1.id = '111';
 match1.playerOne = playerOne;
 match1.playerTwo = playerTwo;
-match1.scores = {'111': 2, '222': 0}; 
+match1.scores = {'111': 2, '222': 0};
+match1.ratings = {'111': 1200, '222': 1500}
 
 let match2 = new Match();
 match2.id = '222';
 match2.playerOne = playerOne;
 match2.playerTwo = playerTwo;
 match2.scores = {'111': 1, '222': 2}; 
+match2.ratings = {'111': 800, '222': 1700}
 
 let match3 = new Match();
 match3.id = '333';
 match3.playerOne = playerThree;
 match3.playerTwo = undefined;
 match3.scores = {'333': 1, '': 2}; 
+match3.ratings = {'': 1200, '333': 1000}
 
 let match4 = new Match();
 match4.id = '444';

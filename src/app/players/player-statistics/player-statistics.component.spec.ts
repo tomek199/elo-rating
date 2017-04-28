@@ -1,3 +1,6 @@
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { MatchServiceStub } from './../../testing/match-stubs';
+import { MatchService } from './../../matches/shared/match.service';
 import { ActivatedRouteStub } from './../../testing/routing-stubs';
 import { ActivatedRoute } from '@angular/router';
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
@@ -12,9 +15,11 @@ describe('PlayerStatisticsComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ PlayerStatisticsComponent ],
+      declarations: [ PlayerStatisticsComponent],
+      imports: [ ChartsModule ],
       providers: [
-        {provide: ActivatedRoute, useValue: activatedRoute}
+        {provide: ActivatedRoute, useValue: activatedRoute},
+        {provide: MatchService, useClass: MatchServiceStub}
       ]
     })
     .compileComponents();
@@ -41,5 +46,14 @@ describe('PlayerStatisticsComponent', () => {
   it('should have league id', fakeAsync(() => {
     createComponent();
     expect(component.leagueId).toEqual('123');
+  }));
+
+  it('should have rating history chart', fakeAsync(() => {
+    createComponent();
+    let ratingHistory = component.ratingHistory;
+    expect(ratingHistory).toBeTruthy();
+    expect(ratingHistory.type).toEqual('line');
+    expect(ratingHistory.datasets[0].data.length).toEqual(2);
+    expect(ratingHistory.labels.length).toEqual(2);
   }));
 });
