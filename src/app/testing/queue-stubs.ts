@@ -9,7 +9,14 @@ export const QUEUE: Queue = {
     matches: [
         new Match()
     ]
-}
+};
+
+export const EMPTY_QUEUE: Queue = {
+    id: '123',
+    name: 'testQueue',
+    description: 'Test Queue',
+    matches: []
+};
 
 @Injectable()
 export class QueueServiceStub {
@@ -24,11 +31,11 @@ export class QueueServiceStub {
 }
 
 @Component({
-  selector: 'app-queue-list',
-  template: ''
+    selector: 'app-queue-list',
+    template: ''
 })
 export class QueueListComponent implements OnInit {
     @Input("leagueId") leagueId: string;
-    
+
     ngOnInit(): void { }
 }

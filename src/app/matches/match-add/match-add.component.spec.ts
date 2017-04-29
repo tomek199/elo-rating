@@ -1,3 +1,5 @@
+import { QueueServiceStub } from './../../testing/queue-stubs';
+import { QueueService } from './../../queue/shared/queue.service';
 import { MatchServiceStub } from './../../testing/match-stubs';
 import { MatchService } from './../shared/match.service';
 import { Player } from './../../players/shared/player.model';
@@ -21,22 +23,26 @@ describe('MatchAddComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ MatchAddComponent ], 
-      imports: [ FormsModule, NgbModule.forRoot(), RouterTestingModule],
+      declarations: [MatchAddComponent],
+      imports: [FormsModule, NgbModule.forRoot(), RouterTestingModule],
       providers: [
-        {provide: PlayerService, useClass: PlayerServiceStub},        
-        {provide: MatchService, useClass: MatchServiceStub},
-        {provide: ActivatedRoute, useValue: activatedRoute},
-        {provide: NgbTypeahead}
+        { provide: PlayerService, useClass: PlayerServiceStub },
+        { provide: MatchService, useClass: MatchServiceStub },
+        { provide: ActivatedRoute, useValue: activatedRoute },
+        { provide: QueueService, useClass: QueueServiceStub },
+        { provide: NgbTypeahead }
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
-  function createComponent() {
+  function createComponent(matchId?: string) {
     fixture = TestBed.createComponent(MatchAddComponent);
     component = fixture.componentInstance;
-    activatedRoute.testParams = {league_id: '123'}
+    activatedRoute.testParams = { league_id: '123' };
+    if (matchId != null) {
+      activatedRoute.testParams = { match_id: matchId };
+    }
     fixture.detectChanges();
     tick();
   }
@@ -49,6 +55,12 @@ describe('MatchAddComponent', () => {
   it('should have league id', fakeAsync(() => {
     createComponent();
     expect(component.leagueId).toEqual('123');
+  }));
+
+  it('should have match when match id provided', fakeAsync(() => {
+    createComponent('111');
+    expect(component.matchId).toEqual('111');
+    expect(component.match.id).toEqual('111');
   }));
 
   it('should have players list', fakeAsync(() => {

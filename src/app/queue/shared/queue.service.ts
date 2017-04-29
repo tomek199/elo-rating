@@ -32,6 +32,14 @@ export class QueueService {
             .catch(this.handleError);
     }
 
+    removeMatchFromQueue(match: Match, queueId: string): Promise<Queue> {
+        let url = `${this.url}/queue/${queueId}/removeMatch/${match.id}`;
+        return this.http.put(url, null, { headers: this.headers })
+            .toPromise()
+            .then(queue => queue.json() as Queue)
+            .catch(this.handleError);
+    }
+
     private handleError(error: any): Promise<any> {
         console.error('An error occured', error);
         return Promise.reject(error.message || error);

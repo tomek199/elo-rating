@@ -10,9 +10,16 @@ import 'rxjs/add/operator/toPromise';
 export class MatchService {
 
   private url = environment.serverUrl;
-  private headers = new Headers({'Content-Type': 'application/json'});
+  private headers = new Headers({ 'Content-Type': 'application/json' });
 
   constructor(private http: Http) { }
+
+  getMatchById(matchId: string): Promise<Match> {
+    let url = `${this.url}/matches/${matchId}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as Match);
+  }
 
   getMatches(leagueId: string): Promise<Match[]> {
     let url = `${this.url}/leagues/${leagueId}/matches`;
@@ -30,7 +37,7 @@ export class MatchService {
 
   add(leagueId: string, match: Match): Promise<Match> {
     let url = `${this.url}/leagues/${leagueId}/matches`;
-    return this.http.post(url, JSON.stringify(match), {headers: this.headers})
+    return this.http.post(url, JSON.stringify(match), { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Match)
       .catch(this.handleError);
