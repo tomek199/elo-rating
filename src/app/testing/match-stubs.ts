@@ -93,19 +93,26 @@ match3.ratings = { '': 1200, '333': 1000 };
 let match4 = new Match();
 match4.id = '444';
 match4.playerOne = playerOne;
-match4.playerTwo = playerTwo;
+match4.playerTwo = playerThree;
+match4.scores = { '111': 0, '333': 2 }
 
 let match5 = new Match();
 match5.id = '555';
-match5.playerOne = playerThree;
-match5.playerTwo = playerOne;
+match5.playerOne = playerOne;
+match5.playerTwo = playerTwo;
 
 let match6 = new Match();
 match6.id = '666';
-match6.playerOne = undefined;
-match6.playerTwo = undefined;
+match6.playerOne = playerThree;
+match6.playerTwo = playerOne;
 match6.scores = { '': 2 };
 
+let match7 = new Match();
+match7.id = '777';
+match7.playerOne = undefined;
+match7.playerTwo = undefined;
+match7.scores = { '': 2 };
+
 export const MATCHES: Match[] = [
-  match1, match2, match3, match4, match5, match6
+  match1, match2, match3, match4, match5, match6, match7
 ];

@@ -11,13 +11,13 @@ export class RatingHistoryChart extends ChartBuilder {
   }
 
   public buildSeries() {
-    let data = [];
+    let data = [['default', 1000]];
     this.matches.forEach(match => {
       let opponent = this.getOpponent(match);
       let rating = match.ratings[this.playerId];
       data.push([opponent, rating]);
     });
-    this.chart.series.push({type: 'spline', name: 'Rating', data: data});
+    this.chart.series.push({type: 'line', name: 'Rating', data: data});
   }  
 
   private getOpponent(match: Match): string {

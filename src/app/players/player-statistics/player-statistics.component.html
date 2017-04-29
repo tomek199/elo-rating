@@ -1,4 +1,16 @@
 <h2>Player statistics</h2>
-<div *ngIf="ratingHistory">
-  <chart [options]="ratingHistory"></chart>
+<div class="alert alert-info" *ngIf="!hasMatches()">
+  No statistics to show!
 </div>
+<ngb-tabset *ngIf="hasMatches()">
+  <ngb-tab title="Rating hisotry">
+    <ng-template ngbTabContent>
+      <chart [options]="ratingHistory"></chart>  
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Matches">
+    <ng-template ngbTabContent>
+      todo
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
