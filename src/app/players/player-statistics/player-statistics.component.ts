@@ -51,7 +51,7 @@ export class PlayerStatisticsComponent implements OnInit, OnChanges {
   }
 
   getMatches() {
-    this.matchService.getPlayerMatches(this.playerId)
+    this.matchService.getPlayerMatches(this.playerId, 'asc')
       .then(matches => {
         this.matches = matches.filter(match => this.isComplete(match.scores));
         this.buildRatingHistory();
@@ -66,5 +66,9 @@ export class PlayerStatisticsComponent implements OnInit, OnChanges {
     let chartBuilder = new RatingHistoryChart(this.matches, this.playerId);
     this.chartDirector.setBuilder(chartBuilder);
     this.ratingHistory = this.chartDirector.build();
+  }
+
+  hasMatches(): boolean {
+    return (this.matches != undefined && this.matches.length > 0);
   }
 }

@@ -10,7 +10,7 @@ export class MatchServiceStub {
     return Promise.resolve(MATCHES);
   }
 
-  getPlayerMatches(playerId: string): Promise<Match[]> {
+  getPlayerMatches(playerId: string, sort?: string): Promise<Match[]> {
     let matches = MATCHES.filter(match => this.hasPlayer(match, playerId));
     return Promise.resolve(matches);
   }
