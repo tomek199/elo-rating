@@ -55,7 +55,22 @@ describe('PlayerStatisticsComponent', () => {
     let ratingHistory = component.ratingHistory;
     expect(ratingHistory).toBeTruthy();
     expect(ratingHistory.title.text).toEqual('Rating history');
-    expect(ratingHistory.series[0].data.length).toEqual(3);
+    expect(ratingHistory.series[0].data.length).toEqual(4);
+  }));
+
+  it('should have matches history chart', fakeAsync(() => {
+    createComponent();
+    let matchesStats = component.matchesStats;
+    expect(matchesStats.title).toEqual('Matches statistics');
+    expect(matchesStats.series[0].name).toEqual('Won matches');
+    expect(matchesStats.series[0].data.value).toEqual(1);
+    expect(matchesStats.series[0].data.max).toEqual(3);
+    expect(matchesStats.series[1].name).toEqual('Lost matches')
+    expect(matchesStats.series[1].data.value).toEqual(2);
+    expect(matchesStats.series[1].data.max).toEqual(3);
+    expect(matchesStats.series[2].name).toEqual('Percentage of winnings');
+    expect(matchesStats.series[2].data.value).toEqual(33);
+    expect(matchesStats.series[2].data.max).toEqual(100);
   }));
 
   it('should display alert if matches list is empty', fakeAsync(() => {

@@ -1,6 +1,7 @@
+import { MatchesStatsChart } from './../../core/utils/charts/matches-stats-chart';
+import { ChartBuilder } from 'app/core/utils/charts/chart-builder';
 import { MatchService } from './../../matches/shared/match.service';
 import { RatingHistoryChart } from './../../core/utils/charts/rating-history-chart';
-import { ChartBuilder } from 'app/core/utils/charts/chart-builder';
 import { ChartDirector } from './../../core/utils/charts/chart-director';
 import { Chart } from './../../core/utils/charts/chart.model';
 import { Match } from './../../matches/shared/match.model';
@@ -18,6 +19,7 @@ export class PlayerStatisticsComponent implements OnInit, OnChanges {
   private matches: Match[];
   private chartDirector: ChartDirector;
   ratingHistory: Chart;
+  matchesStats: Chart;
 
   constructor(
     private route: ActivatedRoute,
@@ -55,6 +57,7 @@ export class PlayerStatisticsComponent implements OnInit, OnChanges {
       .then(matches => {
         this.matches = matches.filter(match => this.isComplete(match.scores));
         this.buildRatingHistory();
+        this.buildMatchesStats();
       });
   }
 
@@ -66,6 +69,12 @@ export class PlayerStatisticsComponent implements OnInit, OnChanges {
     let chartBuilder = new RatingHistoryChart(this.matches, this.playerId);
     this.chartDirector.setBuilder(chartBuilder);
     this.ratingHistory = this.chartDirector.build();
+  }
+
+  buildMatchesStats() {
+    let chartBuilder = new MatchesStatsChart(this.matches, this.playerId);
+    this.chartDirector.setBuilder(chartBuilder);
+    this.matchesStats = this.chartDirector.build();
   }
 
   hasMatches(): boolean {
