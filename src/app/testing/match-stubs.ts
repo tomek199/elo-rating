@@ -105,7 +105,6 @@ let match6 = new Match();
 match6.id = '666';
 match6.playerOne = playerThree;
 match6.playerTwo = playerOne;
-match6.scores = { '': 2 };
 
 let match7 = new Match();
 match7.id = '777';
