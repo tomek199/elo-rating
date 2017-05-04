@@ -47,8 +47,8 @@ export class QueueListComponent implements OnInit, OnChanges {
   }
 
   deleteElement(index: number) {
-    this.match = this.queue.matches[index];
-    this.router.navigate(['/leagues', this.leagueId, 'matches', 'add', this.match.id]);
+    let _match = this.queue.matches[index];
+    this.router.navigate(['/leagues', this.leagueId, 'matches', 'add', _match.id]);
   }
 
   searchPlayer = (text$: Observable<string>) =>

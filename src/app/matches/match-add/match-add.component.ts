@@ -43,7 +43,7 @@ export class MatchAddComponent implements OnInit {
       .forEach(match_id => {
         if (match_id != null) {
           this.matchId = match_id;
-          this.matchService.getMatchById(this.matchId).then(match => this.match = match);
+          this.matchService.getMatchById(this.matchId).then(match => this.match = this.matchService.serialize(match));
           this.queueService.getQueueByLeagueId(this.leagueId).then(queue => this.queue = queue);
         }
       });

@@ -3,8 +3,8 @@ export class Match {
   id: string;
   playerOne: Player;
   playerTwo: Player;
-  scores: {[id: string] : number;}
-  ratings: {[id: string] : number;}
+  scores: { [id: string]: number; }
+  ratings: { [id: string]: number; }
   date: Date;
 
   constructor() {
