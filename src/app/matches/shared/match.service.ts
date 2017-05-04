@@ -58,4 +58,16 @@ export class MatchService {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);
   }
+
+  serialize(match: Match): Match {
+    let output = new Match();
+    output.id = match.id;
+    output.playerOne = match.playerOne;
+    output.playerTwo = match.playerTwo;
+    output.scores = match.scores;
+    output.ratings = match.ratings;
+    output.date = match.date;
+
+    return output;
+  }
 }
