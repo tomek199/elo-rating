@@ -46,6 +46,18 @@ export class MatchServiceStub {
     // todo
     return Promise.resolve(new Match());
   }
+
+  serialize(match: Match): Match {
+    let output = new Match();
+    output.id = match.id;
+    output.playerOne = match.playerOne;
+    output.playerTwo = match.playerTwo;
+    output.scores = match.scores;
+    output.ratings = match.ratings;
+    output.date = match.date;
+
+    return output;
+  }
 }
 
 let playerOne = {
