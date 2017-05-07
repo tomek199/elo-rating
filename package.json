@@ -26,6 +26,7 @@
     "@angular/platform-server": "^4.0.0",
     "@angular/router": "^4.0.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.25",
+    "angular2-click-outside": "^0.1.0",
     "angular2-highcharts": "^0.5.5",
     "bootstrap": "^4.0.0-alpha.6",
     "chart.js": "^2.5.0",

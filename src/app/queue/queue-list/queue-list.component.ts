@@ -77,4 +77,7 @@ export class QueueListComponent implements OnInit, OnChanges {
     return player.username ? player.username : '';
   }
 
+  refreshQueue() {
+    this.getQueue(this.leagueId);
+  }
 }

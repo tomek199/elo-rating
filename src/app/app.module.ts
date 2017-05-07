@@ -28,6 +28,8 @@ import { PlayerMatchesComponent } from './players/player-matches/player-matches.
 import { PlayerStatisticsComponent } from './players/player-statistics/player-statistics.component';
 import { HighchartsStatic } from "angular2-highcharts/dist/HighchartsService";
 
+import { ClickOutsideDirective } from "angular2-click-outside/clickOutside.directive";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +47,8 @@ import { HighchartsStatic } from "angular2-highcharts/dist/HighchartsService";
     MatchListComponent,
     PlayerRankingComponent,
     PlayerMatchesComponent,
-    PlayerStatisticsComponent
+    PlayerStatisticsComponent,
+    ClickOutsideDirective
   ],
   imports: [
     BrowserModule,
@@ -56,18 +59,18 @@ import { HighchartsStatic } from "angular2-highcharts/dist/HighchartsService";
     ChartModule
   ],
   providers: [
-    LeagueService, 
-    PlayerService, 
+    LeagueService,
+    PlayerService,
     QueueService,
-    MatchService, 
+    MatchService,
     {
-      provide: HighchartsStatic, 
+      provide: HighchartsStatic,
       useFactory: highchartsFactory
     }
   ],
   bootstrap: [AppComponent],
   entryComponents: [ConfirmModalComponent],
-  
+
 })
 export class AppModule { }
 
