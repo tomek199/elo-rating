@@ -62,7 +62,10 @@ export class NavComponent implements OnInit {
 
   closeQueueList() {
     let queueListElement = this.elemRef.nativeElement.querySelector('li#queueListDropdown');
-    queueListElement.classList.remove('show');
+    if (queueListElement.classList.contains('show')) {
+      queueListElement.classList.remove('show');
+    }
+
   }
 
   refreshQueueList() {
