@@ -88,6 +88,13 @@ describe('NavComponent', () => {
     expect(debugElement).toBeTruthy();
   }));
 
+  it('should have "Add match" button', fakeAsync(() => {
+    createComponent('123');
+    let debugElement = fixture.debugElement.query(By.css('nav form#addMatch a'));
+    expect(debugElement).toBeTruthy();
+    expect(debugElement.nativeElement.textContent).toEqual('Add match');
+  }));
+
   it('should have app-league-search component', () => {
     createComponent();
     let debugElement = fixture.debugElement.query(By.directive(LeagueSearchComponent));
