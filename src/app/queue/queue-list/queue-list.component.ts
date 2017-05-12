@@ -20,6 +20,7 @@ export class QueueListComponent implements OnInit, OnChanges {
   queue: Queue;
   players = new Array<Player>();
   match: Match;
+  time = { hour: '00', minute: '00' };
 
   constructor(private playerService: PlayerService, private queueService: QueueService, private router: Router) {
     this.queue = new Queue();

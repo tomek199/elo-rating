@@ -70,7 +70,7 @@ describe('QueueComponent', () => {
     component.queue = QUEUE;
     expect(component.queue.matches.length).toEqual(1);
 
-    let formButton = fixture.debugElement.query(By.css('div form div button'));
+    let formButton = fixture.debugElement.query(By.css('div form div.form-group button'));
     expect(formButton.nativeElement.textContent).toEqual('Add match to queue');
 
     let playerOne = PLAYERS[0];
