@@ -1,3 +1,4 @@
+import { RouterLinkStub } from './../../testing/routing-stubs';
 import { PlayerServiceStub } from './../../testing/player-stubs';
 import { PlayerService } from './../../players/shared/player.service';
 import { FormsModule } from '@angular/forms';
@@ -14,8 +15,6 @@ import { HttpModule } from '@angular/http';
 
 import { NavComponent } from './nav.component';
 import { QueueListComponent } from './../../testing/queue-stubs';
-import { QueueService } from './../../queue/shared/queue.service';
-import { QueueServiceStub } from './../../testing/queue-stubs';
 
 describe('NavComponent', () => {
   let component: NavComponent;
@@ -29,7 +28,8 @@ describe('NavComponent', () => {
       declarations: [
         NavComponent,
         QueueListComponent,
-        LeagueSearchComponent
+        LeagueSearchComponent,
+        RouterLinkStub
       ],
       imports: [
         FormsModule,
@@ -38,7 +38,6 @@ describe('NavComponent', () => {
       ],
       providers: [
         { provide: Router, useClass: RouterStub },
-        { provide: QueueService, useClass: QueueServiceStub },
         { provide: LeagueService, useClass: LeagueServiceStub },
         { provide: PlayerService, useClass: PlayerServiceStub }
       ]

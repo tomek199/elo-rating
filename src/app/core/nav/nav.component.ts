@@ -1,6 +1,5 @@
 import { QueueListComponent } from './../../queue/queue-list/queue-list.component';
 import { Queue } from './../../queue/shared/queue.model';
-import { QueueService } from './../../queue/shared/queue.service';
 import { League } from './../../leagues/shared/league.model';
 import { LeagueService } from './../../leagues/shared/league.service';
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
@@ -16,26 +15,33 @@ export class NavComponent implements OnInit {
 
   @ViewChild(QueueListComponent)
   private queueListComponent: QueueListComponent;
-
   title = "EloRating";
-
   navbar;
-
   leagueId: string;
 
-  constructor(private router: Router, private queueService: QueueService, private elemRef: ElementRef) {
+  constructor(
+    private router: Router, 
+    private elemRef: ElementRef) {
   }
 
   ngOnInit() {
+    this.generateNavbar();
+  }
+
+  generateNavbar() {
     this.router.events.filter(event => event instanceof NavigationEnd)
       .subscribe((event: NavigationEnd) => {
-        this.leagueId = this.getLeagueId(event.urlAfterRedirects);
-        if (this.leagueId) {
-          this.getStandardNavbar(this.leagueId);
-        } else {
-          this.getGuestNavbar();
-        }
-      })
+        this.getNavbar(event.urlAfterRedirects);
+      });
+  }
+
+  private getNavbar(urlAfterRedirects: string) {
+    this.leagueId = this.getLeagueId(urlAfterRedirects);
+    if (this.leagueId) {
+      this.getStandardNavbar(this.leagueId);
+    } else {
+      this.getGuestNavbar();
+    }
   }
 
   private getLeagueId(url: string): string {
@@ -48,15 +54,27 @@ export class NavComponent implements OnInit {
 
   private getStandardNavbar(id: String): void {
     this.navbar = [
-      { url: `/leagues/${id}`, title: 'Dashboard' },
-      { url: `/leagues/${id}/matches`, title: 'Matches' },
-      { url: `/leagues/${id}/players`, title: 'Players' }
+      { 
+        url: ['/leagues', id], 
+        title: 'Dashboard' 
+      },
+      { 
+        url: ['/leagues', id, 'matches'], 
+        title: 'Matches' 
+      },
+      { 
+        url: ['/leagues', id, 'players'], 
+        title: 'Players' 
+      }
     ]
   }
 
   private getGuestNavbar(): void {
     this.navbar = [
-      { url: '/leagues', title: 'League' }
+      { 
+        url: ['/leagues'], 
+        title: 'League' 
+      }
     ]
   }
 
@@ -65,7 +83,6 @@ export class NavComponent implements OnInit {
     if (queueListElement.classList.contains('show')) {
       queueListElement.classList.remove('show');
     }
-
   }
 
   refreshQueueList() {

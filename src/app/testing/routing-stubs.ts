@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Directive, Input } from '@angular/core';
 import { NavigationEnd } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
@@ -39,4 +39,11 @@ export class RouterStub {
   navigate(commands: any[]) {
     return commands;
   }
+}
+
+@Directive({
+  selector: '[routerLink]'
+})
+export class RouterLinkStub {
+  @Input('routerLink') linkParams: any;
 }
