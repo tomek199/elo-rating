@@ -84,7 +84,6 @@ export class QueueListComponent implements OnInit, OnChanges {
   }
 
   setTimepickerTime() {
-    console.log("SET DEFAULT TIME");
     let date = new Date();
     this.time.hour = date.getHours().toString();
     let minutes = date.getMinutes();
