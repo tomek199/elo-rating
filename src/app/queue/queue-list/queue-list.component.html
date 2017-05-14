@@ -23,9 +23,6 @@
     <div id="addQueueElementFormToggleContent">
         <div>
             <form #queueMatchAdd="ngForm" id="addQueueElementQueue">
-                <div>
-                    <ngb-timepicker name="match-time" [(ngModel)]="time"></ngb-timepicker>
-                </div>
                 <div class="form-group">
                     <input type="text" name="player-one" [(ngModel)]="match.playerOne" [ngbTypeahead]="searchPlayer" [inputFormatter]="playerFormatter" [resultFormatter]="playerFormatter" class="form-control" id="queuePlayer1" placeholder="Player 1">
                 </div>
@@ -33,7 +30,12 @@
                     <input type="text" name="player-two" [(ngModel)]="match.playerTwo" [ngbTypeahead]="searchPlayer" [inputFormatter]="playerFormatter" [resultFormatter]="playerFormatter" class="form-control" id="queuePlayer2" placeholder="Player 2" required>
                 </div>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block" (click)="onSubmit()" [disabled]="!formValid()">Add match to queue</button>
+                    <div class="timepicker-container">
+                        <ngb-timepicker name="match-time" [(ngModel)]="time" [spinners]="false" [size]="small"></ngb-timepicker>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button id="queue-match-submit" type="submit" class="btn btn-primary btn-block" (click)="onSubmit()" [disabled]="!formValid()">Add match to queue</button>
                 </div>
             </form>
         </div>

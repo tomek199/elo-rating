@@ -20,11 +20,12 @@ export class QueueListComponent implements OnInit, OnChanges {
   queue: Queue;
   players = new Array<Player>();
   match: Match;
-  time = { hour: '00', minute: '00' };
+  time = { hour: '', minute: '' };
 
   constructor(private playerService: PlayerService, private queueService: QueueService, private router: Router) {
     this.queue = new Queue();
     this.match = new Match();
+    this.setTimepickerTime();
   }
 
   ngOnInit() { }
@@ -80,5 +81,15 @@ export class QueueListComponent implements OnInit, OnChanges {
 
   refreshQueue() {
     this.getQueue(this.leagueId);
+  }
+
+  setTimepickerTime() {
+    console.log("SET DEFAULT TIME");
+    let date = new Date();
+    this.time.hour = date.getHours().toString();
+    let minutes = date.getMinutes();
+    let addition = 10 - (minutes % 10);
+    minutes = minutes + addition + 10;
+    this.time.minute = minutes.toString();
   }
 }

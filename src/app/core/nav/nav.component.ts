@@ -20,7 +20,7 @@ export class NavComponent implements OnInit {
   leagueId: string;
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private elemRef: ElementRef) {
   }
 
@@ -54,26 +54,26 @@ export class NavComponent implements OnInit {
 
   private getStandardNavbar(id: String): void {
     this.navbar = [
-      { 
-        url: ['/leagues', id], 
-        title: 'Dashboard' 
+      {
+        url: ['/leagues', id],
+        title: 'Dashboard'
       },
-      { 
-        url: ['/leagues', id, 'matches'], 
-        title: 'Matches' 
+      {
+        url: ['/leagues', id, 'matches'],
+        title: 'Matches'
       },
-      { 
-        url: ['/leagues', id, 'players'], 
-        title: 'Players' 
+      {
+        url: ['/leagues', id, 'players'],
+        title: 'Players'
       }
     ]
   }
 
   private getGuestNavbar(): void {
     this.navbar = [
-      { 
-        url: ['/leagues'], 
-        title: 'League' 
+      {
+        url: ['/leagues'],
+        title: 'League'
       }
     ]
   }
@@ -87,5 +87,6 @@ export class NavComponent implements OnInit {
 
   refreshQueueList() {
     this.queueListComponent.refreshQueue();
+    this.queueListComponent.setTimepickerTime();
   }
 }
