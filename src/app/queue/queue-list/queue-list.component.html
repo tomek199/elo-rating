@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <div class="timepicker-container">
-                        <ngb-timepicker name="match-time" [(ngModel)]="time" [spinners]="false" [size]="small"></ngb-timepicker>
+                        <ngb-timepicker name="match-time" [(ngModel)]="time" (ngModelChange)="setMatchDate()" [spinners]="false" [size]="small"></ngb-timepicker>
                     </div>
                 </div>
                 <div class="form-group">

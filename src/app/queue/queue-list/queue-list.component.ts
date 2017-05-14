@@ -41,10 +41,10 @@ export class QueueListComponent implements OnInit, OnChanges {
   }
 
   onSubmit() {
-    this.queue.matches.push(this.match);
-    this.queueService.addMatchToQueue(this.match, this.queue.id).then(
-      queue => this.queue = queue
-    );
+    this.setMatchDate();
+    //this.queueService.addMatchToQueue(this.match, this.queue.id).then(
+    //  queue => this.queue = queue
+    //);
     this.match = new Match();
   }
 
@@ -61,6 +61,11 @@ export class QueueListComponent implements OnInit, OnChanges {
 
   formValid(): boolean {
     return this.match.isPlayersValid();
+  }
+
+  private isTimepickerTimeValid(): boolean {
+    let date = new Date();
+    return Number(this.time.hour) >= date.getHours() && Number(this.time.minute) > date.getMinutes();
   }
 
   private getQueue(leagueId: string) {
@@ -85,10 +90,32 @@ export class QueueListComponent implements OnInit, OnChanges {
 
   setTimepickerTime() {
     let date = new Date();
-    this.time.hour = date.getHours().toString();
+    let hour = date.getHours();
     let minutes = date.getMinutes();
     let addition = 10 - (minutes % 10);
     minutes = minutes + addition + 10;
+    if (minutes >= 60) {
+      hour = hour + 1;
+      if (hour >= 24) {
+        hour = 0;
+      }
+      minutes = minutes - 60;
+    }
+
+    this.time.hour = hour.toString();
     this.time.minute = minutes.toString();
+    if (this.time.hour == '0') {
+      this.time.hour = '00';
+    }
+    if (this.time.minute == '0') {
+      this.time.minute = '00';
+    }
+  }
+
+  private setMatchDate() {
+    let date = new Date();
+    date.setHours(Number(this.time.hour));
+    date.setMinutes(Number(this.time.minute));
+    this.match.date = date;
   }
 }
