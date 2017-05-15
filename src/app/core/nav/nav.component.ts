@@ -79,9 +79,11 @@ export class NavComponent implements OnInit {
   }
 
   closeQueueList() {
-    let queueListElement = this.elemRef.nativeElement.querySelector('li#queueListDropdown');
-    if (queueListElement.classList.contains('show')) {
-      queueListElement.classList.remove('show');
+    if (this.leagueId != null) {
+      let queueListElement = this.elemRef.nativeElement.querySelector('li#queueListDropdown');
+      if (queueListElement.classList.contains('show')) {
+        queueListElement.classList.remove('show');
+      }
     }
   }
 
