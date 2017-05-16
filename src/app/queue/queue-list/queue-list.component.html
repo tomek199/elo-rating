@@ -12,7 +12,7 @@
         <tbody>
             <tr *ngFor="let match of queue.matches; let i = index" (click)="deleteElement(i)">
                 <td>{{ match.playerOne.username }}</td>
-                <td>vs</td>
+                <td class="match-time">{{ match.date | date: 'HH:mm' }}</td>
                 <td>{{ match.playerTwo.username }}</td>
             </tr>
         </tbody>
