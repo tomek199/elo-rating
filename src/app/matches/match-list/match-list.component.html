@@ -40,7 +40,7 @@
         <a *ngIf="match.playerTwo?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
       </td>
       <td class="text-right">
-        <button type="button" class="btn btn-outline-danger btn-sm" *ngIf="hasBothPlayersDeleted(i)" (click)="openDeleteModal(i)">Delete</button>
+        <button type="button" class="btn btn-outline-danger btn-sm" *ngIf="hasBothPlayersDeleted(i)" (click)="openDeleteModal(match.id)">Delete</button>
       </td>
     </tr>
   </tbody>
@@ -61,13 +61,17 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let match of scheduledMatches; let i=index">
+    <tr *ngFor="let match of scheduledMatches">
       <td>{{match.date | date: "yyyy-MM-dd HH:mm"}}</td>
       <td>
         <a [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
       </td>
       <td>
         <a [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
+      </td>
+      <td class="text-right">
+        <button type="button" class="btn btn-outline-primary btn-sm" (click)="goToMatch(match.id)">Complete</button>
+        <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(match.id)">Delete</button>
       </td>
     </tr>
   </tbody>

@@ -101,7 +101,7 @@ describe('MatchListComponent', () => {
     createComponent();
     fixture.detectChanges();
     let playedMatchesCount = component.playedMatches.length;
-    component.delete(4); // 4 is index of match with both players deleted
+    component.delete('777'); // 777 is id of match with both players deleted
     tick();
     let playedMatchesCountAfterDelete = component.playedMatches.length;
     expect(playedMatchesCountAfterDelete).toEqual(playedMatchesCount - 1);
