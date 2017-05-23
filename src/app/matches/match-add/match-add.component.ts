@@ -79,6 +79,7 @@ export class MatchAddComponent implements OnInit {
 
   setMatchScore() {
     let scores = this.score.split('-');
+    this.match.scores = {};
     this.match.scores[this.match.playerOne.id] = +scores[0];
     this.match.scores[this.match.playerTwo.id] = +scores[1];
   }
