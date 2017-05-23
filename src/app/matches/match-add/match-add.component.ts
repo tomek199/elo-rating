@@ -63,7 +63,7 @@ export class MatchAddComponent implements OnInit {
     text$
       .debounceTime(100)
       .map(term => term === '' ? []
-        : this.players.filter(player => player.username.includes(term)));
+        : this.players.filter(player => player.username.toLowerCase().includes(term.toLowerCase())));
 
   playerFormatter(player: Player): string {
     return player.username ? player.username : '';
