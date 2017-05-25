@@ -17,3 +17,7 @@
 #daily-queue table thead th {
     text-align: center;
 }
+
+.match-time {
+    font-weight: 600;
+}

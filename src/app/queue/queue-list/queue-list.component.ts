@@ -86,6 +86,7 @@ export class QueueListComponent implements OnInit, OnChanges {
 
   refreshQueue() {
     this.getQueue(this.leagueId);
+    this.getPlayers(this.leagueId);
   }
 
   setTimepickerTime() {
