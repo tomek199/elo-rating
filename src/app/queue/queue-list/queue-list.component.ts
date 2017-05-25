@@ -57,7 +57,7 @@ export class QueueListComponent implements OnInit, OnChanges {
     text$
       .debounceTime(100)
       .map(term => term === '' ? []
-        : this.players.filter(player => player.username.includes(term)));
+        : this.players.filter(player => player.username.toLowerCase().includes(term.toLowerCase())));
 
   formValid(): boolean {
     return this.match.isPlayersValid();

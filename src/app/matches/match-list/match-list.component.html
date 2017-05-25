@@ -1,3 +1,29 @@
+<h2 *ngIf="hasScheduledMatches()">Scheduled matches list</h2>
+<table id="scheduledMatches" class="table table-bordered" *ngIf="hasScheduledMatches()">
+  <thead class="thead-default">
+    <tr>
+      <th>Date</th>
+      <th>First player</th>
+      <th>Second player</th>
+      <th class="text-right">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let match of scheduledMatches">
+      <td>{{match.date | date: "yyyy-MM-dd HH:mm"}}</td>
+      <td>
+        <a [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
+      </td>
+      <td>
+        <a [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
+      </td>
+      <td class="text-right">
+        <button type="button" class="btn btn-outline-primary btn-sm" (click)="goToMatch(match.id)">Complete</button>
+        <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(match.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
 <div class="alert alert-info" *ngIf="!hasMatches()">
   Matches list is empty!
   <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="alert-link">Add match</a>
@@ -40,7 +66,7 @@
         <a *ngIf="match.playerTwo?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
       </td>
       <td class="text-right">
-        <button type="button" class="btn btn-outline-danger btn-sm" *ngIf="hasBothPlayersDeleted(i)" (click)="openDeleteModal(i)">Delete</button>
+        <button type="button" class="btn btn-outline-danger btn-sm" *ngIf="hasBothPlayersDeleted(i)" (click)="openDeleteModal(match.id)">Delete</button>
       </td>
     </tr>
   </tbody>
@@ -50,25 +76,3 @@
     <a [routerLink]="['/leagues', leagueId, 'matches', 'add']">Add match</a>
   </li>
 </ul>
-<h2 *ngIf="hasScheduledMatches()">Scheduled matches list</h2>
-<table id="scheduledMatches" class="table table-bordered" *ngIf="hasScheduledMatches()">
-  <thead class="thead-default">
-    <tr>
-      <th>Date</th>
-      <th>First player</th>
-      <th>Second player</th>
-      <th class="text-right">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let match of scheduledMatches; let i=index">
-      <td>{{match.date | date: "yyyy-MM-dd HH:mm"}}</td>
-      <td>
-        <a [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
-      </td>
-      <td>
-        <a [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
-      </td>
-    </tr>
-  </tbody>
-</table>
