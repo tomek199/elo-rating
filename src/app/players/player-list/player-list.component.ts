@@ -47,6 +47,7 @@ export class PlayerListComponent implements OnInit {
   openDeleteModal(index: number): void {
     let player = this.inactivePlayers[index];
     let modal = this.modalService.open(ConfirmModalComponent);
+    modal.componentInstance.title = 'Delete!';
     modal.componentInstance.text = `Are you sure you want to delete player ${player.username}?`;
     modal.result.then((result) => {
       if (result) {
@@ -68,6 +69,7 @@ export class PlayerListComponent implements OnInit {
   openDisableModal(index: number): void {
     let player = this.activePlayers[index];
     let modal = this.modalService.open(ConfirmModalComponent);
+    modal.componentInstance.title = 'Disable!';
     modal.componentInstance.text = `Are you sure you want to disable player ${player.username}`;
     modal.result.then((result) => {
       if (result) {
