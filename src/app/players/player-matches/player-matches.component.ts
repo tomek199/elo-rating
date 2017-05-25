@@ -1,7 +1,9 @@
+import { ConfirmModalComponent } from './../../core/utils/confirm-modal/confirm-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Player } from './../shared/player.model';
 import { MatchService } from './../../matches/shared/match.service';
 import { Match } from './../../matches/shared/match.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
@@ -17,7 +19,9 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
 
   constructor(
     private matchService: MatchService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private modalService: NgbModal
   ) { }
 
   ngOnInit() {
@@ -90,5 +94,28 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
       return this.playedMatches[index].scores[player.id] != 2;
     }
     return false;
+  }
+
+  openDeleteModal(matchId: string): void {
+    let modal = this.modalService.open(ConfirmModalComponent);
+    modal.componentInstance.text = `Are you sure you want to delete match?`;
+    modal.result.then((result) => {
+      if (result) {
+        this.delete(matchId);
+      }
+    })
+  }
+
+  delete(matchId: string) {
+    this.matchService.delete(matchId)
+      .then(result => {
+        if (result) {
+          this.getMatches();
+        }
+      });
+  }
+
+  goToMatch(matchId: string) {
+    this.router.navigate(['/leagues', this.leagueId, 'matches', 'add', matchId]);
   }
 }

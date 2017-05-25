@@ -5,10 +5,11 @@
       <th>Date</th>
       <th>First player</th>
       <th>Second player</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let match of scheduledMatches; let i=index">
+    <tr *ngFor="let match of scheduledMatches">
       <td>{{match.date | date: "yyyy-MM-dd HH:mm"}}</td>
       <td class="table-info" *ngIf="isCurrent(match.playerOne)">{{match.playerOne.username}}</td>
       <td class="table-info" *ngIf="isCurrent(match.playerTwo)">{{match.playerTwo.username}}</td>      
@@ -17,6 +18,10 @@
       </td>
       <td *ngIf="!isCurrent(match.playerTwo)">
         <a [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
+      </td>
+      <td class="text-right">
+        <button type="button" class="btn btn-outline-primary btn-sm" (click)="goToMatch(match.id)">Complete</button>
+        <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(match.id)">Delete</button>
       </td>
     </tr>
   </tbody>
