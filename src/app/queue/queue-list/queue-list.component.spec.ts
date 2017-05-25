@@ -93,6 +93,10 @@ describe('QueueComponent', () => {
     let playerOne = PLAYERS[0];
     let playerTwo = PLAYERS[1];
     let match = MATCHES[0];
+    let date = new Date();
+    date.setHours(16);
+    date.setMinutes(30);
+    match.date = date;
     match.playerOne = playerOne;
     match.playerTwo = playerTwo;
 
@@ -108,7 +112,7 @@ describe('QueueComponent', () => {
     let matchElement = fixture.debugElement.query(By.css('div#daily-queue table tbody tr'));
     let matchColumns = fixture.debugElement.queryAll(By.css('div#daily-queue table tbody tr td'));
     expect(matchColumns[0].nativeElement.textContent).toEqual(playerOne.username);
-    expect(matchColumns[1].nativeElement.textContent).toEqual('vs');
+    expect(matchColumns[1].nativeElement.textContent).toEqual("16:30");
     expect(matchColumns[2].nativeElement.textContent).toEqual(playerTwo.username);
 
     matchElement.triggerEventHandler('click', null);
