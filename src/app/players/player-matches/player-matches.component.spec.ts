@@ -89,7 +89,7 @@ describe('PlayerMatchesComponent', () => {
   it('should present winner in green and looser in red background', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.queryAll(By.css('table tbody tr'));
+    let debugElement = fixture.debugElement.queryAll(By.css('table#playedMatches tbody tr'));
     expect(debugElement[0].query(By.css('td.table-success')).nativeElement.textContent).toEqual('Player 1');
     expect(debugElement[1].query(By.css('td.table-danger')).nativeElement.textContent).toEqual('Player 1');    
   }));
