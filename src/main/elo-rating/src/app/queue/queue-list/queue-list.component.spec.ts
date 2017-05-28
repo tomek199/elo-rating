@@ -63,7 +63,7 @@ describe('QueueComponent', () => {
     fixture.detectChanges();
     expect(component).toBeTruthy();
     let debugElement = fixture.debugElement.query(By.css('div#daily-queue h2'));
-    expect(debugElement.nativeElement.textContent).toEqual('Daily Queue');
+    expect(debugElement.nativeElement.textContent).toEqual('testQueue');
   });
 
   it('should add match to queue', fakeAsync(() => {
