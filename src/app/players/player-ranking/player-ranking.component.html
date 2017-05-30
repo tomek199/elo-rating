@@ -15,6 +15,9 @@
     <tr *ngFor="let player of rankedPlayers; let i=index">
       <td>
         {{i + 1}}
+        <img *ngIf="i == 0" src="assets/img/medals/medal_gold.png"/>
+        <img *ngIf="i == 1" src="assets/img/medals/medal_silver.png"/>
+        <img *ngIf="i == 2" src="assets/img/medals/medal_bronze.png"/>
       </td>
       <td>
         <a [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.username}}</a>
