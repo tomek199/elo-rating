@@ -1,11 +1,15 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# mvn
+target
+
 # compiled output
 /dist
 /tmp
 
 # dependencies
-/node_modules
+/src/main/elo-rating/node
+/src/main/elo-rating/node_modules
 
 # IDEs and editors
 /.idea

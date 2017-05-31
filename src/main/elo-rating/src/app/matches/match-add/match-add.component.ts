@@ -22,6 +22,9 @@ export class MatchAddComponent implements OnInit {
   match: Match;
   score: string;
 
+  completed: boolean = true;
+  time = { hour: '', minute: '' };
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -36,6 +39,7 @@ export class MatchAddComponent implements OnInit {
     this.getLeagueId();
     this.setMatch();
     this.getPlayers();
+    this.setTimepickerTime();
   }
 
   setMatch() {
@@ -107,5 +111,29 @@ export class MatchAddComponent implements OnInit {
 
   goToList() {
     this.router.navigate(['/leagues', this.leagueId, 'matches']);
+  }
+
+  setTimepickerTime() {
+    let date = new Date();
+    let hour = date.getHours();
+    let minutes = date.getMinutes();
+    let addition = 10 - (minutes % 10);
+    minutes = minutes + addition + 10;
+    if (minutes >= 60) {
+      hour = hour + 1;
+      if (hour >= 24) {
+        hour = 0;
+      }
+      minutes = minutes - 60;
+    }
+
+    this.time.hour = hour.toString();
+    this.time.minute = minutes.toString();
+    if (this.time.hour == '0') {
+      this.time.hour = '00';
+    }
+    if (this.time.minute == '0') {
+      this.time.minute = '00';
+    }
   }
 }
