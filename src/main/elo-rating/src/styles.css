@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+.shadedtable tr:nth-child(even) {
+    background-color: #F8F8F8;
+}
+
+.shadedtable tr:hover {
+    background-color: #F0F0F0;
+}

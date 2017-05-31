@@ -3,7 +3,7 @@
   Active players not found! 
   <a [routerLink]="['/leagues', leagueId, 'players']" class="alert-link">Manage players</a>
 </div>
-<table class="table" *ngIf="hasRankedPlayers()">
+<table class="shadedtable table" *ngIf="hasRankedPlayers()">
   <thead class="thead-default">
     <tr>
       <th>Position</th>
@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let player of rankedPlayers; let i=index">
+    <tr *ngFor="let player of rankedPlayers; let i=index" [routerLink]="['/leagues', leagueId, 'players', player.id]">
       <td>
         {{i + 1}}
         <img *ngIf="i == 0" src="assets/img/medals/medal_gold.png"/>

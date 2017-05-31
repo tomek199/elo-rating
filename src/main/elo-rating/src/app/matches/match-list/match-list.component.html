@@ -1,5 +1,5 @@
 <h2 *ngIf="hasScheduledMatches()">Scheduled matches list</h2>
-<table id="scheduledMatches" class="table table-bordered" *ngIf="hasScheduledMatches()">
+<table id="scheduledMatches" class="shadedtable table table-bordered" *ngIf="hasScheduledMatches()">
   <thead class="thead-default">
     <tr>
       <th>Date</th>
@@ -29,7 +29,7 @@
   <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="alert-link">Add match</a>
 </div>
 <h2 *ngIf="hasPlayedMatches()">Played matches list</h2>
-<table id="playedMatches" class="table table-bordered" *ngIf="hasPlayedMatches()">
+<table id="playedMatches" class="shadedtable table table-bordered" *ngIf="hasPlayedMatches()">
   <thead class="thead-default">
     <tr>
       <th>Date</th>

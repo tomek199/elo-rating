@@ -3,7 +3,7 @@
   Players list is empty!  
   <a [routerLink]="['/leagues', leagueId, 'players', 'add']" class="alert-link">Add player</a>
 </div>
-<table class="table" *ngIf="hasPlayers()">
+<table class="shadedtable table" *ngIf="hasPlayers()">
   <thead class="thead-default">
     <tr>
       <th>Username</th>
@@ -12,7 +12,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let player of activePlayers; let i=index">
+    <tr *ngFor="let player of activePlayers; let i=index" [routerLink]="['/leagues', leagueId, 'players', player.id]">
       <td>
         <a [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.username}}</a>
       </td>

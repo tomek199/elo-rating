@@ -1,5 +1,5 @@
 <h2 *ngIf="hasScheduledMatches()">Scheduled matches</h2>
-<table id="scheduledMatches" class="table table-bordered" *ngIf="hasScheduledMatches()">
+<table id="scheduledMatches" class="shadedtable table table-bordered" *ngIf="hasScheduledMatches()">
   <thead class="thead-default">
     <tr>
       <th>Date</th>
@@ -30,7 +30,7 @@
 <div class="alert alert-info" *ngIf="!hasMatches()">
   Player didn't play any matches yet!
 </div>
-<table id="playedMatches" class="table table-bordered" *ngIf="hasPlayedMatches()">
+<table id="playedMatches" class="shadedtable table table-bordered" *ngIf="hasPlayedMatches()">
   <thead class="thead-default">
     <tr>
       <th>Date</th>
