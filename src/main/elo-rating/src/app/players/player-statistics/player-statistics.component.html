@@ -10,28 +10,14 @@
   </ngb-tab>
   <ngb-tab title="Matches">
     <ng-template ngbTabContent>
-      <div class="row my-3">
+      <div class="row my-3" *ngFor="let series of matchesStats.series">
         <div class="col-3">
-          <h5>Won matches:</h5>
+          <h5>{{series.name}}:</h5>
         </div>
         <div class="col-9">
-          <ngb-progressbar type="success" [value]="matchesStats.series[0].data.value" [max]="matchesStats.series[0].data.max">{{matchesStats.series[0].data.value}} of {{matchesStats.series[0].data.max}}</ngb-progressbar>
-        </div>
-      </div>
-      <div class="row my-3">
-        <div class="col-3">
-          <h5>Lost matches:</h5>
-        </div>
-        <div class="col-9">
-          <ngb-progressbar type="danger" [value]="matchesStats.series[1].data.value" [max]="matchesStats.series[1].data.max">{{matchesStats.series[1].data.value}} of {{matchesStats.series[1].data.max}}</ngb-progressbar>
-        </div>
-      </div>
-      <div class="row my-3">
-        <div class="col-3">
-          <h5>Wins percentage:</h5>
-        </div>
-        <div class="col-9">
-          <ngb-progressbar type="info" [value]="matchesStats.series[2].data.value" [max]="matchesStats.series[2].data.max" [showValue]="true"></ngb-progressbar>
+          <ngb-progressbar type="{{series.type}}" [value]="series.data.value" [max]="series.data.max" [showValue]="series.showValue">
+            <span *ngIf="series.showValue != 'true'">{{series.data.value}} of {{series.data.max}}</span>
+          </ngb-progressbar>
         </div>
       </div>
     </ng-template>
