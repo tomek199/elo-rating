@@ -12,6 +12,22 @@
             <app-queue-list #queueList [leagueId]="leagueId"></app-queue-list>
           </div>
         </li>
+        <li class="nav-item dropdown" ngbDropdown [autoClose]="true" *ngIf="leagueId != null">
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle role="button">Queue demo</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">
+              <span class="text-primary font-weight-bold">16:30</span> Luke Skywalker - Dart Vader
+            </a>
+            <a class="dropdown-item" href="#">
+              <span class="text-primary font-weight-bold">16:40</span> Al Capone -  Al Pacino
+            </a>
+            <a class="dropdown-item" href="#">
+              <span class="text-primary font-weight-bold">17:00</span> Dom Toretto - Luke Hobbs              
+            </a>
+            <div class="dropdown-divider"></div>            
+            <a class="dropdown-item" href="#">Add match to queue</a>
+          </div>
+        </li>
       </ul>
       <form id="addMatch" class="form-inline mr-4" *ngIf="leagueId">
         <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="btn btn-primary btn-sm" role="button">Add match</a>
