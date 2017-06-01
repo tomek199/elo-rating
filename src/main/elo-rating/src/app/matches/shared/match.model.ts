@@ -6,12 +6,14 @@ export class Match {
   scores: { [id: string]: number; }
   ratings: { [id: string]: number; }
   date: Date;
+  completed: boolean;
 
   constructor() {
     this.playerOne = new Player();
     this.playerTwo = new Player();
     this.scores = {};
     this.ratings = {};
+    this.completed = false;
   }
 
   isValid(): boolean {

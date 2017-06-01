@@ -34,11 +34,20 @@ export class MatchListComponent implements OnInit {
   }
 
   getMatches() {
+    this.getCompletedMatches();
+    this.getScheduledMatches();
+  }
+
+  private getCompletedMatches() {
     this.matchService.getMatches(this.leagueId)
       .then(matches => {
         this.playedMatches = matches.filter(m => this.isComplete(m.scores));
-        this.scheduledMatches = matches.filter(m => !this.isComplete(m.scores));
       });
+  }
+
+  private getScheduledMatches() {
+    this.matchService.getScheduledMatches(this.leagueId)
+      .then(matches => this.scheduledMatches = matches);
   }
 
   isComplete(scores: {[id: string] : number;}): boolean {
