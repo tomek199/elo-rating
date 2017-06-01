@@ -50,11 +50,20 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
   }
 
   getMatches() {
+    this.getCompletedMatches();
+    this.getScheduledMatches();
+  }
+
+  private getCompletedMatches() {
     this.matchService.getPlayerMatches(this.playerId)
       .then(matches => {
         this.playedMatches = matches.filter(match => this.isComplete(match.scores));
-        this.scheduledMatches = matches.filter(match => !this.isComplete(match.scores));
       });
+  }
+
+  private getScheduledMatches() {
+    this.matchService.getPlayerScheduledMatches(this.playerId)
+      .then(matches => this.scheduledMatches = matches);
   }
 
   isComplete(scores: {[id: string] : number;}): boolean {

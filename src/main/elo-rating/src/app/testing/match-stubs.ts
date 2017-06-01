@@ -15,13 +15,18 @@ export class MatchServiceStub {
     return Promise.resolve(matchFound);
   }
 
-  getScheduledMatches(leagueId: string) {
+  getScheduledMatches(leagueId: string): Promise<Match[]> {
     let matches = MATCHES.filter(match => match.completed == false);
     return Promise.resolve(matches);
   }
 
   getPlayerMatches(playerId: string): Promise<Match[]> {
     let matches = MATCHES.filter(match => this.hasPlayer(match, playerId));
+    return Promise.resolve(matches);
+  }
+
+  getPlayerScheduledMatches(playerId: string): Promise<Match[]> {
+    let matches = MATCHES.filter(match => this.hasPlayer(match, playerId) && match.completed == false);
     return Promise.resolve(matches);
   }
 

@@ -45,6 +45,13 @@ export class MatchService {
       .then(response => response.json() as Match[]);
   }
 
+  getPlayerScheduledMatches(playerId: string): Promise<Match[]> {
+    let url = `${this.url}/players/${playerId}/scheduled-matches?sort=asc`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as Match[]);
+  }
+
   add(leagueId: string, match: Match): Promise<Match> {
     let url = `${this.url}/leagues/${leagueId}/matches`;
     return this.http.post(url, JSON.stringify(match), { headers: this.headers })

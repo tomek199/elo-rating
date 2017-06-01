@@ -10,7 +10,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { PlayerMatchesComponent } from './player-matches.component';
 
-describe('PlayerMatchesComponent', () => {
+fdescribe('PlayerMatchesComponent', () => {
   let component: PlayerMatchesComponent;
   let fixture: ComponentFixture<PlayerMatchesComponent>;
   let activatedRoute: ActivatedRouteStub;
