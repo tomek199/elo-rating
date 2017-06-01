@@ -141,6 +141,11 @@ match7.playerTwo = undefined;
 match7.scores = { '': 2 };
 match7.completed = true;
 
+
+export const SCHEDULED_MATCHES: Match[] = [
+  match5
+]
+
 export const MATCHES: Match[] = [
   match1, match2, match3, match4, match5, match6, match7
 ];

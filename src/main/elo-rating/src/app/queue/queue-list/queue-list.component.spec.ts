@@ -1,7 +1,7 @@
 import { RouterTestingModule } from '@angular/router/testing';
 import { Match } from './../../matches/shared/match.model';
 import { QueueService } from './../shared/queue.service';
-import { MATCHES } from './../../testing/match-stubs';
+import { MATCHES, SCHEDULED_MATCHES } from './../../testing/match-stubs';
 import { Player } from './../../players/shared/player.model';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
@@ -32,7 +32,7 @@ describe('QueueComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         QueueListComponent,
-        RouterLinkStub        
+        RouterLinkStub
       ],
       imports: [
         HttpModule,
@@ -61,7 +61,7 @@ describe('QueueComponent', () => {
   });
 
   it('should have queue', () => {
-    component.queue = QUEUE;
+    component.scheduledMatches = SCHEDULED_MATCHES;
     fixture.detectChanges();
     expect(component).toBeTruthy();
     let debugElement = fixture.debugElement.query(By.css('div#daily-queue h2'));
@@ -92,11 +92,10 @@ describe('QueueComponent', () => {
   //   // expect(component.queue.matches[1].playerTwo.username).toEqual(playerTwo.username);
   // }));
 
-  /*
   it('should remove match from queue', fakeAsync(() => {
     let playerOne = PLAYERS[0];
     let playerTwo = PLAYERS[1];
-    let match = MATCHES[0];
+    let match = SCHEDULED_MATCHES[0];
     let date = new Date();
     date.setHours(16);
     date.setMinutes(30);
@@ -104,13 +103,12 @@ describe('QueueComponent', () => {
     match.playerOne = playerOne;
     match.playerTwo = playerTwo;
 
-    component.scheduledMatches = MATCHES;
+    component.scheduledMatches = SCHEDULED_MATCHES;
     component.scheduledMatches[0] = match;
 
     let queueSize = component.scheduledMatches.length;
 
-    expect(queueSize).toEqual(MATCHES.length);
-    expect(component.scheduledMatches[0].id).toEqual('111');
+    expect(component.scheduledMatches[0].id).toEqual(SCHEDULED_MATCHES[0].id);
 
     fixture.detectChanges();
     let matchElement = fixture.debugElement.query(By.css('div#daily-queue table tbody tr'));
@@ -126,11 +124,10 @@ describe('QueueComponent', () => {
     fixture.detectChanges();
     tick();
 
-    matchColumns = fixture.debugElement.queryAll(By.css('div#daily-queue table tbody tr td'));
-    expect(matchColumns.length).toEqual(0);
-
     let newQueueSize = component.scheduledMatches.length;
+    matchColumns = fixture.debugElement.queryAll(By.css('div#daily-queue table tbody tr td'));
+
+    expect(matchColumns.length).toEqual(newQueueSize);
     expect(newQueueSize).toEqual(queueSize - 1);
   }));
-  */
 });
