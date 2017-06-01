@@ -14,9 +14,15 @@
             <input type="text" name="player-two" [(ngModel)]="match.playerTwo" (ngModelChange)="setMatchScore()" [ngbTypeahead]="searchPlayer" [inputFormatter]="playerFormatter" [resultFormatter]="playerFormatter" class="form-control" placeholder="Type second player name">
         </div>
     </div>
-    <button type="submit" class="btn btn-success float-right" [disabled]="!formValid()" (click)="create()">Create</button>
-    <button type="button" class="btn btn-link float-right" (click)="goToList()">Back to list</button>
-    <div class="form-check row">
+    <div class="d-flex flex-row-reverse">
+        <div class="p-2">
+            <button type="submit" class="btn btn-success" [disabled]="!formValid()" (click)="create()">Create</button>
+        </div>
+        <div class="p-2">
+            <button type="button" class="btn btn-link" (click)="goToList()">Back to list</button>
+        </div>
+    </div>
+    <div class="form-group row">
         <label class="form-check-label">
             <input type="checkbox" [checked]="completed" (change)="completed = !completed" class="form-check-input"> Complete match
         </label>
@@ -41,9 +47,6 @@
         </div>
     </div>
     <div class="form-group row" *ngIf="!completed">
-        <div class="timepicker-container">
-            <label>Match time:</label>
-            <ngb-timepicker name="match-time" [(ngModel)]="time" (ngModelChange)="setTimepickerTime()" [spinners]="false" [size]="small"></ngb-timepicker>
-        </div>
+        <ngb-timepicker name="match-time" [(ngModel)]="time" (ngModelChange)="setTimepickerTime()" [spinners]="true" [size]="small" [minuteStep]="10"></ngb-timepicker>
     </div>
 </form>
