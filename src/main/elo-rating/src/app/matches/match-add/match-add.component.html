@@ -16,10 +16,10 @@
     </div>
     <div class="form-group row">
         <label class="form-check-label">
-            <input type="checkbox" [checked]="completed" (change)="completed = !completed" class="form-check-input"> Complete match
+            <input type="checkbox" [checked]="match.completed" (change)="match.completed = !match.completed" class="form-check-input"> Complete match
         </label>
     </div>
-    <div class="form-group row" *ngIf="completed">
+    <div class="form-group row" *ngIf="match.completed">
         <label for="score" class="col-2 col-form-label">Score</label>
         <div class="col-6">
             <div [(ngModel)]="score" (ngModelChange)="setMatchScore()" ngbRadioGroup name="score" class="col-6">
@@ -38,8 +38,7 @@
             </div>
         </div>
     </div>
-    <div class="form-group row" *ngIf="!completed">
-        <label for="match-time" class="col-2 col-form-label">Time</label>
+    <div class="form-group row" *ngIf="!match.completed">
         <ngb-timepicker name="match-time" [(ngModel)]="time" (ngModelChange)="setTimepickerTime()" [spinners]="true" [size]="small" [minuteStep]="10"></ngb-timepicker>
     </div>
     <button type="submit" class="btn btn-success float-right" [disabled]="!formValid()" (click)="create()">Create</button>

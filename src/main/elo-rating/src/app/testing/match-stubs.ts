@@ -25,6 +25,10 @@ export class MatchServiceStub {
     return Promise.resolve(matches);
   }
 
+  getScheduledMatches(leagueId: string): Promise<Match[]> {
+    return Promise.resolve(MATCHES);
+  }
+
   private hasPlayer(match: Match, id: string) {
     return (match.playerOne !== undefined && match.playerOne.id === id)
       || (match.playerTwo !== undefined && match.playerTwo.id === id);
