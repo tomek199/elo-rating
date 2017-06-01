@@ -1,7 +1,7 @@
 <div id="daily-queue">
-    <h2>{{ queue.name }}</h2>
+    <h2>Daily queue</h2>
     <hr/>
-    <table class="table table-hover">
+    <table class="table table-hover" *ngIf="scheduledMatches.length > 0">
         <thead class="thead-default">
             <tr>
                 <th>Player 1</th>
@@ -10,16 +10,20 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let match of queue.matches; let i = index" (click)="deleteElement(i)">
+            <tr *ngFor="let match of scheduledMatches; let i = index" (click)="deleteElement(i)">
                 <td>{{ match.playerOne.username }}</td>
                 <td class="match-time">{{ match.date | date: 'HH:mm' }}</td>
                 <td>{{ match.playerTwo.username }}</td>
             </tr>
         </tbody>
     </table>
+    <div class="alert alert-info" *ngIf="scheduledMatches.length == 0">
+        No matches in queue!
+        <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="alert-link">Add match</a>
+    </div>
 </div>
 <hr/>
-<div>
+<!--<div>
     <div id="addQueueElementFormToggleContent">
         <div>
             <form #queueMatchAdd="ngForm" id="addQueueElementQueue">
@@ -40,4 +44,4 @@
             </form>
         </div>
     </div>
-</div>
+</div>-->

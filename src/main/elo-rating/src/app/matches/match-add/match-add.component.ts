@@ -22,7 +22,6 @@ export class MatchAddComponent implements OnInit {
   match: Match;
   score: string;
 
-  completed: boolean = true;
   time = { hour: '', minute: '' };
 
   constructor(
@@ -91,7 +90,7 @@ export class MatchAddComponent implements OnInit {
   }
 
   formValid(): boolean {
-    return this.match.isValid();
+    return this.match.isPlayersValid();
   }
 
   create() {
@@ -105,6 +104,7 @@ export class MatchAddComponent implements OnInit {
   }
 
   private addMatch() {
+    this.setMatchDate();
     this.matchService.add(this.leagueId, this.match)
       .then(match => {
         this.goToList();
@@ -136,6 +136,19 @@ export class MatchAddComponent implements OnInit {
     }
     if (this.time.minute == '0') {
       this.time.minute = '00';
+    }
+
+    this.setMatchDate();
+  }
+
+  private setMatchDate() {
+    if (this.match.completed) {
+      this.match.date = new Date();
+    } else {
+      let date = new Date();
+      date.setHours(Number(this.time.hour));
+      date.setMinutes(Number(this.time.minute));
+      this.match.date = date;
     }
   }
 }

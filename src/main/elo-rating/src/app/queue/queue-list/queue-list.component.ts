@@ -1,3 +1,4 @@
+import { MatchService } from './../../matches/shared/match.service';
 import { Observable } from 'rxjs/Observable';
 import { PlayerService } from './../../players/shared/player.service';
 import { Match } from './../../matches/shared/match.model';
@@ -11,7 +12,7 @@ import { Component, OnInit, Input, SimpleChange, OnChanges } from '@angular/core
   selector: 'app-queue-list',
   templateUrl: './queue-list.component.html',
   styleUrls: ['./queue-list.component.css'],
-  providers: [PlayerService, QueueService]
+  providers: [PlayerService, QueueService, MatchService]
 })
 export class QueueListComponent implements OnInit, OnChanges {
 
@@ -20,9 +21,10 @@ export class QueueListComponent implements OnInit, OnChanges {
   queue: Queue;
   players = new Array<Player>();
   match: Match;
+  scheduledMatches = new Array<Match>();
   time = { hour: '', minute: '' };
 
-  constructor(private playerService: PlayerService, private queueService: QueueService, private router: Router) {
+  constructor(private playerService: PlayerService, private queueService: QueueService, private router: Router, private matchService: MatchService) {
     this.queue = new Queue();
     this.match = new Match();
     this.setTimepickerTime();
@@ -35,7 +37,8 @@ export class QueueListComponent implements OnInit, OnChanges {
     //Add 'implements OnChanges' to the class.
     this.leagueId = changes['leagueId'].currentValue;
     if (this.leagueId != null) {
-      this.getQueue(this.leagueId);
+      //this.getQueue(this.leagueId);
+      this.getScheduledMatches(this.leagueId);
       this.getPlayers(this.leagueId);
     }
   }
@@ -49,7 +52,7 @@ export class QueueListComponent implements OnInit, OnChanges {
   }
 
   deleteElement(index: number) {
-    let _match = this.queue.matches[index];
+    let _match = this.scheduledMatches[index];
     this.router.navigate(['/leagues', this.leagueId, 'matches', 'add', _match.id]);
   }
 
@@ -74,6 +77,12 @@ export class QueueListComponent implements OnInit, OnChanges {
     );
   }
 
+  private getScheduledMatches(leagueId: string) {
+    this.matchService.getScheduledMatches(leagueId).then(
+      matches => this.scheduledMatches = matches
+    );
+  }
+
   private getPlayers(leagueId: string) {
     this.playerService.getPlayers(leagueId).then(
       players => this.players = players.filter(p => p.active === true)
@@ -85,7 +94,8 @@ export class QueueListComponent implements OnInit, OnChanges {
   }
 
   refreshQueue() {
-    this.getQueue(this.leagueId);
+    //this.getQueue(this.leagueId);
+    this.getScheduledMatches(this.leagueId);
     this.getPlayers(this.leagueId);
   }
 
