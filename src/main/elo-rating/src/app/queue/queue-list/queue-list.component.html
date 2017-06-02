@@ -1,47 +1,7 @@
-<div id="daily-queue">
-    <h2>Daily queue</h2>
-    <hr/>
-    <table class="table table-hover" *ngIf="scheduledMatches.length > 0">
-        <thead class="thead-default">
-            <tr>
-                <th>Player 1</th>
-                <th></th>
-                <th>Player 2</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let match of scheduledMatches; let i = index" (click)="deleteElement(i)">
-                <td>{{ match.playerOne.username }}</td>
-                <td class="match-time">{{ match.date | date: 'HH:mm' }}</td>
-                <td>{{ match.playerTwo.username }}</td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="alert alert-info" *ngIf="scheduledMatches.length == 0">
-        No matches in queue!
-        <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="alert-link">Add match</a>
-    </div>
+<div class="dropdown-item" *ngFor="let match of scheduledMatches; let i = index" (click)="deleteElement(i)">
+    <a>
+        <span class="text-primary font-weight-bold ">{{ match.date | date: 'HH:mm' }}</span> {{ match.playerOne.username }} - {{ match.playerTwo.username }}
+    </a>
 </div>
-<hr/>
-<!--<div>
-    <div id="addQueueElementFormToggleContent">
-        <div>
-            <form #queueMatchAdd="ngForm" id="addQueueElementQueue">
-                <div class="form-group">
-                    <input type="text" name="player-one" [(ngModel)]="match.playerOne" [ngbTypeahead]="searchPlayer" [inputFormatter]="playerFormatter" [resultFormatter]="playerFormatter" class="form-control" id="queuePlayer1" placeholder="Player 1">
-                </div>
-                <div class="form-group">
-                    <input type="text" name="player-two" [(ngModel)]="match.playerTwo" [ngbTypeahead]="searchPlayer" [inputFormatter]="playerFormatter" [resultFormatter]="playerFormatter" class="form-control" id="queuePlayer2" placeholder="Player 2" required>
-                </div>
-                <div class="form-group">
-                    <div class="timepicker-container">
-                        <ngb-timepicker name="match-time" [(ngModel)]="time" (ngModelChange)="setMatchDate()" [spinners]="false" [size]="small"></ngb-timepicker>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button id="queue-match-submit" type="submit" class="btn btn-primary btn-block" (click)="onSubmit()" [disabled]="!formValid()">Add match to queue</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>-->
+<div class="dropdown-divider "></div>
+<a class="dropdown-item " [routerLink]="['/leagues', leagueId, 'matches', 'add']">Add match to queue</a>

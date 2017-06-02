@@ -1,38 +1,22 @@
 <nav class="navbar navbar-toggleable-sm navbar-inverse bg-inverse" (clickOutside)="closeQueueList()">
-  <div class="container">
-    <a class="navbar-brand" [routerLink]="'/leagues'">{{title}}</a>
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item" *ngFor="let nav of navbar">
-          <a class="nav-link" [routerLink]="nav.url">{{nav.title}}</a>
-        </li>
-        <li id="queueListDropdown" class="nav-item dropdown" ngbDropdown [autoClose]="false" *ngIf="leagueId != null" (click)="refreshQueueList()">
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle role="button">Queue</a>
-          <div id="queue-dropdown" class="dropdown-menu">
-            <app-queue-list #queueList [leagueId]="leagueId"></app-queue-list>
-          </div>
-        </li>
-        <li class="nav-item dropdown" ngbDropdown [autoClose]="true" *ngIf="leagueId != null">
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle role="button">Queue demo</a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">
-              <span class="text-primary font-weight-bold">16:30</span> Luke Skywalker - Dart Vader
-            </a>
-            <a class="dropdown-item" href="#">
-              <span class="text-primary font-weight-bold">16:40</span> Al Capone -  Al Pacino
-            </a>
-            <a class="dropdown-item" href="#">
-              <span class="text-primary font-weight-bold">17:00</span> Dom Toretto - Luke Hobbs              
-            </a>
-            <div class="dropdown-divider"></div>            
-            <a class="dropdown-item" href="#">Add match to queue</a>
-          </div>
-        </li>
-      </ul>
-      <form id="addMatch" class="form-inline mr-4" *ngIf="leagueId">
-        <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="btn btn-primary btn-sm" role="button">Add match</a>
-      </form>
-      <app-league-search></app-league-search>
+    <div class="container">
+        <a class="navbar-brand" [routerLink]="'/leagues'">{{title}}</a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item" *ngFor="let nav of navbar">
+                    <a class="nav-link" [routerLink]="nav.url">{{nav.title}}</a>
+                </li>
+                <li class="nav-item dropdown" ngbDropdown [autoClose]="true" *ngIf="leagueId != null" (click)="refreshQueueList()">
+                    <a class="nav-link dropdown-toggle" ngbDropdownToggle role="button">Queue</a>
+                    <div id="queue-dropdown" class="dropdown-menu">
+                        <app-queue-list #queueList [leagueId]="leagueId"></app-queue-list>
+                    </div>
+                </li>
+            </ul>
+            <form id="addMatch" class="form-inline mr-4" *ngIf="leagueId">
+                <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="btn btn-primary btn-sm" role="button">Add match</a>
+            </form>
+            <app-league-search></app-league-search>
+        </div>
     </div>
-  </div>
 </nav>
