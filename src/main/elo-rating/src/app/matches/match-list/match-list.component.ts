@@ -13,7 +13,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MatchListComponent implements OnInit {
   leagueId: string;
-  playedMatches: Match[];
+  completedMatches: Match[];
   scheduledMatches: Match[];
 
   constructor(
@@ -41,7 +41,7 @@ export class MatchListComponent implements OnInit {
   private getCompletedMatches() {
     this.matchService.getMatches(this.leagueId)
       .then(matches => {
-        this.playedMatches = matches.filter(m => this.isComplete(m.scores));
+        this.completedMatches = matches.filter(m => this.isComplete(m.scores));
       });
   }
 
@@ -55,11 +55,11 @@ export class MatchListComponent implements OnInit {
   }
 
   hasMatches(): boolean {
-    return (this.hasPlayedMatches() || this.hasScheduledMatches());
+    return (this.hasCompletedMatches() || this.hasScheduledMatches());
   }
 
-  hasPlayedMatches(): boolean {
-    return (this.playedMatches != undefined && this.playedMatches.length > 0);    
+  hasCompletedMatches(): boolean {
+    return (this.completedMatches != undefined && this.completedMatches.length > 0);    
   }
 
   hasScheduledMatches(): boolean {
@@ -68,19 +68,19 @@ export class MatchListComponent implements OnInit {
 
   getScore(index: number, player: Player): number {
     let key = player ? player.id : '';
-    return this.playedMatches[index].scores[key];
+    return this.completedMatches[index].scores[key];
   }
 
   isWinner(index: number, player: Player) {
     if (player) {
-      return this.playedMatches[index].scores[player.id] == 2;
+      return this.completedMatches[index].scores[player.id] == 2;
     } else {
       return this.checkIfDeletedIsWinner(index);
     }
   }
 
   private checkIfDeletedIsWinner(index: number) {
-    let match = this.playedMatches[index];
+    let match = this.completedMatches[index];
     let player = [match.playerOne, match.playerTwo].find(player => player != undefined);
     if (player != undefined) {
       return match.scores[player.id] != 2;
@@ -90,7 +90,7 @@ export class MatchListComponent implements OnInit {
   }
 
   hasBothPlayersDeleted(index: number) {
-    let match = this.playedMatches[index];
+    let match = this.completedMatches[index];
     return !match.playerOne && !match.playerTwo;
   }
 
