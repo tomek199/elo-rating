@@ -1,5 +1,4 @@
 import { QueueListComponent } from './../../queue/queue-list/queue-list.component';
-import { Queue } from './../../queue/shared/queue.model';
 import { League } from './../../leagues/shared/league.model';
 import { LeagueService } from './../../leagues/shared/league.service';
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';

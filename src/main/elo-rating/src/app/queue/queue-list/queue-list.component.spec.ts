@@ -1,6 +1,5 @@
 import { RouterTestingModule } from '@angular/router/testing';
 import { Match } from './../../matches/shared/match.model';
-import { QueueService } from './../shared/queue.service';
 import { MATCHES, SCHEDULED_MATCHES } from './../../testing/match-stubs';
 import { Player } from './../../players/shared/player.model';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -9,7 +8,6 @@ import { ActivatedRouteStub, RouterStub, RouterLinkStub } from './../../testing/
 import { ActivatedRoute, Router } from '@angular/router';
 import { PlayerServiceStub, PLAYERS } from './../../testing/player-stubs';
 import { PlayerService } from './../../players/shared/player.service';
-import { QueueServiceStub, QUEUE, EMPTY_QUEUE } from './../../testing/queue-stubs';
 import { HttpModule } from '@angular/http';
 import { AppModule } from './../../app.module';
 /* tslint:disable:no-unused-variable */
@@ -24,7 +22,6 @@ describe('QueueComponent', () => {
   let fixture: ComponentFixture<QueueListComponent>;
 
   let playerService: PlayerService;
-  let queueService: QueueService;
   let router: RouterStub;
   let activatedRoute: ActivatedRouteStub;
 
@@ -42,8 +39,7 @@ describe('QueueComponent', () => {
       providers: [
         { provide: Router, useClass: RouterStub },
         { provide: ActivatedRoute, useValue: activatedRoute },
-        { provide: PlayerService, useClass: PlayerServiceStub },
-        { provide: QueueService, useClass: QueueServiceStub }
+        { provide: PlayerService, useClass: PlayerServiceStub }
       ]
     })
       .compileComponents();

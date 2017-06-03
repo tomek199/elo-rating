@@ -1,5 +1,3 @@
-import { QueueServiceStub } from './../../testing/queue-stubs';
-import { QueueService } from './../../queue/shared/queue.service';
 import { MatchServiceStub } from './../../testing/match-stubs';
 import { MatchService } from './../shared/match.service';
 import { Player } from './../../players/shared/player.model';
@@ -29,7 +27,6 @@ describe('MatchAddComponent', () => {
         { provide: PlayerService, useClass: PlayerServiceStub },
         { provide: MatchService, useClass: MatchServiceStub },
         { provide: ActivatedRoute, useValue: activatedRoute },
-        { provide: QueueService, useClass: QueueServiceStub },
         { provide: NgbTypeahead }
       ]
     })

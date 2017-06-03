@@ -4,28 +4,24 @@ import { PlayerService } from './../../players/shared/player.service';
 import { Match } from './../../matches/shared/match.model';
 import { Player } from './../../players/shared/player.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { QueueService } from './../shared/queue.service';
-import { Queue } from './../shared/queue.model';
 import { Component, OnInit, Input, SimpleChange, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-queue-list',
   templateUrl: './queue-list.component.html',
   styleUrls: ['./queue-list.component.css'],
-  providers: [PlayerService, QueueService, MatchService]
+  providers: [PlayerService, MatchService]
 })
 export class QueueListComponent implements OnInit, OnChanges {
 
   @Input('leagueId') leagueId: string;
 
-  queue: Queue;
   players = new Array<Player>();
   match: Match;
   scheduledMatches = new Array<Match>();
   time = { hour: '', minute: '' };
 
-  constructor(private playerService: PlayerService, private queueService: QueueService, private router: Router, private matchService: MatchService) {
-    this.queue = new Queue();
+  constructor(private playerService: PlayerService, private router: Router, private matchService: MatchService) {
     this.match = new Match();
     this.setTimepickerTime();
   }
@@ -37,18 +33,9 @@ export class QueueListComponent implements OnInit, OnChanges {
     //Add 'implements OnChanges' to the class.
     this.leagueId = changes['leagueId'].currentValue;
     if (this.leagueId != null) {
-      //this.getQueue(this.leagueId);
       this.getScheduledMatches(this.leagueId);
       this.getPlayers(this.leagueId);
     }
-  }
-
-  onSubmit() {
-    this.setMatchDate();
-    this.queueService.addMatchToQueue(this.match, this.queue.id).then(
-      queue => this.queue = queue
-    );
-    this.match = new Match();
   }
 
   deleteElement(index: number) {
@@ -71,12 +58,6 @@ export class QueueListComponent implements OnInit, OnChanges {
     return Number(this.time.hour) >= date.getHours() && Number(this.time.minute) > date.getMinutes();
   }
 
-  private getQueue(leagueId: string) {
-    this.queueService.getQueueByLeagueId(leagueId).then(
-      queue => this.queue = queue
-    );
-  }
-
   private getScheduledMatches(leagueId: string) {
     this.matchService.getScheduledMatches(leagueId).then(
       matches => this.scheduledMatches = matches
@@ -94,7 +75,6 @@ export class QueueListComponent implements OnInit, OnChanges {
   }
 
   refreshQueue() {
-    //this.getQueue(this.leagueId);
     this.getScheduledMatches(this.leagueId);
     this.getPlayers(this.leagueId);
   }

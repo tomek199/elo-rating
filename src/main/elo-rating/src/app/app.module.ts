@@ -1,4 +1,3 @@
-import { QueueService } from './queue/shared/queue.service';
 import { MatchService } from './matches/shared/match.service';
 import { PlayerService } from './players/shared/player.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -58,7 +57,6 @@ import { HighchartsStatic } from "angular2-highcharts/dist/HighchartsService";
   providers: [
     LeagueService,
     PlayerService,
-    QueueService,
     MatchService,
     {
       provide: HighchartsStatic,

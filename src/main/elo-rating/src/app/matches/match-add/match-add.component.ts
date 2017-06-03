@@ -1,5 +1,3 @@
-import { Queue } from './../../queue/shared/queue.model';
-import { QueueService } from './../../queue/shared/queue.service';
 import { MatchService } from './../shared/match.service';
 import { Observable } from 'rxjs/Observable';
 import { Match } from './../shared/match.model';
@@ -17,7 +15,6 @@ import 'rxjs/add/operator/debounceTime';
 export class MatchAddComponent implements OnInit {
   leagueId: string;
   matchId: string;
-  queue: Queue;
   players: Player[];
   match: Match;
   score: string;
@@ -28,8 +25,7 @@ export class MatchAddComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private playerService: PlayerService,
-    private matchService: MatchService,
-    private queueService: QueueService
+    private matchService: MatchService
   ) {
     this.match = new Match();
   }
@@ -47,7 +43,6 @@ export class MatchAddComponent implements OnInit {
         if (match_id != null) {
           this.matchId = match_id;
           this.matchService.getMatchById(this.matchId).then(match => this.match = this.matchService.serialize(match));
-          this.queueService.getQueueByLeagueId(this.leagueId).then(queue => this.queue = queue);
         }
       });
   }
@@ -94,13 +89,7 @@ export class MatchAddComponent implements OnInit {
   }
 
   create() {
-    if (this.matchId != null) {
-      this.queueService.removeMatchFromQueue(this.match, this.queue.id);
-      this.addMatch();
-    } else {
-      this.addMatch();
-    }
-
+    this.addMatch();
   }
 
   private addMatch() {
