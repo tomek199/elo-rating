@@ -28,8 +28,6 @@ import { PlayerMatchesComponent } from './players/player-matches/player-matches.
 import { PlayerStatisticsComponent } from './players/player-statistics/player-statistics.component';
 import { HighchartsStatic } from "angular2-highcharts/dist/HighchartsService";
 
-import { ClickOutsideDirective } from "angular2-click-outside/clickOutside.directive";
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -47,8 +45,7 @@ import { ClickOutsideDirective } from "angular2-click-outside/clickOutside.direc
     MatchListComponent,
     PlayerRankingComponent,
     PlayerMatchesComponent,
-    PlayerStatisticsComponent,
-    ClickOutsideDirective
+    PlayerStatisticsComponent
   ],
   imports: [
     BrowserModule,

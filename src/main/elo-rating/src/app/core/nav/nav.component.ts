@@ -78,15 +78,6 @@ export class NavComponent implements OnInit {
     ]
   }
 
-  closeQueueList() {
-    if (this.leagueId != null) {
-      let queueListElement = this.elemRef.nativeElement.querySelector('li#queueListDropdown');
-      if (queueListElement.classList.contains('show')) {
-        queueListElement.classList.remove('show');
-      }
-    }
-  }
-
   refreshQueueList() {
     this.queueListComponent.refreshQueue();
     this.queueListComponent.setTimepickerTime();
