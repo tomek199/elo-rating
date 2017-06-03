@@ -1,10 +1,11 @@
+import { Page } from './../../core/pagination/page.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmModalComponent } from './../../core/utils/confirm-modal/confirm-modal.component';
 import { Player } from './../../players/shared/player.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatchService } from './../shared/match.service';
 import { Match } from './../shared/match.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges, Input } from '@angular/core';
 
 @Component({
   selector: 'app-match-list',
@@ -13,7 +14,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MatchListComponent implements OnInit {
   leagueId: string;
-  completedMatches: Match[];
+  @Input() pageNumber: number;
+  page: Page<Match>;
   scheduledMatches: Match[];
 
   constructor(
@@ -25,6 +27,7 @@ export class MatchListComponent implements OnInit {
 
   ngOnInit() {
     this.getLeagueId();
+    this.pageNumber = 1;
     this.getMatches();
   }
 
@@ -38,11 +41,13 @@ export class MatchListComponent implements OnInit {
     this.getScheduledMatches();
   }
 
+  getPage(page: number) {
+    this.getCompletedMatches();
+  }
+
   private getCompletedMatches() {
-    this.matchService.getMatches(this.leagueId)
-      .then(matches => {
-        this.completedMatches = matches.filter(m => this.isComplete(m.scores));
-      });
+    this.matchService.getCompletedMatches(this.leagueId, this.pageNumber)
+      .then(page => this.page = page);
   }
 
   private getScheduledMatches() {
@@ -59,7 +64,7 @@ export class MatchListComponent implements OnInit {
   }
 
   hasCompletedMatches(): boolean {
-    return (this.completedMatches != undefined && this.completedMatches.length > 0);    
+    return (this.page != undefined && this.page.numberOfElements != 0);
   }
 
   hasScheduledMatches(): boolean {
@@ -68,19 +73,19 @@ export class MatchListComponent implements OnInit {
 
   getScore(index: number, player: Player): number {
     let key = player ? player.id : '';
-    return this.completedMatches[index].scores[key];
+    return this.page.content[index].scores[key];
   }
 
   isWinner(index: number, player: Player) {
     if (player) {
-      return this.completedMatches[index].scores[player.id] == 2;
+      return this.page.content[index].scores[player.id] == 2;
     } else {
       return this.checkIfDeletedIsWinner(index);
     }
   }
 
   private checkIfDeletedIsWinner(index: number) {
-    let match = this.completedMatches[index];
+    let match = this.page.content[index];
     let player = [match.playerOne, match.playerTwo].find(player => player != undefined);
     if (player != undefined) {
       return match.scores[player.id] != 2;
@@ -90,7 +95,7 @@ export class MatchListComponent implements OnInit {
   }
 
   hasBothPlayersDeleted(index: number) {
-    let match = this.completedMatches[index];
+    let match = this.page.content[index];
     return !match.playerOne && !match.playerTwo;
   }
 

@@ -47,7 +47,7 @@ describe('MatchListComponent', () => {
 
   it('should have played matches list', fakeAsync(() => {
     createComponent();
-    expect(component.completedMatches.length).toBeGreaterThan(0);
+    expect(component.page.content.length).toBeGreaterThan(0);
     expect(component.hasCompletedMatches()).toBeTruthy();
   }));
 
@@ -66,7 +66,8 @@ describe('MatchListComponent', () => {
 
   it('should display alert if matches list is empty', fakeAsync(() => {
     createComponent();
-    component.completedMatches = [];
+    component.page.content = [];
+    component.page.numberOfElements = 0;
     component.scheduledMatches = [];
     fixture.detectChanges();
     expect(component.hasMatches()).toBeFalsy();
@@ -100,10 +101,10 @@ describe('MatchListComponent', () => {
   it('should delete match where both players are deleted', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
-    let completedMatchesCount = component.completedMatches.length;
+    let completedMatchesCount = component.page.content.length;
     component.delete('777'); // 777 is id of match with both players deleted
     tick();
-    let completedMatchesCountAfterDelete = component.completedMatches.length;
+    let completedMatchesCountAfterDelete = component.page.content.length;
     expect(completedMatchesCountAfterDelete).toEqual(completedMatchesCount - 1);
   }));
 

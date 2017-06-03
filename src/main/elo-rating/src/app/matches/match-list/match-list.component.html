@@ -40,7 +40,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let match of completedMatches; let i=index">
+    <tr *ngFor="let match of page.content; let i=index">
       <td>
         <span ngbTooltip="{{match.date | date:'HH:mm'}}">
           {{match.date | date:"yyyy-MM-dd"}}
@@ -71,6 +71,7 @@
     </tr>
   </tbody>
 </table>
+<ngb-pagination [collectionSize]="page.totalElements" [(page)]="pageNumber" [pageSize]="page.size" [maxSize]="20" [boundaryLinks]="true" [rotate]="true" (pageChange)="getPage($event)" *ngIf="hasCompletedMatches()"></ngb-pagination>
 <ul class="nav justify-content-end">
   <li>
     <a [routerLink]="['/leagues', leagueId, 'matches', 'add']">Add match</a>

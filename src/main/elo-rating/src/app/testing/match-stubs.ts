@@ -1,3 +1,4 @@
+import { Page } from './../core/pagination/page.model';
 import { Player } from './../players/shared/player.model';
 import { PLAYERS } from './player-stubs';
 import { Match } from './../matches/shared/match.model';
@@ -8,6 +9,16 @@ export class MatchServiceStub {
 
   getMatches(league_id: string): Promise<Match[]> {
     return Promise.resolve(MATCHES);
+  }
+
+  getCompletedMatches(leagueId: string, page: number): Promise<Page<Match>> {
+    let matches = MATCHES.filter(match => match.completed == true);
+    let resultPage = new Page();
+    resultPage.content = matches;
+    resultPage.totalElements = matches.length;
+    resultPage.numberOfElements = matches.length;
+    resultPage.size = 5;
+    return Promise.resolve(resultPage);  
   }
 
   getMatchById(match_id: string): Promise<Match> {

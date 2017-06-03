@@ -1,4 +1,4 @@
-import { MATCHES } from './../../testing/match-stubs';
+import { Page } from './../../core/pagination/page.model';
 import { Http, Headers } from '@angular/http';
 import { environment } from './../../../environments/environment.prod';
 import { Match } from './match.model';
@@ -26,6 +26,13 @@ export class MatchService {
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as Match[]);
+  }
+
+  getCompletedMatches(leagueId: string, page: number): Promise<Page<Match>> {
+    let url = `${this.url}/leagues/${leagueId}/completed-matches?page=${page - 1}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as Page<Match>);
   }
 
   getScheduledMatches(leagueId: string): Promise<Match[]> {
