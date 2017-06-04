@@ -53,6 +53,10 @@ export class QueueListComponent implements OnInit, OnChanges {
     return this.match.isPlayersValid();
   }
 
+  isScheduledMatchesEmpty(): boolean {
+    return this.scheduledMatches.length == 0 ? true : false;
+  }
+
   private isTimepickerTimeValid(): boolean {
     let date = new Date();
     return Number(this.time.hour) >= date.getHours() && Number(this.time.minute) > date.getMinutes();

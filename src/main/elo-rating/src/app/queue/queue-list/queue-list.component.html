@@ -1,7 +1,9 @@
-<div class="dropdown-item" *ngFor="let match of scheduledMatches; let i = index" (click)="deleteElement(i)">
-    <a>
-        <span class="text-primary font-weight-bold ">{{ match.date | date: 'HH:mm' }}</span> {{ match.playerOne.username }} - {{ match.playerTwo.username }}
-    </a>
+<div *ngIf="!isScheduledMatchesEmpty()">
+    <div class="dropdown-item" *ngFor="let match of scheduledMatches; let i = index" (click)="deleteElement(i)">
+        <a>
+            <span class="text-primary font-weight-bold ">{{ match.date | date: 'HH:mm' }}</span> {{ match.playerOne.username }} - {{ match.playerTwo.username }}
+        </a>
+    </div>
+    <div class=" dropdown-divider "></div>
 </div>
-<div class="dropdown-divider "></div>
-<a class="dropdown-item " [routerLink]="['/leagues', leagueId, 'matches', 'add']">Add match to queue</a>
+<a class="dropdown-item " [routerLink]="[ '/leagues', leagueId, 'matches', 'add'] ">Add match to queue</a>
