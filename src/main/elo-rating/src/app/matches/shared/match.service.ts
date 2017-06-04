@@ -36,7 +36,7 @@ export class MatchService {
   }
 
   getScheduledMatches(leagueId: string): Promise<Match[]> {
-    let url = `${this.url}/leagues/${leagueId}/scheduled-matches`;
+    let url = `${this.url}/leagues/${leagueId}/scheduled-matches?sort=asc`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as Match[]);
