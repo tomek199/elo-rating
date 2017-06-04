@@ -85,7 +85,19 @@ export class MatchAddComponent implements OnInit {
   }
 
   formValid(): boolean {
-    return this.match.isPlayersValid();
+    if (this.match.completed) {
+      return this.match.isValid() && this.match.isPlayersValid();
+    } else {
+      return this.match.isPlayersValid() && this.isTimeValid();
+    }
+  }
+
+  private isTimeValid(): boolean {
+    let now = new Date();
+    let timepickerDate = new Date();
+    timepickerDate.setHours(Number(this.time.hour));
+    timepickerDate.setMinutes(Number(this.time.minute));
+    return now < timepickerDate ? true : false;
   }
 
   create() {
@@ -98,6 +110,14 @@ export class MatchAddComponent implements OnInit {
       .then(match => {
         this.goToList();
       });
+  }
+
+  checkboxCheckAction() {
+    this.match.completed = !this.match.completed;
+    if (!this.match.completed) {
+      this.score = "";
+      this.match.scores = {};
+    }
   }
 
   goToList() {

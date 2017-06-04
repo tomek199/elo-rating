@@ -16,7 +16,7 @@
     </div>
     <div class="form-group row">
         <label class="form-check-label">
-            <input type="checkbox" [checked]="match.completed" (change)="match.completed = !match.completed" class="form-check-input"> Complete match
+            <input type="checkbox" [checked]="match.completed" (change)="checkboxCheckAction()" class="form-check-input"> Complete match
         </label>
     </div>
     <div class="form-group row" *ngIf="match.completed">
@@ -39,7 +39,7 @@
         </div>
     </div>
     <div class="form-group row" *ngIf="!match.completed">
-        <ngb-timepicker name="match-time" [(ngModel)]="time" (ngModelChange)="setTimepickerTime()" [spinners]="true" [size]="small" [minuteStep]="10"></ngb-timepicker>
+        <ngb-timepicker name="match-time" [(ngModel)]="time" [spinners]="true" [size]="small" [minuteStep]="10"></ngb-timepicker>
     </div>
     <button type="submit" class="btn btn-success float-right" [disabled]="!formValid()" (click)="create()">Create</button>
     <button type="button" class="btn btn-link float-right" (click)="goToList()">Back to list</button>
