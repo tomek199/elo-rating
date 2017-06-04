@@ -79,6 +79,5 @@ export class NavComponent implements OnInit {
 
   refreshQueueList() {
     this.queueListComponent.refreshQueue();
-    this.queueListComponent.setTimepickerTime();
   }
 }
