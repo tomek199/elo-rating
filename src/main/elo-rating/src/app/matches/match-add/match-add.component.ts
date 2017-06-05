@@ -68,7 +68,7 @@ export class MatchAddComponent implements OnInit {
         : this.players.filter(player => player.username.toLowerCase().includes(term.toLowerCase())));
 
   playerFormatter(player: Player): string {
-    return player.username ? player.username : '';
+    return player.username ? player.username + " (" + player.rating + ")": '';
   }
 
   hasMinTwoPlayers(): boolean {
