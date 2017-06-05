@@ -71,9 +71,9 @@
     </tr>
   </tbody>
 </table>
-<div class="row">
+<div class="row" *ngIf="hasCompletedMatches()">
   <div class="col-9">
-    <ngb-pagination [collectionSize]="page.totalElements" [(page)]="pageNumber" [pageSize]="page.size" [maxSize]="10" [boundaryLinks]="true" [rotate]="true" (pageChange)="getPage($event)" *ngIf="hasCompletedMatches()"></ngb-pagination>
+    <ngb-pagination [collectionSize]="page.totalElements" [(page)]="pageNumber" [pageSize]="page.size" [maxSize]="10" [boundaryLinks]="true" [rotate]="true" (pageChange)="getPage($event)"></ngb-pagination>
   </div>
   <div class="col-3">
     Page size &nbsp;

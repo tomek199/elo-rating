@@ -52,6 +52,13 @@ export class MatchService {
       .then(response => response.json() as Match[]);
   }
 
+  getPlayerCompletedMatches(playerId: string, page: number, pageSize: number = 5): Promise<Page<Match>> {
+    let url = `${this.url}/players/${playerId}/completed-matches?page=${page - 1}&pageSize=${pageSize}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as Page<Match>);
+  }
+
   getPlayerScheduledMatches(playerId: string): Promise<Match[]> {
     let url = `${this.url}/players/${playerId}/scheduled-matches?sort=asc`;
     return this.http.get(url)

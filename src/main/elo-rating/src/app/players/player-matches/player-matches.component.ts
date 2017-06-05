@@ -1,3 +1,4 @@
+import { Page } from './../../core/pagination/page.model';
 import { ConfirmModalComponent } from './../../core/utils/confirm-modal/confirm-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Player } from './../shared/player.model';
@@ -14,7 +15,9 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/cor
 export class PlayerMatchesComponent implements OnInit, OnChanges {
   @Input() leagueId: string;
   @Input() playerId: string;
-  playedMatches: Match[];
+  pageNumber: number;
+  pageSize: number;
+  page: Page<Match>;
   scheduledMatches: Match[];
 
   constructor(
@@ -27,6 +30,8 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.getLeagueId();
     this.getPlayerId();
+    this.pageNumber = 1;
+    this.pageSize = 5;
     this.getMatches();
   }
 
@@ -45,20 +50,28 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.playedMatches = [];
     this.getMatches();
   }
 
   getMatches() {
+    if (this.playerId != undefined) {
+      this.getCompletedMatches();
+      this.getScheduledMatches();
+    }
+  }
+
+  getPage(page: number) {
     this.getCompletedMatches();
-    this.getScheduledMatches();
+  }
+
+  setPageSize() {
+    this.pageNumber = 1;
+    this.getCompletedMatches();
   }
 
   private getCompletedMatches() {
-    this.matchService.getPlayerMatches(this.playerId)
-      .then(matches => {
-        this.playedMatches = matches.filter(match => this.isComplete(match.scores));
-      });
+    this.matchService.getPlayerCompletedMatches(this.playerId, this.pageNumber, this.pageSize)
+      .then(page => this.page = page);
   }
 
   private getScheduledMatches() {
@@ -71,11 +84,11 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
   }
 
   hasMatches(): boolean {
-    return this.hasPlayedMatches();
+    return this.hasCompletedMatches();
   }
 
-  hasPlayedMatches(): boolean {
-    return (this.playedMatches != undefined && this.playedMatches.length > 0);    
+  hasCompletedMatches(): boolean {
+    return (this.page != undefined && this.page.numberOfElements > 0);    
   }
 
   hasScheduledMatches(): boolean {
@@ -84,7 +97,7 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
 
   getScore(index: number, player: Player): number {
     let key = player ? player.id : '';
-    return this.playedMatches[index].scores[key];
+    return this.page.content[index].scores[key];
   }
 
   isCurrent(player: Player): boolean {
@@ -93,14 +106,14 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
 
   isWinner(index: number, player: Player): boolean {
     if (player && player.id == this.playerId) {
-      return this.playedMatches[index].scores[player.id] == 2;
+      return this.page.content[index].scores[player.id] == 2;
     }
     return false;
   }
 
   isLooser(index: number, player: Player): boolean {
     if (player && player.id == this.playerId) {
-      return this.playedMatches[index].scores[player.id] != 2;
+      return this.page.content[index].scores[player.id] != 2;
     }
     return false;
   }

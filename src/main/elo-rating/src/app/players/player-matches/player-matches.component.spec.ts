@@ -1,3 +1,4 @@
+import { FormsModule } from '@angular/forms';
 import { League } from './../../leagues/shared/league.model';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { By } from '@angular/platform-browser';
@@ -19,7 +20,7 @@ describe('PlayerMatchesComponent', () => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
       declarations: [ PlayerMatchesComponent ],
-      imports: [ RouterTestingModule, NgbModule.forRoot() ],
+      imports: [ RouterTestingModule, FormsModule, NgbModule.forRoot() ],
       providers: [
         {provide: MatchService, useClass: MatchServiceStub},
         {provide: ActivatedRoute, useValue: activatedRoute}
@@ -51,10 +52,10 @@ describe('PlayerMatchesComponent', () => {
     expect(component.leagueId).toEqual('123');
   }));
 
-  it('should have played matches list', fakeAsync(() => {
+  it('should have completed matches list', fakeAsync(() => {
     createComponent();    
-    expect(component.playedMatches.length).toBeGreaterThan(0);
-    expect(component.hasPlayedMatches()).toBeTruthy();
+    expect(component.page.content.length).toBeGreaterThan(0);
+    expect(component.hasCompletedMatches()).toBeTruthy();
   }));
 
   it('should have scheduled matches list', fakeAsync(() => {
@@ -63,10 +64,10 @@ describe('PlayerMatchesComponent', () => {
     expect(component.hasScheduledMatches()).toBeTruthy();
   }));
 
-  it('should display played matches in table', fakeAsync(() => {
+  it('should display completed matches in table', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.queryAll(By.css('table#playedMatches tbody tr'));
+    let debugElement = fixture.debugElement.queryAll(By.css('table#completedMatches tbody tr'));
     expect(debugElement.length).toBeGreaterThan(0);
   }));
 
@@ -79,7 +80,8 @@ describe('PlayerMatchesComponent', () => {
 
   it('should display alert if matches list is empty', fakeAsync(() => {
     createComponent();
-    component.playedMatches = [];
+    component.page.content = [];
+    component.page.numberOfElements = 0;
     fixture.detectChanges();
     expect(component.hasMatches()).toBeFalsy();
     let debugElement = fixture.debugElement.query(By.css('div.alert.alert-info'));
@@ -89,7 +91,7 @@ describe('PlayerMatchesComponent', () => {
   it('should present winner in green and looser in red background', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.queryAll(By.css('table#playedMatches tbody tr'));
+    let debugElement = fixture.debugElement.queryAll(By.css('table#completedMatches tbody tr'));
     expect(debugElement[0].query(By.css('td.table-success')).nativeElement.textContent).toEqual('Player 1');
     expect(debugElement[1].query(By.css('td.table-danger')).nativeElement.textContent).toEqual('Player 1');    
   }));

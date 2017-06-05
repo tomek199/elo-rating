@@ -17,7 +17,7 @@ export class MatchServiceStub {
     resultPage.content = matches;
     resultPage.totalElements = matches.length;
     resultPage.numberOfElements = matches.length;
-    resultPage.size = 5;
+    resultPage.size = pageSize;
     return Promise.resolve(resultPage);  
   }
 
@@ -34,6 +34,16 @@ export class MatchServiceStub {
   getPlayerMatches(playerId: string): Promise<Match[]> {
     let matches = MATCHES.filter(match => this.hasPlayer(match, playerId));
     return Promise.resolve(matches);
+  }
+
+  getPlayerCompletedMatches(playerId: string, page: number, pageSize: number = 5): Promise<Page<Match>> {
+    let matches = MATCHES.filter(match => this.hasPlayer(match, playerId) && match.completed == true);
+    let resultPage = new Page();
+    resultPage.content = matches;
+    resultPage.totalElements = matches.length;
+    resultPage.numberOfElements = matches.length;
+    resultPage.size = pageSize;
+    return Promise.resolve(resultPage);  
   }
 
   getPlayerScheduledMatches(playerId: string): Promise<Match[]> {
