@@ -7,17 +7,17 @@
   <thead class="thead-default">
     <tr>
       <th>Username</th>
-      <th>Rating</th>
+      <th class="text-center">Rating</th>
       <th class="text-right">Actions</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let player of activePlayers; let i=index" [routerLink]="['/leagues', leagueId, 'players', player.id]">
-      <td>
+    <tr *ngFor="let player of activePlayers; let i=index">
+      <td width="20%" [routerLink]="['/leagues', leagueId, 'players', player.id]">
         <a [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.username}}</a>
       </td>
-      <td>{{player.rating}}</td>
-      <td class="text-right">
+      <td width="65%" class="text-center" [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.rating}}</td>
+      <td width="15%" class="text-right">
         <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/leagues', leagueId, 'players', player.id, 'edit']">Edit</a>
         <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDisableModal(i)">Disable</button>
       </td>
@@ -28,7 +28,7 @@
           <del class="font-italic">{{player.username}}</del>
         </a>
       </td>
-      <td>
+      <td class="text-center">
         <del class="font-italic">{{player.rating}}</del>
       </td>
       <td class="text-right">
