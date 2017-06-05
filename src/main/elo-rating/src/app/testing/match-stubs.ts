@@ -11,7 +11,7 @@ export class MatchServiceStub {
     return Promise.resolve(MATCHES);
   }
 
-  getCompletedMatches(leagueId: string, page: number): Promise<Page<Match>> {
+  getCompletedMatches(leagueId: string, page: number, pageSize: number = 5): Promise<Page<Match>> {
     let matches = MATCHES.filter(match => match.completed == true);
     let resultPage = new Page();
     resultPage.content = matches;

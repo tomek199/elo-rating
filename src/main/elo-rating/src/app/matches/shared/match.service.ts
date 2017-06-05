@@ -28,8 +28,8 @@ export class MatchService {
       .then(response => response.json() as Match[]);
   }
 
-  getCompletedMatches(leagueId: string, page: number): Promise<Page<Match>> {
-    let url = `${this.url}/leagues/${leagueId}/completed-matches?page=${page - 1}`;
+  getCompletedMatches(leagueId: string, page: number, pageSize: number = 5): Promise<Page<Match>> {
+    let url = `${this.url}/leagues/${leagueId}/completed-matches?page=${page - 1}&pageSize=${pageSize}`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as Page<Match>);

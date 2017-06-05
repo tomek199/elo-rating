@@ -14,7 +14,8 @@ import { Component, OnInit, SimpleChanges, Input } from '@angular/core';
 })
 export class MatchListComponent implements OnInit {
   leagueId: string;
-  @Input() pageNumber: number;
+  pageNumber: number;
+  pageSize: number;
   page: Page<Match>;
   scheduledMatches: Match[];
 
@@ -28,6 +29,7 @@ export class MatchListComponent implements OnInit {
   ngOnInit() {
     this.getLeagueId();
     this.pageNumber = 1;
+    this.pageSize = 5;
     this.getMatches();
   }
 
@@ -45,8 +47,13 @@ export class MatchListComponent implements OnInit {
     this.getCompletedMatches();
   }
 
+  setPageSize() {
+    this.pageNumber = 1;
+    this.getCompletedMatches();
+  }
+
   private getCompletedMatches() {
-    this.matchService.getCompletedMatches(this.leagueId, this.pageNumber)
+    this.matchService.getCompletedMatches(this.leagueId, this.pageNumber, this.pageSize)
       .then(page => this.page = page);
   }
 
