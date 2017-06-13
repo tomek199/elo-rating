@@ -46,26 +46,54 @@
           {{match.date | date: "yyyy-MM-dd"}}
         </span>
       </td>
-      <td *ngIf="isCurrent(match.playerOne)" [ngClass]="{'table-success': isWinner(i, match.playerOne), 'table-danger': isLooser(i, match.playerOne)}">{{match.playerOne.username}}</td>
+      <td *ngIf="isCurrent(match.playerOne)" [ngClass]="{'table-success': isWinner(i, match.playerOne), 'table-danger': isLooser(i, match.playerOne)}">
+        <span>{{match.playerOne.username}} </span>
+        <span class="small">{{getRating(i, match.playerOne)}} </span>
+        <span *ngIf="match.ratingDelta != 0">
+          <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-up small text-success"></span>
+          <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-down small text-danger"></span>
+          <span class="small">{{match.ratingDelta}}</span>
+        </span>
+      </td>
       <td *ngIf="!isCurrent(match.playerOne)">
         <em *ngIf="!match.playerOne" class="text-warning">deleted player</em>
         <a *ngIf="match.playerOne?.active == false" [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">
           <del class="text-muted">{{match.playerOne.username}}</del>
         </a>
         <a *ngIf="match.playerOne?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
+        <span class="small">{{getRating(i, match.playerOne)}} </span>
+        <span *ngIf="match.ratingDelta != 0">
+          <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-up small text-success"></span>
+          <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-down small text-danger"></span>
+          <span class="small">{{match.ratingDelta}}</span>
+        </span>
       </td>
       <td>
         <span class="badge badge-default">{{getScore(i, match.playerOne)}}</span>
         :
         <span class="badge badge-default">{{getScore(i, match.playerTwo)}}</span>        
       </td>
-      <td *ngIf="isCurrent(match.playerTwo)" [ngClass]="{'table-success': isWinner(i, match.playerTwo), 'table-danger': isLooser(i, match.playerTwo)}">{{match.playerTwo.username}}</td>
+      <td *ngIf="isCurrent(match.playerTwo)" [ngClass]="{'table-success': isWinner(i, match.playerTwo), 'table-danger': isLooser(i, match.playerTwo)}">
+        <span>{{match.playerTwo.username}} </span>
+        <span class="small">{{getRating(i, match.playerTwo)}} </span>
+        <span *ngIf="match.ratingDelta != 0">
+          <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-up small text-success"></span>
+          <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-down small text-danger"></span>
+          <span class="small">{{-match.ratingDelta}}</span>
+        </span>
+      </td>
       <td *ngIf="!isCurrent(match.playerTwo)">
         <em *ngIf="!match.playerTwo" class="text-warning">deleted player</em>
         <a *ngIf="match.playerTwo?.active == false" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">
           <del class="text-muted">{{match.playerTwo.username}}</del>
         </a>
         <a *ngIf="match.playerTwo?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
+        <span class="small">{{getRating(i, match.playerTwo)}} </span>
+        <span *ngIf="match.ratingDelta != 0">
+          <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-up small text-success"></span>
+          <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-down small text-danger"></span>
+          <span class="small">{{-match.ratingDelta}}</span>
+        </span>
       </td>
     </tr>
   </tbody>

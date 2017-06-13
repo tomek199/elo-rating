@@ -83,6 +83,11 @@ export class MatchListComponent implements OnInit {
     return this.page.content[index].scores[key];
   }
 
+  getRating(index: number, player: Player): number {
+    let key = player ? player.id : '';
+    return index < this.page.content.length ? this.page.content[index].ratings[key] : 1000;
+  }
+
   isWinner(index: number, player: Player) {
     if (player) {
       return this.page.content[index].scores[player.id] == 2;

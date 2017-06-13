@@ -100,6 +100,11 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
     return this.page.content[index].scores[key];
   }
 
+  getRating(index: number, player: Player): number {
+    let key = player ? player.id : '';
+    return index < this.page.content.length ? this.page.content[index].ratings[key] : 1000;
+  }
+
   isCurrent(player: Player): boolean {
     return player && player.id == this.playerId;
   }

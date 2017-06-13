@@ -52,6 +52,12 @@
           <del class="text-muted">{{match.playerOne.username}}</del>
         </a>            
         <a *ngIf="match.playerOne?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
+        <span class="small">{{getRating(i, match.playerOne)}} </span>
+        <span *ngIf="match.ratingDelta != 0">
+          <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-up small text-success"></span>
+          <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-down small text-danger"></span>
+          <span class="small">{{match.ratingDelta}}</span>
+        </span>
       </td>
       <td>
         <span class="badge badge-default">{{getScore(i, match.playerOne)}}</span>
@@ -64,6 +70,12 @@
           <del class="text-muted">{{match.playerTwo.username}}</del>
         </a>            
         <a *ngIf="match.playerTwo?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
+        <span class="small">{{getRating(i, match.playerTwo)}} </span>
+        <span *ngIf="match.ratingDelta != 0">
+          <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-up small text-success"></span>
+          <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-down small text-danger"></span>
+          <span class="small">{{-match.ratingDelta}}</span>
+        </span>
       </td>
       <td class="text-right">
         <button type="button" class="btn btn-outline-danger btn-sm" *ngIf="hasBothPlayersDeleted(i)" (click)="openDeleteModal(match.id)">Delete</button>

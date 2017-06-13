@@ -7,6 +7,7 @@ export class Match {
   ratings: { [id: string]: number; }
   date: Date;
   completed: boolean;
+  ratingDelta: number;
 
   constructor() {
     this.playerOne = new Player();
