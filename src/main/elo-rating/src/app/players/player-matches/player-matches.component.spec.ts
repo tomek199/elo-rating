@@ -92,8 +92,8 @@ describe('PlayerMatchesComponent', () => {
     createComponent();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('table#completedMatches tbody tr'));
-    expect(debugElement[0].query(By.css('td.table-success')).nativeElement.textContent).toEqual('Player 1');
-    expect(debugElement[1].query(By.css('td.table-danger')).nativeElement.textContent).toEqual('Player 1');    
+    expect(debugElement[0].query(By.css('td.table-success')).nativeElement.textContent).toContain('Player 1');
+    expect(debugElement[1].query(By.css('td.table-danger')).nativeElement.textContent).toContain('Player 1');    
   }));
 
   it('should present current player in blue background', fakeAsync(() => {
