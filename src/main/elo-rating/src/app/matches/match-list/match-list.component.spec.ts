@@ -95,7 +95,14 @@ describe('MatchListComponent', () => {
   it('should display delete button for matches where both players are deleted', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.queryAll(By.css('table#completedMatches tbody tr td.text-right button'));
+    let debugElement = fixture.debugElement.queryAll(By.css('table#completedMatches tbody tr td.text-right button.btn-outline-danger'));
+    expect(debugElement.length).toEqual(1);
+  }));
+
+  it('should display revert button only for first match', fakeAsync(() => {
+    createComponent();
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.queryAll(By.css('table#completedMatches tbody tr td.text-right button.btn-warning'));
     expect(debugElement.length).toEqual(1);
   }));
 

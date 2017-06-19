@@ -82,6 +82,14 @@ export class MatchService {
       .catch(this.handleError);
   }
 
+  revertMatch(id: string): Promise<boolean> {
+    let url = `${this.url}/matches/${id}/revert`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.ok)
+      .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);

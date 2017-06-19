@@ -78,6 +78,10 @@ export class MatchServiceStub {
     return Promise.resolve(new Match());
   }
 
+  revertMatch(id: string): Promise<boolean> {
+    return Promise.resolve(true);
+  }
+
   serialize(match: Match): Match {
     let output = new Match();
     output.id = match.id;

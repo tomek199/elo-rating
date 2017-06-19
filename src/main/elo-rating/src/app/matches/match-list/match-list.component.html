@@ -79,6 +79,7 @@
       </td>
       <td class="text-right">
         <button type="button" class="btn btn-outline-danger btn-sm" *ngIf="hasBothPlayersDeleted(i)" (click)="openDeleteModal(match.id)">Delete</button>
+        <button type="button" class="btn btn-warning btn-sm" *ngIf="i == 0" (click)="openRevertModal(match.id)">Revert</button>
       </td>
     </tr>
   </tbody>

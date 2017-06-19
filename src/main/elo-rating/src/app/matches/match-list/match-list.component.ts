@@ -130,6 +130,26 @@ export class MatchListComponent implements OnInit {
       });
   }
 
+  openRevertModal(matchId: string): void {
+    let modal = this.modalService.open(ConfirmModalComponent);
+    modal.componentInstance.title = 'Revert';
+    modal.componentInstance.text = `Are you sure you want to revert this match? 
+                                    Players ratings will be restoret to previous state
+                                    and match will be deleted.`;
+    modal.result.then((result) => {
+      if (result) {
+        this.revertMatch(matchId);
+      }
+    });
+  }
+
+  revertMatch(matchId: string) {
+    this.matchService.revertMatch(matchId)
+      .then(result => {
+        this.getCompletedMatches();
+      })
+  }
+
   goToMatch(matchId: string) {
     this.router.navigate(['/leagues', this.leagueId, 'matches', 'add', matchId]);
   }
