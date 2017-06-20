@@ -9,7 +9,8 @@
             <th>Position</th>
             <th>Username</th>
             <th>Rating</th>
-            <th>Ratio</th>
+            <th>Won</th>
+            <th>Lost</th>
         </tr>
     </thead>
     <tbody>
@@ -27,7 +28,10 @@
                 {{player.rating}}
             </td>
             <td>
-                <span class="ratio" *ngIf="rankedPlayersStats.get(player.id) != undefined">{{ rankedPlayersStats.get(player.id).wins }} - {{ rankedPlayersStats.get(player.id).loses }}</span>
+                <span class="won" *ngIf="rankedPlayersStats.get(player.id) != undefined">{{ rankedPlayersStats.get(player.id).wins }}</span>
+            </td>
+            <td>
+                <span class="lost" *ngIf="rankedPlayersStats.get(player.id) != undefined">{{ rankedPlayersStats.get(player.id).loses }}</span>
             </td>
         </tr>
     </tbody>

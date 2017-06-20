@@ -83,7 +83,9 @@ describe('PlayerRankingComponent', () => {
     fixture.detectChanges();
     let playerRating = component.rankedPlayers[0];
     let playerStat = component.rankedPlayersStats.get(playerRating.id);
-    let debugElement = fixture.debugElement.queryAll(By.css('table tbody tr td span.ratio'))[0];
-    expect(debugElement.nativeElement.innerText).toEqual(playerStat.wins + ' - ' + playerStat.loses);
+    let wonElement = fixture.debugElement.queryAll(By.css('table tbody tr td span.won'))[0];
+    let lostElement = fixture.debugElement.queryAll(By.css('table tbody tr td span.lost'))[0];
+    expect(wonElement.nativeElement.innerText).toEqual(playerStat.wins.toString());
+    expect(lostElement.nativeElement.innerText).toEqual(playerStat.loses.toString());
   }));
 });
