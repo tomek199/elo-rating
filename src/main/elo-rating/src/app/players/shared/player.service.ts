@@ -1,3 +1,4 @@
+import { PlayerStats } from './playerStats.model';
 import { Http, Headers } from '@angular/http';
 import { PLAYERS } from './../../testing/player-stubs';
 import { Player } from './player.model';
@@ -10,7 +11,7 @@ import 'rxjs/add/operator/toPromise';
 export class PlayerService {
 
   private url = environment.serverUrl;
-  private headers = new Headers({'Content-Type': 'application/json'});
+  private headers = new Headers({ 'Content-Type': 'application/json' });
 
   constructor(private http: Http) { }
 
@@ -32,7 +33,7 @@ export class PlayerService {
 
   addPlayer(leagueId: string, player: Player): Promise<Player> {
     let url = `${this.url}/leagues/${leagueId}/players`;
-    return this.http.post(url, JSON.stringify(player), {headers: this.headers})
+    return this.http.post(url, JSON.stringify(player), { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Player)
       .catch(this.handleError);
@@ -46,6 +47,14 @@ export class PlayerService {
       .catch(this.handleError);
   }
 
+  getPlayerStats(playerId: string): Promise<PlayerStats> {
+    let url = `${this.url}/players/${playerId}/stats`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as PlayerStats)
+      .catch(this.handleError);
+  }
+
   delete(id: string): Promise<boolean> {
     let url = `${this.url}/players/${id}`;
     return this.http.delete(url)
@@ -56,7 +65,7 @@ export class PlayerService {
 
   update(player: Player): Promise<Player> {
     let url = `${this.url}/players/${player.id}`;
-    return this.http.put(url, JSON.stringify(player), {headers: this.headers})
+    return this.http.put(url, JSON.stringify(player), { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Player)
       .catch(this.handleError);
