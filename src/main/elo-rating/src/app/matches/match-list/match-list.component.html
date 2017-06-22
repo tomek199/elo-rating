@@ -2,7 +2,7 @@
 <table id="scheduledMatches" class="shadedtable table table-bordered" *ngIf="hasScheduledMatches()">
   <thead class="thead-default">
     <tr>
-      <th>Date</th>
+      <th>Time</th>
       <th>First player</th>
       <th>Second player</th>
       <th class="text-right">Actions</th>
@@ -10,12 +10,16 @@
   </thead>
   <tbody>
     <tr *ngFor="let match of scheduledMatches">
-      <td>{{match.date | date: "yyyy-MM-dd HH:mm"}}</td>
+      <td>{{match.date | date: "HH:mm"}}</td>
       <td>
-        <a [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
+        <a [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}
+        </a>
+        <span class="small" ngbTooltip="Actual rating">{{match.playerOne.rating}}</span>
       </td>
       <td>
-        <a [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
+        <a [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}
+        </a>
+        <span class="small" ngbTooltip="Actual rating">{{match.playerTwo.rating}}</span>
       </td>
       <td class="text-right">
         <button type="button" class="btn btn-outline-primary btn-sm" (click)="goToMatch(match.id)">Complete</button>
@@ -52,7 +56,7 @@
           <del class="text-muted">{{match.playerOne.username}}</del>
         </a>            
         <a *ngIf="match.playerOne?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
-        <span class="small">{{getRating(i, match.playerOne)}} </span>
+        <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerOne)}}</span>
         <span *ngIf="match.ratingDelta != 0">
           <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-up small text-success"></span>
           <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-down small text-danger"></span>
@@ -70,7 +74,7 @@
           <del class="text-muted">{{match.playerTwo.username}}</del>
         </a>            
         <a *ngIf="match.playerTwo?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
-        <span class="small">{{getRating(i, match.playerTwo)}} </span>
+        <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerTwo)}}</span>
         <span *ngIf="match.ratingDelta != 0">
           <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-up small text-success"></span>
           <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-down small text-danger"></span>
