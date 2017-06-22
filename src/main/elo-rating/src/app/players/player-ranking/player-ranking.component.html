@@ -27,12 +27,21 @@
             <td>
                 {{player.rating}}
             </td>
-            <td>
-                <span class="won" *ngIf="rankedPlayersStats.get(player.id) != undefined">{{ rankedPlayersStats.get(player.id).wins }}</span>
+            <td [ngSwitch]="rankedPlayersStats.get(player.id)">
+                <div *ngSwitchCase="undefined">
+                    <app-spinner></app-spinner>
+                </div>
+                <div *ngSwitchDefault>
+                    <span class="won">{{ rankedPlayersStats.get(player.id).wins }}</span>
+                </div>
             </td>
-            <td>
-                <span class="lost" *ngIf="rankedPlayersStats.get(player.id) != undefined">{{ rankedPlayersStats.get(player.id).loses }}</span>
-            </td>
+            <td [ngSwitch]="rankedPlayersStats.get(player.id)">
+                <div *ngSwitchCase="undefined">
+                    <app-spinner></app-spinner>
+                </div>
+                <div *ngSwitchDefault>
+                    <span class="lost">{{ rankedPlayersStats.get(player.id).loses }}</span>
+                </div>
         </tr>
     </tbody>
 </table>
