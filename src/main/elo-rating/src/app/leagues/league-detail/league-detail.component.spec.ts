@@ -1,6 +1,5 @@
-import { PlayerServiceStub } from './../../testing/player-stubs';
+import { PlayerServiceStub, PlayerRankingStubComponent } from './../../testing/player-stubs';
 import { PlayerService } from './../../players/shared/player.service';
-import { PlayerRankingComponent } from './../../players/player-ranking/player-ranking.component';
 /* tslint:disable:no-unused-variable */
 import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -23,7 +22,7 @@ describe('LeagueDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ 
         LeagueDetailComponent,
-        PlayerRankingComponent
+        PlayerRankingStubComponent
       ], 
       imports: [ RouterTestingModule ],
       providers: [
@@ -76,7 +75,7 @@ describe('LeagueDetailComponent', () => {
   it('should contains player-ranking component', fakeAsync(() => {
     createComponent('123');
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.query(By.directive(PlayerRankingComponent));
+    let debugElement = fixture.debugElement.query(By.directive(PlayerRankingStubComponent));
     expect(debugElement).toBeTruthy();
   }));
 });

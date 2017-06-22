@@ -1,3 +1,4 @@
+import { SpinnerComponent } from './../../core/spinner/spinner.component';
 import { By } from '@angular/platform-browser';
 import { PlayerService } from './../shared/player.service';
 import { PlayerServiceStub, PLAYERS_STATS } from './../../testing/player-stubs';
@@ -16,7 +17,7 @@ describe('PlayerRankingComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [PlayerRankingComponent],
+      declarations: [PlayerRankingComponent, SpinnerComponent],
       imports: [RouterTestingModule],
       providers: [
         { provide: PlayerService, useClass: PlayerServiceStub },

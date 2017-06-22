@@ -87,3 +87,12 @@ export class PlayerStatisticsStubComponent implements OnInit {
   constructor() { }
   ngOnInit() { }
 }
+
+@Component({
+  selector: 'app-player-ranking',
+  template: ''
+})
+export class PlayerRankingStubComponent implements OnInit {
+  constructor() { }
+  ngOnInit() { }
+}
