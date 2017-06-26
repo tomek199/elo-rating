@@ -22,7 +22,8 @@
         <span class="small" ngbTooltip="Actual rating">{{match.playerTwo.rating}}</span>
       </td>
       <td class="text-right">
-        <button type="button" class="btn btn-outline-primary btn-sm" (click)="goToMatch(match.id)">Complete</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="editMatch(match.id)">Edit</button>
+        <button type="button" class="btn btn-outline-primary btn-sm" (click)="completeMatch(match.id)">Complete</button>
         <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(match.id)">Delete</button>
       </td>
     </tr>

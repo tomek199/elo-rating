@@ -21,7 +21,7 @@ export const routes: Routes = [
   { path: 'leagues/:league_id/players/:player_id', component: PlayerDetailComponent },
   { path: 'leagues/:league_id/players/:player_id/edit', component: PlayerEditComponent },
   { path: 'leagues/:league_id/matches/add', component: MatchAddComponent },
-  { path: 'leagues/:league_id/matches/add/:match_id', component: MatchAddComponent },
+  { path: 'leagues/:league_id/matches/add/:match_id/:mode', component: MatchAddComponent },
   { path: 'leagues/:league_id/matches', component: MatchListComponent },
   { path: '**', redirectTo: '/leagues', pathMatch: 'full' } // this path must be the last one
 ];

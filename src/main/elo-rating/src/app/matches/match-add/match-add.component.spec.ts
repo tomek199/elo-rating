@@ -33,12 +33,12 @@ describe('MatchAddComponent', () => {
       .compileComponents();
   }));
 
-  function createComponent(matchId?: string) {
+  function createComponent(matchId?: string, mode?: string) {
     fixture = TestBed.createComponent(MatchAddComponent);
     component = fixture.componentInstance;
     activatedRoute.testParams = { league_id: '123' };
-    if (matchId != null) {
-      activatedRoute.testParams = { match_id: matchId };
+    if (matchId != null && mode != null) {
+      activatedRoute.testParams = { match_id: matchId, mode: mode };
     }
     fixture.detectChanges();
     tick();
@@ -55,9 +55,32 @@ describe('MatchAddComponent', () => {
   }));
 
   it('should have match when match id provided', fakeAsync(() => {
-    createComponent('111');
+    createComponent('111', 'complete');
     expect(component.matchId).toEqual('111');
     expect(component.match.id).toEqual('111');
+  }));
+
+  it('should have componentMode when match id is provided', fakeAsync(() => {
+    createComponent('111', 'edit');
+    expect(component.mode).toEqual('edit');
+  }));
+
+  it('should have disabled checked "Complete match" checkbox for "complete" mode', fakeAsync(() => {
+    createComponent('111', 'complete');
+    fixture.detectChanges();
+    expect(component.mode).toEqual('complete');
+    expect(component.match.completed).toEqual(true);
+    let debugElement = fixture.debugElement.query(By.css('form input[type=checkbox]:disabled'));
+    expect(debugElement).toBeTruthy();
+  }));
+
+  it('should have disabled unchecked "Complete match" checkbox for "edit" mode', fakeAsync(() => {
+    createComponent('111', 'edit');
+    fixture.detectChanges();
+    expect(component.mode).toEqual('edit');
+    expect(component.match.completed).toEqual(false);
+    let debugElement = fixture.debugElement.query(By.css('form input[type=checkbox]:disabled'));    
+    expect(debugElement).toBeTruthy();    
   }));
 
   it('should have players list', fakeAsync(() => {

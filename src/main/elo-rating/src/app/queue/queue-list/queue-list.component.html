@@ -1,5 +1,5 @@
 <h6 class="dropdown-header">Matches queue</h6>
-<button class="dropdown-item" *ngFor="let match of scheduledMatches; let i = index" (click)="goToMatch(match.id)">
+<button class="dropdown-item" *ngFor="let match of scheduledMatches; let i = index" (click)="completeMatch(match.id)">
   <span class="text-primary font-weight-bold ">{{ match.date | date: 'HH:mm' }}</span>
   {{ match.playerOne.username }} 
   <span class="font-italic text-muted">{{match.playerOne.rating}}</span>

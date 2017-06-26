@@ -154,7 +154,11 @@ export class MatchListComponent implements OnInit {
     return index == 0 && this.pageNumber == 1;
   }
 
-  goToMatch(matchId: string) {
-    this.router.navigate(['/leagues', this.leagueId, 'matches', 'add', matchId]);
+  completeMatch(matchId: string) {
+    this.router.navigate(['/leagues', this.leagueId, 'matches', 'add', matchId, 'complete']);
+  }
+
+  editMatch(matchId: string) {
+    this.router.navigate(['/leagues', this.leagueId, 'matches', 'add', matchId, 'edit']);    
   }
 }

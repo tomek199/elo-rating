@@ -18,6 +18,7 @@ export class MatchAddComponent implements OnInit {
   players: Player[];
   match: Match;
   score: string;
+  mode: string;
 
   time = { hour: '', minute: '' };
 
@@ -42,12 +43,24 @@ export class MatchAddComponent implements OnInit {
       .forEach(match_id => {
         if (match_id != null) {
           this.matchId = match_id;
-          this.matchService.getMatchById(this.matchId)
-            .then(match => {
-              this.match = this.matchService.serialize(match)
-              this.match.completed = true;
-            });
+          this.getMatch();
         }
+      });
+  }
+
+  getMatch() {
+    this.matchService.getMatchById(this.matchId)
+      .then(match => {
+        this.match = this.matchService.serialize(match)
+        this.getMode();
+      });
+  }
+
+  getMode() {
+    this.route.params.map(param => param['mode'])
+      .forEach(mode => {
+        this.mode = mode;
+        mode == 'complete' ? this.match.completed = true : this.match.completed = false;
       });
   }
 
@@ -59,6 +72,13 @@ export class MatchAddComponent implements OnInit {
   getPlayers() {
     this.playerService.getPlayers(this.leagueId)
       .then(players => this.players = players.filter(p => p.active === true));
+  }
+
+  getComponentName(): string {
+    if (this.mode != undefined) 
+      return this.mode.charAt(0).toUpperCase() + this.mode.slice(1) + ' match';
+    else 
+      return 'Add match'
   }
 
   searchPlayer = (text$: Observable<string>) =>

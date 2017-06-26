@@ -44,7 +44,7 @@ export class QueueListComponent implements OnInit, OnChanges {
     this.getScheduledMatches(this.leagueId);
   }
 
-  goToMatch(matchId: string) {
-    this.router.navigate(['/leagues', this.leagueId, 'matches', 'add', matchId]);
+  completeMatch(matchId: string) {
+    this.router.navigate(['/leagues', this.leagueId, 'matches', 'add', matchId, 'complete']);
   }
 }
