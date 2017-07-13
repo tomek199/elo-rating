@@ -1,3 +1,4 @@
+import { Series } from './series.model';
 import { Match } from './../../../matches/shared/match.model';
 import { ChartBuilder } from "app/core/utils/charts/chart-builder";
 
@@ -17,7 +18,7 @@ export class RatingHistoryChart extends ChartBuilder {
       let rating = match.ratings[this.playerId];
       data.push([opponent, rating]);
     });
-    this.chart.series.push({type: 'line', name: 'Rating', data: data});
+    this.chart.series.push(new Series('Rating', 'line', data));
   }  
 
   private getOpponent(match: Match): string {
