@@ -1,6 +1,5 @@
 import { PlayerStats } from './playerStats.model';
 import { Http, Headers } from '@angular/http';
-import { PLAYERS } from './../../testing/player-stubs';
 import { Player } from './player.model';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';

@@ -71,6 +71,12 @@ describe('PlayerStatisticsComponent', () => {
     expect(matchesStats.series[2].name).toEqual('Percentage of winnings');
     expect(matchesStats.series[2].data.value).toEqual(33);
     expect(matchesStats.series[2].data.max).toEqual(100);
+    expect(matchesStats.series[3].name).toEqual('Sets won');
+    expect(matchesStats.series[3].data.value).toEqual(3);
+    expect(matchesStats.series[3].data.max).toEqual(7);
+    expect(matchesStats.series[4].name).toEqual('Sets lost');
+    expect(matchesStats.series[4].data.value).toEqual(4);
+    expect(matchesStats.series[4].data.max).toEqual(7);
   }));
 
   it('should display alert if matches list is empty', fakeAsync(() => {

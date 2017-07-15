@@ -31,11 +31,11 @@ export class PlayerStatisticsComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.getLeagueId();
     this.getPlayerId();
-    this.getMatches();
+    this.generateStatistics();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.getMatches();
+    this.generateStatistics();
   }
 
   getLeagueId() {
@@ -52,7 +52,7 @@ export class PlayerStatisticsComponent implements OnInit, OnChanges {
     }
   }
 
-  getMatches() {
+  generateStatistics() {
     this.matchService.getPlayerMatches(this.playerId, 'asc')
       .then(matches => {
         this.matches = matches.filter(match => this.isComplete(match.scores));

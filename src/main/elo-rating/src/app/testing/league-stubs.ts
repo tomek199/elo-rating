@@ -1,14 +1,9 @@
+import { LEAGUES } from './data/leagues';
 import { League } from './../leagues/shared/league.model';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
 import { Response } from '@angular/http'
 import 'rxjs/add/observable/of';
-
-export const LEAGUES: League[] = [
-  {id: '123', name: 'League name'},
-  {id: '222', name: 'League two'},
-  {id: '333', name: 'League three'}
-]
 
 @Injectable()
 export class LeagueServiceStub {

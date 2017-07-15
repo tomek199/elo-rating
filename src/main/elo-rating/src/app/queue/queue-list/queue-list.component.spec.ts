@@ -1,12 +1,12 @@
 import { RouterTestingModule } from '@angular/router/testing';
 import { Match } from './../../matches/shared/match.model';
-import { MATCHES, SCHEDULED_MATCHES } from './../../testing/match-stubs';
+import { MATCHES, SCHEDULED_MATCHES } from './../../testing/data/matches';
 import { Player } from './../../players/shared/player.model';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRouteStub, RouterStub, RouterLinkStub } from './../../testing/routing-stubs';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PlayerServiceStub, PLAYERS } from './../../testing/player-stubs';
+import { PlayerServiceStub } from './../../testing/player-stubs';
 import { PlayerService } from './../../players/shared/player.service';
 import { HttpModule } from '@angular/http';
 import { AppModule } from './../../app.module';
@@ -14,7 +14,6 @@ import { AppModule } from './../../app.module';
 import { async, ComponentFixture, TestBed, fakeAsync, tick, inject } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-
 import { QueueListComponent } from './queue-list.component';
 
 describe('QueueComponent', () => {
