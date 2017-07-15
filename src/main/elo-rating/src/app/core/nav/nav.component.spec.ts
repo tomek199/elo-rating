@@ -69,7 +69,7 @@ describe('NavComponent', () => {
   it('should render title in navbar header', () => {
     createComponent();
     let debugElement = fixture.debugElement.query(By.css('nav div.container a.navbar-brand'));
-    expect(debugElement.nativeElement.textContent).toEqual('EloRating');
+    expect(debugElement.nativeElement.textContent).toContain('EloRating');
   });
 
   it('should render navbar for user which selected league', fakeAsync(() => {
