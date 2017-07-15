@@ -1,4 +1,4 @@
-import { PlayerStats } from './playerStats.model';
+import { PlayerStats } from './player-stats.model';
 import { Http, Headers } from '@angular/http';
 import { Player } from './player.model';
 import { Injectable } from '@angular/core';

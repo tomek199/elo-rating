@@ -1,4 +1,4 @@
-import { PlayerStats } from './../shared/playerStats.model';
+import { PlayerStats } from './../shared/player-stats.model';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerService } from './../shared/player.service';
 import { Player } from './../shared/player.model';

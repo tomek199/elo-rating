@@ -1,5 +1,5 @@
 import { Player } from './../../players/shared/player.model';
-import { PlayerStats } from './../../players/shared/playerStats.model';
+import { PlayerStats } from './../../players/shared/player-stats.model';
 
 export const PLAYERS: Player[] = [
   { id: '123', username: 'Player 1', rating: 1000, active: true },

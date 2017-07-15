@@ -1,6 +1,6 @@
 import { PLAYERS, PLAYERS_STATS } from './data/players';
 import { Player } from './../players/shared/player.model';
-import { PlayerStats } from './../players/shared/playerStats.model';
+import { PlayerStats } from './../players/shared/player-stats.model';
 import { Injectable, OnInit, Component, Input } from '@angular/core';
 
 @Injectable()
