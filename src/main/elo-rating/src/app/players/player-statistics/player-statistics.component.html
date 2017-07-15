@@ -5,7 +5,43 @@
 <ngb-tabset *ngIf="hasMatches()">
   <ngb-tab title="Rating history">
     <ng-template ngbTabContent>
-      <chart [options]="ratingHistory"></chart>  
+      <div class="row my-3">
+        <div class="col-4">
+          <form id="chartPeriodForm" #chartPeriod="ngForm">
+            <legend>Rating chart period</legend>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" [(ngModel)]="period" (ngModelChange)="buildRatingHistory()" name="period" value="0">
+                Today
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" [(ngModel)]="period" (ngModelChange)="buildRatingHistory()" name="period" value="7">
+                <span ngbTooltip="Last 7 days" placement="right">Last week</span>
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" [(ngModel)]="period" (ngModelChange)="buildRatingHistory()" name="period" value="30">
+                <span ngbTooltip="Last 30 days" placement="right">Last month</span>                
+              </label>
+            </div>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" [(ngModel)]="period" (ngModelChange)="buildRatingHistory()" name="period" value="-1">
+                From the beginning
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="col-8">
+          <div class="alert alert-info" *ngIf="!hasRatingHistory()">
+            No chart to show for this time period!
+          </div>
+          <chart [options]="ratingHistory" *ngIf="hasRatingHistory()"></chart>
+        </div>
+      </div>
     </ng-template>
   </ngb-tab>
   <ngb-tab title="Matches">

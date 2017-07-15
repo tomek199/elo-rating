@@ -12,7 +12,7 @@ export class RatingHistoryChart extends ChartBuilder {
   }
 
   public buildSeries() {
-    let data = [['default', 1000]];
+    let data = [];
     this.matches.forEach(match => {
       let opponent = this.getOpponent(match);
       let rating = match.ratings[this.playerId];

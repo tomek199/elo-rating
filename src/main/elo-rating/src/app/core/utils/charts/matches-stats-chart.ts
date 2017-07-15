@@ -21,8 +21,10 @@ export class MatchesStatsChart extends ChartBuilder {
   }
 
   public buildSeries() {
-    this.generateData();
-    this.fillSeries();
+    if (this.matches.length > 0) {
+      this.generateData();
+      this.fillSeries();
+    }
   }
 
   private generateData() {

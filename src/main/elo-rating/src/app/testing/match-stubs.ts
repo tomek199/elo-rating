@@ -47,6 +47,11 @@ export class MatchServiceStub {
     return Promise.resolve(resultPage);  
   }
 
+  getPlayerCompletedMatchesByDate(playerId: string, from?: Date, to?: Date): Promise<Match[]> {
+    let matches = MATCHES.filter(match => this.hasPlayer(match, playerId) && match.completed);
+    return Promise.resolve(matches);
+  }
+
   getPlayerScheduledMatches(playerId: string): Promise<Match[]> {
     let matches = MATCHES.filter(match => this.hasPlayer(match, playerId) && match.completed == false);
     return Promise.resolve(matches);

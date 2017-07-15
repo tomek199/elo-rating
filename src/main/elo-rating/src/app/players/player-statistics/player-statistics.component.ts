@@ -16,8 +16,8 @@ import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/cor
 export class PlayerStatisticsComponent implements OnInit, OnChanges {
   @Input() leagueId: string;
   @Input() playerId: string;
-  private matches: Match[];
   private chartDirector: ChartDirector;
+  period: string;
   ratingHistory: Chart;
   matchesStats: Chart;
 
@@ -31,6 +31,7 @@ export class PlayerStatisticsComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.getLeagueId();
     this.getPlayerId();
+    this.period = '7';
     this.generateStatistics();
   }
 
@@ -53,31 +54,45 @@ export class PlayerStatisticsComponent implements OnInit, OnChanges {
   }
 
   generateStatistics() {
-    this.matchService.getPlayerMatches(this.playerId, 'asc')
-      .then(matches => {
-        this.matches = matches.filter(match => this.isComplete(match.scores));
-        this.buildRatingHistory();
-        this.buildMatchesStats();
-      });
-  }
-
-  isComplete(scores: {[id: string] : number;}): boolean {
-    return Object.keys(scores).length > 0;
+    this.buildRatingHistory();
+    this.buildMatchesStats();
   }
 
   buildRatingHistory() {
-    let chartBuilder = new RatingHistoryChart(this.matches, this.playerId);
-    this.chartDirector.setBuilder(chartBuilder);
-    this.ratingHistory = this.chartDirector.build();
+    this.matchService.getPlayerCompletedMatchesByDate(this.playerId, this.getDateFrom())
+      .then(matches => {
+        let chartBuilder = new RatingHistoryChart(matches, this.playerId);
+        this.chartDirector.setBuilder(chartBuilder);
+        this.ratingHistory = this.chartDirector.build();
+      });
   }
 
   buildMatchesStats() {
-    let chartBuilder = new MatchesStatsChart(this.matches, this.playerId);
-    this.chartDirector.setBuilder(chartBuilder);
-    this.matchesStats = this.chartDirector.build();
+    this.matchService.getPlayerCompletedMatchesByDate(this.playerId)
+      .then(matches => {
+        let chartBuilder = new MatchesStatsChart(matches, this.playerId);
+        this.chartDirector.setBuilder(chartBuilder);
+        this.matchesStats = this.chartDirector.build();
+      });
+  }
+
+  private getDateFrom(): Date {
+    if (this.period != undefined && +this.period != -1) {
+      let currentDate = new Date();
+      return new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - +this.period);
+    }
+    return null;
   }
 
   hasMatches(): boolean {
-    return (this.matches != undefined && this.matches.length > 0);
+    return this.matchesStats != undefined && this.matchesStats.series.length > 0;
+  }
+
+  hasRatingHistory(): boolean {
+    if (this.ratingHistory != undefined) {
+      let data = this.ratingHistory.series[0].data as Array<any>;
+      return data.length > 0;
+    }
+    return false;
   }
 }

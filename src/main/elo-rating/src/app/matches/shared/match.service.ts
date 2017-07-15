@@ -59,6 +59,19 @@ export class MatchService {
       .then(response => response.json() as Page<Match>);
   }
 
+  getPlayerCompletedMatchesByDate(playerId: string, from?: Date, to?: Date): Promise<Match[]> {
+    let url = `${this.url}/players/${playerId}/completed-matches-by-date`;
+    if (from) {
+      url += `?from=${from.getFullYear()}-${from.getMonth() + 1}-${from.getDate()}`;
+      if (to) {
+        url += `&to=${to.getFullYear()}-${to.getMonth() + 1}-${to.getDate()}`;
+      }
+    }
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as Match[]);
+  }
+
   getPlayerScheduledMatches(playerId: string): Promise<Match[]> {
     let url = `${this.url}/players/${playerId}/scheduled-matches?sort=asc`;
     return this.http.get(url)
