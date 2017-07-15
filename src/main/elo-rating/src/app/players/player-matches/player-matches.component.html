@@ -15,12 +15,15 @@
       <td class="table-info" *ngIf="isCurrent(match.playerTwo)">{{match.playerTwo.username}}</td>      
       <td *ngIf="!isCurrent(match.playerOne)">
         <a [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
+        <span class="small" ngbTooltip="Actual rating">{{match.playerOne.rating}}</span>
       </td>
       <td *ngIf="!isCurrent(match.playerTwo)">
         <a [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
+        <span class="small" ngbTooltip="Actual rating">{{match.playerTwo.rating}}</span>        
       </td>
       <td class="text-right">
-        <button type="button" class="btn btn-outline-primary btn-sm" (click)="goToMatch(match.id)">Complete</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="editMatch(match.id)">Edit</button>
+        <button type="button" class="btn btn-outline-primary btn-sm" (click)="completeMatch(match.id)">Complete</button>
         <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(match.id)">Delete</button>
       </td>
     </tr>
@@ -48,7 +51,7 @@
       </td>
       <td *ngIf="isCurrent(match.playerOne)" [ngClass]="{'table-success': isWinner(i, match.playerOne), 'table-danger': isLooser(i, match.playerOne)}">
         <span>{{match.playerOne.username}} </span>
-        <span class="small">{{getRating(i, match.playerOne)}} </span>
+        <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerOne)}}</span>
         <span *ngIf="match.ratingDelta != 0">
           <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-up small text-success"></span>
           <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-down small text-danger"></span>
@@ -61,7 +64,7 @@
           <del class="text-muted">{{match.playerOne.username}}</del>
         </a>
         <a *ngIf="match.playerOne?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
-        <span class="small">{{getRating(i, match.playerOne)}} </span>
+        <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerOne)}}</span>
         <span *ngIf="match.ratingDelta != 0">
           <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-up small text-success"></span>
           <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-down small text-danger"></span>
@@ -75,7 +78,7 @@
       </td>
       <td *ngIf="isCurrent(match.playerTwo)" [ngClass]="{'table-success': isWinner(i, match.playerTwo), 'table-danger': isLooser(i, match.playerTwo)}">
         <span>{{match.playerTwo.username}} </span>
-        <span class="small">{{getRating(i, match.playerTwo)}} </span>
+        <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerTwo)}}</span>
         <span *ngIf="match.ratingDelta != 0">
           <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-up small text-success"></span>
           <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-down small text-danger"></span>
@@ -88,7 +91,7 @@
           <del class="text-muted">{{match.playerTwo.username}}</del>
         </a>
         <a *ngIf="match.playerTwo?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
-        <span class="small">{{getRating(i, match.playerTwo)}} </span>
+        <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerTwo)}}</span>
         <span *ngIf="match.ratingDelta != 0">
           <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-up small text-success"></span>
           <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-down small text-danger"></span>
