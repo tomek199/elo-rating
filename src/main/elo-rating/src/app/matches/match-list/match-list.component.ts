@@ -29,7 +29,6 @@ export class MatchListComponent implements OnInit {
   ngOnInit() {
     this.getLeagueId();
     this.pageNumber = 1;
-    this.pageSize = 5;
     this.getMatches();
   }
 
@@ -47,8 +46,9 @@ export class MatchListComponent implements OnInit {
     this.getCompletedMatches();
   }
 
-  setPageSize() {
+  setPageSize(pageSize: number) {
     this.pageNumber = 1;
+    this.pageSize = pageSize;
     this.getCompletedMatches();
   }
 

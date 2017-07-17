@@ -94,21 +94,7 @@
     <ngb-pagination [collectionSize]="page.totalElements" [(page)]="pageNumber" [pageSize]="page.size" [maxSize]="10" [boundaryLinks]="true" [rotate]="true" (pageChange)="getPage($event)"></ngb-pagination>
   </div>
   <div class="col-3">
-    Page size &nbsp;
-    <div [(ngModel)]="pageSize" (ngModelChange)="setPageSize()" ngbRadioGroup name="pageSize">
-      <label class="btn btn-sm btn-secondary">
-        <input type="radio" [value]="5">5
-      </label>
-      <label class="btn btn-sm btn-secondary">
-        <input type="radio" [value]="10">10
-      </label>
-      <label class="btn btn-sm btn-secondary">
-        <input type="radio" [value]="20">20
-      </label>
-      <label class="btn btn-sm btn-secondary">
-        <input type="radio" [value]="50">50
-      </label>
-    </div>
+    <app-page-size (onPageChange)="setPageSize($event)"></app-page-size>
   </div>
 </div>
 <ul class="nav justify-content-end">

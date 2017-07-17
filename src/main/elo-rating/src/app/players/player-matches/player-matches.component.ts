@@ -31,7 +31,6 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
     this.getLeagueId();
     this.getPlayerId();
     this.pageNumber = 1;
-    this.pageSize = 5;
     this.getMatches();
   }
 
@@ -64,8 +63,9 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
     this.getCompletedMatches();
   }
 
-  setPageSize() {
+  setPageSize(pageSize: number) {
     this.pageNumber = 1;
+    this.pageSize = pageSize;
     this.getCompletedMatches();
   }
 

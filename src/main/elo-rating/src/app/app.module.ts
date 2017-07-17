@@ -27,6 +27,7 @@ import { PlayerMatchesComponent } from './players/player-matches/player-matches.
 import { PlayerStatisticsComponent } from './players/player-statistics/player-statistics.component';
 import { HighchartsStatic } from "angular2-highcharts/dist/HighchartsService";
 import { SpinnerComponent } from './core/directives/spinner/spinner.component';
+import { PageSizeComponent } from './core/directives/page-size/page-size.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { SpinnerComponent } from './core/directives/spinner/spinner.component';
     PlayerRankingComponent,
     PlayerMatchesComponent,
     PlayerStatisticsComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    PageSizeComponent
   ],
   imports: [
     BrowserModule,

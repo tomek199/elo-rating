@@ -1,3 +1,4 @@
+import { PageSizeComponent } from './../../core/directives/page-size/page-size.component';
 import { FormsModule } from '@angular/forms';
 import { League } from './../../leagues/shared/league.model';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -19,7 +20,7 @@ describe('PlayerMatchesComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ PlayerMatchesComponent ],
+      declarations: [ PlayerMatchesComponent, PageSizeComponent ],
       imports: [ RouterTestingModule, FormsModule, NgbModule.forRoot() ],
       providers: [
         {provide: MatchService, useClass: MatchServiceStub},
