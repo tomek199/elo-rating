@@ -1,5 +1,5 @@
 import { MATCHES } from './data/matches';
-import { Page } from './../core/pagination/page.model';
+import { Page } from './../core/utils/pagination/page.model';
 import { Player } from './../players/shared/player.model';
 import { PLAYERS } from './data/players';
 import { Match } from './../matches/shared/match.model';

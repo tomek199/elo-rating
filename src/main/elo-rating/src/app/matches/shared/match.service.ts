@@ -1,4 +1,4 @@
-import { Page } from './../../core/pagination/page.model';
+import { Page } from './../../core/utils/pagination/page.model';
 import { Http, Headers } from '@angular/http';
 import { environment } from './../../../environments/environment.prod';
 import { Match } from './match.model';

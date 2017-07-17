@@ -1,4 +1,4 @@
-import { Page } from './../../core/pagination/page.model';
+import { Page } from './../../core/utils/pagination/page.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmModalComponent } from './../../core/directives/confirm-modal/confirm-modal.component';
 import { Player } from './../../players/shared/player.model';
