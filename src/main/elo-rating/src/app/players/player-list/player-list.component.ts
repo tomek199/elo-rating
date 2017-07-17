@@ -1,4 +1,4 @@
-import { ConfirmModalComponent } from './../../core/utils/confirm-modal/confirm-modal.component';
+import { ConfirmModalComponent } from './../../core/directives/confirm-modal/confirm-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PlayerService } from './../shared/player.service';
 import { ActivatedRoute } from '@angular/router';

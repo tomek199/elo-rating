@@ -1,5 +1,5 @@
 import { Page } from './../../core/pagination/page.model';
-import { ConfirmModalComponent } from './../../core/utils/confirm-modal/confirm-modal.component';
+import { ConfirmModalComponent } from './../../core/directives/confirm-modal/confirm-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Player } from './../shared/player.model';
 import { MatchService } from './../../matches/shared/match.service';

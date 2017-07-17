@@ -1,6 +1,6 @@
 import { Page } from './../../core/pagination/page.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmModalComponent } from './../../core/utils/confirm-modal/confirm-modal.component';
+import { ConfirmModalComponent } from './../../core/directives/confirm-modal/confirm-modal.component';
 import { Player } from './../../players/shared/player.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatchService } from './../shared/match.service';
