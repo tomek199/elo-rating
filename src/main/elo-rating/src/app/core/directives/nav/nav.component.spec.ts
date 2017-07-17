@@ -1,20 +1,20 @@
-import { RouterLinkStub } from './../../testing/routing-stubs';
-import { PlayerServiceStub } from './../../testing/player-stubs';
-import { PlayerService } from './../../players/shared/player.service';
+import { RouterLinkStub } from './../../../testing/routing-stubs';
+import { PlayerServiceStub } from './../../../testing/player-stubs';
+import { PlayerService } from './../../../players/shared/player.service';
 import { FormsModule } from '@angular/forms';
-import { LeagueSearchComponent } from './../../leagues/league-search/league-search.component';
-import { LeagueServiceStub } from './../../testing/league-stubs';
-import { LeagueService } from './../../leagues/shared/league.service';
+import { LeagueSearchComponent } from './../../../leagues/league-search/league-search.component';
+import { LeagueServiceStub } from './../../../testing/league-stubs';
+import { LeagueService } from './../../../leagues/shared/league.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Router } from '@angular/router';
-import { RouterStub, ActivatedRouteStub } from '../../testing/routing-stubs';
+import { RouterStub, ActivatedRouteStub } from '../../../testing/routing-stubs';
 import { HttpModule } from '@angular/http';
 
 import { NavComponent } from './nav.component';
-import { QueueListComponent } from './../../testing/queue-stubs';
+import { QueueListComponent } from './../../../testing/queue-stubs';
 
 describe('NavComponent', () => {
   let component: NavComponent;

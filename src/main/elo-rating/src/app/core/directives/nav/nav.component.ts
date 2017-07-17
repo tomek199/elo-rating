@@ -1,6 +1,6 @@
-import { QueueListComponent } from './../../queue/queue-list/queue-list.component';
-import { League } from './../../leagues/shared/league.model';
-import { LeagueService } from './../../leagues/shared/league.service';
+import { QueueListComponent } from './../../../queue/queue-list/queue-list.component';
+import { League } from './../../../leagues/shared/league.model';
+import { LeagueService } from './../../../leagues/shared/league.service';
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import 'rxjs/add/operator/filter';

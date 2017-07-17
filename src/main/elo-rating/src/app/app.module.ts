@@ -9,7 +9,7 @@ import { ChartModule } from 'angular2-highcharts';
 
 import { RoutingModule } from './core/routing/routing.module';
 import { AppComponent } from './app.component';
-import { NavComponent } from './core/nav/nav.component';
+import { NavComponent } from './core/directives/nav/nav.component';
 import { LeagueAddComponent } from './leagues/league-add/league-add.component';
 import { LeagueDetailComponent } from './leagues/league-detail/league-detail.component';
 import { LeagueService } from './leagues/shared/league.service';
