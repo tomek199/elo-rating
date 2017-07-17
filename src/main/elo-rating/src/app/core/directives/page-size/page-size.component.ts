@@ -19,7 +19,7 @@ export class PageSizeComponent implements OnInit {
   }
 
   setPageSize() {
-    this.cookieService.set('pageSize', String(this.pageSize), 300);
+    this.cookieService.set('pageSize', String(this.pageSize), 300, '/');
     this.onPageChange.emit(this.pageSize);
   }
 

@@ -1,3 +1,4 @@
+import { CookieService } from 'ng2-cookies';
 import { QueueListComponent } from './../../../queue/queue-list/queue-list.component';
 import { League } from './../../../leagues/shared/league.model';
 import { LeagueService } from './../../../leagues/shared/league.service';
@@ -17,24 +18,31 @@ export class NavComponent implements OnInit {
   title = "EloRating";
   navbar;
   leagueId: string;
+  showCookiesWarning: boolean;
 
   constructor(
     private router: Router,
-    private elemRef: ElementRef) {
+    private cookieService: CookieService) {
   }
 
   ngOnInit() {
-    this.generateNavbar();
+    this.subscribeRouteChange();
   }
 
-  generateNavbar() {
+  subscribeRouteChange() {
     this.router.events.filter(event => event instanceof NavigationEnd)
       .subscribe((event: NavigationEnd) => {
-        this.getNavbar(event.urlAfterRedirects);
+        this.checkCookies();
+        this.generateNavbar(event.urlAfterRedirects);
       });
   }
 
-  private getNavbar(urlAfterRedirects: string) {
+  private checkCookies() {
+    let cookie: string = this.cookieService.get('cookiesWarningShowed');
+    this.showCookiesWarning = (cookie != 'true');
+  }
+
+  private generateNavbar(urlAfterRedirects: string) {
     this.leagueId = this.getLeagueId(urlAfterRedirects);
     if (this.leagueId) {
       this.getStandardNavbar(this.leagueId);
@@ -79,5 +87,10 @@ export class NavComponent implements OnInit {
 
   refreshQueueList() {
     this.queueListComponent.refreshQueue();
+  }
+
+  closeCookiesWarning() {
+    this.cookieService.set('cookiesWarningShowed', 'true', 300, '/');
+    this.showCookiesWarning = false;
   }
 }

@@ -1,3 +1,4 @@
+import { CookieService } from 'ng2-cookies';
 import { RouterLinkStub } from './../../../testing/routing-stubs';
 import { PlayerServiceStub } from './../../../testing/player-stubs';
 import { PlayerService } from './../../../players/shared/player.service';
@@ -39,7 +40,8 @@ describe('NavComponent', () => {
       providers: [
         { provide: Router, useClass: RouterStub },
         { provide: LeagueService, useClass: LeagueServiceStub },
-        { provide: PlayerService, useClass: PlayerServiceStub }
+        { provide: PlayerService, useClass: PlayerServiceStub },
+        CookieService
       ]
     })
       .compileComponents();

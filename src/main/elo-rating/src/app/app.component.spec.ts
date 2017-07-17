@@ -1,3 +1,4 @@
+import { CookieService } from 'ng2-cookies';
 import { LeagueServiceStub } from './testing/league-stubs';
 import { LeagueService } from './leagues/shared/league.service';
 import { FormsModule } from '@angular/forms';
@@ -28,7 +29,8 @@ describe('AppComponent', () => {
         NgbModule.forRoot()
       ],
       providers: [
-        { provide: LeagueService, useClass: LeagueServiceStub }
+        { provide: LeagueService, useClass: LeagueServiceStub },
+        CookieService
       ]
     });
     TestBed.compileComponents();
