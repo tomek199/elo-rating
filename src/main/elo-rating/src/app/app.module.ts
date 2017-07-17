@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChartModule } from 'angular2-highcharts';
+import { CookieService } from 'ng2-cookies';
 
 import { RoutingModule } from './core/routing/routing.module';
 import { AppComponent } from './app.component';
@@ -62,6 +63,7 @@ import { PageSizeComponent } from './core/directives/page-size/page-size.compone
     LeagueService,
     PlayerService,
     MatchService,
+    CookieService,
     {
       provide: HighchartsStatic,
       useFactory: highchartsFactory

@@ -1,3 +1,4 @@
+import { CookieService } from 'ng2-cookies';
 import { PageSizeComponent } from './../../core/directives/page-size/page-size.component';
 import { FormsModule } from '@angular/forms';
 import { League } from './../../leagues/shared/league.model';
@@ -24,7 +25,8 @@ describe('PlayerMatchesComponent', () => {
       imports: [ RouterTestingModule, FormsModule, NgbModule.forRoot() ],
       providers: [
         {provide: MatchService, useClass: MatchServiceStub},
-        {provide: ActivatedRoute, useValue: activatedRoute}
+        {provide: ActivatedRoute, useValue: activatedRoute},
+        CookieService
       ]
     })
     .compileComponents();

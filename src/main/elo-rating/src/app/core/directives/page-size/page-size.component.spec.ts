@@ -1,3 +1,4 @@
+import { CookieService } from 'ng2-cookies';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
@@ -11,7 +12,8 @@ describe('PageSizeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PageSizeComponent ],
-      imports: [ FormsModule, NgbModule.forRoot() ]
+      imports: [ FormsModule, NgbModule.forRoot() ],
+      providers: [ CookieService ]
     })
     .compileComponents();
   }));

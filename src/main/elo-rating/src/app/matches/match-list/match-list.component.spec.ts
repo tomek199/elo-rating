@@ -1,3 +1,4 @@
+import { CookieService } from 'ng2-cookies';
 import { PageSizeComponent } from './../../core/directives/page-size/page-size.component';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -24,6 +25,7 @@ describe('MatchListComponent', () => {
       providers: [
         {provide: MatchService, useClass: MatchServiceStub},
         {provide: ActivatedRoute, useValue: activatedRoute},
+        CookieService
       ]
     })
     .compileComponents();
