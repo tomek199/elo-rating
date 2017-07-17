@@ -1,4 +1,4 @@
-import { SpinnerComponent } from './../../core/spinner/spinner.component';
+import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { By } from '@angular/platform-browser';
 import { PlayerService } from './../shared/player.service';
 import { PlayerServiceStub } from './../../testing/player-stubs';
