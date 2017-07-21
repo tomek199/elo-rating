@@ -49,6 +49,7 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.pageNumber = 1;    
     this.getMatches();
   }
 

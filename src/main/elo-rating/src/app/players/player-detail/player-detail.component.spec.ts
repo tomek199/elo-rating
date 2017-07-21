@@ -1,3 +1,4 @@
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlayerMatchesStubComponent, PlayerStatisticsStubComponent } from './../../testing/player-stubs';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +24,7 @@ describe('PlayerDetailComponent', () => {
         PlayerMatchesStubComponent, 
         PlayerStatisticsStubComponent
       ],
-      imports: [ RouterTestingModule, FormsModule],
+      imports: [ RouterTestingModule, FormsModule, NgbModule.forRoot()],
       providers: [
         {provide: PlayerService, useClass: PlayerServiceStub},
         {provide: ActivatedRoute, useValue: activatedRoute}

@@ -1,4 +1,4 @@
-<h2 *ngIf="hasScheduledMatches()">Scheduled matches</h2>
+<h2 class="mt-2" *ngIf="hasScheduledMatches()">Scheduled matches</h2>
 <table id="scheduledMatches" class="shadedtable table table-bordered" *ngIf="hasScheduledMatches()">
   <thead class="thead-default">
     <tr>
@@ -29,7 +29,7 @@
     </tr>
   </tbody>
 </table>
-<h2>Completed matches</h2>
+<h2 class="mt-2">Completed matches</h2>
 <div class="alert alert-info" *ngIf="!hasCompletedMatches()">
   Player didn't play any matches yet!
 </div>

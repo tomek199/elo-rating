@@ -6,18 +6,18 @@ import { ChartDirector } from './../../core/utils/charts/chart-director';
 import { Chart } from './../../core/utils/charts/chart.model';
 import { Match } from './../../matches/shared/match.model';
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-player-statistics',
   templateUrl: './player-statistics.component.html',
   styleUrls: ['./player-statistics.component.css']
 })
-export class PlayerStatisticsComponent implements OnInit, OnChanges {
+export class PlayerStatisticsComponent implements OnInit {
   @Input() leagueId: string;
   @Input() playerId: string;
   private chartDirector: ChartDirector;
-  period: string;
+  period: number;
   ratingHistory: Chart;
   matchesStats: Chart;
 
@@ -31,11 +31,7 @@ export class PlayerStatisticsComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.getLeagueId();
     this.getPlayerId();
-    this.period = '7';
-    this.generateStatistics();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
+    this.period = 7;
     this.generateStatistics();
   }
 
@@ -77,9 +73,9 @@ export class PlayerStatisticsComponent implements OnInit, OnChanges {
   }
 
   private getDateFrom(): Date {
-    if (this.period != undefined && +this.period != -1) {
+    if (this.period != undefined && this.period != -1) {
       let currentDate = new Date();
-      return new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - +this.period);
+      return new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() - this.period);
     }
     return null;
   }

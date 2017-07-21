@@ -16,16 +16,23 @@
     </div>
   </div>
 </form>
-<div class="card col-12 my-2">
-  <div class="card-block">
-    <app-player-matches [leagueId]="leagueId" [playerId]="player.id"></app-player-matches>
-  </div>
-</div>
-<div class="card col-12 my-2">
-  <div class="card-block">
-    <app-player-statistics [leagueId]="leagueId" [playerId]="player.id"></app-player-statistics>
-  </div>
-</div>
+<ul class="nav justify-content-end">
+  <li>
+    <a [routerLink]="['/leagues', leagueId, 'players']">Back to list</a>
+  </li>
+</ul>
+<ngb-tabset>
+  <ngb-tab title="Matches">
+    <ng-template ngbTabContent>
+      <app-player-matches [leagueId]="leagueId" [playerId]="player.id"></app-player-matches>    
+    </ng-template>
+  </ngb-tab>
+  <ngb-tab title="Statistics">
+    <ng-template ngbTabContent>
+      <app-player-statistics [leagueId]="leagueId" [playerId]="player.id"></app-player-statistics>    
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
 <ul class="nav justify-content-end">
   <li>
     <a [routerLink]="['/leagues', leagueId, 'players']">Back to list</a>
