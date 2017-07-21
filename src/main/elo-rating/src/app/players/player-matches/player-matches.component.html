@@ -1,111 +1,124 @@
-<h2 class="mt-2" *ngIf="hasScheduledMatches()">Scheduled matches</h2>
-<table id="scheduledMatches" class="shadedtable table table-bordered" *ngIf="hasScheduledMatches()">
-  <thead class="thead-default">
-    <tr>
-      <th>Date</th>
-      <th>First player</th>
-      <th>Second player</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let match of scheduledMatches">
-      <td>{{match.date | date: "yyyy-MM-dd HH:mm"}}</td>
-      <td class="table-info" *ngIf="isCurrent(match.playerOne)">{{match.playerOne.username}}</td>
-      <td class="table-info" *ngIf="isCurrent(match.playerTwo)">{{match.playerTwo.username}}</td>      
-      <td *ngIf="!isCurrent(match.playerOne)">
-        <a [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
-        <span class="small" ngbTooltip="Actual rating">{{match.playerOne.rating}}</span>
-      </td>
-      <td *ngIf="!isCurrent(match.playerTwo)">
-        <a [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
-        <span class="small" ngbTooltip="Actual rating">{{match.playerTwo.rating}}</span>        
-      </td>
-      <td class="text-right">
-        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="editMatch(match.id)">Edit</button>
-        <button type="button" class="btn btn-outline-primary btn-sm" (click)="completeMatch(match.id)">Complete</button>
-        <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(match.id)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<h2 class="mt-2">Completed matches</h2>
-<div class="alert alert-info" *ngIf="!hasCompletedMatches()">
-  Player didn't play any matches yet!
+<h2 class="mt-2">Player matches</h2>
+<div class="alert alert-info" *ngIf="!hasMatches()">
+  Player doesn't have any matches to show!
 </div>
-<table id="completedMatches" class="shadedtable table table-bordered" *ngIf="hasCompletedMatches()">
-  <thead class="thead-default">
-    <tr>
-      <th>Date</th>
-      <th>First player</th>
-      <th>Score</th>
-      <th>Second player</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let match of page.content; let i=index">
-      <td>
-        <span ngbTooltip="{{match.date | date:'HH:mm'}}">
-          {{match.date | date: "yyyy-MM-dd"}}
-        </span>
-      </td>
-      <td *ngIf="isCurrent(match.playerOne)" [ngClass]="{'table-success': isWinner(i, match.playerOne), 'table-danger': isLooser(i, match.playerOne)}">
-        <span>{{match.playerOne.username}} </span>
-        <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerOne)}}</span>
-        <span *ngIf="match.ratingDelta != 0">
-          <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-up small text-success"></span>
-          <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-down small text-danger"></span>
-          <span class="small">{{match.ratingDelta}}</span>
-        </span>
-      </td>
-      <td *ngIf="!isCurrent(match.playerOne)">
-        <em *ngIf="!match.playerOne" class="text-warning">deleted player</em>
-        <a *ngIf="match.playerOne?.active == false" [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">
-          <del class="text-muted">{{match.playerOne.username}}</del>
-        </a>
-        <a *ngIf="match.playerOne?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
-        <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerOne)}}</span>
-        <span *ngIf="match.ratingDelta != 0">
-          <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-up small text-success"></span>
-          <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-down small text-danger"></span>
-          <span class="small">{{match.ratingDelta}}</span>
-        </span>
-      </td>
-      <td>
-        <span class="badge badge-default">{{getScore(i, match.playerOne)}}</span>
-        :
-        <span class="badge badge-default">{{getScore(i, match.playerTwo)}}</span>        
-      </td>
-      <td *ngIf="isCurrent(match.playerTwo)" [ngClass]="{'table-success': isWinner(i, match.playerTwo), 'table-danger': isLooser(i, match.playerTwo)}">
-        <span>{{match.playerTwo.username}} </span>
-        <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerTwo)}}</span>
-        <span *ngIf="match.ratingDelta != 0">
-          <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-up small text-success"></span>
-          <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-down small text-danger"></span>
-          <span class="small">{{-match.ratingDelta}}</span>
-        </span>
-      </td>
-      <td *ngIf="!isCurrent(match.playerTwo)">
-        <em *ngIf="!match.playerTwo" class="text-warning">deleted player</em>
-        <a *ngIf="match.playerTwo?.active == false" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">
-          <del class="text-muted">{{match.playerTwo.username}}</del>
-        </a>
-        <a *ngIf="match.playerTwo?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
-        <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerTwo)}}</span>
-        <span *ngIf="match.ratingDelta != 0">
-          <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-up small text-success"></span>
-          <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-down small text-danger"></span>
-          <span class="small">{{-match.ratingDelta}}</span>
-        </span>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<div class="row" *ngIf="hasCompletedMatches()">
-  <div class="col-9">
-    <ngb-pagination [collectionSize]="page.totalElements" [(page)]="pageNumber" [pageSize]="page.size" [maxSize]="10" [boundaryLinks]="true" [rotate]="true" (pageChange)="getPage($event)"></ngb-pagination>
+<div class="card mt-2" *ngIf="hasScheduledMatches()">
+  <div class="card-header">
+    Scheduled matches
   </div>
-  <div class="col-3">
-    <app-page-size (onPageChange)="setPageSize($event)"></app-page-size>
+  <div class="card-block">
+    <table id="scheduledMatches" class="shadedtable table table-bordered">
+      <thead class="thead-default">
+        <tr>
+          <th>Date</th>
+          <th>First player</th>
+          <th>Second player</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let match of scheduledMatches">
+          <td>{{match.date | date: "yyyy-MM-dd HH:mm"}}</td>
+          <td class="table-info" *ngIf="isCurrent(match.playerOne)">{{match.playerOne.username}}</td>
+          <td class="table-info" *ngIf="isCurrent(match.playerTwo)">{{match.playerTwo.username}}</td>      
+          <td *ngIf="!isCurrent(match.playerOne)">
+            <a [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
+            <span class="small" ngbTooltip="Actual rating">{{match.playerOne.rating}}</span>
+          </td>
+          <td *ngIf="!isCurrent(match.playerTwo)">
+            <a [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
+            <span class="small" ngbTooltip="Actual rating">{{match.playerTwo.rating}}</span>        
+          </td>
+          <td class="text-right">
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="editMatch(match.id)">Edit</button>
+            <button type="button" class="btn btn-outline-primary btn-sm" (click)="completeMatch(match.id)">Complete</button>
+            <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(match.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="card mt-2" *ngIf="hasCompletedMatches()">
+  <div class="card-header">
+    Completed matches
+  </div>
+  <div class="card-block">
+    <table id="completedMatches" class="shadedtable table table-bordered">
+      <thead class="thead-default">
+        <tr>
+          <th>Date</th>
+          <th>First player</th>
+          <th>Score</th>
+          <th>Second player</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let match of page.content; let i=index">
+          <td>
+            <span ngbTooltip="{{match.date | date:'HH:mm'}}">
+              {{match.date | date: "yyyy-MM-dd"}}
+            </span>
+          </td>
+          <td *ngIf="isCurrent(match.playerOne)" [ngClass]="{'table-success': isWinner(i, match.playerOne), 'table-danger': isLooser(i, match.playerOne)}">
+            <span>{{match.playerOne.username}} </span>
+            <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerOne)}}</span>
+            <span *ngIf="match.ratingDelta != 0">
+              <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-up small text-success"></span>
+              <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-down small text-danger"></span>
+              <span class="small">{{match.ratingDelta}}</span>
+            </span>
+          </td>
+          <td *ngIf="!isCurrent(match.playerOne)">
+            <em *ngIf="!match.playerOne" class="text-warning">deleted player</em>
+            <a *ngIf="match.playerOne?.active == false" [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">
+              <del class="text-muted">{{match.playerOne.username}}</del>
+            </a>
+            <a *ngIf="match.playerOne?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
+            <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerOne)}}</span>
+            <span *ngIf="match.ratingDelta != 0">
+              <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-up small text-success"></span>
+              <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-down small text-danger"></span>
+              <span class="small">{{match.ratingDelta}}</span>
+            </span>
+          </td>
+          <td>
+            <span class="badge badge-default">{{getScore(i, match.playerOne)}}</span>
+            :
+            <span class="badge badge-default">{{getScore(i, match.playerTwo)}}</span>        
+          </td>
+          <td *ngIf="isCurrent(match.playerTwo)" [ngClass]="{'table-success': isWinner(i, match.playerTwo), 'table-danger': isLooser(i, match.playerTwo)}">
+            <span>{{match.playerTwo.username}} </span>
+            <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerTwo)}}</span>
+            <span *ngIf="match.ratingDelta != 0">
+              <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-up small text-success"></span>
+              <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-down small text-danger"></span>
+              <span class="small">{{-match.ratingDelta}}</span>
+            </span>
+          </td>
+          <td *ngIf="!isCurrent(match.playerTwo)">
+            <em *ngIf="!match.playerTwo" class="text-warning">deleted player</em>
+            <a *ngIf="match.playerTwo?.active == false" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">
+              <del class="text-muted">{{match.playerTwo.username}}</del>
+            </a>
+            <a *ngIf="match.playerTwo?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
+            <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerTwo)}}</span>
+            <span *ngIf="match.ratingDelta != 0">
+              <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-up small text-success"></span>
+              <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-down small text-danger"></span>
+              <span class="small">{{-match.ratingDelta}}</span>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="row" *ngIf="hasCompletedMatches()">
+      <div class="col-9">
+        <ngb-pagination [collectionSize]="page.totalElements" [(page)]="pageNumber" [pageSize]="page.size" [maxSize]="10" [boundaryLinks]="true" [rotate]="true" (pageChange)="getPage($event)"></ngb-pagination>
+      </div>
+      <div class="col-3">
+        <app-page-size (onPageChange)="setPageSize($event)"></app-page-size>
+      </div>
+    </div>
   </div>
 </div>

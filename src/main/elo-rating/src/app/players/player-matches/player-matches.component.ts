@@ -85,7 +85,7 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
   }
 
   hasMatches(): boolean {
-    return this.hasCompletedMatches();
+    return this.hasCompletedMatches() || this.hasScheduledMatches();
   }
 
   hasCompletedMatches(): boolean {

@@ -85,6 +85,7 @@ describe('PlayerMatchesComponent', () => {
     createComponent();
     component.page.content = [];
     component.page.numberOfElements = 0;
+    component.scheduledMatches = [];
     fixture.detectChanges();
     expect(component.hasMatches()).toBeFalsy();
     let debugElement = fixture.debugElement.query(By.css('div.alert.alert-info'));
