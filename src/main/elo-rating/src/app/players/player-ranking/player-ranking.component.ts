@@ -2,15 +2,16 @@ import { PlayerStats } from './../shared/player-stats.model';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerService } from './../shared/player.service';
 import { Player } from './../shared/player.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 
 @Component({
   selector: 'app-player-ranking',
   templateUrl: './player-ranking.component.html',
   styleUrls: ['./player-ranking.component.css']
 })
-export class PlayerRankingComponent implements OnInit {
-  leagueId: string;
+export class PlayerRankingComponent implements OnInit, OnChanges {
+  
+  @Input() leagueId: string;
   rankedPlayers: Player[];
   rankedPlayersStats = new Map<string, PlayerStats>();
 
@@ -21,6 +22,10 @@ export class PlayerRankingComponent implements OnInit {
 
   ngOnInit() {
     this.getLeagueId();
+    this.getRanking();
+  }
+
+  ngOnChanges() {
     this.getRanking();
   }
 

@@ -73,6 +73,7 @@ export class PlayerStatisticsStubComponent implements OnInit {
   template: ''
 })
 export class PlayerRankingStubComponent implements OnInit {
+  @Input() leagueId;
   constructor() { }
   ngOnInit() { }
 }
