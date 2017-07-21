@@ -62,7 +62,7 @@ describe('PlayerStatisticsComponent', () => {
   it('should present rating history chart', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.query(By.css('ngb-tabset div div.col-8 chart'));    
+    let debugElement = fixture.debugElement.query(By.css('div.card div.card-block div.row div.col-8 chart'));    
     expect(debugElement.nativeElement).toBeTruthy();
   }));
 
@@ -91,7 +91,7 @@ describe('PlayerStatisticsComponent', () => {
     createComponent();
     component.ratingHistory.series[0].data = [];
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.query(By.css('ngb-tabset div div.col-8 div.alert.alert-info'));
+    let debugElement = fixture.debugElement.query(By.css('div.card div.card-block div.row div.col-8 div.alert.alert-info'));
     expect(debugElement.nativeElement).toBeTruthy();
   }))
 

@@ -2,60 +2,64 @@
 <div class="alert alert-info" *ngIf="!hasMatches()">
   No statistics to show!
 </div>
-<ngb-tabset *ngIf="hasMatches()">
-  <ngb-tab title="Rating history">
-    <ng-template ngbTabContent>
-      <div class="row my-3">
-        <div class="col-4">
-          <form id="chartPeriodForm" #chartPeriod="ngForm">
-            <legend>Rating chart period</legend>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" [(ngModel)]="period" (ngModelChange)="buildRatingHistory()" name="period" value="0">
-                Today
-              </label>
-            </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" [(ngModel)]="period" (ngModelChange)="buildRatingHistory()" name="period" value="7">
-                <span ngbTooltip="Last 7 days" placement="right">Last week</span>
-              </label>
-            </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" [(ngModel)]="period" (ngModelChange)="buildRatingHistory()" name="period" value="30">
-                <span ngbTooltip="Last 30 days" placement="right">Last month</span>                
-              </label>
-            </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" [(ngModel)]="period" (ngModelChange)="buildRatingHistory()" name="period" value="-1">
-                From the beginning
-              </label>
-            </div>
-          </form>
-        </div>
-        <div class="col-8">
-          <div class="alert alert-info" *ngIf="!hasRatingHistory()">
-            No chart to show for this time period!
+<div class="card mt-2" *ngIf="hasMatches()">
+  <div class="card-header">
+    Rating history
+  </div>
+  <div class="card-block">
+    <div class="row my-2">
+      <div class="col-4">
+        <form id="chartPeriodForm" #chartPeriod="ngForm">
+          <legend>Rating chart period</legend>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" [(ngModel)]="period" (ngModelChange)="buildRatingHistory()" name="period" value="0">
+              Today
+            </label>
           </div>
-          <chart [options]="ratingHistory" *ngIf="hasRatingHistory()"></chart>
-        </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" [(ngModel)]="period" (ngModelChange)="buildRatingHistory()" name="period" value="7">
+              <span ngbTooltip="Last 7 days" placement="right">Last week</span>
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" [(ngModel)]="period" (ngModelChange)="buildRatingHistory()" name="period" value="30">
+              <span ngbTooltip="Last 30 days" placement="right">Last month</span>                
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" [(ngModel)]="period" (ngModelChange)="buildRatingHistory()" name="period" value="-1">
+              From the beginning
+            </label>
+          </div>
+        </form>
       </div>
-    </ng-template>
-  </ngb-tab>
-  <ngb-tab title="Matches">
-    <ng-template ngbTabContent>
-      <div class="row my-3" *ngFor="let series of matchesStats.series">
-        <div class="col-3">
-          <h5>{{series.name}}:</h5>
+      <div class="col-8">
+        <div class="alert alert-info" *ngIf="!hasRatingHistory()">
+          No chart to show for this time period!
         </div>
-        <div class="col-9">
-          <ngb-progressbar type="{{series.type}}" [value]="series.data.value" [max]="series.data.max" [showValue]="series.showValue">
-            <span *ngIf="series.showValue != 'true'">{{series.data.value}} of {{series.data.max}}</span>
-          </ngb-progressbar>
-        </div>
+        <chart [options]="ratingHistory" *ngIf="hasRatingHistory()"></chart>
       </div>
-    </ng-template>
-  </ngb-tab>
-</ngb-tabset>
+    </div>
+  </div>
+</div>
+<div class="card mt-2" *ngIf="hasMatches()">
+  <div class="card-header">
+    Overall
+  </div>
+  <div class="card-block">
+    <div class="row my-2" *ngFor="let series of matchesStats.series">
+      <div class="col-3">
+        <h5>{{series.name}}:</h5>
+      </div>
+      <div class="col-9">
+        <ngb-progressbar type="{{series.type}}" [value]="series.data.value" [max]="series.data.max" [showValue]="series.showValue">
+          <span *ngIf="series.showValue != 'true'">{{series.data.value}} of {{series.data.max}}</span>
+        </ngb-progressbar>
+      </div>
+    </div>
+  </div>
+</div>
