@@ -1,3 +1,4 @@
+import { Match } from './../matches/shared/match.model';
 import { PLAYERS, PLAYERS_STATS } from './data/players';
 import { Player } from './../players/shared/player.model';
 import { PlayerStats } from './../players/shared/player-stats.model';
@@ -42,6 +43,23 @@ export class PlayerServiceStub {
     playerToUpdate.rating = player.rating;
     return Promise.resolve(playerToUpdate);
   }
+
+  getMatchForecast(playerId: string, opponentId: string): Promise<Match[]> {
+    let player = PLAYERS.find(p => p.id == playerId);
+    let opponent = PLAYERS.find(p => p.id == playerId);
+    let score = [[2, 0], [2, 1], [1, 2], [0, 2]];
+    let ratio = [20, 10, -10, -20];
+    let matches = [];
+    for(let i = 0; i < 4; i++) {
+      let match = new Match();
+      match.playerOne = player;
+      match.playerTwo = opponent;
+      match.scores = {playerId: score[i][0], opponentId: score[i][1]}
+      match.ratingDelta = ratio[i];
+      matches.push(match);
+    }
+    return Promise.resolve(matches);
+  }
 }
 
 @Component({
@@ -74,6 +92,17 @@ export class PlayerStatisticsStubComponent implements OnInit {
 })
 export class PlayerRankingStubComponent implements OnInit {
   @Input() leagueId;
+  constructor() { }
+  ngOnInit() { }
+}
+
+@Component({
+  selector: 'app-player-forecast',
+  template: ''
+})
+export class PlayerForecastStubComponent implements OnInit {
+  @Input() leagueId;
+  @Input() playerId;
   constructor() { }
   ngOnInit() { }
 }

@@ -1,0 +1,52 @@
+<h2 class="my-2">Match forecast</h2>
+<div class="row">
+  <div class="col-5">
+    <ul class="list-group">
+      <li *ngFor="let opponent of opponents" class="list-group-item justify-content-between " [ngClass]="{'disabled': isCurrentPlayer(opponent.id), 'cursor-pointer': !isCurrentPlayer(opponent.id), 'active': isSelectedOpponent(opponent.id)}" (click)="changeOpponent(opponent.id)">
+        {{opponent.username}}
+        <span class="badge badge-default badge-pill">{{opponent.rating}}</span>
+      </li>
+    </ul>
+  </div>
+  <div class="col-7">
+    <div class="alert alert-info" role="alert" *ngIf="!hasOpponent()">
+      <h4 class="alert-heading">Choose your next opponent!</h4>
+      <p>Select player from list on the left to see how many points you earn when you win the match</p>
+      <p class="mb-0">or how many points you lose when your opponent will be better.</p>
+    </div>
+    <div *ngIf="hasForecast()">
+      <div class="alert alert-success" *ngFor="let match of getWins()">
+        <h4 class="alert-heading">
+          Win {{getMatchScore(match)}}
+        </h4>
+        <p>
+          Earned points:
+          <span class="octicon octicon-triangle-up"></span>
+          <strong>{{match.ratingDelta}}</strong>
+        </p>        
+        <p>
+          Rating after match: 
+          <span class="badge badge-success">
+            {{getRating(match)}}
+          </span>
+        </p>
+      </div>
+      <div class="alert alert-danger" *ngFor="let match of getLoses()">
+        <h4 class="alert-heading">
+          Lost {{getMatchScore(match)}}
+        </h4>
+        <p>
+          Lost points:
+          <span class="octicon octicon-triangle-down"></span>
+          <strong>{{match.ratingDelta}}</strong>
+        </p>        
+        <p>
+          Rating after match: 
+          <span class="badge badge-danger">
+            {{getRating(match)}}
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

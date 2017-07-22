@@ -60,6 +60,7 @@ describe('PlayerEditComponent', () => {
     tick();
     expect(component.player.username).toEqual('Player 2 updated');
     expect(component.player.active).toEqual(false);
+    component.player.active = true;
   }));
 
   it('should redirect to players list', inject([Router], fakeAsync((router: Router) => {

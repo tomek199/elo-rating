@@ -1,5 +1,5 @@
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PlayerMatchesStubComponent, PlayerStatisticsStubComponent } from './../../testing/player-stubs';
+import { PlayerMatchesStubComponent, PlayerStatisticsStubComponent, PlayerForecastStubComponent } from './../../testing/player-stubs';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -22,7 +22,8 @@ describe('PlayerDetailComponent', () => {
       declarations: [ 
         PlayerDetailComponent, 
         PlayerMatchesStubComponent, 
-        PlayerStatisticsStubComponent
+        PlayerStatisticsStubComponent,
+        PlayerForecastStubComponent,
       ],
       imports: [ RouterTestingModule, FormsModule, NgbModule.forRoot()],
       providers: [

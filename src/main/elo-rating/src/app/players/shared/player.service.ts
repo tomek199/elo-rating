@@ -1,3 +1,4 @@
+import { Match } from './../../matches/shared/match.model';
 import { PlayerStats } from './player-stats.model';
 import { Http, Headers } from '@angular/http';
 import { Player } from './player.model';
@@ -67,6 +68,14 @@ export class PlayerService {
     return this.http.put(url, JSON.stringify(player), { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Player)
+      .catch(this.handleError);
+  }
+
+  getMatchForecast(playerId: string, opponentId: string): Promise<Match[]> {
+    let url = `${this.url}/players/${playerId}/match-forecast/${opponentId}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as Match[])
       .catch(this.handleError);
   }
 
