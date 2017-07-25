@@ -31,6 +31,7 @@ import { SmallSpinnerComponent } from './core/directives/small-spinner/small-spi
 import { PageSizeComponent } from './core/directives/page-size/page-size.component';
 import { PlayerForecastComponent } from './players/player-forecast/player-forecast.component';
 import { PlayerCellComponent } from './players/player-cell/player-cell.component';
+import { SpinnerComponent } from './core/directives/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { PlayerCellComponent } from './players/player-cell/player-cell.component
     SmallSpinnerComponent,
     PageSizeComponent,
     PlayerForecastComponent,
-    PlayerCellComponent
+    PlayerCellComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
