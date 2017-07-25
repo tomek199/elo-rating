@@ -27,7 +27,7 @@ import { PlayerRankingComponent } from './players/player-ranking/player-ranking.
 import { PlayerMatchesComponent } from './players/player-matches/player-matches.component';
 import { PlayerStatisticsComponent } from './players/player-statistics/player-statistics.component';
 import { HighchartsStatic } from "angular2-highcharts/dist/HighchartsService";
-import { SpinnerComponent } from './core/directives/spinner/spinner.component';
+import { SmallSpinnerComponent } from './core/directives/small-spinner/small-spinner.component';
 import { PageSizeComponent } from './core/directives/page-size/page-size.component';
 import { PlayerForecastComponent } from './players/player-forecast/player-forecast.component';
 import { PlayerCellComponent } from './players/player-cell/player-cell.component';
@@ -50,7 +50,7 @@ import { PlayerCellComponent } from './players/player-cell/player-cell.component
     PlayerRankingComponent,
     PlayerMatchesComponent,
     PlayerStatisticsComponent,
-    SpinnerComponent,
+    SmallSpinnerComponent,
     PageSizeComponent,
     PlayerForecastComponent,
     PlayerCellComponent
