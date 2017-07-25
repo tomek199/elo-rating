@@ -26,6 +26,7 @@ export class PlayerRankingComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    this.rankedPlayers = undefined;
     this.getRanking();
   }
 
