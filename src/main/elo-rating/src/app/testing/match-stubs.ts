@@ -1,3 +1,4 @@
+import { LEAGUES } from './data/leagues';
 import { MATCHES } from './data/matches';
 import { Page } from './../core/utils/pagination/page.model';
 import { Player } from './../players/shared/player.model';
@@ -69,6 +70,7 @@ export class MatchServiceStub {
 
   add(leagueId: string, match: Match): Promise<Match> {
     match.id = '111';
+    match.league = LEAGUES[0];
     MATCHES.push(match);
     return Promise.resolve(match);
   }
