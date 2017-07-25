@@ -47,6 +47,7 @@ export class PlayerForecastComponent implements OnInit {
 
   changeOpponent(opponentId: string) {
     if (!this.isCurrentPlayer(opponentId)) {
+      this.forecast = undefined;    
       this.opponentId = opponentId;
       this.getForecast();
     }

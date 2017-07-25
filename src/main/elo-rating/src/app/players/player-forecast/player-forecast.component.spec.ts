@@ -1,3 +1,4 @@
+import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { PlayerServiceStub } from './../../testing/player-stubs';
 import { PlayerService } from './../shared/player.service';
 import { By } from '@angular/platform-browser';
@@ -11,7 +12,7 @@ describe('PlayerForecastComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlayerForecastComponent ],
+      declarations: [ PlayerForecastComponent, SpinnerComponent],
       providers: [
         {provide: PlayerService, useClass: PlayerServiceStub}
       ]
