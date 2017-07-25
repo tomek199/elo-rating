@@ -1,3 +1,4 @@
+import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { PlayerCellComponent } from './../../players/player-cell/player-cell.component';
 import { CookieService } from 'ng2-cookies';
 import { PageSizeComponent } from './../../core/directives/page-size/page-size.component';
@@ -21,7 +22,7 @@ describe('MatchListComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ MatchListComponent, PageSizeComponent, PlayerCellComponent ],
+      declarations: [ MatchListComponent, PageSizeComponent, PlayerCellComponent, SpinnerComponent ],
       imports: [ RouterTestingModule, FormsModule, NgbModule.forRoot() ],
       providers: [
         {provide: MatchService, useClass: MatchServiceStub},
@@ -75,7 +76,7 @@ describe('MatchListComponent', () => {
     component.page.numberOfElements = 0;
     component.scheduledMatches = [];
     fixture.detectChanges();
-    expect(component.hasMatches()).toBeFalsy();
+    expect(component.displayAlert()).toBeTruthy();
     let debugElement = fixture.debugElement.query(By.css('div.alert.alert-info'));
     expect(debugElement.nativeElement).toBeTruthy();
   }));
