@@ -1,3 +1,4 @@
+import { PlayerCellComponent } from './../player-cell/player-cell.component';
 import { CookieService } from 'ng2-cookies';
 import { PageSizeComponent } from './../../core/directives/page-size/page-size.component';
 import { FormsModule } from '@angular/forms';
@@ -21,7 +22,7 @@ describe('PlayerMatchesComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ PlayerMatchesComponent, PageSizeComponent ],
+      declarations: [ PlayerMatchesComponent, PageSizeComponent, PlayerCellComponent ],
       imports: [ RouterTestingModule, FormsModule, NgbModule.forRoot() ],
       providers: [
         {provide: MatchService, useClass: MatchServiceStub},
@@ -104,7 +105,9 @@ describe('PlayerMatchesComponent', () => {
     createComponent();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('table#scheduledMatches tbody tr'));
-    expect(debugElement[0].query(By.css('td.table-info')).nativeElement.textContent).toEqual('Player 1');
-    expect(debugElement[1].query(By.css('td.table-info')).nativeElement.textContent).toEqual('Player 1');    
+    let firstRow = debugElement[0].query(By.css('td.table-info span'));
+    expect(firstRow.nativeElement.textContent).toEqual('Player 1');
+    let secondRow = debugElement[0].query(By.css('td.table-info span'));
+    expect(secondRow.nativeElement.textContent).toEqual('Player 1');
   }));
 });

@@ -80,10 +80,6 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
       .then(matches => this.scheduledMatches = matches);
   }
 
-  isComplete(scores: {[id: string] : number;}): boolean {
-    return Object.keys(scores).length > 0;
-  }
-
   hasMatches(): boolean {
     return this.hasCompletedMatches() || this.hasScheduledMatches();
   }
@@ -99,11 +95,6 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
   getScore(index: number, player: Player): number {
     let key = player ? player.id : '';
     return this.page.content[index].scores[key];
-  }
-
-  getRating(index: number, player: Player): number {
-    let key = player ? player.id : '';
-    return index < this.page.content.length ? this.page.content[index].ratings[key] : 1000;
   }
 
   isCurrent(player: Player): boolean {

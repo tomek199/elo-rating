@@ -12,14 +12,10 @@
     <tr *ngFor="let match of scheduledMatches">
       <td>{{match.date | date: "HH:mm"}}</td>
       <td>
-        <a [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}
-        </a>
-        <span class="small" ngbTooltip="Actual rating">{{match.playerOne.rating}}</span>
+        <app-player-cell [match]="match" [player]="match.playerOne"></app-player-cell>
       </td>
       <td>
-        <a [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}
-        </a>
-        <span class="small" ngbTooltip="Actual rating">{{match.playerTwo.rating}}</span>
+        <app-player-cell [match]="match" [player]="match.playerTwo"></app-player-cell>
       </td>
       <td class="text-right">
         <button type="button" class="btn btn-outline-secondary btn-sm" (click)="editMatch(match.id)">Edit</button>
@@ -52,17 +48,7 @@
         </span>
       </td>
       <td [ngClass]="{'table-success': isWinner(i, match.playerOne)}">
-        <em *ngIf="!match.playerOne" class="text-warning">deleted player</em>
-        <a *ngIf="match.playerOne?.active == false" [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">          
-          <del class="text-muted">{{match.playerOne.username}}</del>
-        </a>            
-        <a *ngIf="match.playerOne?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerOne.id]">{{match.playerOne.username}}</a>
-        <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerOne)}}</span>
-        <span *ngIf="match.ratingDelta != 0">
-          <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-up small text-success"></span>
-          <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-down small text-danger"></span>
-          <span class="small">{{match.ratingDelta}}</span>
-        </span>
+        <app-player-cell [match]="match" [player]="match.playerOne"></app-player-cell>
       </td>
       <td>
         <span class="badge badge-default">{{getScore(i, match.playerOne)}}</span>
@@ -70,17 +56,7 @@
         <span class="badge badge-default">{{getScore(i, match.playerTwo)}}</span>        
       </td>
       <td [ngClass]="{'table-success': isWinner(i, match.playerTwo)}">      
-        <em *ngIf="!match.playerTwo" class="text-warning">deleted player</em>
-        <a *ngIf="match.playerTwo?.active == false" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">          
-          <del class="text-muted">{{match.playerTwo.username}}</del>
-        </a>            
-        <a *ngIf="match.playerTwo?.active == true" [routerLink]="['/leagues', leagueId, 'players', match.playerTwo.id]">{{match.playerTwo.username}}</a>
-        <span class="small" ngbTooltip="Rating after match">{{getRating(i, match.playerTwo)}}</span>
-        <span *ngIf="match.ratingDelta != 0">
-          <span *ngIf="match.ratingDelta < 0" class="octicon octicon-triangle-up small text-success"></span>
-          <span *ngIf="match.ratingDelta > 0" class="octicon octicon-triangle-down small text-danger"></span>
-          <span class="small">{{-match.ratingDelta}}</span>
-        </span>
+        <app-player-cell [match]="match" [player]="match.playerTwo"></app-player-cell>
       </td>
       <td class="text-right">
         <button type="button" class="btn btn-outline-danger btn-sm" *ngIf="hasBothPlayersDeleted(i)" (click)="openDeleteModal(match.id)">Delete</button>

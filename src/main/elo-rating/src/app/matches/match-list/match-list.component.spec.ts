@@ -1,3 +1,4 @@
+import { PlayerCellComponent } from './../../players/player-cell/player-cell.component';
 import { CookieService } from 'ng2-cookies';
 import { PageSizeComponent } from './../../core/directives/page-size/page-size.component';
 import { FormsModule } from '@angular/forms';
@@ -20,7 +21,7 @@ describe('MatchListComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ MatchListComponent, PageSizeComponent ],
+      declarations: [ MatchListComponent, PageSizeComponent, PlayerCellComponent ],
       imports: [ RouterTestingModule, FormsModule, NgbModule.forRoot() ],
       providers: [
         {provide: MatchService, useClass: MatchServiceStub},
@@ -85,14 +86,6 @@ describe('MatchListComponent', () => {
     let debugElement = fixture.debugElement.queryAll(By.css('table#completedMatches tbody tr'));
     expect(debugElement[0].query(By.css('td.table-success a')).nativeElement.textContent).toEqual('Player 1');
     expect(debugElement[1].query(By.css('td.table-success a')).nativeElement.textContent).toEqual('Player 2');    
-  }));
-
-  it('should present disabled player in "<del>" tag and deleted in <em> tag in played matches table', fakeAsync(() => {
-    createComponent();
-    fixture.detectChanges();
-    let debugElement = fixture.debugElement.queryAll(By.css('table#completedMatches tbody tr'));
-    expect(debugElement[2].query(By.css('td a del')).nativeElement.textContent).toEqual('Player 3');
-    expect(debugElement[2].query(By.css('td em')).nativeElement.textContent).toEqual('deleted player');    
   }));
 
   it('should display delete button for matches where both players are deleted', fakeAsync(() => {
