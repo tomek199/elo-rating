@@ -9,7 +9,11 @@ import 'rxjs/add/observable/of';
 export class LeagueServiceStub {
 
   getLeague(id: string): Promise<League> {
-    return Promise.resolve(LEAGUES.find(league => league.id === id));
+    let league = LEAGUES.find(league => league.id === id);
+    if (league)
+      return Promise.resolve(league);
+    else
+      return Promise.resolve(null);
   }
 
   getAllLeagues(): Promise<League[]> {

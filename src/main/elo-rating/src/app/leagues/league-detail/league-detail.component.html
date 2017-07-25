@@ -1,4 +1,5 @@
-<div *ngIf="!league" class="alert alert-warning">
+<app-spinner [resource]="league"></app-spinner>
+<div *ngIf="displayWarning()" class="alert alert-warning">
   League doesn't exist!  
   <a [routerLink]="['/leagues']" class="alert-link">Create new league</a>
 </div>

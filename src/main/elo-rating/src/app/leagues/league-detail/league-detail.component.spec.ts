@@ -1,3 +1,4 @@
+import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { PlayerServiceStub, PlayerRankingStubComponent } from './../../testing/player-stubs';
 import { PlayerService } from './../../players/shared/player.service';
 /* tslint:disable:no-unused-variable */
@@ -22,7 +23,8 @@ describe('LeagueDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ 
         LeagueDetailComponent,
-        PlayerRankingStubComponent
+        PlayerRankingStubComponent,
+        SpinnerComponent
       ], 
       imports: [ RouterTestingModule ],
       providers: [
@@ -53,9 +55,9 @@ describe('LeagueDetailComponent', () => {
     expect(component.league.name).toEqual('League name');
   }));
 
-  it('should has empty league variable if league does not exist', fakeAsync(() => {
+  it('should has null league variable if league does not exist', fakeAsync(() => {
     createComponent('456');
-    expect(component.league).toBeFalsy();
+    expect(component.league).toBeNull();
   }));
 
   it('should display league name in header', fakeAsync(() => {
