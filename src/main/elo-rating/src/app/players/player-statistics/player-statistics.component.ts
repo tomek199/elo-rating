@@ -55,6 +55,7 @@ export class PlayerStatisticsComponent implements OnInit {
   }
 
   buildRatingHistory() {
+    this.ratingHistory = undefined;
     this.matchService.getPlayerCompletedMatchesByDate(this.playerId, this.getDateFrom())
       .then(matches => {
         let chartBuilder = new RatingHistoryChart(matches, this.playerId);
@@ -84,10 +85,24 @@ export class PlayerStatisticsComponent implements OnInit {
     return this.matchesStats != undefined && this.matchesStats.series.length > 0;
   }
 
+  displayAlert(): boolean {
+    if (this.matchesStats)
+      return this.matchesStats.series.length == 0;
+    return false;
+  }
+
   hasRatingHistory(): boolean {
     if (this.ratingHistory != undefined) {
       let data = this.ratingHistory.series[0].data as Array<any>;
       return data.length > 0;
+    }
+    return false;
+  }
+
+  displayRatingHistoryAlert(): boolean {
+    if (this.ratingHistory) {
+      let data = this.ratingHistory.series[0].data as Array<any>;
+      return data.length == 0;
     }
     return false;
   }

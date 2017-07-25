@@ -1,3 +1,4 @@
+import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -18,7 +19,11 @@ describe('PlayerStatisticsComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ PlayerStatisticsComponent, ChartComponentStub ],
+      declarations: [ 
+        PlayerStatisticsComponent, 
+        ChartComponentStub, 
+        SpinnerComponent
+      ],
       imports: [ NgbModule.forRoot(), FormsModule ],
       providers: [
         {provide: ActivatedRoute, useValue: activatedRoute},
@@ -98,7 +103,7 @@ describe('PlayerStatisticsComponent', () => {
   it('should display alert if matches list is empty', fakeAsync(() => {
     createComponent('555');
     fixture.detectChanges();
-    expect(component.hasMatches()).toBeFalsy();
+    expect(component.displayAlert()).toBeTruthy();
     let debugElement = fixture.debugElement.query(By.css('div.alert.alert-info'));
     expect(debugElement.nativeElement).toBeTruthy();
   }));

@@ -1,7 +1,8 @@
 <h2 class="mt-2">Player statistics</h2>
-<div class="alert alert-info" *ngIf="!hasMatches()">
+<div class="alert alert-info" *ngIf="displayAlert()">
   No statistics to show!
 </div>
+<app-spinner [resource]="matchesStats"></app-spinner>
 <div class="card mt-2" *ngIf="hasMatches()">
   <div class="card-header">
     Rating history
@@ -38,7 +39,8 @@
         </form>
       </div>
       <div class="col-8">
-        <div class="alert alert-info" *ngIf="!hasRatingHistory()">
+        <app-spinner [resource]="ratingHistory"></app-spinner>
+        <div class="alert alert-info" *ngIf="displayRatingHistoryAlert()">
           No chart to show for this time period!
         </div>
         <chart [options]="ratingHistory" *ngIf="hasRatingHistory()"></chart>
