@@ -16,6 +16,6 @@ export class SpinnerComponent implements OnChanges {
   }
 
   setShowProperty() {
-    this.show = this.resource == undefined;
+    this.show = this.resource === undefined;
   }
 }
