@@ -63,9 +63,8 @@ export class MatchListComponent implements OnInit {
   }
 
   displayAlert(): boolean {
-    if (this.page && this.scheduledMatches) {
+    if (this.page && this.scheduledMatches) 
       return this.page.content.length == 0 && this.scheduledMatches.length == 0;
-    }
     return false;
   }
 

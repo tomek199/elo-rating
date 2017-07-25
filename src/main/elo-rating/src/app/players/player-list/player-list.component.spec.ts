@@ -1,3 +1,4 @@
+import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { NgbModalStub } from './../../testing/bootstrap-stubs.';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -20,7 +21,7 @@ describe('PlayerListComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ PlayerListComponent ],
+      declarations: [ PlayerListComponent, SpinnerComponent ],
       imports: [ RouterTestingModule ],
       providers: [
         {provide: PlayerService, useClass: PlayerServiceStub},

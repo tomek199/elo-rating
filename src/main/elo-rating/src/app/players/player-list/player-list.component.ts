@@ -1,3 +1,4 @@
+import { LeagueAddComponent } from './../../leagues/league-add/league-add.component';
 import { ConfirmModalComponent } from './../../core/directives/confirm-modal/confirm-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PlayerService } from './../shared/player.service';
@@ -42,6 +43,12 @@ export class PlayerListComponent implements OnInit {
   hasPlayers(): boolean {
     return (this.activePlayers != undefined && this.activePlayers.length > 0)
       || (this.inactivePlayers != undefined && this.inactivePlayers.length > 0);
+  }
+
+  displayAlert(): boolean {
+    if (this.activePlayers && this.inactivePlayers) 
+      return this.activePlayers.length == 0 && this.inactivePlayers.length == 0;
+    return false
   }
 
   openDeleteModal(index: number): void {
