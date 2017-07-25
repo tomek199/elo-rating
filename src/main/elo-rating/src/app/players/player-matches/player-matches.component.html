@@ -1,5 +1,6 @@
 <h2 class="mt-2">Player matches</h2>
-<div class="alert alert-info" *ngIf="!hasMatches()">
+<app-spinner [resource]="scheduledMatches"></app-spinner>
+<div class="alert alert-info" *ngIf="displayAlert()">
   Player doesn't have any matches to show!
 </div>
 <div class="card mt-2" *ngIf="hasScheduledMatches()">
@@ -35,6 +36,7 @@
     </table>
   </div>
 </div>
+<app-spinner [resource]="page"></app-spinner>
 <div class="card mt-2" *ngIf="hasCompletedMatches()">
   <div class="card-header">
     Completed matches
