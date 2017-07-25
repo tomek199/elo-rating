@@ -55,4 +55,9 @@ export class PlayerRankingComponent implements OnInit, OnChanges {
   hasRankedPlayers(): boolean {
     return this.rankedPlayers != undefined && this.rankedPlayers.length > 0;
   }
+
+  displayAlert(): boolean {
+    let display = this.rankedPlayers != undefined ? this.rankedPlayers.length == 0 : false;
+    return display;
+  }
 }

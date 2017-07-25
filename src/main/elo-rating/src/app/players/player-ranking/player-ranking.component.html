@@ -1,5 +1,6 @@
 <h2>Players ranking</h2>
-<div class="alert alert-info" *ngIf="!hasRankedPlayers()">
+<app-spinner [resource]="rankedPlayers"></app-spinner>
+<div class="alert alert-info" *ngIf="displayAlert()">
     Active players not found!
     <a [routerLink]="['/leagues', leagueId, 'players']" class="alert-link">Manage players</a>
 </div>
