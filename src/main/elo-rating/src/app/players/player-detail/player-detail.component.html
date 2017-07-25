@@ -32,11 +32,7 @@
       <app-player-statistics [leagueId]="leagueId" [playerId]="player.id"></app-player-statistics>    
     </ng-template>
   </ngb-tab>
-  <ngb-tab>
-    <ng-template ngbTabTitle>
-      Forecast
-      <span class="badge badge-warning">new feature</span>
-    </ng-template>
+  <ngb-tab title="Forecast">
     <ng-template ngbTabContent>
       <app-player-forecast [leagueId]="leagueId" [playerId]="player.id"></app-player-forecast>    
     </ng-template>
