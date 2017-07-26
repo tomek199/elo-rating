@@ -1,5 +1,6 @@
 <h2>{{getComponentName()}}</h2>
-<div class="alert alert-info" *ngIf="!hasMinTwoPlayers()">
+<app-spinner [resource]="players"></app-spinner>
+<div class="alert alert-info" *ngIf="displayAlert()">
     At least two players are needed to create the match!
     <a [routerLink]="['/leagues', leagueId, 'players']" class="alert-link">Manage players</a>
 </div>

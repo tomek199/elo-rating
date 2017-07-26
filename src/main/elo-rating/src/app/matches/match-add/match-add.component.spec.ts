@@ -1,3 +1,4 @@
+import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { MatchServiceStub } from './../../testing/match-stubs';
 import { MatchService } from './../shared/match.service';
 import { Player } from './../../players/shared/player.model';
@@ -21,7 +22,7 @@ describe('MatchAddComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [MatchAddComponent],
+      declarations: [MatchAddComponent, SpinnerComponent],
       imports: [FormsModule, NgbModule.forRoot(), RouterTestingModule],
       providers: [
         { provide: PlayerService, useClass: PlayerServiceStub },
@@ -94,7 +95,7 @@ describe('MatchAddComponent', () => {
     component.players = [new Player()];
     fixture.detectChanges();
     let debugElement = fixture.debugElement.query(By.css('div.alert.alert-info'));
-    expect(component.hasMinTwoPlayers()).toBeFalsy();
+    expect(component.displayAlert()).toBeTruthy();
     expect(debugElement.nativeElement).toBeTruthy();
   }));
 

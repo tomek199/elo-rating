@@ -99,6 +99,12 @@ export class MatchAddComponent implements OnInit {
     }
   }
 
+  displayAlert(): boolean {
+    if (this.players)
+      return this.players.length < 2;
+    return false;
+  }
+
   isCompleteMode(): boolean {
     return this.mode == 'complete';
   }
