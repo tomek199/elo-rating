@@ -20,7 +20,7 @@ export class MatchAddComponent implements OnInit {
   score: string;
   mode: string;
 
-  time = { hour: '', minute: '' };
+  time = { hour: 0, minute: 0};
 
   constructor(
     private route: ActivatedRoute,
@@ -33,9 +33,9 @@ export class MatchAddComponent implements OnInit {
 
   ngOnInit() {
     this.getLeagueId();
+    this.getPossibleMatchTime();
     this.setMatch();
     this.getPlayers();
-    this.setTimepickerTime();
   }
 
   setMatch() {
@@ -60,7 +60,13 @@ export class MatchAddComponent implements OnInit {
     this.route.params.map(param => param['mode'])
       .forEach(mode => {
         this.mode = mode;
-        mode == 'complete' ? this.match.completed = true : this.match.completed = false;
+        if (mode == 'complete') {
+          this.match.completed = true
+        } else if (mode == 'edit') {
+          this.match.completed = false
+          this.time.hour = this.match.date.getHours();
+          this.time.minute = this.match.date.getMinutes();
+        }
       });
   }
 
@@ -126,10 +132,9 @@ export class MatchAddComponent implements OnInit {
   }
 
   private isTimeValid(): boolean {
+    if (!this.time) return false;
     let now = new Date();
-    let timepickerDate = new Date();
-    timepickerDate.setHours(Number(this.time.hour));
-    timepickerDate.setMinutes(Number(this.time.minute));
+    let timepickerDate = new Date(now.getFullYear(), this.time.hour, this.time.minute);
     return now < timepickerDate ? true : false;
   }
 
@@ -153,7 +158,7 @@ export class MatchAddComponent implements OnInit {
     this.router.navigate(['/leagues', this.leagueId, 'matches']);
   }
 
-  setTimepickerTime() {
+  getPossibleMatchTime() {
     let date = new Date();
     let hour = date.getHours();
     let minutes = date.getMinutes();
@@ -167,25 +172,15 @@ export class MatchAddComponent implements OnInit {
       minutes = minutes - 60;
     }
 
-    this.time.hour = hour.toString();
-    this.time.minute = minutes.toString();
-    if (this.time.hour == '0') {
-      this.time.hour = '00';
-    }
-    if (this.time.minute == '0') {
-      this.time.minute = '00';
-    }
-
-    this.setMatchDate();
+    this.time.hour = hour;
+    this.time.minute = minutes;
   }
 
   private setMatchDate() {
-    if (this.match.completed) {
-      this.match.date = new Date();
-    } else {
+    if (!this.match.completed) {
       let date = new Date();
-      date.setHours(Number(this.time.hour));
-      date.setMinutes(Number(this.time.minute));
+      date.setHours(this.time.hour);
+      date.setMinutes(this.time.minute);
       this.match.date = date;
     }
   }

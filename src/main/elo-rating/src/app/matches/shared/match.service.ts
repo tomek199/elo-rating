@@ -115,7 +115,7 @@ export class MatchService {
     output.playerTwo = match.playerTwo;
     output.scores = match.scores;
     output.ratings = match.ratings;
-    output.date = match.date;
+    output.date = new Date(match.date);
     output.ratingDelta = match.ratingDelta;
 
     return output;

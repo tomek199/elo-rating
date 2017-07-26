@@ -97,7 +97,7 @@ export class MatchServiceStub {
     output.playerTwo = match.playerTwo;
     output.scores = match.scores;
     output.ratings = match.ratings;
-    output.date = match.date;
+    output.date = new Date(match.date);
 
     return output;
   }
