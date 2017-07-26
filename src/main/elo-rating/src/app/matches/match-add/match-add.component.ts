@@ -33,7 +33,6 @@ export class MatchAddComponent implements OnInit {
 
   ngOnInit() {
     this.getLeagueId();
-    this.getPossibleMatchTime();
     this.setMatch();
     this.getPlayers();
   }
@@ -44,6 +43,8 @@ export class MatchAddComponent implements OnInit {
         if (match_id != null) {
           this.matchId = match_id;
           this.getMatch();
+        } else {
+          this.getPossibleMatchTime();
         }
       });
   }
@@ -131,10 +132,12 @@ export class MatchAddComponent implements OnInit {
       return this.match.isPlayersValid() && this.isTimeValid();
   }
 
-  private isTimeValid(): boolean {
+  isTimeValid(): boolean {
     if (!this.time) return false;
     let now = new Date();
-    let timepickerDate = new Date(now.getFullYear(), this.time.hour, this.time.minute);
+    let timepickerDate = new Date();
+    timepickerDate.setHours(this.time.hour);
+    timepickerDate.setMinutes(this.time.minute);
     return now < timepickerDate ? true : false;
   }
 
