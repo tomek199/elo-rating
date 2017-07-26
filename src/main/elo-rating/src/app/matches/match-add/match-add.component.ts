@@ -99,6 +99,10 @@ export class MatchAddComponent implements OnInit {
     }
   }
 
+  isCompleteMode(): boolean {
+    return this.mode == 'complete';
+  }
+
   setMatchScore() {
     if (this.score) {
       let scores = this.score.split('-');
@@ -109,11 +113,10 @@ export class MatchAddComponent implements OnInit {
   }
 
   formValid(): boolean {
-    if (this.match.completed) {
-      return this.match.isValid() && this.match.isPlayersValid();
-    } else {
+    if (this.match.completed) 
+      return this.match.isValid();
+    else 
       return this.match.isPlayersValid() && this.isTimeValid();
-    }
   }
 
   private isTimeValid(): boolean {
@@ -124,11 +127,7 @@ export class MatchAddComponent implements OnInit {
     return now < timepickerDate ? true : false;
   }
 
-  create() {
-    this.addMatch();
-  }
-
-  private addMatch() {
+  save() {
     this.setMatchDate();
     this.matchService.add(this.leagueId, this.match)
       .then(match => {

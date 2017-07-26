@@ -60,7 +60,7 @@ describe('MatchAddComponent', () => {
     expect(component.match.id).toEqual('111');
   }));
 
-  it('should have componentMode when match id is provided', fakeAsync(() => {
+  it('should have mode when match id is provided', fakeAsync(() => {
     createComponent('111', 'edit');
     expect(component.mode).toEqual('edit');
   }));
