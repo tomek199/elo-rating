@@ -139,10 +139,10 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
   }
 
   completeMatch(matchId: string) {
-    this.router.navigate(['/leagues', this.leagueId, 'matches', 'add', matchId, 'complete']);
+    this.router.navigate(['/leagues', this.leagueId, 'matches', 'save', matchId, 'complete']);
   }
 
   editMatch(matchId: string) {
-    this.router.navigate(['/leagues', this.leagueId, 'matches', 'add', matchId, 'edit']);    
+    this.router.navigate(['/leagues', this.leagueId, 'matches', 'save', matchId, 'edit']);    
   }
 }

@@ -9,11 +9,11 @@ import 'rxjs/add/operator/debounceTime';
 import { NgbPopover } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
-  selector: 'app-match-add',
-  templateUrl: './match-add.component.html',
-  styleUrls: ['./match-add.component.css']
+  selector: 'app-match-save',
+  templateUrl: './match-save.component.html',
+  styleUrls: ['./match-save.component.css']
 })
-export class MatchAddComponent implements OnInit {
+export class MatchSaveComponent implements OnInit {
   leagueId: string;
   players: Player[];
   match: Match;
@@ -31,6 +31,7 @@ export class MatchAddComponent implements OnInit {
     private matchService: MatchService
   ) {
     this.match = new Match();
+    this.scheduledMatches = new Map<string, Match>();
   }
 
   ngOnInit() {
@@ -91,7 +92,7 @@ export class MatchAddComponent implements OnInit {
   }
 
   private initScheduledMatches(matches: Match[]) {
-    this.scheduledMatches = new Map<string, Match>();
+    this.scheduledMatches.clear();
     matches.forEach(match => {
       let date = new Date(match.date);
       let time: string = `${date.getHours()}:${date.getMinutes()}`;

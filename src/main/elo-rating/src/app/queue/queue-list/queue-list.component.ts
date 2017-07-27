@@ -45,6 +45,6 @@ export class QueueListComponent implements OnInit, OnChanges {
   }
 
   completeMatch(matchId: string) {
-    this.router.navigate(['/leagues', this.leagueId, 'matches', 'add', matchId, 'complete']);
+    this.router.navigate(['/leagues', this.leagueId, 'matches', 'save', matchId, 'complete']);
   }
 }

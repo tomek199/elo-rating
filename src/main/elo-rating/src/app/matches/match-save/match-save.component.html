@@ -4,7 +4,7 @@
   At least two players are needed to create the match!
   <a [routerLink]="['/leagues', leagueId, 'players']" class="alert-link">Manage players</a>
 </div>
-<form #matchAdd="ngForm" class="col-10" *ngIf="hasMinTwoPlayers()">
+<form #matchSave="ngForm" class="col-10" *ngIf="hasMinTwoPlayers()">
   <div class="form-group row">
     <label for="player-one" class="col-2 col-form-label">Player one</label>
     <div class="col-4">
@@ -40,8 +40,9 @@
     </div>
   </div>
   <div class="form-group row" *ngIf="!match.completed" [ngClass]="{'has-danger': !isTimeValid()}">
-    <div class="col-10">
-      <ngb-timepicker name="match-time" [(ngModel)]="time" [spinners]="true" [size]="small" [minuteStep]="10"></ngb-timepicker>
+    <label for="time" class="col-1 col-form-label">Time</label>    
+    <div class="col-9">
+      <ngb-timepicker name="time" [(ngModel)]="time" [spinners]="true" [size]="small" [minuteStep]="10"></ngb-timepicker>
       <div class="form-control-feedback" *ngIf="timeMessage">{{timeMessage}}</div>
       <div [ngbPopover]="queuePopContent" popoverTitle="Queue" #queuePopover="ngbPopover" triggers="manual" placement="bottom"></div>
     </div>

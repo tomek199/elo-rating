@@ -13,17 +13,17 @@ import { PlayerService } from './../../players/shared/player.service';
 import { ActivatedRouteStub, RouterStub } from './../../testing/routing-stubs';
 import { async, ComponentFixture, TestBed, tick, fakeAsync, inject } from '@angular/core/testing';
 
-import { MatchAddComponent } from './match-add.component';
+import { MatchSaveComponent } from './match-save.component';
 
-fdescribe('MatchAddComponent', () => {
-  let component: MatchAddComponent;
-  let fixture: ComponentFixture<MatchAddComponent>;
+describe('MatchSaveComponent', () => {
+  let component: MatchSaveComponent;
+  let fixture: ComponentFixture<MatchSaveComponent>;
   let activatedRoute: ActivatedRouteStub;
 
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [MatchAddComponent, SpinnerComponent],
+      declarations: [MatchSaveComponent, SpinnerComponent],
       imports: [FormsModule, NgbModule.forRoot(), RouterTestingModule],
       providers: [
         { provide: PlayerService, useClass: PlayerServiceStub },
@@ -36,7 +36,7 @@ fdescribe('MatchAddComponent', () => {
   }));
 
   function createComponent(matchId?: string, mode?: string) {
-    fixture = TestBed.createComponent(MatchAddComponent);
+    fixture = TestBed.createComponent(MatchSaveComponent);
     component = fixture.componentInstance;
     activatedRoute.testParams = { league_id: '123' };
     if (matchId != null && mode != null) {

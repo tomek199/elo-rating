@@ -19,7 +19,7 @@ import { PlayerAddComponent } from './players/player-add/player-add.component';
 import { ConfirmModalComponent } from './core/directives/confirm-modal/confirm-modal.component';
 import { PlayerDetailComponent } from './players/player-detail/player-detail.component';
 import { PlayerEditComponent } from './players/player-edit/player-edit.component';
-import { MatchAddComponent } from './matches/match-add/match-add.component';
+import { MatchSaveComponent } from './matches/match-save/match-save.component';
 import { QueueListComponent } from './queue/queue-list/queue-list.component';
 import { LeagueSearchComponent } from './leagues/league-search/league-search.component';
 import { MatchListComponent } from './matches/match-list/match-list.component';
@@ -44,7 +44,7 @@ import { SpinnerComponent } from './core/directives/spinner/spinner.component';
     ConfirmModalComponent,
     PlayerDetailComponent,
     PlayerEditComponent,
-    MatchAddComponent,
+    MatchSaveComponent,
     QueueListComponent,
     LeagueSearchComponent,
     MatchListComponent,
