@@ -4,8 +4,9 @@ import { Match } from './../shared/match.model';
 import { PlayerService } from './../../players/shared/player.service';
 import { Player } from './../../players/shared/player.model';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import 'rxjs/add/operator/debounceTime';
+import { NgbPopover } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-match-add',
@@ -19,8 +20,10 @@ export class MatchAddComponent implements OnInit {
   match: Match;
   score: string;
   mode: string;
-
-  time = { hour: 0, minute: 0};
+  time;
+  matchTimes: Map<string, Match>;
+  timeMessage: string;
+  @ViewChild('queuePopover') queuePopover: NgbPopover;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,7 +40,7 @@ export class MatchAddComponent implements OnInit {
     this.getPlayers();
   }
 
-  setMatch() {
+  private setMatch() {
     this.route.params.map(param => param['match_id'])
       .forEach(match_id => {
         if (match_id != null) {
@@ -45,11 +48,12 @@ export class MatchAddComponent implements OnInit {
           this.getMatch();
         } else {
           this.getPossibleMatchTime();
+          this.getScheduledMatches();
         }
       });
   }
 
-  getMatch() {
+  private getMatch() {
     this.matchService.getMatchById(this.matchId)
       .then(match => {
         this.match = this.matchService.serialize(match)
@@ -57,28 +61,47 @@ export class MatchAddComponent implements OnInit {
       });
   }
 
-  getMode() {
+  private getMode() {
     this.route.params.map(param => param['mode'])
       .forEach(mode => {
         this.mode = mode;
         if (mode == 'complete') {
           this.match.completed = true
         } else if (mode == 'edit') {
+          this.getScheduledMatches();
           this.match.completed = false
-          this.time.hour = this.match.date.getHours();
-          this.time.minute = this.match.date.getMinutes();
+          this.time = {
+            hour: this.match.date.getHours(),
+            minute: this.match.date.getMinutes()
+          };
         }
       });
   }
 
-  getLeagueId() {
+  private getLeagueId() {
     this.route.params.map(param => param['league_id'])
       .forEach(league_id => this.leagueId = league_id);
   }
 
-  getPlayers() {
+  private getPlayers() {
     this.playerService.getPlayers(this.leagueId)
       .then(players => this.players = players.filter(p => p.active === true));
+  }
+
+  private getScheduledMatches() {
+    this.matchService.getScheduledMatches(this.leagueId)
+      .then(matches => {
+        this.initMatchTimes(matches);
+      })
+  }
+
+  private initMatchTimes(matches: Match[]) {
+    this.matchTimes = new Map<string, Match>();
+    matches.forEach(match => {
+      let date = new Date(match.date);
+      let time: string = `${date.getHours()}:${date.getMinutes()}`;
+      this.matchTimes.set(time, match);
+    });
   }
 
   getComponentName(): string {
@@ -129,16 +152,40 @@ export class MatchAddComponent implements OnInit {
     if (this.match.completed) 
       return this.match.isValid();
     else 
-      return this.match.isPlayersValid() && this.isTimeValid();
+      return this.isTimeValid() && this.match.isPlayersValid();
   }
 
   isTimeValid(): boolean {
     if (!this.time) return false;
+    this.timeMessage = undefined;
+    return this.isTimeAfterNow() && this.isTimeFree();
+  }
+
+  private isTimeAfterNow(): boolean {
     let now = new Date();
     let timepickerDate = new Date();
     timepickerDate.setHours(this.time.hour);
     timepickerDate.setMinutes(this.time.minute);
-    return now < timepickerDate ? true : false;
+    if (now >= timepickerDate) {
+      this.timeMessage = 'Time must be in the future';
+      if (this.queuePopover) this.queuePopover.close();
+      return false;
+    }    
+    return true;
+  }
+
+  private isTimeFree(): boolean {
+    if (this.matchTimes) {
+      let time = `${this.time.hour}:${this.time.minute}`;
+      let match = this.matchTimes.get(time);
+      if (match && match.id != this.match.id) {
+        this.timeMessage = `Match "${match.playerOne.username} - ${match.playerTwo.username}" already scheduled at the same time`;
+        if (this.queuePopover) this.queuePopover.open();
+        return false;
+      }
+    }
+    if (this.queuePopover) this.queuePopover.close();    
+    return true;
   }
 
   save() {
@@ -161,7 +208,7 @@ export class MatchAddComponent implements OnInit {
     this.router.navigate(['/leagues', this.leagueId, 'matches']);
   }
 
-  getPossibleMatchTime() {
+  private getPossibleMatchTime() {
     let date = new Date();
     let hour = date.getHours();
     let minutes = date.getMinutes();
@@ -174,9 +221,7 @@ export class MatchAddComponent implements OnInit {
       }
       minutes = minutes - 60;
     }
-
-    this.time.hour = hour;
-    this.time.minute = minutes;
+    this.time = {hour: hour, minute: minutes}
   }
 
   private setMatchDate() {
@@ -186,5 +231,16 @@ export class MatchAddComponent implements OnInit {
       date.setMinutes(this.time.minute);
       this.match.date = date;
     }
+  }
+
+  getQueueMatches() {
+    if (this.matchTimes) {
+      let matches: Match[] = [];
+      this.matchTimes.forEach(value => {
+        matches.push(value);
+      });
+      return matches;
+    }
+    return null;
   }
 }
