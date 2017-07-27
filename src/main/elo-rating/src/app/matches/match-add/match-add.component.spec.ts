@@ -1,3 +1,4 @@
+import { HttpModule } from '@angular/http';
 import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { MatchServiceStub } from './../../testing/match-stubs';
 import { MatchService } from './../shared/match.service';
@@ -14,7 +15,7 @@ import { async, ComponentFixture, TestBed, tick, fakeAsync, inject } from '@angu
 
 import { MatchAddComponent } from './match-add.component';
 
-describe('MatchAddComponent', () => {
+fdescribe('MatchAddComponent', () => {
   let component: MatchAddComponent;
   let fixture: ComponentFixture<MatchAddComponent>;
   let activatedRoute: ActivatedRouteStub;
@@ -57,7 +58,6 @@ describe('MatchAddComponent', () => {
 
   it('should have match when match id provided', fakeAsync(() => {
     createComponent('111', 'complete');
-    expect(component.matchId).toEqual('111');
     expect(component.match.id).toEqual('111');
   }));
 
@@ -82,6 +82,13 @@ describe('MatchAddComponent', () => {
     expect(component.match.completed).toEqual(false);
     let debugElement = fixture.debugElement.query(By.css('form input[type=checkbox]:disabled'));    
     expect(debugElement).toBeTruthy();    
+  }));
+
+  it('should have timepicker\'s time initialized by match\'s time', fakeAsync(() => {
+    createComponent('111', 'edit');
+    fixture.detectChanges();
+    expect(component.time.hour).toEqual(component.match.date.getHours());
+    expect(component.time.minute).toEqual(component.match.date.getMinutes());    
   }));
 
   it('should have players list', fakeAsync(() => {
@@ -111,6 +118,20 @@ describe('MatchAddComponent', () => {
     component.setMatchScore();
     fixture.detectChanges();
     expect(component.formValid()).toBeTruthy();
+  }));
+
+  it('should validate match time', fakeAsync(() => {
+    createComponent();
+    component.match.completed = false;
+    fixture.detectChanges();
+    expect(component.isTimeValid()).toBeTruthy();
+    let date = new Date();
+    component.time = {hour: date.getHours(), minute: date.getMinutes() - 10}
+    fixture.detectChanges();
+    expect(component.isTimeValid()).toBeFalsy();    
+    component.time = {hour: date.getHours(), minute: date.getMinutes() + 10}
+    fixture.detectChanges();   
+    expect(component.isTimeValid()).toBeTruthy();    
   }));
 
   it('should create match and go to matches list', inject([Router], fakeAsync((router: Router) => {
