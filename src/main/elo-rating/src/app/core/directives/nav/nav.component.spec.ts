@@ -1,3 +1,4 @@
+import { GoogleAuthComponentStub } from './../../../testing/google-stubs';
 import { CookieService } from 'ng2-cookies';
 import { RouterLinkStub } from './../../../testing/routing-stubs';
 import { PlayerServiceStub } from './../../../testing/player-stubs';
@@ -30,7 +31,8 @@ describe('NavComponent', () => {
         NavComponent,
         QueueListComponent,
         LeagueSearchComponent,
-        RouterLinkStub
+        RouterLinkStub, 
+        GoogleAuthComponentStub
       ],
       imports: [
         FormsModule,

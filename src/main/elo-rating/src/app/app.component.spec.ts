@@ -1,3 +1,4 @@
+import { GoogleAuthComponentStub } from './testing/google-stubs';
 import { CookieService } from 'ng2-cookies';
 import { LeagueServiceStub } from './testing/league-stubs';
 import { LeagueService } from './leagues/shared/league.service';
@@ -20,7 +21,8 @@ describe('AppComponent', () => {
         AppComponent,
         NavComponent,
         QueueListComponent,
-        LeagueSearchComponent
+        LeagueSearchComponent,
+        GoogleAuthComponentStub,
       ],
       imports: [
         FormsModule,

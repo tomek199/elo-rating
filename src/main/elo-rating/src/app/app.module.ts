@@ -32,6 +32,7 @@ import { PageSizeComponent } from './core/directives/page-size/page-size.compone
 import { PlayerForecastComponent } from './players/player-forecast/player-forecast.component';
 import { PlayerCellComponent } from './players/player-cell/player-cell.component';
 import { SpinnerComponent } from './core/directives/spinner/spinner.component';
+import { GoogleAuthComponent } from './core/directives/google-auth/google-auth.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { SpinnerComponent } from './core/directives/spinner/spinner.component';
     PageSizeComponent,
     PlayerForecastComponent,
     PlayerCellComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    GoogleAuthComponent
   ],
   imports: [
     BrowserModule,
