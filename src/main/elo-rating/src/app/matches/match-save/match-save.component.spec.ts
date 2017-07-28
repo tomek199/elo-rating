@@ -111,6 +111,7 @@ describe('MatchSaveComponent', () => {
     expect(component.formValid()).toBeFalsy();
     component.match.playerOne = component.players[0];
     component.match.playerTwo = component.players[0];
+    component.match.completed = true;
     component.score = '2-1';
     fixture.detectChanges();
     expect(component.formValid()).toBeFalsy();
