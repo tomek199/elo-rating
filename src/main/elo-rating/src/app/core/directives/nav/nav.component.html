@@ -9,12 +9,7 @@
         <li class="nav-item" *ngFor="let nav of navbar">
           <a class="nav-link" [routerLink]="nav.url">{{nav.title}}</a>
         </li>
-        <li class="nav-item dropdown" ngbDropdown [autoClose]="true" *ngIf="leagueId" (click)="refreshQueueList()">
-          <a class="nav-link dropdown-toggle" ngbDropdownToggle role="button">Queue</a>
-          <div id="queue-dropdown" class="dropdown-menu">
-            <app-queue-list #queueList [leagueId]="leagueId"></app-queue-list>
-          </div>
-        </li>
+        <app-queue-list *ngIf="leagueId" [leagueId]="leagueId"></app-queue-list>
       </ul>
       <form id="addMatch" class="form-inline mr-4" *ngIf="leagueId">
         <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="btn btn-primary btn-sm" role="button">Add match</a>

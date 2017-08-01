@@ -1,4 +1,3 @@
-import { QueueListComponent } from './../../../queue/queue-list/queue-list.component';
 import { Component, Input, ViewChild, OnChanges } from '@angular/core';
 
 @Component({
@@ -7,9 +6,6 @@ import { Component, Input, ViewChild, OnChanges } from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnChanges {
-
-  @ViewChild(QueueListComponent)
-  private queueListComponent: QueueListComponent;
   title = "EloRating";
   @Input() leagueId: string;
   navbar;
@@ -52,9 +48,5 @@ export class NavComponent implements OnChanges {
         title: 'League'
       }
     ]
-  }
-
-  refreshQueueList() {
-    this.queueListComponent.refreshQueue();
   }
 }

@@ -60,7 +60,6 @@ describe('NavComponent', () => {
     expect(debugElement[0].nativeElement.textContent).toEqual('Dashboard');
     expect(debugElement[1].nativeElement.textContent).toEqual('Matches');
     expect(debugElement[2].nativeElement.textContent).toEqual('Players');
-    expect(debugElement[3].nativeElement.textContent).toEqual('Queue');
   }));
 
   it('should have app-queue-list component', fakeAsync(() => {
