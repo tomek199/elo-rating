@@ -1,3 +1,4 @@
+import { GoogleAuthService } from './../shared/google-auth.service';
 import { Profile } from './../shared/profile.model';
 import { environment } from './../../../../environments/environment';
 import { Component, NgZone, AfterViewInit } from '@angular/core';
@@ -15,7 +16,10 @@ export class GoogleAuthComponent implements AfterViewInit {
   private token: string;
   public profile: Profile;
   
-  constructor(private zone: NgZone) { }
+  constructor(
+    private zone: NgZone,
+    private googleAuthService: GoogleAuthService
+  ) { }
 
   ngAfterViewInit() {
     this.initAuthModule();
@@ -40,12 +44,17 @@ export class GoogleAuthComponent implements AfterViewInit {
 
   onSignIn = (googleUser: any) => {
     this.zone.run(() => {
-      this.token = googleUser.getAuthResponse().id_token;
-      this.fillProfile(googleUser.getBasicProfile()); 
+      this.saveToken(googleUser.getAuthResponse());
+      this.saveProfile(googleUser.getBasicProfile()); 
     });
   }
 
-  private fillProfile(googleProfile: any) {
+  private saveToken(authResponse) {
+    this.token = authResponse.id_token;
+    sessionStorage.setItem('token', this.token);
+  }
+
+  private saveProfile(googleProfile: any) {
     this.profile = new Profile();
     this.profile.id = googleProfile.getId();
     this.profile.fullName = googleProfile.getName();
@@ -53,12 +62,19 @@ export class GoogleAuthComponent implements AfterViewInit {
     this.profile.familyName = googleProfile.getFamilyName();
     this.profile.email = googleProfile.getEmail();
     this.profile.imageUrl = googleProfile.getImageUrl();
+    sessionStorage.setItem('profile', JSON.stringify(this.profile));
   }
 
   signOut() {
     let auth = gapi.auth2.getAuthInstance();
     auth.signOut();
+    this.clearTokenAndProfile();
+  }
+
+  private clearTokenAndProfile() {
     this.token = undefined;
     this.profile = undefined;
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('profile');
   }
 }

@@ -1,3 +1,4 @@
+import { GoogleAuthService } from './core/directives/shared/google-auth.service';
 import { MatchService } from './matches/shared/match.service';
 import { PlayerService } from './players/shared/player.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -72,6 +73,7 @@ import { GoogleAuthComponent } from './core/directives/google-auth/google-auth.c
     PlayerService,
     MatchService,
     CookieService,
+    GoogleAuthService,
     {
       provide: HighchartsStatic,
       useFactory: highchartsFactory
