@@ -1,3 +1,4 @@
+import { CookieService } from 'ng2-cookies';
 import { Router, NavigationEnd } from '@angular/router';
 import { Component } from '@angular/core';
 import 'rxjs/add/operator/filter';
@@ -9,13 +10,16 @@ import 'rxjs/add/operator/filter';
 })
 export class AppComponent {
   leagueId: string;
+  showCookiesWarning: boolean;
 
   constructor(
-    private router: Router) {
+    private router: Router,
+    private cookieService: CookieService) {
   }
 
   ngOnInit() {
     this.subscribeRouteChange();
+    this.checkCookies();
   }
 
   private subscribeRouteChange() {
@@ -31,5 +35,15 @@ export class AppComponent {
       this.leagueId = splitted[2];
     else 
       this.leagueId = undefined;
+  }
+
+  private checkCookies() {
+    let cookie: string = this.cookieService.get('cookiesWarningShowed');
+    this.showCookiesWarning = (cookie != 'true');
+  }
+
+  closeCookiesWarning() {
+    this.cookieService.set('cookiesWarningShowed', 'true', 300, '/');
+    this.showCookiesWarning = false;
   }
 }

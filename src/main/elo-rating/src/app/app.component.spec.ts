@@ -1,3 +1,4 @@
+import { CookieService } from 'ng2-cookies';
 import { NavComponentStub } from './testing/nav-stubs';
 import { RouterStub, ActivatedRouteStub } from './testing/routing-stubs';
 import { LeagueServiceStub } from './testing/league-stubs';
@@ -29,6 +30,7 @@ describe('AppComponent', () => {
       ],
       providers: [
         { provide: Router, useClass: RouterStub },
+        CookieService
       ]
     });
     TestBed.compileComponents();

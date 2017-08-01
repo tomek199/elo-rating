@@ -1,6 +1,4 @@
-import { CookieService } from 'ng2-cookies';
 import { QueueListComponent } from './../../../queue/queue-list/queue-list.component';
-import { League } from './../../../leagues/shared/league.model';
 import { Component, Input, ViewChild, OnChanges } from '@angular/core';
 
 @Component({
@@ -15,19 +13,11 @@ export class NavComponent implements OnChanges {
   title = "EloRating";
   @Input() leagueId: string;
   navbar;
-  showCookiesWarning: boolean;
 
-  constructor(
-    private cookieService: CookieService) {
-  }
+  constructor() { }
 
   ngOnChanges() {
     this.generateNavbar();
-  }
-
-  private checkCookies() {
-    let cookie: string = this.cookieService.get('cookiesWarningShowed');
-    this.showCookiesWarning = (cookie != 'true');
   }
 
   private generateNavbar() {
@@ -66,10 +56,5 @@ export class NavComponent implements OnChanges {
 
   refreshQueueList() {
     this.queueListComponent.refreshQueue();
-  }
-
-  closeCookiesWarning() {
-    this.cookieService.set('cookiesWarningShowed', 'true', 300, '/');
-    this.showCookiesWarning = false;
   }
 }
