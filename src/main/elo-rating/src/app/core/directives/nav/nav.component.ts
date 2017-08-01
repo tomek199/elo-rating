@@ -1,40 +1,28 @@
 import { CookieService } from 'ng2-cookies';
 import { QueueListComponent } from './../../../queue/queue-list/queue-list.component';
 import { League } from './../../../leagues/shared/league.model';
-import { LeagueService } from './../../../leagues/shared/league.service';
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import 'rxjs/add/operator/filter';
+import { Component, Input, ViewChild, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements OnInit {
+export class NavComponent implements OnChanges {
 
   @ViewChild(QueueListComponent)
   private queueListComponent: QueueListComponent;
   title = "EloRating";
+  @Input() leagueId: string;
   navbar;
-  leagueId: string;
   showCookiesWarning: boolean;
 
   constructor(
-    private router: Router,
     private cookieService: CookieService) {
   }
 
-  ngOnInit() {
-    this.subscribeRouteChange();
-  }
-
-  subscribeRouteChange() {
-    this.router.events.filter(event => event instanceof NavigationEnd)
-      .subscribe((event: NavigationEnd) => {
-        this.checkCookies();
-        this.generateNavbar(event.urlAfterRedirects);
-      });
+  ngOnChanges() {
+    this.generateNavbar();
   }
 
   private checkCookies() {
@@ -42,21 +30,12 @@ export class NavComponent implements OnInit {
     this.showCookiesWarning = (cookie != 'true');
   }
 
-  private generateNavbar(urlAfterRedirects: string) {
-    this.leagueId = this.getLeagueId(urlAfterRedirects);
+  private generateNavbar() {
     if (this.leagueId) {
       this.getStandardNavbar(this.leagueId);
     } else {
       this.getGuestNavbar();
     }
-  }
-
-  private getLeagueId(url: string): string {
-    let splitted = url.split('/');
-    if (splitted[1] == 'leagues') {
-      return splitted[2];
-    }
-    return undefined;
   }
 
   private getStandardNavbar(id: String): void {

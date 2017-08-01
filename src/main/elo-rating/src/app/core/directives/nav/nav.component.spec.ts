@@ -1,36 +1,26 @@
 import { GoogleAuthComponentStub } from './../../../testing/google-stubs';
 import { CookieService } from 'ng2-cookies';
 import { RouterLinkStub } from './../../../testing/routing-stubs';
-import { PlayerServiceStub } from './../../../testing/player-stubs';
-import { PlayerService } from './../../../players/shared/player.service';
 import { FormsModule } from '@angular/forms';
-import { LeagueSearchComponent } from './../../../leagues/league-search/league-search.component';
-import { LeagueServiceStub } from './../../../testing/league-stubs';
-import { LeagueService } from './../../../leagues/shared/league.service';
+import { LeagueSearchComponentStub } from './../../../testing/league-stubs';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { Router } from '@angular/router';
-import { RouterStub, ActivatedRouteStub } from '../../../testing/routing-stubs';
 import { HttpModule } from '@angular/http';
-
 import { NavComponent } from './nav.component';
-import { QueueListComponent } from './../../../testing/queue-stubs';
+import { QueueListComponentStub } from './../../../testing/queue-stubs';
 
 describe('NavComponent', () => {
   let component: NavComponent;
   let fixture: ComponentFixture<NavComponent>;
-  let routerStub: RouterStub;
-  let activatedRoute: ActivatedRouteStub;
 
   beforeEach(async(() => {
-    activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
       declarations: [
         NavComponent,
-        QueueListComponent,
-        LeagueSearchComponent,
+        QueueListComponentStub,
+        LeagueSearchComponentStub,
         RouterLinkStub, 
         GoogleAuthComponentStub
       ],
@@ -40,44 +30,35 @@ describe('NavComponent', () => {
         NgbModule.forRoot()
       ],
       providers: [
-        { provide: Router, useClass: RouterStub },
-        { provide: LeagueService, useClass: LeagueServiceStub },
-        { provide: PlayerService, useClass: PlayerServiceStub },
         CookieService
       ]
     })
       .compileComponents();
   }));
 
-  function createComponent(leagueId?: string) {
+  beforeEach(() =>{
     fixture = TestBed.createComponent(NavComponent);
     component = fixture.componentInstance;
+    component.leagueId = '123';
     fixture.detectChanges();
-    if (leagueId != null) {
-      activatedRoute.testParams = { league_id: leagueId };
-      fixture.detectChanges();
-      tick();
-    }
-  }
-
+  }); 
+    
   it('should create', () => {
-    createComponent();
     expect(component).toBeTruthy();
   });
 
   it('should have title ', () => {
-    createComponent();
     expect(component.title).toEqual('EloRating');
   });
 
   it('should render title in navbar header', () => {
-    createComponent();
     let debugElement = fixture.debugElement.query(By.css('nav div.container a.navbar-brand'));
     expect(debugElement.nativeElement.textContent).toContain('EloRating');
   });
 
   it('should render navbar for user which selected league', fakeAsync(() => {
-    createComponent('123');
+    component.ngOnChanges();
+    fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('nav ul.navbar-nav li a'));
     expect(debugElement[0].nativeElement.textContent).toEqual('Dashboard');
     expect(debugElement[1].nativeElement.textContent).toEqual('Matches');
@@ -86,21 +67,23 @@ describe('NavComponent', () => {
   }));
 
   it('should have app-queue-list component', fakeAsync(() => {
-    createComponent('123');
-    let debugElement = fixture.debugElement.query(By.directive(QueueListComponent));
+    let debugElement = fixture.debugElement.query(By.directive(QueueListComponentStub));
     expect(debugElement).toBeTruthy();
   }));
 
   it('should have "Add match" button', fakeAsync(() => {
-    createComponent('123');
     let debugElement = fixture.debugElement.query(By.css('nav form#addMatch a'));
     expect(debugElement).toBeTruthy();
     expect(debugElement.nativeElement.textContent).toEqual('Add match');
   }));
 
   it('should have app-league-search component', () => {
-    createComponent();
-    let debugElement = fixture.debugElement.query(By.directive(LeagueSearchComponent));
+    let debugElement = fixture.debugElement.query(By.directive(LeagueSearchComponentStub));
     expect(debugElement).toBeTruthy();
   });
+
+  it('should have app-google-auth component', fakeAsync(() => {
+    let debugElement = fixture.debugElement.query(By.directive(GoogleAuthComponentStub));
+    expect(debugElement).toBeTruthy();
+  }));
 });

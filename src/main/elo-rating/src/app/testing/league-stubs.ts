@@ -1,7 +1,7 @@
 import { LEAGUES } from './data/leagues';
 import { League } from './../leagues/shared/league.model';
 import { Observable } from 'rxjs/Observable';
-import { Injectable } from '@angular/core';
+import { Injectable, Component, OnInit } from '@angular/core';
 import { Response } from '@angular/http'
 import 'rxjs/add/observable/of';
 
@@ -30,4 +30,12 @@ export class LeagueServiceStub {
     LEAGUES.push(league);
     return Promise.resolve(league);
   }
+}
+
+@Component({
+  selector: 'app-league-search',
+  template: ''
+})
+export class LeagueSearchComponentStub implements OnInit {
+  ngOnInit(): void { }
 }

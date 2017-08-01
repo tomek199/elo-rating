@@ -5,7 +5,7 @@ import { Injectable, Component, OnInit, Input } from '@angular/core';
     selector: 'app-queue-list',
     template: ''
 })
-export class QueueListComponent implements OnInit {
+export class QueueListComponentStub implements OnInit {
     @Input("leagueId") leagueId: string;
 
     ngOnInit(): void { }

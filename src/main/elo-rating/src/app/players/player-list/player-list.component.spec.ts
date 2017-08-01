@@ -1,5 +1,5 @@
 import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { NgbModalStub } from './../../testing/bootstrap-stubs.';
+import { NgbModalStub } from './../../testing/bootstrap-stubs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PlayerServiceStub } from './../../testing/player-stubs';
