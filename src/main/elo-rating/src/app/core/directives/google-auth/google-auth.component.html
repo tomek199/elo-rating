@@ -5,12 +5,12 @@
   <ul class="navbar-nav" *ngIf="token">
     <li class="nav-item dropdown" ngbDropdown [autoClose]="true">
       <a class="nav-link dropdown-toggle p-1" ngbDropdownToggle role="button">
-        <img id="profile-image" [src]="profile.imageUrl" class="rounded"/>
+        <img id="user-image" [src]="user.pictureUrl" class="rounded"/>
       </a>
       <div id="queue-dropdown" class="dropdown-menu">
         <h6 class="dropdown-header">
           Signed in as
-          <strong>{{profile.fullName}}</strong>
+          <strong>{{user.name}}</strong>
         </h6>
         <div class=" dropdown-divider"></div>
         <button class="dropdown-item disabled">Your profile</button>

@@ -1,5 +1,5 @@
+import { User } from './../../../users/shared/user.model';
 import { GoogleAuthService } from './../shared/google-auth.service';
-import { Profile } from './../shared/profile.model';
 import { environment } from './../../../../environments/environment';
 import { Component, NgZone, AfterViewInit } from '@angular/core';
 
@@ -14,11 +14,10 @@ export class GoogleAuthComponent implements AfterViewInit {
 
   private readonly signInButtonId = 'googleSignInButton';
   private token: string;
-  public profile: Profile;
+  public user: User;
   
   constructor(
-    private zone: NgZone,
-    private googleAuthService: GoogleAuthService
+    private zone: NgZone
   ) { }
 
   ngAfterViewInit() {
@@ -44,25 +43,25 @@ export class GoogleAuthComponent implements AfterViewInit {
 
   onSignIn = (googleUser: any) => {
     this.zone.run(() => {
-      this.saveToken(googleUser.getAuthResponse());
-      this.saveProfile(googleUser.getBasicProfile()); 
+      this.saveIdToken(googleUser.getAuthResponse());
+      this.saveUser(googleUser.getBasicProfile()); 
     });
   }
 
-  private saveToken(authResponse) {
+  private saveIdToken(authResponse) {
     this.token = authResponse.id_token;
     sessionStorage.setItem('token', this.token);
   }
 
-  private saveProfile(googleProfile: any) {
-    this.profile = new Profile();
-    this.profile.id = googleProfile.getId();
-    this.profile.fullName = googleProfile.getName();
-    this.profile.givenName = googleProfile.getGivenName();
-    this.profile.familyName = googleProfile.getFamilyName();
-    this.profile.email = googleProfile.getEmail();
-    this.profile.imageUrl = googleProfile.getImageUrl();
-    sessionStorage.setItem('profile', JSON.stringify(this.profile));
+  private saveUser(googleProfile: any) {
+    this.user = new User();
+    this.user.id = googleProfile.getId();
+    this.user.name = googleProfile.getName();
+    this.user.givenName = googleProfile.getGivenName();
+    this.user.familyName = googleProfile.getFamilyName();
+    this.user.email = googleProfile.getEmail();
+    this.user.pictureUrl = googleProfile.getImageUrl();
+    sessionStorage.setItem('user', JSON.stringify(this.user));
   }
 
   signOut() {
@@ -73,8 +72,8 @@ export class GoogleAuthComponent implements AfterViewInit {
 
   private clearTokenAndProfile() {
     this.token = undefined;
-    this.profile = undefined;
+    this.user = undefined;
     sessionStorage.removeItem('token');
-    sessionStorage.removeItem('profile');
+    sessionStorage.removeItem('user');
   }
 }

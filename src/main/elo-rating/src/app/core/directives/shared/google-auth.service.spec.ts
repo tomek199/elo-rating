@@ -1,7 +1,7 @@
-import { Profile } from './profile.model';
 import { TestBed, inject } from '@angular/core/testing';
 
 import { GoogleAuthService } from './google-auth.service';
+import { User } from "../../../users/shared/user.model";
 
 describe('GoogleAuthService', () => {
   let sessionStorageMock: Map<string, any> = new Map<string, any>();
@@ -16,19 +16,19 @@ describe('GoogleAuthService', () => {
   });
 
   function signIn() {
-    let profile = new Profile();
-    profile.id = '1234';
-    profile.fullName = 'Name LastName';
-    profile.givenName = 'Name';
-    profile.familyName = 'LastName';
-    profile.email = 'lastname@gmail.com';
-    profile.imageUrl = '';
-    sessionStorageMock.set('profile', JSON.stringify(profile));
+    let user = new User();
+    user.id = '1234';
+    user.name = 'Name LastName';
+    user.givenName = 'Name';
+    user.familyName = 'LastName';
+    user.email = 'lastname@gmail.com';
+    user.pictureUrl = '';
+    sessionStorageMock.set('user', JSON.stringify(user));
     sessionStorageMock.set('token', '1q2w3e4r5t6y7u8i9o');
   }
 
   function signOut() {
-    sessionStorageMock.set('profile', null);
+    sessionStorageMock.set('user', null);
     sessionStorageMock.set('token', null);
   }
 
@@ -48,21 +48,21 @@ describe('GoogleAuthService', () => {
 
   it('getProfile() should return profile for signed in user', inject([GoogleAuthService], (service: GoogleAuthService) => {
     signIn();
-    expect(service.getProfile()).toBeTruthy();
+    expect(service.getUser()).toBeTruthy();
   }));
 
   it('getProfile() should return null for signed out user', inject([GoogleAuthService], (service: GoogleAuthService) => {
     signOut();
-    expect(service.getProfile()).toBeNull();
+    expect(service.getUser()).toBeNull();
   }));
 
   it('getSessionToken() should return token for signed in user', inject([GoogleAuthService], (service: GoogleAuthService) => {
     signIn();
-    expect(service.getSessionToken()).toBeTruthy();
+    expect(service.getIdToken()).toBeTruthy();
   }));
 
   it('getSessionToken() should return null for signed out user', inject([GoogleAuthService], (service: GoogleAuthService) => {
     signOut();
-    expect(service.getSessionToken()).toBeNull();;
+    expect(service.getIdToken()).toBeNull();;
   }));
 });

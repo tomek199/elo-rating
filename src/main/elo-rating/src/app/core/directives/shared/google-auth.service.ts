@@ -1,25 +1,25 @@
+import { User } from './../../../users/shared/user.model';
 import { Injectable } from '@angular/core';
-import { Profile } from "app/core/directives/shared/profile.model";
 
 @Injectable()
 export class GoogleAuthService {
-  private readonly PROFILE = 'profile';
+  private readonly USER = 'user';
   private readonly TOKEN = 'token';
 
   constructor() { }
 
   isAuthenticated(): boolean {
-    let profile = sessionStorage.getItem(this.PROFILE);
+    let user = sessionStorage.getItem(this.USER);
     let token = sessionStorage.getItem(this.TOKEN);
-    return profile !== null && token !== null;
+    return user !== null && token !== null;
   }
 
-  getProfile(): Profile {
-    let profile = sessionStorage.getItem(this.PROFILE);
-    return JSON.parse(profile);
+  getUser(): User {
+    let user = sessionStorage.getItem(this.USER);
+    return JSON.parse(user);
   }
 
-  getSessionToken(): string {
+  getIdToken(): string {
     return sessionStorage.getItem(this.TOKEN);
   }
 }
