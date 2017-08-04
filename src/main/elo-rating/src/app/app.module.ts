@@ -1,3 +1,4 @@
+import { UserService } from './users/shared/user.service';
 import { GoogleAuthService } from './core/directives/shared/google-auth.service';
 import { MatchService } from './matches/shared/match.service';
 import { PlayerService } from './players/shared/player.service';
@@ -74,6 +75,7 @@ import { GoogleAuthComponent } from './core/directives/google-auth/google-auth.c
     MatchService,
     CookieService,
     GoogleAuthService,
+    UserService,
     {
       provide: HighchartsStatic,
       useFactory: highchartsFactory

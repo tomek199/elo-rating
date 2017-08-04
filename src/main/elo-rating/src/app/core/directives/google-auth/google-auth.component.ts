@@ -1,3 +1,4 @@
+import { UserService } from './../../../users/shared/user.service';
 import { User } from './../../../users/shared/user.model';
 import { GoogleAuthService } from './../shared/google-auth.service';
 import { environment } from './../../../../environments/environment';
@@ -17,7 +18,8 @@ export class GoogleAuthComponent implements AfterViewInit {
   public user: User;
   
   constructor(
-    private zone: NgZone
+    private zone: NgZone,
+    private userService: UserService
   ) { }
 
   ngAfterViewInit() {
@@ -54,14 +56,11 @@ export class GoogleAuthComponent implements AfterViewInit {
   }
 
   private saveUser(googleProfile: any) {
-    this.user = new User();
-    this.user.id = googleProfile.getId();
-    this.user.name = googleProfile.getName();
-    this.user.givenName = googleProfile.getGivenName();
-    this.user.familyName = googleProfile.getFamilyName();
-    this.user.email = googleProfile.getEmail();
-    this.user.pictureUrl = googleProfile.getImageUrl();
-    sessionStorage.setItem('user', JSON.stringify(this.user));
+    this.userService.signIn(this.token)
+      .then(user => {
+        this.user = user;
+        sessionStorage.setItem('user', JSON.stringify(this.user));
+      });
   }
 
   signOut() {
