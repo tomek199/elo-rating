@@ -9,6 +9,7 @@ import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChartModule } from 'angular2-highcharts';
 import { CookieService } from 'ng2-cookies';
+import { OrderModule } from 'ngx-order-pipe';
 
 import { RoutingModule } from './core/routing/routing.module';
 import { AppComponent } from './app.component';
@@ -35,6 +36,7 @@ import { PlayerForecastComponent } from './players/player-forecast/player-foreca
 import { PlayerCellComponent } from './players/player-cell/player-cell.component';
 import { SpinnerComponent } from './core/directives/spinner/spinner.component';
 import { GoogleAuthComponent } from './core/directives/google-auth/google-auth.component';
+import { PlayerOpponentsComponent } from './players/player-opponents/player-opponents.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,8 @@ import { GoogleAuthComponent } from './core/directives/google-auth/google-auth.c
     PlayerForecastComponent,
     PlayerCellComponent,
     SpinnerComponent,
-    GoogleAuthComponent
+    GoogleAuthComponent,
+    PlayerOpponentsComponent
   ],
   imports: [
     BrowserModule,
@@ -67,7 +70,8 @@ import { GoogleAuthComponent } from './core/directives/google-auth/google-auth.c
     HttpModule,
     RoutingModule,
     NgbModule.forRoot(),
-    ChartModule
+    ChartModule,
+    OrderModule
   ],
   providers: [
     LeagueService,

@@ -1,5 +1,6 @@
 import { Match } from './../../matches/shared/match.model';
 import { PlayerStats } from './player-stats.model';
+import { OpponentStats } from './opponent-stats.model';
 import { Http, Headers } from '@angular/http';
 import { Player } from './player.model';
 import { Injectable } from '@angular/core';
@@ -76,6 +77,14 @@ export class PlayerService {
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as Match[])
+      .catch(this.handleError);
+  }
+
+  getOpponentsStats(playerId: string): Promise<OpponentStats[]> {
+    let url = `${this.url}/players/${playerId}/opponents`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as OpponentStats[])
       .catch(this.handleError);
   }
 

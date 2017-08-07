@@ -1,0 +1,32 @@
+<app-spinner [resource]="opponentStats"></app-spinner>
+<table class="shadedtable table">
+    <thead class="thead-default">
+        <tr>
+            <th (click)="setOrder('username')">Name</th>
+            <th (click)="setOrder('won')">Won</th>
+            <th (click)="setOrder('lost')">Lost</th>
+            <th (click)="setOrder('pointsGained')">Points gained</th>
+            <th (click)="setOrder('streak')">Streak</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let opponentStats of opponentsStats | orderBy: order:reverse">
+            <td>
+                {{opponentStats.opponent.username}}
+            </td>
+            <td>
+                {{opponentStats.won}}
+            </td>
+            <td>
+                {{opponentStats.lost}}
+            </td>
+            <td>
+                {{opponentStats.pointsGained}}
+            </td>
+            <td>
+                {{opponentStats.streak}}
+            </td>
+        </tr>
+    </tbody>
+</table>
+

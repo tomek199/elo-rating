@@ -37,6 +37,15 @@
       <app-player-forecast [leagueId]="leagueId" [playerId]="player.id"></app-player-forecast>    
     </ng-template>
   </ngb-tab>
+  <ngb-tab>
+    <ng-template ngbTabTitle>
+      Opponents
+      <span class="badge badge-warning">wip</span>
+    </ng-template>
+    <ng-template ngbTabContent>
+      <app-player-opponents [playerId]="player.id"></app-player-opponents>
+    </ng-template>
+  </ngb-tab>
 </ngb-tabset>
 <ul class="nav justify-content-end">
   <li>
