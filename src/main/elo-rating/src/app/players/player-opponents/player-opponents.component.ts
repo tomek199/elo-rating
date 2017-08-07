@@ -25,9 +25,6 @@ export class PlayerOpponentsComponent implements OnInit {
   }
 
   setOrder(value: string) {
-    console.log("value:" + value);
-    console.log("order:" + this.order);
-    // console.log("reverse:")
     if (this.order === value) {
       this.reverse = !this.reverse;
     } else {
