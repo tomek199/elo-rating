@@ -73,7 +73,10 @@ describe('NavComponent', () => {
     expect(debugElement.nativeElement.textContent).toEqual('Add match');
   }));
 
-  it('should have app-league-search component', () => {
+  it('should have app-league-search component for not selected league', () => {
+    component.leagueId = undefined;
+    component.ngOnChanges();
+    fixture.detectChanges();
     let debugElement = fixture.debugElement.query(By.directive(LeagueSearchComponentStub));
     expect(debugElement).toBeTruthy();
   });
