@@ -1,3 +1,6 @@
+import { PlayerServiceStub } from './../../testing/player-stubs';
+import { PlayerService } from './../shared/player.service';
+import { OrderModule } from 'ngx-order-pipe';
 import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
@@ -9,7 +12,11 @@ describe('PlayerOpponentsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlayerOpponentsComponent, SpinnerComponent ]
+      declarations: [ PlayerOpponentsComponent, SpinnerComponent ],
+      providers: [
+        {provide: PlayerService, useClass: PlayerServiceStub}
+      ],
+      imports: [ OrderModule ]
     })
     .compileComponents();
   }));

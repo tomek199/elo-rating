@@ -1,3 +1,4 @@
+import { OpponentStats } from './../players/shared/opponent-stats.model';
 import { Match } from './../matches/shared/match.model';
 import { PLAYERS, PLAYERS_STATS } from './data/players';
 import { Player } from './../players/shared/player.model';
@@ -60,6 +61,11 @@ export class PlayerServiceStub {
     }
     return Promise.resolve(matches);
   }
+
+  getOpponentsStats(playerId: string): Promise<OpponentStats[]> {
+    // TODO create mock data for opponents stats
+    return Promise.resolve(null);
+  }
 }
 
 @Component({
@@ -105,4 +111,13 @@ export class PlayerForecastStubComponent implements OnInit {
   @Input() playerId;
   constructor() { }
   ngOnInit() { }
+}
+
+@Component({
+  selector: 'app-player-opponents',
+  template: ''
+})
+export class PlayerOpponentsStubComponent implements OnInit {
+  @Input() playerId;
+  ngOnInit() {}
 }
