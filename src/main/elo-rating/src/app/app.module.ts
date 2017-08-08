@@ -37,6 +37,7 @@ import { PlayerCellComponent } from './players/player-cell/player-cell.component
 import { SpinnerComponent } from './core/directives/spinner/spinner.component';
 import { GoogleAuthComponent } from './core/directives/google-auth/google-auth.component';
 import { PlayerOpponentsComponent } from './players/player-opponents/player-opponents.component';
+import { LeagueAssignComponent } from './leagues/league-assign/league-assign.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { PlayerOpponentsComponent } from './players/player-opponents/player-oppo
     PlayerCellComponent,
     SpinnerComponent,
     GoogleAuthComponent,
-    PlayerOpponentsComponent
+    PlayerOpponentsComponent,
+    LeagueAssignComponent
   ],
   imports: [
     BrowserModule,

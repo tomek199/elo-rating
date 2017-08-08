@@ -1,7 +1,7 @@
 import { LEAGUES } from './data/leagues';
 import { League } from './../leagues/shared/league.model';
 import { Observable } from 'rxjs/Observable';
-import { Injectable, Component, OnInit } from '@angular/core';
+import { Injectable, Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Response } from '@angular/http'
 import 'rxjs/add/observable/of';
 
@@ -38,4 +38,13 @@ export class LeagueServiceStub {
 })
 export class LeagueSearchComponentStub implements OnInit {
   ngOnInit(): void { }
+}
+
+@Component({
+  selector: 'app-league-assign',
+  template: ''
+})
+export class LeagueAssignComponentStub implements OnChanges {
+  @Input() league: League;
+  ngOnChanges(): void { }
 }

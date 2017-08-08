@@ -1,0 +1,21 @@
+<ng-container *ngIf="!isAssigned()">
+  <div class="alert alert-warning" *ngIf="!isAuthenticated() && !showSuccessAlert">
+    <h4>League is temporary!</h4>
+    <p>The league you created is temporary and will be deleted after few hours. To save it you have to sign in firstly. Please use button located in top navbar to sign in.</p>
+  </div>
+  <div class="card text-center my-2" *ngIf="isAuthenticated() && !showSuccessAlert">
+    <div class="card-block">
+      <h5>
+        You are signed in as 
+        <strong>{{getUser()?.name}}</strong>
+      </h5>
+      <button class="btn btn-success btn-lg btn-block" (click)="assignLeague()">
+        Click this button to assign league to your profile and save them permanently.
+      </button>
+    </div>
+  </div>
+  <div class="alert alert-success" *ngIf="showSuccessAlert">
+    <h4>Success!</h4>
+    <p>League was successfully assigned to your profile.</p>
+  </div>
+</ng-container>

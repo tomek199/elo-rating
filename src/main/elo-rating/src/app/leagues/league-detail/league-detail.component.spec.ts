@@ -1,3 +1,4 @@
+import { LeagueAssignComponentStub } from './../../testing/league-stubs';
 import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { PlayerServiceStub, PlayerRankingStubComponent } from './../../testing/player-stubs';
 import { PlayerService } from './../../players/shared/player.service';
@@ -24,7 +25,8 @@ describe('LeagueDetailComponent', () => {
       declarations: [ 
         LeagueDetailComponent,
         PlayerRankingStubComponent,
-        SpinnerComponent
+        SpinnerComponent,
+        LeagueAssignComponentStub
       ], 
       imports: [ RouterTestingModule ],
       providers: [

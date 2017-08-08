@@ -7,6 +7,7 @@
   League
   <small class="text-muted">{{league.name}}</small>
 </h1>
+<app-league-assign [league]="league"></app-league-assign>
 <div class="card col-12" *ngIf="league">
   <div class="card-block">
     <app-player-ranking [leagueId]="league.id"></app-player-ranking>

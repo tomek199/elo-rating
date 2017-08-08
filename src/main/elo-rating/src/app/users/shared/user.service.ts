@@ -20,6 +20,14 @@ export class UserService {
       .catch(this.handleError);
   }
 
+  assignLeague(userId: string, leagueId: string) {
+    let url = `${this.url}/users/${userId}/assign-league/${leagueId}`;
+    return this.http.post(url, null)
+      .toPromise()
+      .then(response => response.json() as User)
+      .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
     return Promise.resolve(null);
