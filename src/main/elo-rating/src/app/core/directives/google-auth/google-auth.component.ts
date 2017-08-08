@@ -19,7 +19,8 @@ export class GoogleAuthComponent implements AfterViewInit {
   
   constructor(
     private zone: NgZone,
-    private userService: UserService
+    private userService: UserService,
+    private googleAuthService: GoogleAuthService
   ) { }
 
   ngAfterViewInit() {
@@ -52,14 +53,14 @@ export class GoogleAuthComponent implements AfterViewInit {
 
   private saveIdToken(authResponse) {
     this.token = authResponse.id_token;
-    sessionStorage.setItem('token', this.token);
+    sessionStorage.setItem(this.googleAuthService.TOKEN, this.token);
   }
 
   private saveUser(googleProfile: any) {
     this.userService.signIn(this.token)
       .then(user => {
         this.user = user;
-        sessionStorage.setItem('user', JSON.stringify(this.user));
+        sessionStorage.setItem(this.googleAuthService.USER, JSON.stringify(this.user));
       });
   }
 
@@ -72,7 +73,7 @@ export class GoogleAuthComponent implements AfterViewInit {
   private clearTokenAndProfile() {
     this.token = undefined;
     this.user = undefined;
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('user');
+    sessionStorage.removeItem(this.googleAuthService.TOKEN);
+    sessionStorage.removeItem(this.googleAuthService.USER);
   }
 }

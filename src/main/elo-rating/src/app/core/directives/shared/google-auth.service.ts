@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class GoogleAuthService {
-  private readonly USER = 'user';
-  private readonly TOKEN = 'token';
+  public readonly USER = 'user';
+  public readonly TOKEN = 'token';
 
   constructor() { }
 
