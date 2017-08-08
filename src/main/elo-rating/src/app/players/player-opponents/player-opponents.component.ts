@@ -9,6 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PlayerOpponentsComponent implements OnInit {
   @Input() playerId;
+  @Input() leagueId;
   opponentsStats: OpponentStats[];
   order: string = 'total';
   reverse: boolean = true;
