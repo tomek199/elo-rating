@@ -1,30 +1,72 @@
 <app-spinner [resource]="opponentStats"></app-spinner>
-<table class="shadedtable table">
+<table class="shadedtable table table-bordered">
     <thead class="thead-default">
         <tr>
-            <th (click)="setOrder('username')">Name</th>
-            <th (click)="setOrder('won')">Won</th>
-            <th (click)="setOrder('lost')">Lost</th>
-            <th (click)="setOrder('pointsGained')">Points gained</th>
-            <th (click)="setOrder('streak')">Streak</th>
+            <th (click)="setOrder('username')">
+              Name
+              <span *ngIf="order == 'username'" class="octicon">
+                <span *ngIf="!reverse" class="octicon-triangle-up"></span>
+                <span *ngIf="reverse" class="octicon-triangle-down"></span>
+              </span>
+            </th>
+            <th (click)="setOrder('total')">
+              Total
+              <span *ngIf="order == 'total'" class="octicon">
+                <span *ngIf="!reverse" class="octicon-triangle-up"></span>
+                <span *ngIf="reverse" class="octicon-triangle-down"></span>
+              </span>
+            </th>
+            <th (click)="setOrder('won')">
+              Won
+              <span *ngIf="order == 'won'" class="octicon">
+                <span *ngIf="!reverse" class="octicon-triangle-up"></span>
+                <span *ngIf="reverse" class="octicon-triangle-down"></span>
+              </span>
+            </th>
+            <th (click)="setOrder('lost')">
+              Lost
+              <span *ngIf="order == 'lost'" class="octicon">
+                <span *ngIf="!reverse" class="octicon-triangle-up"></span>
+                <span *ngIf="reverse" class="octicon-triangle-down"></span>
+              </span>
+            </th>
+            <th (click)="setOrder('pointsGained')">
+              Points gained
+              <span *ngIf="order == 'pointsGained'" class="octicon">
+                <span *ngIf="!reverse" class="octicon-triangle-up"></span>
+                <span *ngIf="reverse" class="octicon-triangle-down"></span>
+              </span>
+            </th>
+            <th (click)="setOrder('streak')">
+              Streak
+              <span *ngIf="order == 'streak'" class="octicon">
+                <span *ngIf="!reverse" class="octicon-triangle-up"></span>
+                <span *ngIf="reverse" class="octicon-triangle-down"></span>
+              </span>
+            </th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let opponentStats of opponentsStats | orderBy: order:reverse">
             <td>
-                {{opponentStats.opponent.username}}
+              <a [routerLink]="['/leagues', leagueId, 'players', opponentStats.opponent.id]">{{opponentStats.opponent.username}}</a>
             </td>
             <td>
+                {{opponentStats.total}}
+            </td>
+            <td [ngClass]="'text-success'">
                 {{opponentStats.won}}
             </td>
-            <td>
+            <td [ngClass]="'text-danger'">
                 {{opponentStats.lost}}
             </td>
-            <td>
-                {{opponentStats.pointsGained}}
+            <td [ngClass]="{'text-success': opponentStats.pointsGained > 0, 'text-danger': opponentStats.pointsGained < 0}">
+              <span class="octicon" [ngClass]="{'octicon-triangle-up': opponentStats.pointsGained > 0, 'octicon-triangle-down': opponentStats.pointsGained < 0}"></span>
+              {{opponentStats.pointsGained}}
             </td>
-            <td>
-                {{opponentStats.streak}}
+            <td [ngClass]="{'text-success': opponentStats.streak > 0, 'text-danger': opponentStats.streak < 0}">
+              <span class="octicon" [ngClass]="{'octicon-triangle-up': opponentStats.streak > 0, 'octicon-triangle-down': opponentStats.streak < 0}"></span>
+              {{opponentStats.streak}}
             </td>
         </tr>
     </tbody>

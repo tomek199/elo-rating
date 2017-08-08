@@ -10,7 +10,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class PlayerOpponentsComponent implements OnInit {
   @Input() playerId;
   opponentsStats: OpponentStats[];
-  order: string = 'won';
+  order: string = 'total';
   reverse: boolean = true;
 
   constructor(private playerService: PlayerService) { }

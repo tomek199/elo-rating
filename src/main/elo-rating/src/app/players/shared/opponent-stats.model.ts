@@ -6,4 +6,5 @@ export class OpponentStats {
     lost: number;
     pointsGained: number;
     streak: number;
+    total: number;
 }
