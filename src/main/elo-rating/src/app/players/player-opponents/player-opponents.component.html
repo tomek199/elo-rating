@@ -1,5 +1,6 @@
-<app-spinner [resource]="opponentStats"></app-spinner>
-<table class="shadedtable table table-bordered">
+<h2 class="mt-2">Player opponents</h2>
+<app-spinner [resource]="opponentsStats"></app-spinner>
+<table class="shadedtable table table-bordered" *ngIf="opponentsStats">
     <thead class="thead-default">
         <tr>
             <th (click)="setOrder('username')">
