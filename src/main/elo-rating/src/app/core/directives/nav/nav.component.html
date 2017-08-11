@@ -15,7 +15,7 @@
         <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="btn btn-primary btn-sm" role="button">Add match</a>
       </form>
       <app-league-search *ngIf="!leagueId"></app-league-search>
-      <app-google-auth></app-google-auth> 
+      <app-google-auth [leagueId]="leagueId"></app-google-auth> 
     </div>
   </div>
 </nav>

@@ -2,7 +2,7 @@ import { UserService } from './../../../users/shared/user.service';
 import { User } from './../../../users/shared/user.model';
 import { GoogleAuthService } from './../shared/google-auth.service';
 import { environment } from './../../../../environments/environment';
-import { Component, NgZone, AfterViewInit } from '@angular/core';
+import { Component, NgZone, AfterViewInit, Input } from '@angular/core';
 
 declare var gapi: any;
 
@@ -13,6 +13,7 @@ declare var gapi: any;
 })
 export class GoogleAuthComponent implements AfterViewInit {
 
+  @Input() leagueId;
   private readonly signInButtonId = 'googleSignInButton';
   private token: string;
   public user: User;

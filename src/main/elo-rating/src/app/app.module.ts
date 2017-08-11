@@ -38,6 +38,7 @@ import { SpinnerComponent } from './core/directives/spinner/spinner.component';
 import { GoogleAuthComponent } from './core/directives/google-auth/google-auth.component';
 import { PlayerOpponentsComponent } from './players/player-opponents/player-opponents.component';
 import { LeagueAssignComponent } from './leagues/league-assign/league-assign.component';
+import { UserInviteComponent } from './users/user-invite/user-invite.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { LeagueAssignComponent } from './leagues/league-assign/league-assign.com
     SpinnerComponent,
     GoogleAuthComponent,
     PlayerOpponentsComponent,
-    LeagueAssignComponent
+    LeagueAssignComponent,
+    UserInviteComponent
   ],
   imports: [
     BrowserModule,

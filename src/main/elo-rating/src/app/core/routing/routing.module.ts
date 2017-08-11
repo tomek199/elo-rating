@@ -1,3 +1,4 @@
+import { UserInviteComponent } from './../../users/user-invite/user-invite.component';
 import { PlayerRankingComponent } from './../../players/player-ranking/player-ranking.component';
 import { MatchListComponent } from './../../matches/match-list/match-list.component';
 import { MatchSaveComponent } from './../../matches/match-save/match-save.component';
@@ -23,6 +24,7 @@ export const routes: Routes = [
   { path: 'leagues/:league_id/matches/add', component: MatchSaveComponent },
   { path: 'leagues/:league_id/matches/save/:match_id/:mode', component: MatchSaveComponent },
   { path: 'leagues/:league_id/matches', component: MatchListComponent },
+  { path: 'leagues/:league_id/users/invite', component: UserInviteComponent},
   { path: '**', redirectTo: '/leagues', pathMatch: 'full' } // this path must be the last one
 ];
 
