@@ -118,6 +118,7 @@ export class PlayerForecastStubComponent implements OnInit {
   template: ''
 })
 export class PlayerOpponentsStubComponent implements OnInit {
+  @Input() leagueId;
   @Input() playerId;
   ngOnInit() {}
 }

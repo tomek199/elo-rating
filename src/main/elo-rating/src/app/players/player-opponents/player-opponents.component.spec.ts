@@ -1,3 +1,4 @@
+import { RouterLinkStub } from './../../testing/routing-stubs';
 import { PlayerServiceStub } from './../../testing/player-stubs';
 import { PlayerService } from './../shared/player.service';
 import { OrderModule } from 'ngx-order-pipe';
@@ -12,7 +13,11 @@ describe('PlayerOpponentsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlayerOpponentsComponent, SpinnerComponent ],
+      declarations: [ 
+        PlayerOpponentsComponent, 
+        SpinnerComponent,
+        RouterLinkStub, 
+      ],
       providers: [
         {provide: PlayerService, useClass: PlayerServiceStub}
       ],
