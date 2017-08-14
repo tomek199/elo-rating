@@ -34,4 +34,15 @@ export class GoogleAuthService {
     else 
       sessionStorage.removeItem(this.LEAGUE);
   }
+
+  isAuthorized(): boolean {
+    if (!this.isAuthenticated() || !this.getCurrentLeague())
+      return false;
+    let leagueMatched: boolean = false;
+    this.getUser().leagues.forEach(league => {
+      if (league.id == this.getCurrentLeague())
+        leagueMatched = true;
+    });
+    return leagueMatched;
+  }
 }

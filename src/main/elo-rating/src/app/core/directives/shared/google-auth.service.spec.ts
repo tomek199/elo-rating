@@ -1,3 +1,4 @@
+import { League } from 'app/leagues/shared/league.model';
 import { TestBed, inject } from '@angular/core/testing';
 
 import { GoogleAuthService } from './google-auth.service';
@@ -28,6 +29,9 @@ describe('GoogleAuthService', () => {
     user.familyName = 'LastName';
     user.email = 'lastname@gmail.com';
     user.pictureUrl = '';
+    let league = new League('123', 'Test league');
+    user.leagues = [];
+    user.leagues.push(league);
     sessionStorageMock.set('user', JSON.stringify(user));
     sessionStorageMock.set('token', '1q2w3e4r5t6y7u8i9o');
   }
@@ -88,5 +92,29 @@ describe('GoogleAuthService', () => {
   it('setCurrentLeague() should set current league id and store it in sessionStorage', inject([GoogleAuthService], (service: GoogleAuthService) => {
     service.setCurrentLeague('987');
     expect(service.getCurrentLeague()).toEqual('987');
+  }));
+
+  it('isAuthorized() should return true for authorized user', inject([GoogleAuthService], (service: GoogleAuthService) => {
+    signIn();
+    setLeague('123');
+    expect(service.isAuthorized()).toBeTruthy();
+  }));
+
+  it('isAuthorized() should return false for not authorized user', inject([GoogleAuthService], (service: GoogleAuthService) => {
+    signIn();
+    setLeague('987');
+    expect(service.isAuthorized()).toBeFalsy();    
+  }));
+
+  it('isAuthorized() should return false for not authenticated user', inject([GoogleAuthService], (service: GoogleAuthService) => {
+    signOut();
+    setLeague('123');
+    expect(service.isAuthorized()).toBeFalsy();    
+  }));
+
+  it('isAuthorized() should return false for not selected league', inject([GoogleAuthService], (service: GoogleAuthService) => {
+    signIn();
+    setLeague(undefined);
+    expect(service.isAuthorized()).toBeFalsy();    
   }));
 });
