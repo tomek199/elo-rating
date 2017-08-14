@@ -77,4 +77,8 @@ export class GoogleAuthComponent implements AfterViewInit {
     sessionStorage.removeItem(this.googleAuthService.TOKEN);
     sessionStorage.removeItem(this.googleAuthService.USER);
   }
+
+  isAuthorized(): boolean {
+    return this.googleAuthService.isAuthorized();
+  }
 }
