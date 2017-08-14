@@ -29,6 +29,9 @@ export class GoogleAuthService {
   }
 
   setCurrentLeague(leagueId: string) {
-    sessionStorage.setItem(this.LEAGUE, leagueId);
+    if (leagueId) 
+      sessionStorage.setItem(this.LEAGUE, leagueId);
+    else 
+      sessionStorage.removeItem(this.LEAGUE);
   }
 }
