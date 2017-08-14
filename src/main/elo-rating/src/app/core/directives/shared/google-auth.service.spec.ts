@@ -6,12 +6,17 @@ import { User } from "../../../users/shared/user.model";
 describe('GoogleAuthService', () => {
   let sessionStorageMock: Map<string, any> = new Map<string, any>();
   beforeEach(() => {
+    sessionStorageMock.clear();
     TestBed.configureTestingModule({
       providers: [GoogleAuthService]
     });
 
     spyOn(sessionStorage, 'getItem').and.callFake((key) => {
       return sessionStorageMock.get(key);
+    });
+
+    spyOn(sessionStorage, 'setItem').and.callFake((key, value) => {
+      sessionStorageMock.set(key, value);
     });
   });
 
@@ -30,6 +35,10 @@ describe('GoogleAuthService', () => {
   function signOut() {
     sessionStorageMock.set('user', null);
     sessionStorageMock.set('token', null);
+  }
+
+  function setLeague(leagueId: string | null) {
+    sessionStorageMock.set('league', leagueId);
   }
 
   it('should be created', inject([GoogleAuthService], (service: GoogleAuthService) => {
@@ -63,6 +72,21 @@ describe('GoogleAuthService', () => {
 
   it('getSessionToken() should return null for signed out user', inject([GoogleAuthService], (service: GoogleAuthService) => {
     signOut();
-    expect(service.getIdToken()).toBeNull();;
+    expect(service.getIdToken()).toBeNull();
+  }));
+
+  it('getCurrentLeague() should return league id when league is selected', inject([GoogleAuthService], (service: GoogleAuthService) => {
+    setLeague('123');
+    expect(service.getCurrentLeague()).toEqual('123');
+  }));
+
+  it('getCurrentLeague() should return null when league is not selected', inject([GoogleAuthService], (service: GoogleAuthService) => {
+    setLeague(null);
+    expect(service.getCurrentLeague()).toBeNull();
+  }));
+
+  it('setCurrentLeague() should set current league id and store it in sessionStorage', inject([GoogleAuthService], (service: GoogleAuthService) => {
+    service.setCurrentLeague('987');
+    expect(service.getCurrentLeague()).toEqual('987');
   }));
 });

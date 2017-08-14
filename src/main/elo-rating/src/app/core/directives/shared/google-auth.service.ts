@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 export class GoogleAuthService {
   public readonly USER = 'user';
   public readonly TOKEN = 'token';
+  public readonly LEAGUE = 'league';
 
   constructor() { }
 
@@ -21,5 +22,13 @@ export class GoogleAuthService {
 
   getIdToken(): string {
     return sessionStorage.getItem(this.TOKEN);
+  }
+
+  getCurrentLeague(): string {
+    return sessionStorage.getItem(this.LEAGUE);
+  }
+
+  setCurrentLeague(leagueId: string) {
+    sessionStorage.setItem(this.LEAGUE, leagueId);
   }
 }
