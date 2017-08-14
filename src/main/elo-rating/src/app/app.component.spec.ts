@@ -1,3 +1,5 @@
+import { GoogleAuthServiceStub } from './testing/google-stubs';
+import { GoogleAuthService } from './core/directives/shared/google-auth.service';
 import { CookieService } from 'ng2-cookies';
 import { NavComponentStub } from './testing/nav-stubs';
 import { RouterStub, ActivatedRouteStub } from './testing/routing-stubs';
@@ -30,6 +32,7 @@ describe('AppComponent', () => {
       ],
       providers: [
         { provide: Router, useClass: RouterStub },
+        { provide: GoogleAuthService, useClass: GoogleAuthServiceStub },
         CookieService
       ]
     });

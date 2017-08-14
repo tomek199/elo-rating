@@ -1,3 +1,4 @@
+import { GoogleAuthService } from './core/directives/shared/google-auth.service';
 import { CookieService } from 'ng2-cookies';
 import { Router, NavigationEnd } from '@angular/router';
 import { Component } from '@angular/core';
@@ -14,7 +15,8 @@ export class AppComponent {
 
   constructor(
     private router: Router,
-    private cookieService: CookieService) {
+    private cookieService: CookieService, 
+    private googleAuthService: GoogleAuthService) {
   }
 
   ngOnInit() {
@@ -32,9 +34,10 @@ export class AppComponent {
   private getLeagueId(url: string) {
     let splitted = url.split('/');
     if (splitted[1] == 'leagues') 
-      this.leagueId = splitted[2];
+      this.googleAuthService.setCurrentLeague(splitted[2]);
     else 
-      this.leagueId = undefined;
+      this.googleAuthService.setCurrentLeague(undefined);
+    this.leagueId = this.googleAuthService.getCurrentLeague();
   }
 
   private checkCookies() {
