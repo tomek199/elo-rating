@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { User } from './user.model';
 import { Http } from '@angular/http';
 import { environment } from './../../../environments/environment';
@@ -20,13 +21,27 @@ export class UserService {
       .catch(this.handleError);
   }
 
-  assignLeague(userId: string, leagueId: string) {
+  findByName(name: string): Observable<User[]> {
+    let url = `${this.url}/users/find-by-name?name=${name}`;
+    return this.http.get(url)
+      .map(response => response.json() as User[]);
+  }
+
+  assignLeague(userId: string, leagueId: string): Promise<User> {
     let url = `${this.url}/users/${userId}/assign-league/${leagueId}`;
     return this.http.post(url, null)
       .toPromise()
       .then(response => response.json() as User)
       .catch(this.handleError);
   }
+
+  inviteUser(currentUserId: string, userToInvite: User): Promise<User> {
+    let url = `${this.url}/users/${currentUserId}/invite-user`;
+    return this.http.post(url, userToInvite)
+      .toPromise()
+      .then(response => response.json() as User)
+      .catch(this.handleError);
+  }  
 
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);

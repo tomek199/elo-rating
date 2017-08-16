@@ -18,7 +18,9 @@ export class GoogleAuthServiceStub {
   }
 
   getUser(): User {
-    return null;
+    let user = new User();
+    user.id = '123';
+    return user;
   }
 
   getIdToken(): string {

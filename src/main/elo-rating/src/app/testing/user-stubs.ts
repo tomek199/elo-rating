@@ -14,4 +14,12 @@ export class UserServiceStub {
     user.leagues.push(league);
     return Promise.resolve(user);
   }
+
+  inviteUser(currentUserId: string, userToInvite: User): Promise<User> {
+    let user = new User();
+    let league = new League();
+    user.leagues = [];
+    user.leagues.push(league);
+    return Promise.resolve(user);
+  }  
 }
