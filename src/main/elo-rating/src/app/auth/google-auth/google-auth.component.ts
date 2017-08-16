@@ -22,7 +22,10 @@ export class GoogleAuthComponent implements OnInit {
     private googleAuthService: GoogleAuthService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.token = this.googleAuthService.getIdToken();
+    this.user = this.googleAuthService.getUser();
+  }
 
   onSignIn = (googleUser: any) => {
     this.saveIdToken(googleUser.getAuthResponse());

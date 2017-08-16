@@ -5,7 +5,7 @@
   <strong>Cookies!</strong>
   We use cookies on <span class="font-italic">EloRating</span> service. By using this website, you agree to our use of cookies.
 </div>
-<app-nav [leagueId]="leagueId"></app-nav>
+<app-nav *ngIf="showNavbar" [leagueId]="leagueId"></app-nav>
 <div id="main-container" class="container mt-3">
   <router-outlet></router-outlet>
 </div>

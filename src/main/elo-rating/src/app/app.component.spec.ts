@@ -45,11 +45,14 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it('should contain NavComponent', () => {
+  it('should contain NavComponent', fakeAsync(() => {
     let fixture = TestBed.createComponent(AppComponent);
+    activatedRoute.testParams = {league_id: '123'};
+    fixture.detectChanges();    
+    tick();
     let debugElement = fixture.debugElement.query(By.directive(NavComponentStub))
     expect(debugElement).toBeTruthy();
-  });
+  }));
 
   it('should have main-container div tag', () => {
     let fixture = TestBed.createComponent(AppComponent);

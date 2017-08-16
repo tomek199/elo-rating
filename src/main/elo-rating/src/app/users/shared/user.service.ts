@@ -43,6 +43,23 @@ export class UserService {
       .catch(this.handleError);
   }  
 
+  verifySecurityToken(token: string) {
+    let url = `${this.url}/users/verify-security-token`;
+    return this.http.post(url, token)
+      .toPromise()
+      .then(response => response.json() as boolean)
+      .catch(this.handleError);
+  }
+
+  completeInvitation(googleIdToken: string, securityToken: string): Promise<User> {
+    let url = `${this.url}/users/confirm-invitation`;
+    let requestBody = {googleIdToken: googleIdToken, securityToken: securityToken};
+    return this.http.post(url, requestBody)
+      .toPromise()
+      .then(response => response.json() as User)
+      .catch(this.handleError);
+  }
+ 
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
     return Promise.resolve(null);

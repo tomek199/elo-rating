@@ -12,6 +12,7 @@ import 'rxjs/add/operator/filter';
 export class AppComponent {
   leagueId: string;
   showCookiesWarning: boolean;
+  showNavbar: boolean;
 
   constructor(
     private router: Router,
@@ -27,16 +28,19 @@ export class AppComponent {
   private subscribeRouteChange() {
     this.router.events.filter(event => event instanceof NavigationEnd)
       .subscribe((event: NavigationEnd) => {
+        this.showNavbar = false;
         this.getLeagueId(event.urlAfterRedirects);
       });
   }
 
   private getLeagueId(url: string) {
     let splitted = url.split('/');
-    if (splitted[1] == 'leagues') 
+    if (splitted[1] == 'leagues') { 
+      this.showNavbar = true;
       this.googleAuthService.setCurrentLeague(splitted[2]);
-    else 
+    } else {
       this.googleAuthService.setCurrentLeague(undefined);
+    } 
     this.leagueId = this.googleAuthService.getCurrentLeague();
   }
 

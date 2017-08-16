@@ -1,0 +1,21 @@
+<app-spinner [resource]="showSuccessAlert"></app-spinner>
+<div class="jumbotron" [hidden]="!showForm()">
+  <h2 class="display-4">Confirm invitation</h2>
+  <p class="lead">To confirm the invitation please use button below to sign in by your Google's account</p>
+  <hr class="my-4">
+  <app-google-button [buttonId]="'googleConfirmInvitationButton'" (onSignIn)="signIn($event)"></app-google-button>
+</div>
+<div class="alert alert-success" *ngIf="showSuccessAlert">
+  <h4 class="alert-heading">Well done!</h4>
+  <p>You are correctly signed in and assigned to league
+    <em>{{league.name}}</em>
+  </p>
+  <p>
+    Now you can follow
+    <a [routerLink]="['/leagues', league.id]" class="alert-link">this</a>
+    link to see your league details.
+  </p>
+</div>
+<div class="alert alert-danger" *ngIf="securityToken === null">
+  <strong>Error!</strong> Invalid token.
+</div>
