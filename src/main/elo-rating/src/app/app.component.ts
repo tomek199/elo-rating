@@ -1,4 +1,4 @@
-import { GoogleAuthService } from './core/directives/shared/google-auth.service';
+import { GoogleAuthService } from './auth/shared/google-auth.service';
 import { CookieService } from 'ng2-cookies';
 import { Router, NavigationEnd } from '@angular/router';
 import { Component } from '@angular/core';

@@ -2,7 +2,7 @@ import { League } from 'app/leagues/shared/league.model';
 import { TestBed, inject } from '@angular/core/testing';
 
 import { GoogleAuthService } from './google-auth.service';
-import { User } from "../../../users/shared/user.model";
+import { User } from "../../users/shared/user.model";
 
 describe('GoogleAuthService', () => {
   let sessionStorageMock: Map<string, any> = new Map<string, any>();

@@ -1,5 +1,5 @@
 import { League } from 'app/leagues/shared/league.model';
-import { GoogleAuthService } from './../../core/directives/shared/google-auth.service';
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { User } from './../shared/user.model';
 import { UserService } from './../shared/user.service';
 import { Observable } from 'rxjs/Observable';

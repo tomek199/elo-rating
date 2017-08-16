@@ -1,5 +1,5 @@
 import { UserService } from './users/shared/user.service';
-import { GoogleAuthService } from './core/directives/shared/google-auth.service';
+import { GoogleAuthService } from './auth/shared/google-auth.service';
 import { MatchService } from './matches/shared/match.service';
 import { PlayerService } from './players/shared/player.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -35,7 +35,7 @@ import { PageSizeComponent } from './core/directives/page-size/page-size.compone
 import { PlayerForecastComponent } from './players/player-forecast/player-forecast.component';
 import { PlayerCellComponent } from './players/player-cell/player-cell.component';
 import { SpinnerComponent } from './core/directives/spinner/spinner.component';
-import { GoogleAuthComponent } from './core/directives/google-auth/google-auth.component';
+import { GoogleAuthComponent } from './auth/google-auth/google-auth.component';
 import { PlayerOpponentsComponent } from './players/player-opponents/player-opponents.component';
 import { LeagueAssignComponent } from './leagues/league-assign/league-assign.component';
 import { UserInviteComponent } from './users/user-invite/user-invite.component';

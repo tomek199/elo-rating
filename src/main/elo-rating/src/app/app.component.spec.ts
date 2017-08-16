@@ -1,5 +1,5 @@
 import { GoogleAuthServiceStub } from './testing/google-stubs';
-import { GoogleAuthService } from './core/directives/shared/google-auth.service';
+import { GoogleAuthService } from './auth/shared/google-auth.service';
 import { CookieService } from 'ng2-cookies';
 import { NavComponentStub } from './testing/nav-stubs';
 import { RouterStub, ActivatedRouteStub } from './testing/routing-stubs';

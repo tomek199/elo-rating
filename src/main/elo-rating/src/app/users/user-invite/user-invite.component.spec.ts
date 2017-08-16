@@ -1,6 +1,6 @@
 import { By } from '@angular/platform-browser';
 import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { GoogleAuthService } from './../../core/directives/shared/google-auth.service';
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { UserServiceStub } from './../../testing/user-stubs';
 import { UserService } from './../shared/user.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
