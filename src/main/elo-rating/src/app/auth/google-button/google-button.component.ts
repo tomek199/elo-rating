@@ -1,5 +1,5 @@
 import { environment } from './../../../environments/environment.prod';
-import { Component, AfterViewInit, NgZone, Output, EventEmitter } from '@angular/core';
+import { Component, AfterViewInit, NgZone, Output, EventEmitter, Input } from '@angular/core';
 
 declare var gapi: any;
 
@@ -10,8 +10,8 @@ declare var gapi: any;
 })
 export class GoogleButtonComponent implements AfterViewInit {
 
+  @Input() buttonId: string;
   @Output() onSignIn = new EventEmitter<any>();
-  private readonly signInButtonId = 'googleSignInButton';
 
   constructor(private zone: NgZone) { }
 
@@ -29,7 +29,7 @@ export class GoogleButtonComponent implements AfterViewInit {
   }
 
   private initButton() {
-    gapi.signin2.render(this.signInButtonId,
+    gapi.signin2.render(this.buttonId,
       {
         onSuccess: this.signedIn,
         scope: 'profile email'

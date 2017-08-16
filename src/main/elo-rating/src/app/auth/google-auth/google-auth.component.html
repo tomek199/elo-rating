@@ -1,6 +1,6 @@
 <div>
   <form class="form-inline" [hidden]="token">
-    <app-google-button (onSignIn)="onSignIn($event)"></app-google-button>
+    <app-google-button [buttonId]="'googleNavButton'" (onSignIn)="onSignIn($event)"></app-google-button>
   </form>
   <ul class="navbar-nav" *ngIf="token && user">
     <li class="nav-item dropdown" ngbDropdown [autoClose]="true">
