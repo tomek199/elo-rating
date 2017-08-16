@@ -38,6 +38,8 @@ export class GoogleAuthService {
   isAuthorized(): boolean {
     if (!this.isAuthenticated() || !this.getCurrentLeague())
       return false;
+    if (this.getUser().leagues == null) 
+      return false;
     let leagueMatched: boolean = false;
     this.getUser().leagues.forEach(league => {
       if (league.id == this.getCurrentLeague())
