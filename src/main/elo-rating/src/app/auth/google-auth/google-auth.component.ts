@@ -2,7 +2,7 @@ import { UserService } from './../../users/shared/user.service';
 import { User } from './../../users/shared/user.model';
 import { GoogleAuthService } from './../shared/google-auth.service';
 import { environment } from './../../../environments/environment';
-import { Component, NgZone, AfterViewInit, Input } from '@angular/core';
+import { Component, NgZone, AfterViewInit, Input, OnInit } from '@angular/core';
 
 declare var gapi: any;
 
@@ -11,45 +11,22 @@ declare var gapi: any;
   templateUrl: './google-auth.component.html',
   styleUrls: ['./google-auth.component.css']
 })
-export class GoogleAuthComponent implements AfterViewInit {
+export class GoogleAuthComponent implements OnInit {
 
   @Input() leagueId;
-  private readonly signInButtonId = 'googleSignInButton';
   private token: string;
   public user: User;
   
   constructor(
-    private zone: NgZone,
     private userService: UserService,
     private googleAuthService: GoogleAuthService
   ) { }
 
-  ngAfterViewInit() {
-    this.initAuthModule();
-    this.initButton();
-  }
-
-  private initAuthModule() {
-    gapi.load('auth2', () => {
-      gapi.auth2.init({
-        client_id: environment.googleClientId
-      });
-    });
-  }
-
-  private initButton() {
-    gapi.signin2.render(this.signInButtonId,
-      {
-        onSuccess: this.onSignIn,
-        scope: 'profile email'
-      });
-  }
+  ngOnInit() { }
 
   onSignIn = (googleUser: any) => {
-    this.zone.run(() => {
-      this.saveIdToken(googleUser.getAuthResponse());
-      this.saveUser(googleUser.getBasicProfile()); 
-    });
+    this.saveIdToken(googleUser.getAuthResponse());
+    this.saveUser(googleUser.getBasicProfile()); 
   }
 
   private saveIdToken(authResponse) {

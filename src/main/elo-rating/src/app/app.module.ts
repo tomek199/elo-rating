@@ -39,6 +39,7 @@ import { GoogleAuthComponent } from './auth/google-auth/google-auth.component';
 import { PlayerOpponentsComponent } from './players/player-opponents/player-opponents.component';
 import { LeagueAssignComponent } from './leagues/league-assign/league-assign.component';
 import { UserInviteComponent } from './users/user-invite/user-invite.component';
+import { GoogleButtonComponent } from './auth/google-button/google-button.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { UserInviteComponent } from './users/user-invite/user-invite.component';
     GoogleAuthComponent,
     PlayerOpponentsComponent,
     LeagueAssignComponent,
-    UserInviteComponent
+    UserInviteComponent,
+    GoogleButtonComponent
   ],
   imports: [
     BrowserModule,

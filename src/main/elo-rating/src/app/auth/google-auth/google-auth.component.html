@@ -1,6 +1,6 @@
 <div>
   <form class="form-inline" [hidden]="token">
-    <div id="googleSignInButton" ngbTooltip="Authentication doesn't affect any application functionality yet. You can just sign in to see your Google's account image instead of this button:)" placement="bottom"></div>
+    <app-google-button (onSignIn)="onSignIn($event)"></app-google-button>
   </form>
   <ul class="navbar-nav" *ngIf="token && user">
     <li class="nav-item dropdown" ngbDropdown [autoClose]="true">
