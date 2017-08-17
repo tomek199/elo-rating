@@ -43,7 +43,7 @@ export class UserService {
       .catch(this.handleError);
   }  
 
-  verifySecurityToken(token: string) {
+  verifySecurityToken(token: string): Promise<boolean> {
     let url = `${this.url}/users/verify-security-token`;
     return this.http.post(url, token)
       .toPromise()

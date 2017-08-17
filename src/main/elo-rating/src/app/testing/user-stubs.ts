@@ -6,12 +6,7 @@ import { Injectable } from '@angular/core';
 export class UserServiceStub {
 
   assignLeague(userId: string, leagueId: string) {
-    let user = new User();
-    user.id = userId;
-    user.name = "Username";
-    let league = new League('987', 'Assigned league');
-    user.leagues = [];
-    user.leagues.push(league);
+    let user = this.getUserWithLeague(userId);
     return Promise.resolve(user);
   }
 
@@ -22,4 +17,23 @@ export class UserServiceStub {
     user.leagues.push(league);
     return Promise.resolve(user);
   }  
+
+  verifySecurityToken(token: string): Promise<boolean> {
+    return Promise.resolve(true);
+  }
+
+  completeInvitation(googleIdToken: string, securityToken: string): Promise<User> {
+    let user = this.getUserWithLeague('123');
+    return Promise.resolve(user);
+  }
+
+  private getUserWithLeague(userId: string): User {
+    let user = new User();
+    user.id = userId;
+    user.name = "Username";
+    let league = new League('987', 'Assigned league');
+    user.leagues = [];
+    user.leagues.push(league);
+    return user;
+  }
 }

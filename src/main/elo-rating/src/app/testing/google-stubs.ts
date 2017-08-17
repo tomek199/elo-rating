@@ -1,5 +1,5 @@
 import { User } from './../users/shared/user.model';
-import { AfterViewInit, Component, Input, Injectable } from '@angular/core';
+import { AfterViewInit, Component, Input, Injectable, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-google-auth',
@@ -33,4 +33,16 @@ export class GoogleAuthServiceStub {
 
   setCurrentLeague(leagueId: string) {
   }
+}
+
+@Component({
+  selector: 'app-google-button',
+  template: ''
+})
+export class GoogleButtonComponentStub implements AfterViewInit {
+  @Input() buttonId: string;
+  @Output() onSignIn = new EventEmitter<any>();
+
+  constructor() { }
+  ngAfterViewInit() { }
 }
