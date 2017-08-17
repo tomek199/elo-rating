@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { Match } from './../../matches/shared/match.model';
 import { PlayerStats } from './player-stats.model';
 import { OpponentStats } from './opponent-stats.model';
@@ -86,6 +87,12 @@ export class PlayerService {
       .toPromise()
       .then(response => response.json() as OpponentStats[])
       .catch(this.handleError);
+  }
+
+  findByUsername(leagueId: string, username: string): Observable<Player[]> {
+    let url = `${this.url}/leagues/${leagueId}/users/find-by-username?username=${username}`;
+    return this.http.get(url)
+      .map(response => response.json() as Player[])
   }
 
   private handleError(error: any): Promise<any> {
