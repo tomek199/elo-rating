@@ -46,3 +46,9 @@ export class GoogleButtonComponentStub implements AfterViewInit {
   constructor() { }
   ngAfterViewInit() { }
 }
+
+export class GoogleUserStub {
+  public getAuthResponse() {
+    return {id_token: '123'};
+  }
+}
