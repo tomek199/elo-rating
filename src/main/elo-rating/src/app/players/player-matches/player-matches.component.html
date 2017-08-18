@@ -62,9 +62,9 @@
             <app-player-cell [match]="match" [player]="match.playerOne" [currentPlayerId]="playerId"></app-player-cell>
           </td>
           <td>
-            <span class="badge badge-default">{{getScore(i, match.playerOne)}}</span>
+            <span class="badge badge-dark">{{getScore(i, match.playerOne)}}</span>
             :
-            <span class="badge badge-default">{{getScore(i, match.playerTwo)}}</span>        
+            <span class="badge badge-dark">{{getScore(i, match.playerTwo)}}</span>        
           </td>
           <td [ngClass]="{'table-success': isWinner(i, match.playerTwo), 'table-danger': isLooser(i, match.playerTwo)}">
             <app-player-cell [match]="match" [player]="match.playerTwo" [currentPlayerId]="playerId"></app-player-cell>

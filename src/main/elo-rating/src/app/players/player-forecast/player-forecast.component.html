@@ -5,7 +5,7 @@
     <ul class="list-group">
       <li *ngFor="let opponent of opponents" class="list-group-item justify-content-between " [ngClass]="{'disabled': isCurrentPlayer(opponent.id), 'cursor-pointer': !isCurrentPlayer(opponent.id), 'active': isSelectedOpponent(opponent.id)}" (click)="changeOpponent(opponent.id)">
         {{opponent.username}}
-        <span class="badge badge-default badge-pill">{{opponent.rating}}</span>
+        <span class="badge badge-secondary badge-pill">{{opponent.rating}}</span>
       </li>
     </ul>
   </div>
