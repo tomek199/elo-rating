@@ -1,3 +1,5 @@
+import { PlayerServiceStub } from './../../testing/player-stubs';
+import { PlayerService } from './../../players/shared/player.service';
 import { By } from '@angular/platform-browser';
 import { GoogleAuthServiceStub } from './../../testing/google-stubs';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
@@ -26,6 +28,7 @@ describe('UserInviteComponent', () => {
       ],
       providers: [
         {provide: UserService, useClass: UserServiceStub},
+        {provide: PlayerService, useClass: PlayerServiceStub},
         {provide: GoogleAuthService, useClass: GoogleAuthServiceStub}
       ]
     })

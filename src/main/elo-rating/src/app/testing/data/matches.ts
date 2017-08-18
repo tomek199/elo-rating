@@ -6,21 +6,24 @@ let playerOne = {
   id: '111',
   username: 'Player 1',
   rating: 1500,
-  active: true
+  active: true, 
+  user: null
 };
 
 let playerTwo = {
   id: '222',
   username: 'Player 2',
   rating: 1000,
-  active: true
+  active: true, 
+  user: null
 };
 
 let playerThree = {
   id: '333',
   username: 'Player 3',
   rating: 1000,
-  active: false
+  active: false, 
+  user: null
 };
 
 let match1 = new Match();

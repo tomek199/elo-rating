@@ -1,3 +1,4 @@
+import { Player } from './../../players/shared/player.model';
 import { League } from './../../leagues/shared/league.model';
 
 export class User {
@@ -9,4 +10,5 @@ export class User {
   email: string;
   pictureUrl: string;
   leagues: League[];
+  player: Player;
 }
