@@ -90,7 +90,7 @@ export class PlayerService {
   }
 
   findByUsername(leagueId: string, username: string): Observable<Player[]> {
-    let url = `${this.url}/leagues/${leagueId}/users/find-by-username?username=${username}`;
+    let url = `${this.url}/leagues/${leagueId}/players/find-by-username?username=${username}`;
     return this.http.get(url)
       .map(response => response.json() as Player[])
   }
