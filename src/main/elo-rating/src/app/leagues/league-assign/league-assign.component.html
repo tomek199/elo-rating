@@ -4,7 +4,7 @@
     <p>The league you created is temporary and will be deleted after few hours. To save it you have to sign in firstly. Please use button located in top navbar to sign in.</p>
   </div>
   <div class="card text-center my-2" *ngIf="isAuthenticated() && !showSuccessAlert">
-    <div class="card-block">
+    <div class="card-body">
       <h5>
         You are signed in as 
         <strong>{{getUser()?.name}}</strong>
