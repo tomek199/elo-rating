@@ -15,8 +15,8 @@
       <input type="text" name="player-two" [(ngModel)]="match.playerTwo" (ngModelChange)="setMatchScore()" [ngbTypeahead]="searchPlayer" [inputFormatter]="playerFormatter" [resultFormatter]="playerFormatter" [disabled]="isCompleteMode()" class="form-control" placeholder="Type second player name">
     </div>
   </div>
-  <div class="form-group row">
-    <label class="form-check-label">
+  <div class="form-check row" [ngClass]="{'disabled': mode}">
+    <label class="form-check-label" >
     <input type="checkbox" [checked]="match.completed" (change)="checkboxCheckAction()" [disabled]="mode" class="form-check-input"> Complete match
     </label>
   </div>
@@ -39,11 +39,11 @@
       </div>
     </div>
   </div>
-  <div class="form-group row" *ngIf="!match.completed" [ngClass]="{'has-danger': !isTimeValid()}">
+  <div class="form-group row" *ngIf="!match.completed">
     <label for="time" class="col-1 col-form-label">Time</label>    
     <div class="col-9">
       <ngb-timepicker name="time" [(ngModel)]="time" [spinners]="true" [size]="small" [minuteStep]="10"></ngb-timepicker>
-      <div class="form-control-feedback" *ngIf="timeMessage">{{timeMessage}}</div>
+      <div class="text-danger" *ngIf="timeMessage">{{timeMessage}}</div>
       <div [ngbPopover]="queuePopContent" popoverTitle="Queue" #queuePopover="ngbPopover" triggers="manual" placement="bottom"></div>
     </div>
   </div>
