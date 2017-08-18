@@ -1,6 +1,6 @@
-<li class="nav-item dropdown" ngbDropdown [autoClose]="true" (click)="refreshQueue()">
+<li class="nav-item dropdown" ngbDropdown (click)="refreshQueue()">
   <a class="nav-link dropdown-toggle" ngbDropdownToggle role="button">Queue</a>
-  <div id="queue-dropdown" class="dropdown-menu">
+  <div ngbDropdownMenu id="queue-dropdown" class="dropdown-menu">
     <h6 class="dropdown-header">Matches queue</h6>
     <button class="dropdown-item" *ngFor="let match of scheduledMatches; let i = index" (click)="completeMatch(match.id)">
       <span class="text-primary font-weight-bold ">{{ match.date | date: 'HH:mm' }}</span>

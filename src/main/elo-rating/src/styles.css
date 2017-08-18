@@ -6,3 +6,7 @@
 .shadedtable tr:hover {
     background-color: #F0F0F0;
 }
+
+.nav-link.dropdown-toggle {
+    cursor: pointer;
+}
