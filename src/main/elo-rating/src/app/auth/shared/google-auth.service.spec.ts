@@ -132,4 +132,22 @@ describe('GoogleAuthService', () => {
     setLeague(null);
     expect(service.isAuthorized()).toBeFalsy();    
   }));
+
+  it('isLeagueAssigned() should return true for assigned league', inject([GoogleAuthService], (service: GoogleAuthService) => {
+    let league = new League('123', 'Test league');
+    let user = new User();
+    league.users = [];
+    league.users.push(user);
+    setLeague(league);
+    expect(service.isLeagueAssigned()).toBeTruthy();
+  }));
+
+  it('isLeagueAssigned() should return false for not assigned league', inject([GoogleAuthService], (service: GoogleAuthService) => {
+    let league = new League('123', 'Test league');
+    expect(service.isLeagueAssigned()).toBeFalsy();
+  }));
+
+  it('isLeagueAssigned() should return false for not selected league', inject([GoogleAuthService], (service: GoogleAuthService) => {
+    expect(service.isLeagueAssigned()).toBeFalsy();    
+  }));
 });

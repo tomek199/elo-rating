@@ -53,4 +53,13 @@ export class GoogleAuthService {
     });
     return leagueMatched;
   }
+
+  isLeagueAssigned(): boolean {
+    if (!this.getCurrentLeague())
+      return false;
+    let leagueUsers = this.getCurrentLeague().users;
+    if (leagueUsers && leagueUsers.length > 0)
+      return true;
+    return false;
+  }
 }
