@@ -19,6 +19,9 @@ describe('GoogleAuthService', () => {
     spyOn(sessionStorage, 'setItem').and.callFake((key, value) => {
       sessionStorageMock.set(key, value);
     });
+
+    signOut();
+    setLeague(null);
   });
 
   function signIn() {
@@ -41,8 +44,8 @@ describe('GoogleAuthService', () => {
     sessionStorageMock.set('token', null);
   }
 
-  function setLeague(leagueId: string | null) {
-    sessionStorageMock.set('league', leagueId);
+  function setLeague(league: League | null) {
+    sessionStorageMock.set('league', JSON.stringify(league));
   }
 
   it('should be created', inject([GoogleAuthService], (service: GoogleAuthService) => {
@@ -55,7 +58,6 @@ describe('GoogleAuthService', () => {
   }));
 
   it('isAuthenticated() should return false for signed out user', inject([GoogleAuthService], (service: GoogleAuthService) => {
-    signOut();
     expect(service.isAuthenticated()).toBeFalsy();
   }));
 
@@ -65,7 +67,6 @@ describe('GoogleAuthService', () => {
   }));
 
   it('getProfile() should return null for signed out user', inject([GoogleAuthService], (service: GoogleAuthService) => {
-    signOut();
     expect(service.getUser()).toBeNull();
   }));
 
@@ -75,46 +76,60 @@ describe('GoogleAuthService', () => {
   }));
 
   it('getSessionToken() should return null for signed out user', inject([GoogleAuthService], (service: GoogleAuthService) => {
-    signOut();
     expect(service.getIdToken()).toBeNull();
   }));
 
-  it('getCurrentLeague() should return league id when league is selected', inject([GoogleAuthService], (service: GoogleAuthService) => {
-    setLeague('123');
-    expect(service.getCurrentLeagueId()).toEqual('123');
+  it('getCurrentLeague() should return league when league is selected', inject([GoogleAuthService], (service: GoogleAuthService) => {
+    let league = new League('123', 'Test league');
+    setLeague(league);
+    expect(service.getCurrentLeague().id).toEqual(league.id);
+    expect(service.getCurrentLeague().name).toEqual(league.name);
   }));
 
   it('getCurrentLeague() should return null when league is not selected', inject([GoogleAuthService], (service: GoogleAuthService) => {
-    setLeague(null);
+    expect(service.getCurrentLeague()).toBeNull();
+  }));
+
+  it('getCurrentLeagueId() should return league id when league is selected', inject([GoogleAuthService], (service: GoogleAuthService) => {
+    let league = new League('123', 'Test league');
+    setLeague(league);
+    expect(service.getCurrentLeagueId()).toEqual('123');
+  }));
+
+  it('getCurrentLeagueId() should return null when league is not selected', inject([GoogleAuthService], (service: GoogleAuthService) => {
     expect(service.getCurrentLeagueId()).toBeNull();
   }));
 
   it('setCurrentLeague() should set current league id and store it in sessionStorage', inject([GoogleAuthService], (service: GoogleAuthService) => {
-    service.setCurrentLeague('987');
-    expect(service.getCurrentLeagueId()).toEqual('987');
+    let league = new League('987', 'Test league');
+    service.setCurrentLeague(league);
+    expect(service.getCurrentLeagueId()).toEqual(league.id);
+    expect(service.getCurrentLeague().name).toEqual(league.name);
   }));
 
   it('isAuthorized() should return true for authorized user', inject([GoogleAuthService], (service: GoogleAuthService) => {
     signIn();
-    setLeague('123');
+    let league = new League('123', 'Test league');    
+    setLeague(league);
     expect(service.isAuthorized()).toBeTruthy();
   }));
 
   it('isAuthorized() should return false for not authorized user', inject([GoogleAuthService], (service: GoogleAuthService) => {
     signIn();
-    setLeague('987');
+    let league = new League('987', 'Test league');    
+    setLeague(league);
     expect(service.isAuthorized()).toBeFalsy();    
   }));
 
   it('isAuthorized() should return false for not authenticated user', inject([GoogleAuthService], (service: GoogleAuthService) => {
-    signOut();
-    setLeague('123');
+    let league = new League('123', 'Test league');    
+    setLeague(league);
     expect(service.isAuthorized()).toBeFalsy();    
   }));
 
   it('isAuthorized() should return false for not selected league', inject([GoogleAuthService], (service: GoogleAuthService) => {
     signIn();
-    setLeague(undefined);
+    setLeague(null);
     expect(service.isAuthorized()).toBeFalsy();    
   }));
 });

@@ -3,6 +3,7 @@ import { CookieService } from 'ng2-cookies';
 import { Router, NavigationEnd } from '@angular/router';
 import { Component } from '@angular/core';
 import 'rxjs/add/operator/filter';
+import { League } from "./leagues/shared/league.model";
 
 @Component({
   selector: 'app-root',
@@ -37,7 +38,8 @@ export class AppComponent {
     let splitted = url.split('/');
     if (splitted[1] == 'leagues') { 
       this.showNavbar = true;
-      this.googleAuthService.setCurrentLeague(splitted[2]);
+      let league = new League(splitted[2])
+      this.googleAuthService.setCurrentLeague(league);
     } else {
       this.googleAuthService.setCurrentLeague(undefined);
     } 

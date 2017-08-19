@@ -1,3 +1,4 @@
+import { League } from './../../leagues/shared/league.model';
 import { User } from './../../users/shared/user.model';
 import { Injectable } from '@angular/core';
 
@@ -24,13 +25,18 @@ export class GoogleAuthService {
     return sessionStorage.getItem(this.TOKEN);
   }
 
-  getCurrentLeagueId(): string {
-    return sessionStorage.getItem(this.LEAGUE);
+  getCurrentLeague(): League {
+    let league = JSON.parse(sessionStorage.getItem(this.LEAGUE));
+    return league;
   }
 
-  setCurrentLeague(leagueId: string) {
-    if (leagueId) 
-      sessionStorage.setItem(this.LEAGUE, leagueId);
+  getCurrentLeagueId(): string {
+    return this.getCurrentLeague() ? this.getCurrentLeague().id : null;
+  }
+
+  setCurrentLeague(league: League) {
+    if (league) 
+      sessionStorage.setItem(this.LEAGUE, JSON.stringify(league));
     else 
       sessionStorage.removeItem(this.LEAGUE);
   }
