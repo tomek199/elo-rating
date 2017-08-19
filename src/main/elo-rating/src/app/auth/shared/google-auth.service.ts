@@ -24,7 +24,7 @@ export class GoogleAuthService {
     return sessionStorage.getItem(this.TOKEN);
   }
 
-  getCurrentLeague(): string {
+  getCurrentLeagueId(): string {
     return sessionStorage.getItem(this.LEAGUE);
   }
 
@@ -36,13 +36,13 @@ export class GoogleAuthService {
   }
 
   isAuthorized(): boolean {
-    if (!this.isAuthenticated() || !this.getCurrentLeague())
+    if (!this.isAuthenticated() || !this.getCurrentLeagueId())
       return false;
     if (this.getUser().leagues == null) 
       return false;
     let leagueMatched: boolean = false;
     this.getUser().leagues.forEach(league => {
-      if (league.id == this.getCurrentLeague())
+      if (league.id == this.getCurrentLeagueId())
         leagueMatched = true;
     });
     return leagueMatched;

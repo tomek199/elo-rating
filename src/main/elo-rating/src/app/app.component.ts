@@ -41,7 +41,7 @@ export class AppComponent {
     } else {
       this.googleAuthService.setCurrentLeague(undefined);
     } 
-    this.leagueId = this.googleAuthService.getCurrentLeague();
+    this.leagueId = this.googleAuthService.getCurrentLeagueId();
   }
 
   private checkCookies() {
