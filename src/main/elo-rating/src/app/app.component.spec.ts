@@ -1,3 +1,4 @@
+import { LeagueService } from './leagues/shared/league.service';
 import { GoogleAuthServiceStub } from './testing/google-stubs';
 import { GoogleAuthService } from './auth/shared/google-auth.service';
 import { CookieService } from 'ng2-cookies';
@@ -32,6 +33,7 @@ describe('AppComponent', () => {
       ],
       providers: [
         { provide: Router, useClass: RouterStub },
+        { provide: LeagueService, useClass: LeagueServiceStub },
         { provide: GoogleAuthService, useClass: GoogleAuthServiceStub },
         CookieService
       ]

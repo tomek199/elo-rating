@@ -44,7 +44,6 @@ export class LeagueService {
   }
 
   private handleError(error: any): Promise<any> {
-    console.error('An error occured', error);
     return Promise.resolve(null);
   }
 }

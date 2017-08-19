@@ -1,3 +1,4 @@
+import { LeagueService } from './leagues/shared/league.service';
 import { GoogleAuthService } from './auth/shared/google-auth.service';
 import { CookieService } from 'ng2-cookies';
 import { Router, NavigationEnd } from '@angular/router';
@@ -18,6 +19,7 @@ export class AppComponent {
   constructor(
     private router: Router,
     private cookieService: CookieService, 
+    private leagueService: LeagueService,
     private googleAuthService: GoogleAuthService) {
   }
 
@@ -30,20 +32,28 @@ export class AppComponent {
     this.router.events.filter(event => event instanceof NavigationEnd)
       .subscribe((event: NavigationEnd) => {
         this.showNavbar = false;
-        this.getLeagueId(event.urlAfterRedirects);
+        let leagueId = this.getLeagueId(event.urlAfterRedirects);
+        this.getLeague(leagueId);
       });
   }
 
   private getLeagueId(url: string) {
     let splitted = url.split('/');
-    if (splitted[1] == 'leagues') { 
+    if (splitted[1] == 'leagues') {
       this.showNavbar = true;
-      let league = new League(splitted[2])
-      this.googleAuthService.setCurrentLeague(league);
-    } else {
-      this.googleAuthService.setCurrentLeague(undefined);
-    } 
-    this.leagueId = this.googleAuthService.getCurrentLeagueId();
+      return splitted[2];
+    }
+    return null;
+  }
+
+  private getLeague(leagueId: string) {
+    if (this.leagueId != leagueId) {
+      this.leagueService.getLeague(leagueId)
+        .then(league => {
+          this.googleAuthService.setCurrentLeague(league);
+          this.leagueId = this.googleAuthService.getCurrentLeagueId();
+        });
+    }
   }
 
   private checkCookies() {
