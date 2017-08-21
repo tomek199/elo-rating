@@ -1,6 +1,7 @@
+import { Player } from './../players/shared/player.model';
 import { League } from './../leagues/shared/league.model';
 import { User } from './../users/shared/user.model';
-import { Injectable } from '@angular/core';
+import { Injectable, Component } from '@angular/core';
 
 @Injectable()
 export class UserServiceStub {
@@ -27,6 +28,13 @@ export class UserServiceStub {
     return Promise.resolve(user);
   }
 
+  createPlayer(userId: string, leagueId: string): Promise<User> {
+    let user = this.getUserWithLeague('123');
+    user.player = new Player();
+    user.player.id = '987';
+    return Promise.resolve(user);
+  }
+
   private getUserWithLeague(userId: string): User {
     let user = new User();
     user.id = userId;
@@ -37,3 +45,9 @@ export class UserServiceStub {
     return user;
   }
 }
+
+@Component({
+  selector: 'app-user-create-player',
+  template: ''
+})
+export class UserCreatePlayerStubComponent { }

@@ -41,6 +41,7 @@ import { LeagueAssignComponent } from './leagues/league-assign/league-assign.com
 import { UserInviteComponent } from './users/user-invite/user-invite.component';
 import { GoogleButtonComponent } from './auth/google-button/google-button.component';
 import { UserConfirmInvitationComponent } from './users/user-confirm-invitation/user-confirm-invitation.component';
+import { UserCreatePlayerComponent } from './users/user-create-player/user-create-player.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { UserConfirmInvitationComponent } from './users/user-confirm-invitation/
     LeagueAssignComponent,
     UserInviteComponent,
     GoogleButtonComponent,
-    UserConfirmInvitationComponent
+    UserConfirmInvitationComponent,
+    UserCreatePlayerComponent
   ],
   imports: [
     BrowserModule,

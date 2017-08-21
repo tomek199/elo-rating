@@ -33,6 +33,10 @@ export class GoogleAuthServiceStub {
 
   setCurrentLeague(leagueId: string) {
   }
+
+  isAuthorized(): boolean {
+    return true;
+  }
 }
 
 @Component({

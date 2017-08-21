@@ -59,6 +59,14 @@ export class UserService {
       .then(response => response.json() as User)
       .catch(this.handleError);
   }
+
+  createPlayer(userId: string, leagueId: string): Promise<User> {
+    let url = `${this.url}/users/${userId}/create-player`;
+    return this.http.post(url, leagueId)
+      .toPromise()
+      .then(response => response.json() as User)
+      .catch(this.handleError);
+  }
  
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
