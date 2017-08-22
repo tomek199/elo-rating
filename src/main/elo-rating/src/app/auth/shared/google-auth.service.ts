@@ -65,7 +65,7 @@ export class GoogleAuthService {
   }
 
   getCurrentPlayerId(): string | null {
-    if (this.getCurrentLeagueId && this.isAuthenticated()) {
+    if (this.getCurrentLeagueId() && this.isAuthenticated() && this.getCurrentUser().players) {
       let player: Player = this.getCurrentUser().players
         .find(player => this.playerHasLeague(player));
       return player ? player.id : null;
