@@ -29,17 +29,19 @@ export class UserCreatePlayerComponent implements OnInit {
   }
 
   private hasNotPlayer(): boolean {
-    if (this.user) 
-      return this.user.players == undefined;
-    return false;
+    return this.googleAuthService.getCurrentPlayerId() == null;
   }
 
   create() {
     this.userService.createPlayer(this.user.id, this.leagueId)
-      .then(user => this.goToPlayer(''));
+      .then(user => {
+        sessionStorage.setItem(this.googleAuthService.USER, JSON.stringify(user));
+        this.goToPlayer();
+      });
   }
 
-  private goToPlayer(playerId: string) {
+  private goToPlayer() {
+    let playerId = this.googleAuthService.getCurrentPlayerId();
     this.router.navigate(['/leagues', this.leagueId, 'players', playerId]);  
   }
 }

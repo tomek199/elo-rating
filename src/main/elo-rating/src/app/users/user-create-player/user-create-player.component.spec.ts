@@ -50,9 +50,8 @@ describe('UserCreatePlayerComponent', () => {
     const authService = fixture.debugElement.injector.get(GoogleAuthService);
     spyOn(authService, 'isAuthorized').and.returnValue(true);
     let user = new User();
-    let player = new Player();
-    user.players = [];
     spyOn(authService, 'getCurrentUser').and.returnValue(user);
+    spyOn(authService, 'getCurrentPlayerId').and.returnValue('123');
     component.ngOnInit();        
     fixture.detectChanges();    
     let debugElement = fixture.debugElement.query(By.css('div.card'));
@@ -63,6 +62,7 @@ describe('UserCreatePlayerComponent', () => {
     const authService = fixture.debugElement.injector.get(GoogleAuthService);
     spyOn(authService, 'isAuthorized').and.returnValue(true);
     spyOn(authService, 'getCurrentUser').and.returnValue(new User());
+    spyOn(authService, 'getCurrentPlayerId').and.returnValue(null);
     component.ngOnInit();    
     fixture.detectChanges();    
     let debugElement = fixture.debugElement.query(By.css('div.card'));
@@ -73,6 +73,7 @@ describe('UserCreatePlayerComponent', () => {
     const authService = fixture.debugElement.injector.get(GoogleAuthService);
     spyOn(authService, 'isAuthorized').and.returnValue(true);
     spyOn(authService, 'getCurrentUser').and.returnValue(new User());
+    spyOn(authService, 'getCurrentPlayerId').and.returnValue(null);    
     const routerSpy = spyOn(router, 'navigate');
     component.ngOnInit();    
     fixture.detectChanges();    
@@ -82,6 +83,6 @@ describe('UserCreatePlayerComponent', () => {
     expect(routerSpy.calls.first().args[0][0]).toEqual('/leagues');
     expect(routerSpy.calls.first().args[0][1]).toBeTruthy();
     expect(routerSpy.calls.first().args[0][2]).toEqual('players');  
-    expect(routerSpy.calls.first().args[0][3]).toBeTruthy();
+    expect(routerSpy.calls.first().args[0][3]).toBeNull();
   })));
 });
