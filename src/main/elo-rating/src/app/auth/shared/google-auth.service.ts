@@ -16,7 +16,7 @@ export class GoogleAuthService {
     return user !== null && token !== null;
   }
 
-  getUser(): User {
+  getCurrentUser(): User {
     let user = sessionStorage.getItem(this.USER);
     return JSON.parse(user);
   }
@@ -44,10 +44,10 @@ export class GoogleAuthService {
   isAuthorized(): boolean {
     if (!this.isAuthenticated() || !this.getCurrentLeagueId())
       return false;
-    if (this.getUser().leagues == null) 
+    if (this.getCurrentUser().leagues == null) 
       return false;
     let leagueMatched: boolean = false;
-    this.getUser().leagues.forEach(league => {
+    this.getCurrentUser().leagues.forEach(league => {
       if (league.id == this.getCurrentLeagueId())
         leagueMatched = true;
     });

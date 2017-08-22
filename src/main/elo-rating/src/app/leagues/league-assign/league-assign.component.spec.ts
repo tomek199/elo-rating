@@ -65,7 +65,7 @@ describe('LeagueAssignComponent', () => {
     spyOn(authService, 'isAuthenticated').and.returnValue(true);
     let user = new User();
     user.id = '987';
-    spyOn(authService, 'getUser').and.returnValue(user);
+    spyOn(authService, 'getCurrentUser').and.returnValue(user);
     component.assignLeague();
     tick();
     expect(component.showSuccessAlert).toBeTruthy();

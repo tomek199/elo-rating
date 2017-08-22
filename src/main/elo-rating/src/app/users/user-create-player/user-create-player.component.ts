@@ -21,7 +21,7 @@ export class UserCreatePlayerComponent implements OnInit {
 
   ngOnInit() {
     this.leagueId = this.googleAuthService.getCurrentLeagueId();
-    this.user = this.googleAuthService.getUser();
+    this.user = this.googleAuthService.getCurrentUser();
   }
 
   show(): boolean {
@@ -30,13 +30,13 @@ export class UserCreatePlayerComponent implements OnInit {
 
   private hasNotPlayer(): boolean {
     if (this.user) 
-      return this.user.player == undefined;
+      return this.user.players == undefined;
     return false;
   }
 
   create() {
     this.userService.createPlayer(this.user.id, this.leagueId)
-      .then(user => this.goToPlayer(user.player.id));
+      .then(user => this.goToPlayer(''));
   }
 
   private goToPlayer(playerId: string) {

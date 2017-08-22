@@ -61,13 +61,13 @@ describe('GoogleAuthService', () => {
     expect(service.isAuthenticated()).toBeFalsy();
   }));
 
-  it('getProfile() should return profile for signed in user', inject([GoogleAuthService], (service: GoogleAuthService) => {
+  it('getCurrentUser() should return User for signed in user', inject([GoogleAuthService], (service: GoogleAuthService) => {
     signIn();
-    expect(service.getUser()).toBeTruthy();
+    expect(service.getCurrentUser()).toBeTruthy();
   }));
 
-  it('getProfile() should return null for signed out user', inject([GoogleAuthService], (service: GoogleAuthService) => {
-    expect(service.getUser()).toBeNull();
+  it('getCurrentUser() should return null for signed out user', inject([GoogleAuthService], (service: GoogleAuthService) => {
+    expect(service.getCurrentUser()).toBeNull();
   }));
 
   it('getSessionToken() should return token for signed in user', inject([GoogleAuthService], (service: GoogleAuthService) => {

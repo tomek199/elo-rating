@@ -27,7 +27,7 @@ export class LeagueAssignComponent implements OnChanges {
   }
 
   getUser() {
-    return this.googleAuthService.getUser();
+    return this.googleAuthService.getCurrentUser();
   }
 
   isAssigned() {
@@ -37,7 +37,7 @@ export class LeagueAssignComponent implements OnChanges {
   }
 
   assignLeague() {
-    let userId = this.googleAuthService.getUser().id;
+    let userId = this.googleAuthService.getCurrentUser().id;
     let leagueId = this.league.id;
     this.userService.assignLeague(userId, leagueId)
       .then(user => {

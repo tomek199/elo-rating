@@ -28,7 +28,7 @@ export class UserInviteComponent implements OnInit {
   ngOnInit() {
     this.showSuccessAlert = false;
     this.leagueId = this.googleAuthService.getCurrentLeagueId();
-    this.currentUser = this.googleAuthService.getUser();
+    this.currentUser = this.googleAuthService.getCurrentUser();
   }
 
   searchUsers = (text$: Observable<string>) =>

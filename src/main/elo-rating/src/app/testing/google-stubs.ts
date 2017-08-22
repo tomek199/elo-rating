@@ -17,7 +17,7 @@ export class GoogleAuthServiceStub {
     return true;
   }
 
-  getUser(): User {
+  getCurrentUser(): User {
     let user = new User();
     user.id = '123';
     return user;

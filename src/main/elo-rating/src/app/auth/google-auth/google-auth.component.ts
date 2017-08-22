@@ -24,7 +24,7 @@ export class GoogleAuthComponent implements OnInit {
 
   ngOnInit() { 
     this.token = this.googleAuthService.getIdToken();
-    this.user = this.googleAuthService.getUser();
+    this.user = this.googleAuthService.getCurrentUser();
   }
 
   onSignIn = (googleUser: any) => {

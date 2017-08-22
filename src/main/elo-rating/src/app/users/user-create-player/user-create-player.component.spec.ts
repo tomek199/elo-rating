@@ -51,8 +51,8 @@ describe('UserCreatePlayerComponent', () => {
     spyOn(authService, 'isAuthorized').and.returnValue(true);
     let user = new User();
     let player = new Player();
-    user.player = player;
-    spyOn(authService, 'getUser').and.returnValue(user);
+    user.players = [];
+    spyOn(authService, 'getCurrentUser').and.returnValue(user);
     component.ngOnInit();        
     fixture.detectChanges();    
     let debugElement = fixture.debugElement.query(By.css('div.card'));
@@ -62,7 +62,7 @@ describe('UserCreatePlayerComponent', () => {
   it('should present card for player without user', () => {
     const authService = fixture.debugElement.injector.get(GoogleAuthService);
     spyOn(authService, 'isAuthorized').and.returnValue(true);
-    spyOn(authService, 'getUser').and.returnValue(new User());
+    spyOn(authService, 'getCurrentUser').and.returnValue(new User());
     component.ngOnInit();    
     fixture.detectChanges();    
     let debugElement = fixture.debugElement.query(By.css('div.card'));
@@ -72,7 +72,7 @@ describe('UserCreatePlayerComponent', () => {
   it('should create new player and redirect to player details', inject([Router], fakeAsync((router: Router) => {
     const authService = fixture.debugElement.injector.get(GoogleAuthService);
     spyOn(authService, 'isAuthorized').and.returnValue(true);
-    spyOn(authService, 'getUser').and.returnValue(new User());
+    spyOn(authService, 'getCurrentUser').and.returnValue(new User());
     const routerSpy = spyOn(router, 'navigate');
     component.ngOnInit();    
     fixture.detectChanges();    
