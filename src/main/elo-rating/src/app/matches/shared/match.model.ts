@@ -1,3 +1,4 @@
+import { League } from './../../leagues/shared/league.model';
 import { Player } from './../../players/shared/player.model';
 export class Match {
   id: string;
@@ -6,12 +7,16 @@ export class Match {
   scores: { [id: string]: number; }
   ratings: { [id: string]: number; }
   date: Date;
+  completed: boolean;
+  ratingDelta: number;
+  league: League;
 
   constructor() {
     this.playerOne = new Player();
     this.playerTwo = new Player();
     this.scores = {};
     this.ratings = {};
+    this.completed = false;
   }
 
   isValid(): boolean {

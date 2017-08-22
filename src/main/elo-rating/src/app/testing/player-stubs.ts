@@ -1,14 +1,10 @@
+import { Observable } from 'rxjs/Observable';
+import { OpponentStats } from './../players/shared/opponent-stats.model';
+import { Match } from './../matches/shared/match.model';
+import { PLAYERS, PLAYERS_STATS } from './data/players';
 import { Player } from './../players/shared/player.model';
+import { PlayerStats } from './../players/shared/player-stats.model';
 import { Injectable, OnInit, Component, Input } from '@angular/core';
-
-export const PLAYERS: Player[] = [
-  {id: '123', username: 'Player 1', rating: 1000, active: true},
-  {id: '456', username: 'Player 2', rating: 500, active: true},
-  {id: '789', username: 'Player 3', rating: 1200, active: true},
-  {id: '987', username: 'Player 4', rating: 2100, active: false},
-  {id: '654', username: 'Player 5', rating: 700, active: false},
-  
-]
 
 @Injectable()
 export class PlayerServiceStub {
@@ -25,6 +21,10 @@ export class PlayerServiceStub {
     return Promise.resolve(PLAYERS
       .sort((playerOne, playerTwo) => playerTwo.rating - playerOne.rating)
       .filter(player => player.active == true));
+  }
+
+  getPlayerStats(playerId: string): Promise<Map<string, PlayerStats>> {
+    return Promise.resolve(PLAYERS_STATS);
   }
 
   addPlayer(leagueId: string, player: Player): Promise<Player> {
@@ -45,6 +45,32 @@ export class PlayerServiceStub {
     playerToUpdate.rating = player.rating;
     return Promise.resolve(playerToUpdate);
   }
+
+  getMatchForecast(playerId: string, opponentId: string): Promise<Match[]> {
+    let player = PLAYERS.find(p => p.id == playerId);
+    let opponent = PLAYERS.find(p => p.id == playerId);
+    let score = [[2, 0], [2, 1], [1, 2], [0, 2]];
+    let ratio = [20, 10, -10, -20];
+    let matches = [];
+    for(let i = 0; i < 4; i++) {
+      let match = new Match();
+      match.playerOne = player;
+      match.playerTwo = opponent;
+      match.scores = {playerId: score[i][0], opponentId: score[i][1]}
+      match.ratingDelta = ratio[i];
+      matches.push(match);
+    }
+    return Promise.resolve(matches);
+  }
+
+  getOpponentsStats(playerId: string): Promise<OpponentStats[]> {
+    // TODO create mock data for opponents stats
+    return Promise.resolve(null);
+  }
+
+  findByUsername(leagueId: string, username: string): Observable<Player[]> {
+    return Observable.of(PLAYERS);
+  }
 }
 
 @Component({
@@ -54,7 +80,7 @@ export class PlayerServiceStub {
 export class PlayerMatchesStubComponent implements OnInit {
   @Input() leagueId: string;
   @Input() playerId: string;
-  
+
   constructor() { }
   ngOnInit() { }
 }
@@ -66,7 +92,38 @@ export class PlayerMatchesStubComponent implements OnInit {
 export class PlayerStatisticsStubComponent implements OnInit {
   @Input() leagueId: string;
   @Input() playerId: string;
-  
+
   constructor() { }
   ngOnInit() { }
+}
+
+@Component({
+  selector: 'app-player-ranking',
+  template: ''
+})
+export class PlayerRankingStubComponent implements OnInit {
+  @Input() leagueId;
+  constructor() { }
+  ngOnInit() { }
+}
+
+@Component({
+  selector: 'app-player-forecast',
+  template: ''
+})
+export class PlayerForecastStubComponent implements OnInit {
+  @Input() leagueId;
+  @Input() playerId;
+  constructor() { }
+  ngOnInit() { }
+}
+
+@Component({
+  selector: 'app-player-opponents',
+  template: ''
+})
+export class PlayerOpponentsStubComponent implements OnInit {
+  @Input() leagueId;
+  @Input() playerId;
+  ngOnInit() {}
 }

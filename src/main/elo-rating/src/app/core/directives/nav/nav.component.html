@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" [routerLink]="'/leagues'">
+      <img src="assets/img/favicon.png" id="elo-favicon"/>
+      {{title}}
+    </a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item" *ngFor="let nav of navbar">
+          <a class="nav-link" [routerLink]="nav.url">{{nav.title}}</a>
+        </li>
+        <app-queue-list *ngIf="leagueId" [leagueId]="leagueId"></app-queue-list>
+      </ul>
+      <form id="addMatch" class="form-inline mr-4" *ngIf="isAuthorized()">
+        <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="btn btn-primary btn-sm" role="button">Add match</a>
+      </form>
+      <app-league-search *ngIf="!leagueId"></app-league-search>
+      <app-google-auth [leagueId]="leagueId"></app-google-auth> 
+    </div>
+  </div>
+</nav>

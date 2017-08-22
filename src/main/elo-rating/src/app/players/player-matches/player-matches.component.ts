@@ -1,4 +1,6 @@
-import { ConfirmModalComponent } from './../../core/utils/confirm-modal/confirm-modal.component';
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
+import { Page } from './../../core/utils/pagination/page.model';
+import { ConfirmModalComponent } from './../../core/directives/confirm-modal/confirm-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Player } from './../shared/player.model';
 import { MatchService } from './../../matches/shared/match.service';
@@ -14,19 +16,23 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/cor
 export class PlayerMatchesComponent implements OnInit, OnChanges {
   @Input() leagueId: string;
   @Input() playerId: string;
-  playedMatches: Match[];
+  pageNumber: number;
+  pageSize: number;
+  page: Page<Match>;
   scheduledMatches: Match[];
 
   constructor(
     private matchService: MatchService,
     private route: ActivatedRoute, 
     private router: Router, 
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private googleAuthService: GoogleAuthService
   ) { }
 
   ngOnInit() {
     this.getLeagueId();
     this.getPlayerId();
+    this.pageNumber = 1;
     this.getMatches();
   }
 
@@ -45,28 +51,47 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.playedMatches = [];
+    this.pageNumber = 1;    
+    this.page = undefined;
+    this.scheduledMatches = undefined;
     this.getMatches();
   }
 
   getMatches() {
-    this.matchService.getPlayerMatches(this.playerId)
-      .then(matches => {
-        this.playedMatches = matches.filter(match => this.isComplete(match.scores));
-        this.scheduledMatches = matches.filter(match => !this.isComplete(match.scores));
-      });
+    if (this.playerId != undefined) {
+      this.getCompletedMatches();
+      this.getScheduledMatches();
+    }
   }
 
-  isComplete(scores: {[id: string] : number;}): boolean {
-    return Object.keys(scores).length > 0;
+  getPage(page: number) {
+    this.getCompletedMatches();
   }
 
-  hasMatches(): boolean {
-    return this.hasPlayedMatches();
+  setPageSize(pageSize: number) {
+    this.pageNumber = 1;
+    this.pageSize = pageSize;
+    this.getCompletedMatches();
   }
 
-  hasPlayedMatches(): boolean {
-    return (this.playedMatches != undefined && this.playedMatches.length > 0);    
+  private getCompletedMatches() {
+    this.matchService.getPlayerCompletedMatches(this.playerId, this.pageNumber, this.pageSize)
+      .then(page => this.page = page);
+  }
+
+  private getScheduledMatches() {
+    this.matchService.getPlayerScheduledMatches(this.playerId)
+      .then(matches => this.scheduledMatches = matches);
+  }
+
+  displayAlert(): boolean {
+    if (this.page && this.scheduledMatches) 
+      return this.page.content.length == 0 && this.scheduledMatches.length == 0;
+    return false;
+  }
+
+  hasCompletedMatches(): boolean {
+    return (this.page != undefined && this.page.numberOfElements > 0);    
   }
 
   hasScheduledMatches(): boolean {
@@ -75,7 +100,7 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
 
   getScore(index: number, player: Player): number {
     let key = player ? player.id : '';
-    return this.playedMatches[index].scores[key];
+    return this.page.content[index].scores[key];
   }
 
   isCurrent(player: Player): boolean {
@@ -84,14 +109,14 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
 
   isWinner(index: number, player: Player): boolean {
     if (player && player.id == this.playerId) {
-      return this.playedMatches[index].scores[player.id] == 2;
+      return this.page.content[index].scores[player.id] == 2;
     }
     return false;
   }
 
   isLooser(index: number, player: Player): boolean {
     if (player && player.id == this.playerId) {
-      return this.playedMatches[index].scores[player.id] != 2;
+      return this.page.content[index].scores[player.id] != 2;
     }
     return false;
   }
@@ -115,7 +140,15 @@ export class PlayerMatchesComponent implements OnInit, OnChanges {
       });
   }
 
-  goToMatch(matchId: string) {
-    this.router.navigate(['/leagues', this.leagueId, 'matches', 'add', matchId]);
+  completeMatch(matchId: string) {
+    this.router.navigate(['/leagues', this.leagueId, 'matches', 'save', matchId, 'complete']);
+  }
+
+  editMatch(matchId: string) {
+    this.router.navigate(['/leagues', this.leagueId, 'matches', 'save', matchId, 'edit']);    
+  }
+
+  isAuthorized(): boolean {
+    return (!this.googleAuthService.isLeagueAssigned() || this.googleAuthService.isAuthorized());
   }
 }

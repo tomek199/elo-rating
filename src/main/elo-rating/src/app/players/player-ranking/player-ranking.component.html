@@ -1,30 +1,41 @@
 <h2>Players ranking</h2>
-<div class="alert alert-info" *ngIf="!hasRankedPlayers()">
-  Active players not found! 
-  <a [routerLink]="['/leagues', leagueId, 'players']" class="alert-link">Manage players</a>
+<app-spinner [resource]="rankedPlayers"></app-spinner>
+<div class="alert alert-info" *ngIf="displayAlert()">
+    Active players not found!
+    <a [routerLink]="['/leagues', leagueId, 'players']" class="alert-link">Manage players</a>
 </div>
-<table class="table" *ngIf="hasRankedPlayers()">
-  <thead class="thead-default">
-    <tr>
-      <th>Position</th>
-      <th>Username</th>
-      <th>Rating</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let player of rankedPlayers; let i=index">
-      <td>
-        {{i + 1}}
-        <img *ngIf="i == 0" src="assets/img/medals/medal_gold.png"/>
-        <img *ngIf="i == 1" src="assets/img/medals/medal_silver.png"/>
-        <img *ngIf="i == 2" src="assets/img/medals/medal_bronze.png"/>
-      </td>
-      <td>
-        <a [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.username}}</a>
-      </td>
-      <td>
-        {{player.rating}}
-      </td>
-    </tr>
-  </tbody>
+<table class="shadedtable table" *ngIf="hasRankedPlayers()">
+    <thead class="thead-default">
+        <tr>
+            <th>Position</th>
+            <th>Username</th>
+            <th>Won</th>
+            <th>Lost</th>
+            <th>Rating</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let player of rankedPlayers; let i=index" [routerLink]="['/leagues', leagueId, 'players', player.id]">
+            <td>
+                {{i + 1}}
+                <img *ngIf="i == 0" src="assets/img/medals/medal_gold.png" />
+                <img *ngIf="i == 1" src="assets/img/medals/medal_silver.png" />
+                <img *ngIf="i == 2" src="assets/img/medals/medal_bronze.png" />
+            </td>
+            <td>
+                <a [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.username}}</a>
+            </td>
+            <td [ngSwitch]="rankedPlayersStats.get(player.id)">
+                <app-small-spinner *ngSwitchCase="undefined"></app-small-spinner>
+                <span *ngSwitchDefault class="won text-success">{{ rankedPlayersStats.get(player.id).wins }}</span>
+            </td>
+            <td [ngSwitch]="rankedPlayersStats.get(player.id)">
+                <app-small-spinner *ngSwitchCase="undefined"></app-small-spinner>
+                <span *ngSwitchDefault class="lost text-danger">{{ rankedPlayersStats.get(player.id).loses }}</span>
+            </td>
+            <td class="font-weight-bold">
+                {{player.rating}}
+            </td>
+        </tr>
+    </tbody>
 </table>

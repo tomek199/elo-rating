@@ -1,3 +1,5 @@
+import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
+import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChartComponentStub } from './../../testing/chart-stubs';
@@ -17,8 +19,12 @@ describe('PlayerStatisticsComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ PlayerStatisticsComponent, ChartComponentStub ],
-      imports: [ NgbModule.forRoot() ],
+      declarations: [ 
+        PlayerStatisticsComponent, 
+        ChartComponentStub, 
+        SpinnerComponent
+      ],
+      imports: [ NgbModule.forRoot(), FormsModule ],
       providers: [
         {provide: ActivatedRoute, useValue: activatedRoute},
         {provide: MatchService, useClass: MatchServiceStub}
@@ -50,15 +56,22 @@ describe('PlayerStatisticsComponent', () => {
     expect(component.leagueId).toEqual('123');
   }));
 
-  it('should have rating history chart', fakeAsync(() => {
+  it('should have rating history chart data', fakeAsync(() => {
     createComponent();
     let ratingHistory = component.ratingHistory;
     expect(ratingHistory).toBeTruthy();
     expect(ratingHistory.title.text).toEqual('Rating history');
-    expect(ratingHistory.series[0].data.length).toEqual(4);
+    expect(ratingHistory.series[0].data.length).toEqual(3);
   }));
 
-  it('should have matches history chart', fakeAsync(() => {
+  it('should present rating history chart', fakeAsync(() => {
+    createComponent();
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.query(By.css('div.card div.card-body div.row div.col-8 chart'));    
+    expect(debugElement.nativeElement).toBeTruthy();
+  }));
+
+  it('should have matches history chart data', fakeAsync(() => {
     createComponent();
     let matchesStats = component.matchesStats;
     expect(matchesStats.title).toEqual('Matches statistics');
@@ -71,12 +84,26 @@ describe('PlayerStatisticsComponent', () => {
     expect(matchesStats.series[2].name).toEqual('Percentage of winnings');
     expect(matchesStats.series[2].data.value).toEqual(33);
     expect(matchesStats.series[2].data.max).toEqual(100);
+    expect(matchesStats.series[3].name).toEqual('Sets won');
+    expect(matchesStats.series[3].data.value).toEqual(3);
+    expect(matchesStats.series[3].data.max).toEqual(7);
+    expect(matchesStats.series[4].name).toEqual('Sets lost');
+    expect(matchesStats.series[4].data.value).toEqual(4);
+    expect(matchesStats.series[4].data.max).toEqual(7);
   }));
+
+  it('should display alert if chart for current period is empty', fakeAsync(() => {
+    createComponent();
+    component.ratingHistory.series[0].data = [];
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.query(By.css('div.card div.card-body div.row div.col-8 div.alert.alert-info'));
+    expect(debugElement.nativeElement).toBeTruthy();
+  }))
 
   it('should display alert if matches list is empty', fakeAsync(() => {
     createComponent('555');
     fixture.detectChanges();
-    expect(component.hasMatches()).toBeFalsy();
+    expect(component.displayAlert()).toBeTruthy();
     let debugElement = fixture.debugElement.query(By.css('div.alert.alert-info'));
     expect(debugElement.nativeElement).toBeTruthy();
   }));

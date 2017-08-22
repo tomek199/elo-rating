@@ -1,4 +1,5 @@
-<div *ngIf="!league" class="alert alert-warning">
+<app-spinner [resource]="league"></app-spinner>
+<div *ngIf="displayWarning()" class="alert alert-warning">
   League doesn't exist!  
   <a [routerLink]="['/leagues']" class="alert-link">Create new league</a>
 </div>
@@ -6,8 +7,9 @@
   League
   <small class="text-muted">{{league.name}}</small>
 </h1>
+<app-league-assign [league]="league"></app-league-assign>
 <div class="card col-12" *ngIf="league">
-  <div class="card-block">
-    <app-player-ranking></app-player-ranking>
+  <div class="card-body">
+    <app-player-ranking [leagueId]="league.id"></app-player-ranking>
   </div>
 </div>

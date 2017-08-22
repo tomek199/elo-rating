@@ -1,23 +1,25 @@
 <h2>Players list</h2>
-<div class="alert alert-info" *ngIf="!hasPlayers()">
+<app-user-create-player></app-user-create-player>
+<app-spinner [resource]="activePlayers"></app-spinner>
+<div class="alert alert-info" *ngIf="displayAlert()">
   Players list is empty!  
-  <a [routerLink]="['/leagues', leagueId, 'players', 'add']" class="alert-link">Add player</a>
+  <a [routerLink]="['/leagues', leagueId, 'players', 'add']" class="alert-link" *ngIf="isAuthorized()">Add player</a>
 </div>
-<table class="table" *ngIf="hasPlayers()">
+<table class="shadedtable table" *ngIf="hasPlayers()">
   <thead class="thead-default">
     <tr>
       <th>Username</th>
-      <th>Rating</th>
-      <th class="text-right">Actions</th>
+      <th class="text-center">Rating</th>
+      <th class="text-right" *ngIf="isAuthorized()">Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let player of activePlayers; let i=index">
-      <td>
+      <td width="20%" [routerLink]="['/leagues', leagueId, 'players', player.id]">
         <a [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.username}}</a>
       </td>
-      <td>{{player.rating}}</td>
-      <td class="text-right">
+      <td width="65%" class="text-center" [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.rating}}</td>
+      <td width="15%" class="text-right" *ngIf="isAuthorized()">
         <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/leagues', leagueId, 'players', player.id, 'edit']">Edit</a>
         <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDisableModal(i)">Disable</button>
       </td>
@@ -28,10 +30,10 @@
           <del class="font-italic">{{player.username}}</del>
         </a>
       </td>
-      <td>
+      <td class="text-center">
         <del class="font-italic">{{player.rating}}</del>
       </td>
-      <td class="text-right">
+      <td class="text-right" *ngIf="isAuthorized()">
         <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/leagues', leagueId, 'players', player.id, 'edit']">Edit</a>
         <button type="button" class="btn btn-danger btn-sm" (click)="openDeleteModal(i)">Delete</button>
       </td>
@@ -40,6 +42,6 @@
 </table>
 <ul class="nav justify-content-end">
   <li>
-    <a [routerLink]="['/leagues', leagueId, 'players', 'add']">Add player</a>
+    <a [routerLink]="['/leagues', leagueId, 'players', 'add']" *ngIf="isAuthorized()">Add player</a>
   </li>
 </ul>

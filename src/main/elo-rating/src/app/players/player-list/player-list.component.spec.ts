@@ -1,4 +1,8 @@
-import { NgbModalStub } from './../../testing/bootstrap-stubs.';
+import { GoogleAuthServiceStub } from './../../testing/google-stubs';
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
+import { UserCreatePlayerStubComponent } from './../../testing/user-stubs';
+import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
+import { NgbModalStub } from './../../testing/bootstrap-stubs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PlayerServiceStub } from './../../testing/player-stubs';
@@ -20,12 +24,16 @@ describe('PlayerListComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ PlayerListComponent ],
+      declarations: [ 
+        PlayerListComponent, 
+        SpinnerComponent,
+        UserCreatePlayerStubComponent ],
       imports: [ RouterTestingModule ],
       providers: [
         {provide: PlayerService, useClass: PlayerServiceStub},
         {provide: ActivatedRoute, useValue: activatedRoute},
-        {provide: NgbModal, useClass: NgbModalStub}
+        {provide: NgbModal, useClass: NgbModalStub},
+        {provide: GoogleAuthService, useClass: GoogleAuthServiceStub}
       ]
     })
     .compileComponents();
@@ -85,7 +93,7 @@ describe('PlayerListComponent', () => {
     debugElement[0].triggerEventHandler('click', null);
     component.delete(0); // Called manually because of comment in bootstrap-stubs
     tick();
-    let playersCountAfterDelete = component.activePlayers.length + component.inactivePlayers.length;        
+    let playersCountAfterDelete = component.activePlayers.length + component.inactivePlayers.length;
     expect(playersCountAfterDelete).toEqual(playersCount - 1);
   }))
 });

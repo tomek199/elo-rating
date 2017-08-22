@@ -1,0 +1,24 @@
+<h2>Invite user</h2>
+<app-spinner [resource]="showSuccessAlert"></app-spinner>
+<ng-template #userResult let-r="result" let-t="term">
+  <img [src]="r.pictureUrl" width="16">
+  {{r.name}}
+</ng-template>
+<div class="alert alert-success" *ngIf="showSuccessAlert">
+  <strong>Success!</strong>
+  The invitation has been sent.
+  <button type="button" class="close" (click)="clear()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<form #inviteUser="ngForm" class="col-10" *ngIf="showForm()">
+  <div class="form-group col-8">
+    <input type="email" name="email" email="true" class="form-control" [(ngModel)]="email" [ngbTypeahead]="searchUsers" [resultTemplate]="userResult" (selectItem)="selectUser($event)" placeholder="Type username">
+    <small class="text-muted">If you can't find user that you want add to this league, just type his email to send invitation.</small>
+  </div>
+  <div class="form-group col-6">
+    <input type="player" name="player" class="form-control" [(ngModel)]="player" [ngbTypeahead]="searchPlayers" [inputFormatter]="playerFormatter" [resultFormatter]="playerFormatter" [editable]="false" placeholder="Type player name">
+    <small class="text-muted"><strong>Optional!</strong> You can also connect user to invite with player from this league.</small>
+  </div>
+  <button type="submit" class="btn btn-success float-right" [disabled]="!inviteUser.form.valid" (click)="sendInvitation()">Send invitation</button>
+</form>

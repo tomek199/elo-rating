@@ -18,14 +18,22 @@ export class LeagueDetailComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getLeague();
+    this.getLeagueId();
   }
 
-  getLeague() {
+  getLeagueId() {
     this.route.params.map(p => p['league_id'])
-      .forEach(id => {
-        this.leagueService.getLeague(id)
-          .then(league => this.league = league);
-      })
+      .forEach(id => this.getLeague(id));
+  }
+
+  getLeague(leagueId: string) {
+    this.leagueService.getLeague(leagueId)
+      .then(league => {
+        this.league = league}
+      );
+  }
+
+  displayWarning(): boolean {
+    return this.league === null;
   }
 }

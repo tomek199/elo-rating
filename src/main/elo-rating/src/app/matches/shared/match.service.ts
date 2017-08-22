@@ -1,4 +1,4 @@
-import { MATCHES } from './../../testing/match-stubs';
+import { Page } from './../../core/utils/pagination/page.model';
 import { Http, Headers } from '@angular/http';
 import { environment } from './../../../environments/environment.prod';
 import { Match } from './match.model';
@@ -28,11 +28,52 @@ export class MatchService {
       .then(response => response.json() as Match[]);
   }
 
+  getCompletedMatches(leagueId: string, page: number, pageSize: number = 5): Promise<Page<Match>> {
+    let url = `${this.url}/leagues/${leagueId}/completed-matches?page=${page - 1}&pageSize=${pageSize}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as Page<Match>);
+  }
+
+  getScheduledMatches(leagueId: string): Promise<Match[]> {
+    let url = `${this.url}/leagues/${leagueId}/scheduled-matches?sort=asc`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as Match[]);
+  }
+
   getPlayerMatches(playerId: string, sort?: string): Promise<Match[]> {
     let url = `${this.url}/players/${playerId}/matches`;
     if (sort) {
       url += `?sort=${sort}`;
     }
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as Match[]);
+  }
+
+  getPlayerCompletedMatches(playerId: string, page: number, pageSize: number = 5): Promise<Page<Match>> {
+    let url = `${this.url}/players/${playerId}/completed-matches?page=${page - 1}&pageSize=${pageSize}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as Page<Match>);
+  }
+
+  getPlayerCompletedMatchesByDate(playerId: string, from?: Date, to?: Date): Promise<Match[]> {
+    let url = `${this.url}/players/${playerId}/completed-matches-by-date`;
+    if (from) {
+      url += `?from=${from.getFullYear()}-${from.getMonth() + 1}-${from.getDate()}`;
+      if (to) {
+        url += `&to=${to.getFullYear()}-${to.getMonth() + 1}-${to.getDate()}`;
+      }
+    }
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as Match[]);
+  }
+
+  getPlayerScheduledMatches(playerId: string): Promise<Match[]> {
+    let url = `${this.url}/players/${playerId}/scheduled-matches?sort=asc`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as Match[]);
@@ -54,6 +95,14 @@ export class MatchService {
       .catch(this.handleError);
   }
 
+  revertMatch(id: string): Promise<boolean> {
+    let url = `${this.url}/matches/${id}/revert`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.ok)
+      .catch(this.handleError);
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occured', error);
     return Promise.reject(error.message || error);
@@ -66,7 +115,8 @@ export class MatchService {
     output.playerTwo = match.playerTwo;
     output.scores = match.scores;
     output.ratings = match.ratings;
-    output.date = match.date;
+    output.date = new Date(match.date);
+    output.ratingDelta = match.ratingDelta;
 
     return output;
   }

@@ -1,20 +1,19 @@
+import { LEAGUES } from './data/leagues';
 import { League } from './../leagues/shared/league.model';
 import { Observable } from 'rxjs/Observable';
-import { Injectable } from '@angular/core';
+import { Injectable, Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Response } from '@angular/http'
 import 'rxjs/add/observable/of';
-
-export const LEAGUES: League[] = [
-  {id: '123', name: 'League name'},
-  {id: '222', name: 'League two'},
-  {id: '333', name: 'League three'}
-]
 
 @Injectable()
 export class LeagueServiceStub {
 
   getLeague(id: string): Promise<League> {
-    return Promise.resolve(LEAGUES.find(league => league.id === id));
+    let league = LEAGUES.find(league => league.id === id);
+    if (league)
+      return Promise.resolve(league);
+    else
+      return Promise.resolve(null);
   }
 
   getAllLeagues(): Promise<League[]> {
@@ -31,4 +30,21 @@ export class LeagueServiceStub {
     LEAGUES.push(league);
     return Promise.resolve(league);
   }
+}
+
+@Component({
+  selector: 'app-league-search',
+  template: ''
+})
+export class LeagueSearchComponentStub implements OnInit {
+  ngOnInit(): void { }
+}
+
+@Component({
+  selector: 'app-league-assign',
+  template: ''
+})
+export class LeagueAssignComponentStub implements OnChanges {
+  @Input() league: League;
+  ngOnChanges(): void { }
 }
