@@ -1,3 +1,4 @@
+import { AuthGuardService } from './auth/shared/auth-guard.service';
 import { UserService } from './users/shared/user.service';
 import { GoogleAuthService } from './auth/shared/google-auth.service';
 import { MatchService } from './matches/shared/match.service';
@@ -90,6 +91,7 @@ import { UserCreatePlayerComponent } from './users/user-create-player/user-creat
     CookieService,
     GoogleAuthService,
     UserService,
+    AuthGuardService,
     {
       provide: HighchartsStatic,
       useFactory: highchartsFactory
