@@ -1,4 +1,5 @@
-import { League } from 'app/leagues/shared/league.model';
+import { League } from '../../leagues/shared/league.model';
+import { Player } from '../../players/shared/player.model';
 import { TestBed, inject } from '@angular/core/testing';
 
 import { GoogleAuthService } from './google-auth.service';
@@ -35,6 +36,10 @@ describe('GoogleAuthService', () => {
     let league = new League('123', 'Test league');
     user.leagues = [];
     user.leagues.push(league);
+    let player = new Player('456', 'Test player');
+    player.league = league;
+    user.players = [];
+    user.players.push(player, new Player('789'));
     sessionStorageMock.set('user', JSON.stringify(user));
     sessionStorageMock.set('token', '1q2w3e4r5t6y7u8i9o');
   }
@@ -144,10 +149,23 @@ describe('GoogleAuthService', () => {
 
   it('isLeagueAssigned() should return false for not assigned league', inject([GoogleAuthService], (service: GoogleAuthService) => {
     let league = new League('123', 'Test league');
+    setLeague(league);
     expect(service.isLeagueAssigned()).toBeFalsy();
   }));
 
   it('isLeagueAssigned() should return false for not selected league', inject([GoogleAuthService], (service: GoogleAuthService) => {
     expect(service.isLeagueAssigned()).toBeFalsy();    
+  }));
+
+  it('getCurrentPlayerId() should return id when user is connected to player for current league', inject([GoogleAuthService], (service: GoogleAuthService) => {
+    signIn();
+    setLeague(new League('123'));
+    expect(service.getCurrentPlayerId()).toEqual('456');
+  }));
+
+  it('getCurrentPlayerId() should return null when user is not connected to player for current league', inject([GoogleAuthService], (service: GoogleAuthService) => {
+    signIn();
+    setLeague(new League('321'));
+    expect(service.getCurrentPlayerId()).toBeNull();
   }));
 });

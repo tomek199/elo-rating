@@ -7,7 +7,8 @@ let playerOne = {
   username: 'Player 1',
   rating: 1500,
   active: true, 
-  user: null
+  user: null,
+  league: null
 };
 
 let playerTwo = {
@@ -15,7 +16,8 @@ let playerTwo = {
   username: 'Player 2',
   rating: 1000,
   active: true, 
-  user: null
+  user: null,
+  league: null  
 };
 
 let playerThree = {
@@ -23,7 +25,8 @@ let playerThree = {
   username: 'Player 3',
   rating: 1000,
   active: false, 
-  user: null
+  user: null,
+  league: null  
 };
 
 let match1 = new Match();

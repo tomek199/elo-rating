@@ -1,3 +1,4 @@
+import { Player } from 'app/players/shared/player.model';
 import { League } from './../../leagues/shared/league.model';
 import { User } from './../../users/shared/user.model';
 import { Injectable } from '@angular/core';
@@ -61,5 +62,18 @@ export class GoogleAuthService {
     if (leagueUsers && leagueUsers.length > 0)
       return true;
     return false;
+  }
+
+  getCurrentPlayerId(): string | null {
+    if (this.getCurrentLeagueId && this.isAuthenticated()) {
+      let player: Player = this.getCurrentUser().players
+        .find(player => this.playerHasLeague(player));
+      return player ? player.id : null;
+    }
+    return null;
+  }
+
+  private playerHasLeague(player: Player): boolean {
+    return (player.league && player.league.id == this.getCurrentLeagueId());
   }
 }

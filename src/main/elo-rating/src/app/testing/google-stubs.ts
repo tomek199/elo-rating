@@ -37,6 +37,10 @@ export class GoogleAuthServiceStub {
   isAuthorized(): boolean {
     return true;
   }
+
+  getCurrentPlayerId(): string | null {
+    return '123';
+  }
 }
 
 @Component({
