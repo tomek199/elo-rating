@@ -30,8 +30,10 @@ export class UserServiceStub {
 
   createPlayer(userId: string, leagueId: string): Promise<User> {
     let user = this.getUserWithLeague('123');
-    user.player = new Player();
-    user.player.id = '987';
+    user.players = [];
+    let player = new Player();
+    player.id = '987';
+    user.players.push(player);
     return Promise.resolve(user);
   }
 

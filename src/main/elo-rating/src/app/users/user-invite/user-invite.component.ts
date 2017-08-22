@@ -85,7 +85,8 @@ export class UserInviteComponent implements OnInit {
     if (this.player) {
       let player = new Player();
       player.id = this.player.id;
-      user.player = player;
+      user.players = [];
+      user.players.push(player);
     }
   }
 

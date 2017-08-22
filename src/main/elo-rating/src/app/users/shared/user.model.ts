@@ -10,5 +10,5 @@ export class User {
   email: string;
   pictureUrl: string;
   leagues: League[];
-  player: Player;
+  players: Player[];
 }
