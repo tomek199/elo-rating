@@ -1,3 +1,4 @@
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { MatchService } from './../../matches/shared/match.service';
 import { Observable } from 'rxjs/Observable';
 import { PlayerService } from './../../players/shared/player.service';
@@ -18,7 +19,10 @@ export class QueueListComponent implements OnInit, OnChanges {
 
   scheduledMatches = new Array<Match>();
 
-  constructor(private router: Router, private matchService: MatchService) {
+  constructor(
+    private router: Router, 
+    private matchService: MatchService, 
+    private googleAuthService: GoogleAuthService) {
   }
 
   ngOnInit() { }
@@ -45,6 +49,11 @@ export class QueueListComponent implements OnInit, OnChanges {
   }
 
   completeMatch(matchId: string) {
-    this.router.navigate(['/leagues', this.leagueId, 'matches', 'save', matchId, 'complete']);
+    if (this.isAuthorized())
+      this.router.navigate(['/leagues', this.leagueId, 'matches', 'save', matchId, 'complete']);
+  }
+
+  isAuthorized(): boolean {
+    return (!this.googleAuthService.isLeagueAssigned() || this.googleAuthService.isAuthorized());
   }
 }

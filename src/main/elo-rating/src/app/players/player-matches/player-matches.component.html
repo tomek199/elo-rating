@@ -14,7 +14,7 @@
           <th>Date</th>
           <th>First player</th>
           <th>Second player</th>
-          <th>Actions</th>
+          <th class="text-right" *ngIf="isAuthorized()">Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -26,7 +26,7 @@
           <td [ngClass]="{'table-info': isCurrent(match.playerTwo)}">
             <app-player-cell [match]="match" [player]="match.playerTwo" [currentPlayerId]="playerId"></app-player-cell>
           </td>
-          <td class="text-right">
+          <td class="text-right" *ngIf="isAuthorized()">
             <button type="button" class="btn btn-outline-secondary btn-sm" (click)="editMatch(match.id)">Edit</button>
             <button type="button" class="btn btn-outline-primary btn-sm" (click)="completeMatch(match.id)">Complete</button>
             <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(match.id)">Delete</button>

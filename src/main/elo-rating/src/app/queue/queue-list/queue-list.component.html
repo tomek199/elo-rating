@@ -11,6 +11,6 @@
     </button>
     <a class="dropdown-item disabled" *ngIf="isScheduledMatchesEmpty()" [routerLink]="[ '/leagues', leagueId, 'matches', 'add']">Queue is empty</a>
     <div class=" dropdown-divider"></div>
-    <a class="dropdown-item " [routerLink]="[ '/leagues', leagueId, 'matches', 'add']">Add match to queue</a>
+    <a class="dropdown-item " [routerLink]="[ '/leagues', leagueId, 'matches', 'add']" *ngIf="isAuthorized()">Add match to queue</a>
   </div>
 </li>

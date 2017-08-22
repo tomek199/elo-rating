@@ -1,3 +1,5 @@
+import { GoogleAuthServiceStub } from './../../testing/google-stubs';
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Match } from './../../matches/shared/match.model';
 import { MATCHES, SCHEDULED_MATCHES } from './../../testing/data/matches';
@@ -38,7 +40,8 @@ describe('QueueComponent', () => {
       providers: [
         { provide: Router, useClass: RouterStub },
         { provide: ActivatedRoute, useValue: activatedRoute },
-        { provide: PlayerService, useClass: PlayerServiceStub }
+        { provide: PlayerService, useClass: PlayerServiceStub },
+        { provide: GoogleAuthService, useClass: GoogleAuthServiceStub }
       ]
     })
       .compileComponents();

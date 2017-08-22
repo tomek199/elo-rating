@@ -1,4 +1,5 @@
-import { GoogleAuthComponentStub } from './../../../testing/google-stubs';
+import { GoogleAuthService } from './../../../auth/shared/google-auth.service';
+import { GoogleAuthComponentStub, GoogleAuthServiceStub } from './../../../testing/google-stubs';
 import { RouterLinkStub } from './../../../testing/routing-stubs';
 import { FormsModule } from '@angular/forms';
 import { LeagueSearchComponentStub } from './../../../testing/league-stubs';
@@ -28,7 +29,9 @@ describe('NavComponent', () => {
         HttpModule,
         NgbModule.forRoot()
       ],
-      providers: []
+      providers: [
+        {provide: GoogleAuthService, useClass: GoogleAuthServiceStub}
+      ]
     })
       .compileComponents();
   }));

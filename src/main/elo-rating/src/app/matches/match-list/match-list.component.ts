@@ -1,3 +1,4 @@
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { Page } from './../../core/utils/pagination/page.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmModalComponent } from './../../core/directives/confirm-modal/confirm-modal.component';
@@ -23,7 +24,8 @@ export class MatchListComponent implements OnInit {
     private matchService: MatchService,
     private route: ActivatedRoute,
     private router: Router,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private googleAuthService: GoogleAuthService
   ) { }
 
   ngOnInit() {
@@ -153,5 +155,9 @@ export class MatchListComponent implements OnInit {
 
   editMatch(matchId: string) {
     this.router.navigate(['/leagues', this.leagueId, 'matches', 'save', matchId, 'edit']);    
+  }
+
+  isAuthorized(): boolean {
+    return (!this.googleAuthService.isLeagueAssigned() || this.googleAuthService.isAuthorized());
   }
 }

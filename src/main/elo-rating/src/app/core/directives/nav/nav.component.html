@@ -11,7 +11,7 @@
         </li>
         <app-queue-list *ngIf="leagueId" [leagueId]="leagueId"></app-queue-list>
       </ul>
-      <form id="addMatch" class="form-inline mr-4" *ngIf="leagueId">
+      <form id="addMatch" class="form-inline mr-4" *ngIf="isAuthorized()">
         <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="btn btn-primary btn-sm" role="button">Add match</a>
       </form>
       <app-league-search *ngIf="!leagueId"></app-league-search>

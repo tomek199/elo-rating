@@ -1,3 +1,5 @@
+import { GoogleAuthServiceStub } from './../../testing/google-stubs';
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { PlayerCellComponent } from './../../players/player-cell/player-cell.component';
 import { CookieService } from 'ng2-cookies';
@@ -27,6 +29,7 @@ describe('MatchListComponent', () => {
       providers: [
         {provide: MatchService, useClass: MatchServiceStub},
         {provide: ActivatedRoute, useValue: activatedRoute},
+        {provide: GoogleAuthService, useClass: GoogleAuthServiceStub},
         CookieService
       ]
     })

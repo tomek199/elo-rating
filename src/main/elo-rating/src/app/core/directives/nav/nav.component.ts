@@ -1,3 +1,4 @@
+import { GoogleAuthService } from './../../../auth/shared/google-auth.service';
 import { Component, Input, ViewChild, OnChanges } from '@angular/core';
 
 @Component({
@@ -10,7 +11,7 @@ export class NavComponent implements OnChanges {
   @Input() leagueId: string;
   navbar;
 
-  constructor() { }
+  constructor(private googleAuthService: GoogleAuthService) { }
 
   ngOnChanges() {
     this.generateNavbar();
@@ -48,5 +49,10 @@ export class NavComponent implements OnChanges {
         title: 'League'
       }
     ]
+  }
+
+  isAuthorized(): boolean {
+    let authorized = !this.googleAuthService.isLeagueAssigned() || this.googleAuthService.isAuthorized();
+    return (this.leagueId && authorized);
   }
 }
