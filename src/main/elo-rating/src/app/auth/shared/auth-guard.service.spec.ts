@@ -1,3 +1,7 @@
+import { GoogleAuthServiceStub } from './../../testing/google-stubs';
+import { GoogleAuthService } from './google-auth.service';
+import { RouterStub } from './../../testing/routing-stubs';
+import { Router } from '@angular/router';
 import { TestBed, inject } from '@angular/core/testing';
 
 import { AuthGuardService } from './auth-guard.service';
@@ -5,7 +9,11 @@ import { AuthGuardService } from './auth-guard.service';
 describe('AuthGuardService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AuthGuardService]
+      providers: [
+        AuthGuardService,
+        {provide: Router, useClass: RouterStub},
+        {provide: GoogleAuthService, useClass: GoogleAuthServiceStub}
+      ]
     });
   });
 

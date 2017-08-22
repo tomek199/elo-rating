@@ -1,3 +1,4 @@
+import { AuthGuardService } from './../../auth/shared/auth-guard.service';
 import { UserConfirmInvitationComponent } from './../../users/user-confirm-invitation/user-confirm-invitation.component';
 import { UserInviteComponent } from './../../users/user-invite/user-invite.component';
 import { PlayerRankingComponent } from './../../players/player-ranking/player-ranking.component';
@@ -19,13 +20,13 @@ export const routes: Routes = [
   { path: 'leagues/:league_id', component: LeagueDetailComponent },
   { path: 'leagues/:league_id/players', component: PlayerListComponent },
   { path: 'leagues/:league_id/players/ranking', component: PlayerRankingComponent },
-  { path: 'leagues/:league_id/players/add', component: PlayerAddComponent },
+  { path: 'leagues/:league_id/players/add', component: PlayerAddComponent, canActivate: [ AuthGuardService ] },
   { path: 'leagues/:league_id/players/:player_id', component: PlayerDetailComponent },
-  { path: 'leagues/:league_id/players/:player_id/edit', component: PlayerEditComponent },
-  { path: 'leagues/:league_id/matches/add', component: MatchSaveComponent },
-  { path: 'leagues/:league_id/matches/save/:match_id/:mode', component: MatchSaveComponent },
+  { path: 'leagues/:league_id/players/:player_id/edit', component: PlayerEditComponent, canActivate: [ AuthGuardService ] },
+  { path: 'leagues/:league_id/matches/add', component: MatchSaveComponent, canActivate: [ AuthGuardService ] },
+  { path: 'leagues/:league_id/matches/save/:match_id/:mode', component: MatchSaveComponent, canActivate: [ AuthGuardService ] },
   { path: 'leagues/:league_id/matches', component: MatchListComponent },
-  { path: 'leagues/:league_id/users/invite', component: UserInviteComponent},
+  { path: 'leagues/:league_id/users/invite', component: UserInviteComponent, canActivate: [ AuthGuardService ]},
   { path: 'users/confirm-invitation/:token', component: UserConfirmInvitationComponent},
   { path: '**', redirectTo: '/leagues', pathMatch: 'full' } // this path must be the last one
 ];
