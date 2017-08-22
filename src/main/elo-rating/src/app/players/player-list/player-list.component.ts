@@ -1,3 +1,4 @@
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { LeagueAddComponent } from './../../leagues/league-add/league-add.component';
 import { ConfirmModalComponent } from './../../core/directives/confirm-modal/confirm-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -19,7 +20,8 @@ export class PlayerListComponent implements OnInit {
   constructor(
     private playerService: PlayerService,
     private route: ActivatedRoute,
-    private modalService: NgbModal
+    private modalService: NgbModal, 
+    private googleAuthService: GoogleAuthService
   ) { }
 
   ngOnInit() {
@@ -94,5 +96,9 @@ export class PlayerListComponent implements OnInit {
           this.getPlayers();
         }
       })
+  }
+
+  isAuthorized(): boolean {
+    return (!this.googleAuthService.isLeagueAssigned() || this.googleAuthService.isAuthorized());
   }
 }

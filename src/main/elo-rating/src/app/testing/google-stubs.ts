@@ -41,6 +41,10 @@ export class GoogleAuthServiceStub {
   getCurrentPlayerId(): string | null {
     return '123';
   }
+
+  isLeagueAssigned(): boolean {
+    return true;
+  }
 }
 
 @Component({

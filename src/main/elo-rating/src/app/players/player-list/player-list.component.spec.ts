@@ -1,3 +1,5 @@
+import { GoogleAuthServiceStub } from './../../testing/google-stubs';
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { UserCreatePlayerStubComponent } from './../../testing/user-stubs';
 import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { NgbModalStub } from './../../testing/bootstrap-stubs';
@@ -30,7 +32,8 @@ describe('PlayerListComponent', () => {
       providers: [
         {provide: PlayerService, useClass: PlayerServiceStub},
         {provide: ActivatedRoute, useValue: activatedRoute},
-        {provide: NgbModal, useClass: NgbModalStub}
+        {provide: NgbModal, useClass: NgbModalStub},
+        {provide: GoogleAuthService, useClass: GoogleAuthServiceStub}
       ]
     })
     .compileComponents();
@@ -90,7 +93,7 @@ describe('PlayerListComponent', () => {
     debugElement[0].triggerEventHandler('click', null);
     component.delete(0); // Called manually because of comment in bootstrap-stubs
     tick();
-    let playersCountAfterDelete = component.activePlayers.length + component.inactivePlayers.length;        
+    let playersCountAfterDelete = component.activePlayers.length + component.inactivePlayers.length;
     expect(playersCountAfterDelete).toEqual(playersCount - 1);
   }))
 });
