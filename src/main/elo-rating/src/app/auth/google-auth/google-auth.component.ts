@@ -61,4 +61,8 @@ export class GoogleAuthComponent implements OnInit {
   isAuthorized(): boolean {
     return this.googleAuthService.isAuthorized();
   }
+
+  getCurrentPlayerId(): string | null {
+    return this.googleAuthService.getCurrentPlayerId();
+  }
 }

@@ -13,7 +13,7 @@
           <strong>{{user.name}}</strong>
         </h6>
         <div class=" dropdown-divider"></div>
-        <button class="dropdown-item disabled">Your profile</button>
+        <a [routerLink]="['leagues', leagueId, 'players', getCurrentPlayerId()]" class="dropdown-item" *ngIf="getCurrentPlayerId()">Your profile</a>
         <a [routerLink]="['leagues', leagueId, 'users', 'invite']" class="dropdown-item" *ngIf="isAuthorized()">Invite user</a>
         <button class="dropdown-item" (click)="signOut()">Sign out</button>
       </div>
