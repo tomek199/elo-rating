@@ -1,0 +1,6 @@
+a#feedback {
+  position: fixed;
+  top: 40%;
+  right: -2rem;
+  transform: rotate(-90deg);
+}

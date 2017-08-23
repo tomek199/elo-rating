@@ -1,4 +1,4 @@
-import { Injectable, Directive, Input } from '@angular/core';
+import { Injectable, Directive, Input, Component } from '@angular/core';
 import { NavigationEnd } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
@@ -46,4 +46,12 @@ export class RouterStub {
 })
 export class RouterLinkStub {
   @Input('routerLink') linkParams: any;
+}
+
+@Component({
+  selector: 'router-outlet',
+  template: ''
+})
+export class RouterOutletStub {
+  
 }

@@ -3,7 +3,7 @@ import { GoogleAuthServiceStub } from './testing/google-stubs';
 import { GoogleAuthService } from './auth/shared/google-auth.service';
 import { CookieService } from 'ng2-cookies';
 import { NavComponentStub } from './testing/nav-stubs';
-import { RouterStub, ActivatedRouteStub } from './testing/routing-stubs';
+import { RouterStub, ActivatedRouteStub, RouterLinkStub, RouterOutletStub } from './testing/routing-stubs';
 import { LeagueServiceStub } from './testing/league-stubs';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -24,10 +24,11 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         NavComponentStub,
+        RouterOutletStub,
+        RouterLinkStub
       ],
       imports: [
         FormsModule,
-        RouterTestingModule,
         HttpModule,
         NgbModule.forRoot()
       ],
@@ -64,7 +65,7 @@ describe('AppComponent', () => {
 
   it('should have router-outlet component', () => {
     let fixture = TestBed.createComponent(AppComponent);
-    let debugElement = fixture.debugElement.query(By.directive(RouterOutlet))
+    let debugElement = fixture.debugElement.query(By.directive(RouterOutletStub))
     expect(debugElement).toBeTruthy();
   });
 

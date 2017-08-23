@@ -1,3 +1,4 @@
+import { FeedbackSendComponent } from './../../feedback/feedback-send/feedback-send.component';
 import { AuthGuardService } from './../../auth/shared/auth-guard.service';
 import { UserConfirmInvitationComponent } from './../../users/user-confirm-invitation/user-confirm-invitation.component';
 import { UserInviteComponent } from './../../users/user-invite/user-invite.component';
@@ -28,6 +29,7 @@ export const routes: Routes = [
   { path: 'leagues/:league_id/matches', component: MatchListComponent },
   { path: 'leagues/:league_id/users/invite', component: UserInviteComponent, canActivate: [ AuthGuardService ]},
   { path: 'users/confirm-invitation/:token', component: UserConfirmInvitationComponent},
+  { path: 'leagues/feedback/send', component: FeedbackSendComponent},
   { path: '**', redirectTo: '/leagues', pathMatch: 'full' } // this path must be the last one
 ];
 
