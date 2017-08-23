@@ -43,6 +43,7 @@ import { UserInviteComponent } from './users/user-invite/user-invite.component';
 import { GoogleButtonComponent } from './auth/google-button/google-button.component';
 import { UserConfirmInvitationComponent } from './users/user-confirm-invitation/user-confirm-invitation.component';
 import { UserCreatePlayerComponent } from './users/user-create-player/user-create-player.component';
+import { FeedbackSendComponent } from './feedback/feedback-send/feedback-send.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { UserCreatePlayerComponent } from './users/user-create-player/user-creat
     UserInviteComponent,
     GoogleButtonComponent,
     UserConfirmInvitationComponent,
-    UserCreatePlayerComponent
+    UserCreatePlayerComponent,
+    FeedbackSendComponent
   ],
   imports: [
     BrowserModule,
