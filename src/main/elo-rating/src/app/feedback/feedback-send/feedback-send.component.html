@@ -1,3 +1,29 @@
-<p>
-  feedback-send works!
-</p>
+<app-spinner [resource]="showSuccessAlert"></app-spinner>
+<div class="alert alert-success" *ngIf="showSuccessAlert">
+  <strong>Success!</strong>
+  Your email has been sent. Thank you for your feedback.
+  <button type="button" class="close" (click)="clear()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>  
+<div class="card" *ngIf="showForm()">
+  <div class="card-body">
+    <h2 class="card-title">Send feedback</h2>
+    <h5 class="card-subtitle mb-4 text-muted">Feel free to send us any suggestions or ideas.</h5>
+    <form #sendFeedback="ngForm">
+      <div class="form-group row">
+        <label for="email" class="col-2 col-form-label">Your email</label>
+        <div class="col-6">
+          <input type="email" class="form-control" name="sender" [(ngModel)]="feedback.sender" #sender="ngModel" email="true" [disabled]="isAuthenticated()">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="text" class="col-2 col-form-label">Feedback</label>
+        <div class="col-10">
+          <textarea class="form-control" name="text" [(ngModel)]="feedback.text" #text="ngModel" rows="5" required></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success float-right" [disabled]="!sendFeedback.form.valid" (click)="send()">Send</button>
+    </form>
+  </div>
+</div>

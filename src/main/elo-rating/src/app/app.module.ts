@@ -1,3 +1,4 @@
+import { FeedbackService } from './feedback/shared/feedback.service';
 import { AuthGuardService } from './auth/shared/auth-guard.service';
 import { UserService } from './users/shared/user.service';
 import { GoogleAuthService } from './auth/shared/google-auth.service';
@@ -94,6 +95,7 @@ import { FeedbackSendComponent } from './feedback/feedback-send/feedback-send.co
     GoogleAuthService,
     UserService,
     AuthGuardService,
+    FeedbackService,
     {
       provide: HighchartsStatic,
       useFactory: highchartsFactory
