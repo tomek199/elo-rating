@@ -23,7 +23,7 @@
           <textarea class="form-control" name="text" [(ngModel)]="feedback.text" #text="ngModel" rows="5" required></textarea>
         </div>
       </div>
-      <button type="submit" class="btn btn-success float-right" [disabled]="!sendFeedback.form.valid" (click)="send()">Send</button>
+      <button type="button" class="btn btn-success float-right" [disabled]="!sendFeedback.form.valid" (click)="send()">Send</button>
     </form>
   </div>
 </div>
