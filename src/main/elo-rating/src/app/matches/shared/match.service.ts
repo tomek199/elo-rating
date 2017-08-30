@@ -1,18 +1,16 @@
 import { Page } from './../../core/utils/pagination/page.model';
-import { Http, Headers } from '@angular/http';
-import { environment } from './../../../environments/environment.prod';
+import { Http } from '@angular/http';
 import { Match } from './match.model';
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/toPromise';
+import { BaseApiService } from "../../core/shared/base-api.service";
 
 
 @Injectable()
-export class MatchService {
+export class MatchService extends BaseApiService {
 
-  private url = environment.serverUrl;
-  private headers = new Headers({ 'Content-Type': 'application/json' });
-
-  constructor(private http: Http) { }
+  constructor(private http: Http) { 
+    super();
+  }
 
   getMatchById(matchId: string): Promise<Match> {
     let url = `${this.url}/matches/${matchId}`;
@@ -101,11 +99,6 @@ export class MatchService {
       .toPromise()
       .then(response => response.ok)
       .catch(this.handleError);
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occured', error);
-    return Promise.reject(error.message || error);
   }
 
   serialize(match: Match): Match {

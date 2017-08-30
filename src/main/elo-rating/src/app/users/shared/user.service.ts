@@ -3,15 +3,15 @@ import { User } from './user.model';
 import { Http } from '@angular/http';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/toPromise';
+import { BaseApiService } from "../../core/shared/base-api.service";
 
 
 @Injectable()
-export class UserService {
-  private url = environment.serverUrl;
-  private headers = new Headers({ 'Content-Type': 'application/json' });
+export class UserService extends BaseApiService {
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) { 
+    super();
+  }
 
   signIn(idToken: string): Promise<User> {
     let url = `${this.url}/users/sign-in`;
@@ -66,10 +66,5 @@ export class UserService {
       .toPromise()
       .then(response => response.json() as User)
       .catch(this.handleError);
-  }
- 
-  private handleError(error: any): Promise<any> {
-    console.error('An error occured', error);
-    return Promise.resolve(null);
   }
 }

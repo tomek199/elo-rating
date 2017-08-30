@@ -2,20 +2,18 @@ import { Observable } from 'rxjs/Observable';
 import { Match } from './../../matches/shared/match.model';
 import { PlayerStats } from './player-stats.model';
 import { OpponentStats } from './opponent-stats.model';
-import { Http, Headers } from '@angular/http';
+import { Http } from '@angular/http';
 import { Player } from './player.model';
 import { Injectable } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import 'rxjs/add/operator/toPromise';
+import { BaseApiService } from "../../core/shared/base-api.service";
 
 
 @Injectable()
-export class PlayerService {
+export class PlayerService extends BaseApiService {
 
-  private url = environment.serverUrl;
-  private headers = new Headers({ 'Content-Type': 'application/json' });
-
-  constructor(private http: Http) { }
+  constructor(private http: Http) { 
+    super();
+  }
 
   getPlayers(leagueId: string): Promise<Player[]> {
     let url = `${this.url}/leagues/${leagueId}/players`;
@@ -93,10 +91,5 @@ export class PlayerService {
     let url = `${this.url}/leagues/${leagueId}/players/find-by-username?username=${username}`;
     return this.http.get(url)
       .map(response => response.json() as Player[])
-  }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occured', error);
-    return Promise.reject(error.message || error);
   }
 }

@@ -1,21 +1,19 @@
+import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response } from '@angular/http';
 import { League } from './league.model';
-import { environment } from '../../../environments/environment';
-import 'rxjs/add/operator/toPromise';
+import { BaseApiService } from "../../core/shared/base-api.service";
 
 
 @Injectable()
-export class LeagueService {
+export class LeagueService extends BaseApiService {
 
-  private url = environment.serverUrl + '/leagues';
-  private headers = new Headers({'Content-Type': 'application/json'});
-
-  constructor(private http: Http) { }
+  constructor(private http: Http) {
+    super();
+  }
 
   getLeague(id: string): Promise<League> {
-    let url = `${this.url}/${id}`;
+    let url = `${this.url}/leagues/${id}`;
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as League)
@@ -23,27 +21,24 @@ export class LeagueService {
   }
 
   getAllLeagues(): Promise<League[]> {
-    return this.http.get(this.url)
+    let url = `${this.url}/leagues`
+    return this.http.get(url)
       .toPromise()
       .then(response => response.json() as League[])
       .catch(this.handleError);
   }
 
   findByName(name: string): Observable<League[]> {
-    let url = `${this.url}/find-by-name?name=${name}`;
+    let url = `${this.url}/leagues/find-by-name?name=${name}`;
     return this.http.get(url)
       .map(response => response.json() as League[]);
   }
 
   create(league: League): Promise<League> {
-    let url = this.url;
+    let url = `${this.url}/leagues`;
     return this.http.post(url, JSON.stringify(league), {headers: this.headers})
       .toPromise()
       .then(response => response.json() as League)
       .catch(this.handleError);
-  }
-
-  private handleError(error: any): Promise<any> {
-    return Promise.resolve(null);
   }
 }
