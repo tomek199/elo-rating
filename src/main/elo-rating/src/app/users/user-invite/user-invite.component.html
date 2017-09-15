@@ -20,5 +20,5 @@
     <input type="player" name="player" class="form-control" [(ngModel)]="player" [ngbTypeahead]="searchPlayers" [inputFormatter]="playerFormatter" [resultFormatter]="playerFormatter" [editable]="false" placeholder="Type player name">
     <small class="text-muted"><strong>Optional!</strong> You can also connect user to invite with player from this league.</small>
   </div>
-  <button type="submit" class="btn btn-success float-right" [disabled]="!inviteUser.form.valid" (click)="sendInvitation()">Send invitation</button>
+  <button type="button" class="btn btn-success float-right" [disabled]="!inviteUser.form.valid" (click)="sendInvitation()">Send invitation</button>
 </form>
