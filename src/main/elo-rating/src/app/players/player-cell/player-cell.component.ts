@@ -1,3 +1,4 @@
+import { PlayerService } from './../shared/player.service';
 import { Player } from './../shared/player.model';
 import { Match } from './../../matches/shared/match.model';
 import { Component, OnInit, Input } from '@angular/core';
@@ -11,8 +12,9 @@ export class PlayerCellComponent implements OnInit {
   @Input() match: Match;
   @Input() player: Player;
   @Input() currentPlayerId: string;
+  forecast: Match[];
 
-  constructor() { }
+  constructor(private playerService: PlayerService) { }
 
   ngOnInit() {
   }
@@ -52,5 +54,25 @@ export class PlayerCellComponent implements OnInit {
       return this.match.ratingDelta * sign;
     }
     return 0;
+  }
+
+  private getOpponentId(): string {
+    return this.player.id == this.match.playerOne.id 
+      ? this.match.playerTwo.id
+      : this.match.playerOne.id;
+  }
+
+  getForecast() {
+    this.forecast = undefined;
+    this.playerService.getMatchForecast(this.player.id, this.getOpponentId())
+      .then(matches => {
+        this.forecast = matches;
+      });
+  }
+
+  getMatchScore(match: Match) {
+    let firstScore = match.scores[this.player.id];
+    let secondScore = match.scores[this.getOpponentId()];
+    return `${firstScore} : ${secondScore}`;
   }
 }

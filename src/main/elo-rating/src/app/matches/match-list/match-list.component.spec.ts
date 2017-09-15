@@ -1,7 +1,7 @@
+import { PlayerCellStubComponent } from './../../testing/player-stubs';
 import { GoogleAuthServiceStub } from './../../testing/google-stubs';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { PlayerCellComponent } from './../../players/player-cell/player-cell.component';
 import { CookieService } from 'ng2-cookies';
 import { PageSizeComponent } from './../../core/directives/page-size/page-size.component';
 import { FormsModule } from '@angular/forms';
@@ -24,7 +24,12 @@ describe('MatchListComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ MatchListComponent, PageSizeComponent, PlayerCellComponent, SpinnerComponent ],
+      declarations: [ 
+        MatchListComponent, 
+        PageSizeComponent, 
+        PlayerCellStubComponent, 
+        SpinnerComponent 
+      ],
       imports: [ RouterTestingModule, FormsModule, NgbModule.forRoot() ],
       providers: [
         {provide: MatchService, useClass: MatchServiceStub},
@@ -88,8 +93,8 @@ describe('MatchListComponent', () => {
     createComponent();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('table#completedMatches tbody tr'));
-    expect(debugElement[0].query(By.css('td.table-success a')).nativeElement.textContent).toEqual('Player 1');
-    expect(debugElement[1].query(By.css('td.table-success a')).nativeElement.textContent).toEqual('Player 2');    
+    expect(debugElement[0].query(By.css('td.table-success')).nativeElement.textContent).toContain('Player 1');
+    expect(debugElement[1].query(By.css('td.table-success')).nativeElement.textContent).toContain('Player 2');    
   }));
 
   it('should display delete button for matches where both players are deleted', fakeAsync(() => {

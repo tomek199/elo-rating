@@ -1,7 +1,7 @@
+import { PlayerCellStubComponent } from './../../testing/player-stubs';
 import { GoogleAuthServiceStub } from './../../testing/google-stubs';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { PlayerCellComponent } from './../player-cell/player-cell.component';
 import { CookieService } from 'ng2-cookies';
 import { PageSizeComponent } from './../../core/directives/page-size/page-size.component';
 import { FormsModule } from '@angular/forms';
@@ -28,7 +28,7 @@ describe('PlayerMatchesComponent', () => {
       declarations: [ 
         PlayerMatchesComponent, 
         PageSizeComponent, 
-        PlayerCellComponent, 
+        PlayerCellStubComponent, 
         SpinnerComponent
       ],
       imports: [ RouterTestingModule, FormsModule, NgbModule.forRoot() ],
@@ -114,9 +114,9 @@ describe('PlayerMatchesComponent', () => {
     createComponent();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('table#scheduledMatches tbody tr'));
-    let firstRow = debugElement[0].query(By.css('td.table-info span'));
-    expect(firstRow.nativeElement.textContent).toEqual('Player 1');
-    let secondRow = debugElement[0].query(By.css('td.table-info span'));
-    expect(secondRow.nativeElement.textContent).toEqual('Player 1');
+    let firstRow = debugElement[0].query(By.css('td.table-info'));
+    expect(firstRow.nativeElement.textContent).toContain('Player 1');
+    let secondRow = debugElement[0].query(By.css('td.table-info'));
+    expect(secondRow.nativeElement.textContent).toContain('Player 1');
   }));
 });

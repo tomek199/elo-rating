@@ -127,3 +127,15 @@ export class PlayerOpponentsStubComponent implements OnInit {
   @Input() playerId;
   ngOnInit() {}
 }
+
+@Component({
+  selector: 'app-player-cell',
+  template: '{{player?.username}}'
+})
+export class PlayerCellStubComponent implements OnInit {
+  @Input() match: Match;
+  @Input() player: Player;
+  @Input() currentPlayerId: string;
+  constructor() {};
+  ngOnInit() {}
+}

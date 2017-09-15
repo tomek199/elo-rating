@@ -1,3 +1,7 @@
+import { PlayerServiceStub } from './../../testing/player-stubs';
+import { PlayerService } from './../shared/player.service';
+import { SmallSpinnerComponent } from './../../core/directives/small-spinner/small-spinner.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MATCHES } from './../../testing/data/matches';
 import { PlayerCellComponent } from './player-cell.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -11,8 +15,11 @@ describe('PlayerCellComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PlayerCellComponent ],
-      imports: [ RouterTestingModule ]
+      declarations: [ PlayerCellComponent, SmallSpinnerComponent ],
+      imports: [ RouterTestingModule, NgbModule.forRoot() ],
+      providers: [
+        {provide: PlayerService, useClass: PlayerServiceStub}
+      ]
     })
     .compileComponents();
   }));
