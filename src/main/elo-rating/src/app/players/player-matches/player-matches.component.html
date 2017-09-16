@@ -19,7 +19,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let match of scheduledMatches">
-          <td>{{match.date | date: "HH:mm"}}</td>
+          <td [ngClass]="{'table-danger': isTimeAfter(match.date)}">{{match.date | date: "HH:mm"}}</td>
           <td [ngClass]="{'table-info': isCurrent(match.playerOne)}">
             <app-player-cell [match]="match" [player]="match.playerOne" [currentPlayerId]="playerId"></app-player-cell>
           </td>

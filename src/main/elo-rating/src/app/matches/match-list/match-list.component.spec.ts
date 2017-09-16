@@ -1,3 +1,4 @@
+import { Match } from './../shared/match.model';
 import { PlayerCellStubComponent } from './../../testing/player-stubs';
 import { GoogleAuthServiceStub } from './../../testing/google-stubs';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
@@ -128,4 +129,14 @@ describe('MatchListComponent', () => {
     let debugElement = fixture.debugElement.queryAll(By.css('table#scheduledMatches tbody tr'));
     expect(debugElement.length).toBeGreaterThan(0);
   }));
+
+  it('should present scheduled match time on red background when time is up', fakeAsync(() => {
+    createComponent();
+    let pastDate = new Date();
+    pastDate.setMinutes(pastDate.getMinutes() - 15);
+    component.scheduledMatches[0].date = pastDate;
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.query(By.css('table#scheduledMatches tbody tr td.table-danger'));
+    expect(debugElement).toBeTruthy();
+  }))
 });

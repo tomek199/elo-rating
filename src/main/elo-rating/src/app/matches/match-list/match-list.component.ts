@@ -173,4 +173,11 @@ export class MatchListComponent implements OnInit, OnDestroy {
   isAuthorized(): boolean {
     return (!this.googleAuthService.isLeagueAssigned() || this.googleAuthService.isAuthorized());
   }
+
+  isTimeAfter(timestamp: number): boolean {
+    let now = new Date();
+    let matchDate = new Date(timestamp);
+    matchDate.setMinutes(matchDate.getMinutes() + environment.matchDuration);
+    return now > matchDate;
+  }
 }

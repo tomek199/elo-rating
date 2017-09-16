@@ -42,7 +42,7 @@
   <div class="form-group row" *ngIf="!match.completed">
     <label for="time" class="col-1 col-form-label">Time</label>    
     <div class="col-9">
-      <ngb-timepicker name="time" [(ngModel)]="time" [spinners]="true" [size]="small" [minuteStep]="10"></ngb-timepicker>
+      <ngb-timepicker name="time" [(ngModel)]="time" [spinners]="true" [size]="small" [minuteStep]="matchDuration"></ngb-timepicker>
       <div class="text-danger" *ngIf="!isTimeValid()">{{timeMessage}}</div>
       <div [ngbPopover]="queuePopContent" popoverTitle="Queue" #queuePopover="ngbPopover" triggers="manual" placement="bottom"></div>
     </div>

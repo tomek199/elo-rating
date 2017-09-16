@@ -29,6 +29,9 @@ let playerThree = {
   league: null  
 };
 
+let futureDate = new Date();
+futureDate.setMinutes(futureDate.getMinutes() + 30);
+
 let match1 = new Match();
 match1.id = '111';
 match1.league = LEAGUES[0];
@@ -78,7 +81,7 @@ match5.id = '555';
 match5.league = LEAGUES[0];
 match5.playerOne = playerOne;
 match5.playerTwo = playerTwo;
-match5.date = new Date();
+match5.date = futureDate;
 match5.completed = false;
 
 let match6 = new Match();
@@ -86,7 +89,7 @@ match6.id = '666';
 match6.league = LEAGUES[0];
 match6.playerOne = playerThree;
 match6.playerTwo = playerOne;
-match6.date = new Date();
+match6.date = futureDate;
 match6.completed = false
 
 let match7 = new Match();

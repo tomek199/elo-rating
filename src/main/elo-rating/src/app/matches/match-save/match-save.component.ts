@@ -1,3 +1,4 @@
+import { environment } from './../../../environments/environment';
 import { MatchService } from './../shared/match.service';
 import { Observable } from 'rxjs/Observable';
 import { Match } from './../shared/match.model';
@@ -22,6 +23,7 @@ export class MatchSaveComponent implements OnInit {
   time;
   scheduledMatches: Map<string, Match>;
   timeMessage: string;
+  matchDuration: number = environment.matchDuration;
   @ViewChild('queuePopover') queuePopover: NgbPopover;
 
   constructor(
@@ -111,8 +113,8 @@ export class MatchSaveComponent implements OnInit {
     let date = new Date();
     let hour = date.getHours();
     let minutes = date.getMinutes();
-    let addition = 10 - (minutes % 10);
-    minutes = minutes + addition + 10;
+    let addition = this.matchDuration - (minutes % this.matchDuration);
+    minutes = minutes + addition + this.matchDuration;
     if (minutes >= 60) {
       hour = hour + 1;
       if (hour >= 24) {

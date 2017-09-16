@@ -120,4 +120,14 @@ describe('PlayerMatchesComponent', () => {
     let secondRow = debugElement[0].query(By.css('td.table-info'));
     expect(secondRow.nativeElement.textContent).toContain('Player 1');
   }));
+
+  it('should present scheduled match time on red background when time is up', fakeAsync(() => {
+    createComponent();
+    let pastDate = new Date();
+    pastDate.setMinutes(pastDate.getMinutes() - 15);
+    component.scheduledMatches[0].date = pastDate;
+    fixture.detectChanges();
+    let debugElement = fixture.debugElement.query(By.css('table#scheduledMatches tbody tr td.table-danger'));
+    expect(debugElement).toBeTruthy();
+  }))
 });
