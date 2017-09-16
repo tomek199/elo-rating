@@ -13,7 +13,7 @@ import { MatchService } from './../../matches/shared/match.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRouteStub } from './../../testing/routing-stubs';
 import { ActivatedRoute } from '@angular/router';
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
 
 import { PlayerMatchesComponent } from './player-matches.component';
 
@@ -48,6 +48,7 @@ describe('PlayerMatchesComponent', () => {
     activatedRoute.testParams = {player_id: '111', league_id: '123'}
     fixture.detectChanges();
     tick();
+    discardPeriodicTasks();        
   };
 
   it('should create', fakeAsync(() => {
