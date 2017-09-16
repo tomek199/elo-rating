@@ -13,6 +13,7 @@ export class PlayerOpponentsComponent implements OnInit {
   opponentsStats: OpponentStats[];
   order: string = 'total';
   reverse: boolean = true;
+  showDisabled: boolean = false;
 
   constructor(private playerService: PlayerService) { }
 
@@ -32,5 +33,9 @@ export class PlayerOpponentsComponent implements OnInit {
       this.reverse = true;
     }
     this.order = value;
+  }
+
+  checkboxCheckAction() {
+    this.showDisabled = !this.showDisabled;
   }
 }

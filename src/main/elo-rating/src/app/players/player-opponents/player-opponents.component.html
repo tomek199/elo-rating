@@ -1,5 +1,12 @@
 <h2 class="mt-2">Player opponents</h2>
 <app-spinner [resource]="opponentsStats"></app-spinner>
+
+<div class="form-check row float-right" [ngClass]="{'disabled': mode}" *ngIf="opponentsStats">
+  <label class="form-check-label" >
+    <input type="checkbox" [checked]="showDisabled" (change)="checkboxCheckAction()" [disabled]="mode" class="form-check-input"> Show disabled players
+  </label>
+</div>
+
 <table class="shadedtable table table-bordered" *ngIf="opponentsStats">
     <thead class="thead-default">
         <tr>
@@ -48,28 +55,33 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let opponentStats of opponentsStats | orderBy: order:reverse">
-            <td>
-              <a [routerLink]="['/leagues', leagueId, 'players', opponentStats.opponent.id]">{{opponentStats.opponent.username}}</a>
-            </td>
-            <td>
-                {{opponentStats.total}}
-            </td>
-            <td [ngClass]="'text-success'">
-                {{opponentStats.won}}
-            </td>
-            <td [ngClass]="'text-danger'">
-                {{opponentStats.lost}}
-            </td>
-            <td [ngClass]="{'text-success': opponentStats.pointsGained > 0, 'text-danger': opponentStats.pointsGained < 0}">
-              <span class="octicon" [ngClass]="{'octicon-triangle-up': opponentStats.pointsGained > 0, 'octicon-triangle-down': opponentStats.pointsGained < 0}"></span>
-              {{opponentStats.pointsGained}}
-            </td>
-            <td [ngClass]="{'text-success': opponentStats.streak > 0, 'text-danger': opponentStats.streak < 0}">
-              <span class="octicon" [ngClass]="{'octicon-triangle-up': opponentStats.streak > 0, 'octicon-triangle-down': opponentStats.streak < 0}"></span>
-              {{opponentStats.streak}}
-            </td>
+      <ng-container *ngFor="let opponentStats of opponentsStats | orderBy: order:reverse">
+        <tr *ngIf="opponentStats.opponent.active == true || showDisabled == true">
+          <td>
+            <a [routerLink]="['/leagues', leagueId, 'players', opponentStats.opponent.id]">
+              <span *ngIf="opponentStats.opponent.active == true">{{opponentStats.opponent.username}}</span>
+              <del class="font-italic" *ngIf="opponentStats.opponent.active != true">{{opponentStats.opponent.username}}</del>
+            </a>
+          </td>
+          <td>
+            {{opponentStats.total}}
+          </td>
+          <td [ngClass]="'text-success'">
+            {{opponentStats.won}}
+          </td>
+          <td [ngClass]="'text-danger'">
+            {{opponentStats.lost}}
+          </td>
+          <td [ngClass]="{'text-success': opponentStats.pointsGained > 0, 'text-danger': opponentStats.pointsGained < 0}">
+            <span class="octicon" [ngClass]="{'octicon-triangle-up': opponentStats.pointsGained > 0, 'octicon-triangle-down': opponentStats.pointsGained < 0}"></span>
+            {{opponentStats.pointsGained}}
+          </td>
+          <td [ngClass]="{'text-success': opponentStats.streak > 0, 'text-danger': opponentStats.streak < 0}">
+            <span class="octicon" [ngClass]="{'octicon-triangle-up': opponentStats.streak > 0, 'octicon-triangle-down': opponentStats.streak < 0}"></span>
+            {{opponentStats.streak}}
+          </td>
         </tr>
+      </ng-container>
     </tbody>
 </table>
 
