@@ -1,6 +1,6 @@
 import { PlayerService } from './../shared/player.service';
 import { OpponentStats } from './../shared/opponent-stats.model';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-player-opponents',
@@ -18,6 +18,11 @@ export class PlayerOpponentsComponent implements OnInit {
   constructor(private playerService: PlayerService) { }
 
   ngOnInit() {
+    this.getPlayer();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.opponentsStats = undefined;
     this.getPlayer();
   }
 
