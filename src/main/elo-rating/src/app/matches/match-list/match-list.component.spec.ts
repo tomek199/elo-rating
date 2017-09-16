@@ -12,7 +12,7 @@ import { MatchService } from './../shared/match.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRouteStub } from './../../testing/routing-stubs';
 import { ActivatedRoute } from '@angular/router';
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, tick, fakeAsync, discardPeriodicTasks } from '@angular/core/testing';
 
 import { MatchListComponent } from './match-list.component';
 
@@ -47,6 +47,7 @@ describe('MatchListComponent', () => {
     activatedRoute.testParams = {league_id: '123'}
     fixture.detectChanges();
     tick();
+    discardPeriodicTasks();
   };
 
   it('should create', fakeAsync(() => {

@@ -1,3 +1,5 @@
+import { environment } from './../../../environments/environment';
+import { Observable } from 'rxjs/Observable';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { Page } from './../../core/utils/pagination/page.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -6,19 +8,22 @@ import { Player } from './../../players/shared/player.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatchService } from './../shared/match.service';
 import { Match } from './../shared/match.model';
-import { Component, OnInit, SimpleChanges, Input } from '@angular/core';
+import { Component, OnInit, SimpleChanges, Input, OnDestroy } from '@angular/core';
+import { IntervalObservable } from "rxjs/observable/IntervalObservable";
+import { Subscription } from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-match-list',
   templateUrl: './match-list.component.html',
   styleUrls: ['./match-list.component.css']
 })
-export class MatchListComponent implements OnInit {
+export class MatchListComponent implements OnInit, OnDestroy {
   leagueId: string;
   pageNumber: number;
   pageSize: number;
   page: Page<Match>;
   scheduledMatches: Match[];
+  private matchesSubscription: Subscription;
 
   constructor(
     private matchService: MatchService,
@@ -32,6 +37,14 @@ export class MatchListComponent implements OnInit {
     this.getLeagueId();
     this.pageNumber = 1;
     this.getMatches();
+    this.matchesSubscription = IntervalObservable.create(environment.matchesRefreshTime)
+      .subscribe(() => {
+        this.getScheduledMatches();
+      });
+  }
+
+  ngOnDestroy() {
+    this.matchesSubscription.unsubscribe();
   }
 
   getLeagueId() {
