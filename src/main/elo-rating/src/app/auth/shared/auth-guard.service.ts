@@ -13,7 +13,6 @@ export class AuthGuardService implements CanActivate {
   canActivate(): boolean {
     let isLeagueAssign = this.googleAuthService.isLeagueAssigned();
     let isAuthorized = this.googleAuthService.isAuthorized();
-    console.log('auth-guard called');    
     if (!isLeagueAssign || isAuthorized) {
       return true;
     } else {
