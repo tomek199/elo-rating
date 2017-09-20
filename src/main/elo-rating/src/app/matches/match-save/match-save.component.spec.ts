@@ -1,3 +1,5 @@
+import { GoogleAuthServiceStub } from './../../testing/google-stubs';
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { HttpModule } from '@angular/http';
 import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { MatchServiceStub } from './../../testing/match-stubs';
@@ -29,6 +31,7 @@ describe('MatchSaveComponent', () => {
         { provide: PlayerService, useClass: PlayerServiceStub },
         { provide: MatchService, useClass: MatchServiceStub },
         { provide: ActivatedRoute, useValue: activatedRoute },
+        { provide: GoogleAuthService, useClass: GoogleAuthServiceStub},
         { provide: NgbTypeahead }
       ]
     })

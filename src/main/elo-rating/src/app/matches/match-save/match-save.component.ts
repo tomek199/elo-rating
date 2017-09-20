@@ -1,3 +1,4 @@
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { environment } from './../../../environments/environment';
 import { MatchService } from './../shared/match.service';
 import { Observable } from 'rxjs/Observable';
@@ -30,7 +31,8 @@ export class MatchSaveComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private playerService: PlayerService,
-    private matchService: MatchService
+    private matchService: MatchService,
+    private googleAuthService: GoogleAuthService
   ) {
     this.match = new Match();
     this.scheduledMatches = new Map<string, Match>();
@@ -55,6 +57,7 @@ export class MatchSaveComponent implements OnInit {
         } else {
           this.getPossibleMatchTime();
           this.getScheduledMatches();
+          this.setFirstPlayer();
         }
       });
   }
@@ -123,6 +126,14 @@ export class MatchSaveComponent implements OnInit {
       minutes = minutes - 60;
     }
     this.time = {hour: hour, minute: minutes}
+  }
+
+  private setFirstPlayer() {
+    let currentPlayerId = this.googleAuthService.getCurrentPlayerId();
+    if (currentPlayerId) {
+      this.playerService.getPlayer(currentPlayerId)
+        .then(player => this.match.playerOne = player);
+    }
   }
 
   getComponentName(): string {
