@@ -1,45 +1,24 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
+target/
+!.mvn/wrapper/maven-wrapper.jar
 
-# mvn
-target
-
-# compiled output
-/dist
-/tmp
-
-# dependencies
-/src/main/elo-rating/node
-/src/main/elo-rating/node_modules
-
-# IDEs and editors
-/.idea
-.project
+### STS ###
+.apt_generated
 .classpath
-.c9/
-*.launch
-.settings/
-.vscode
+.factorypath
+.project
+.settings
+.springBeans
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
 
-# misc
-/.sass-cache
-/connect.lock
-/coverage/*
-/libpeerconnection.log
-npm-debug.log
-testem.log
-/typings
-
-# e2e
-/e2e/*.js
-/e2e/*.map
-
-#System Files
-.DS_Store
-Thumbs.db
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
