@@ -1,0 +1,44 @@
+import { Http } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { League } from './league.model';
+import { BaseApiService } from "../../core/shared/base-api.service";
+
+
+@Injectable()
+export class LeagueService extends BaseApiService {
+
+  constructor(private http: Http) {
+    super();
+  }
+
+  getLeague(id: string): Promise<League> {
+    let url = `${this.url}/leagues/${id}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as League)
+      .catch(this.handleError);
+  }
+
+  getAllLeagues(): Promise<League[]> {
+    let url = `${this.url}/leagues`
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as League[])
+      .catch(this.handleError);
+  }
+
+  findByName(name: string): Observable<League[]> {
+    let url = `${this.url}/leagues/find-by-name?name=${name}`;
+    return this.http.get(url)
+      .map(response => response.json() as League[]);
+  }
+
+  create(league: League): Promise<League> {
+    let url = `${this.url}/leagues`;
+    return this.http.post(url, JSON.stringify(league), {headers: this.headers})
+      .toPromise()
+      .then(response => response.json() as League)
+      .catch(this.handleError);
+  }
+}

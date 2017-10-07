@@ -1,0 +1,1 @@
+web java -Denv=app -Dserver.port=$PORT -jar elo-rating-core/target/elo-rating.jar

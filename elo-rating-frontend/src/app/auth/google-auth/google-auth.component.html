@@ -1,0 +1,22 @@
+<div>
+  <form class="form-inline" [hidden]="token">
+    <app-google-button [buttonId]="'googleNavButton'" (onSignIn)="onSignIn($event)"></app-google-button>
+  </form>
+  <ul class="navbar-nav" *ngIf="token && user">
+    <li class="nav-item dropdown" ngbDropdown [autoClose]="true">
+      <a class="nav-link dropdown-toggle p-1" ngbDropdownToggle role="button">
+        <img id="user-image" [src]="user.pictureUrl" class="rounded"/>
+      </a>
+      <div ngbDropdownMenu id="queue-dropdown" class="dropdown-menu dropdown-menu-right">
+        <h6 class="dropdown-header">
+          Signed in as
+          <strong>{{user.name}}</strong>
+        </h6>
+        <div class=" dropdown-divider"></div>
+        <a [routerLink]="['leagues', leagueId, 'players', getCurrentPlayerId()]" class="dropdown-item" *ngIf="getCurrentPlayerId()">Your profile</a>
+        <a [routerLink]="['leagues', leagueId, 'users', 'invite']" class="dropdown-item" *ngIf="isAuthorized()">Invite user</a>
+        <button class="dropdown-item" (click)="signOut()">Sign out</button>
+      </div>
+    </li>
+  </ul>
+</div>

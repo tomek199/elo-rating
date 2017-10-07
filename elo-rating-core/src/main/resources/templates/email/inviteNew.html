@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:remove="all">EloRating</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+    <h2>EloRating invitation</h2>
+    <p>
+        You are invited to EloRating application by user
+        <strong th:text="${username}"></strong>.
+    </p>
+    <p>
+        Go to this link
+        <a th:href="@{${redirectUrl}}" th:text="@{${redirectUrl}}"></a>
+        to finalize registration.
+    </p>
+</body>
+</html>
