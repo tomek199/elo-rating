@@ -1,0 +1,1 @@
+web java -Denv=app -jar elo-rating-core/target/elo-rating.jar
