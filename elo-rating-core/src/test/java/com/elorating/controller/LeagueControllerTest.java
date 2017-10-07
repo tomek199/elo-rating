@@ -51,7 +51,7 @@ public class LeagueControllerTest extends BaseControllerTest {
     @Test
     public void testGet() throws Exception {
         when(leagueRepository.findOne(league.getId())).thenReturn(league);
-        mockMvc.perform(get("/leagues/" + league.getId()))
+        mockMvc.perform(get("/api/leagues/" + league.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(league.getId())))
                 .andExpect(jsonPath("$.name", is("League")));
@@ -60,7 +60,7 @@ public class LeagueControllerTest extends BaseControllerTest {
     @Test
     public void testGetAll() throws Exception {
         when(leagueRepository.findOne(league.getId())).thenReturn(league);
-        mockMvc.perform(get("/leagues/" + league.getId()))
+        mockMvc.perform(get("/api/leagues/" + league.getId()))
                 .andExpect(status().isOk());
     }
 
@@ -70,7 +70,7 @@ public class LeagueControllerTest extends BaseControllerTest {
         leagues.add(new League("111", "League 1"));
         leagues.add(new League("222", "league 2"));
         when(leagueRepository.findByNameLikeIgnoreCase("Lea")).thenReturn(leagues);
-        mockMvc.perform(get("/leagues/find-by-name?name=Lea"))
+        mockMvc.perform(get("/api/leagues/find-by-name?name=Lea"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(leagues.size())));
     }
@@ -79,7 +79,7 @@ public class LeagueControllerTest extends BaseControllerTest {
     public void testCreate() throws Exception {
         String leagueJson = objectMapper.writeValueAsString(new League(null, "New league"));
         when(leagueRepository.save(any(League.class))).thenReturn(league);
-        mockMvc.perform(post("/leagues")
+        mockMvc.perform(post("/api/leagues")
                 .content(leagueJson)
                 .contentType(contentType))
                 .andExpect(status().isOk())
@@ -89,14 +89,14 @@ public class LeagueControllerTest extends BaseControllerTest {
     @Test
     public void test_createAndDeleteLeague_success() throws Exception {
         when(leagueRepository.findOne(league.getId())).thenReturn(league);
-        mockMvc.perform(get("/leagues/" + league.getId()))
+        mockMvc.perform(get("/api/leagues/" + league.getId()))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(delete("/leagues/delete/" + league.getId()))
+        mockMvc.perform(delete("/api/leagues/delete/" + league.getId()))
                 .andExpect(status().isOk());
 
         when(leagueRepository.findOne(league.getId())).thenReturn(null);
-        mockMvc.perform(get("/leagues/" + league.getId()))
+        mockMvc.perform(get("/api/leagues/" + league.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().string(""));
     }
@@ -106,7 +106,7 @@ public class LeagueControllerTest extends BaseControllerTest {
         League newLeague = new League("testID", "TestLeague");
         String newLeagueJson = objectMapper.writeValueAsString(newLeague);
         when(leagueRepository.save(any(League.class))).thenReturn(newLeague);
-        mockMvc.perform(post("/leagues")
+        mockMvc.perform(post("/api/leagues")
                 .content(newLeagueJson)
                 .contentType(contentType))
                 .andExpect(status().isOk())
@@ -114,7 +114,7 @@ public class LeagueControllerTest extends BaseControllerTest {
 
 
         when(leagueRepository.findOne(newLeague.getId())).thenReturn(newLeague);
-        mockMvc.perform(get("/leagues/" + newLeague.getId()))
+        mockMvc.perform(get("/api/leagues/" + newLeague.getId()))
                 .andExpect(status().isOk());
     }
 }

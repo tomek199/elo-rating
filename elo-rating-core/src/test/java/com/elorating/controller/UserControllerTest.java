@@ -58,7 +58,7 @@ public class UserControllerTest extends BaseControllerTest {
         user.addLeague(league);
         userRepository.save(user);
         League leagueToAssign = leagueRepository.save(new League(null, "To assign"));
-        String url = "/users/" + user.getId() + "/assign-league/" + leagueToAssign.getId();
+        String url = "/api/users/" + user.getId() + "/assign-league/" + leagueToAssign.getId();
         mockMvc.perform(post(url)
                 .contentType(contentType))
                 .andExpect(status().isOk())
@@ -72,7 +72,7 @@ public class UserControllerTest extends BaseControllerTest {
         User user = userRepository.save(new User("User who invite"));
         User userToInvite = new User("User to invite", "t.morek@gmail.com");
         userToInvite.addLeague(league);
-        String url = "/users/" + user.getId() + "/invite-user";
+        String url = "/api/users/" + user.getId() + "/invite-user";
         mockMvc.perform(post(url)
                 .contentType(contentType)
                 .header("Origin", "http://elo.com")
@@ -89,7 +89,7 @@ public class UserControllerTest extends BaseControllerTest {
         User user = userRepository.save(new User("User who invite"));
         User userToInvite = userRepository.save(new User("User to invite", "t.morek@gmail.com"));
         userToInvite.addLeague(league);
-        String url = "/users/" + user.getId() + "/invite-user";
+        String url = "/api/users/" + user.getId() + "/invite-user";
         mockMvc.perform(post(url)
                 .contentType(contentType)
                 .header("Origin", "http://elo.com")
@@ -110,7 +110,7 @@ public class UserControllerTest extends BaseControllerTest {
         Player player = playerRepository.save(new Player("Player to connect", league));
         userToInvite.addPlayer(player);
         userToInvite.addLeague(league);
-        String url = "/users/" + user.getId() + "/invite-user";
+        String url = "/api/users/" + user.getId() + "/invite-user";
         mockMvc.perform(post(url)
                 .contentType(contentType)
                 .header("Origin", "http://elo.com")
@@ -131,7 +131,7 @@ public class UserControllerTest extends BaseControllerTest {
         Player player = playerRepository.save(new Player("Player to connect", league));
         userToInvite.addPlayer(player);
         userToInvite.addLeague(league);
-        String url = "/users/" + user.getId() + "/invite-user";
+        String url = "/api/users/" + user.getId() + "/invite-user";
         mockMvc.perform(post(url)
                 .contentType(contentType)
                 .header("Origin", "http://elo.com")
@@ -152,7 +152,7 @@ public class UserControllerTest extends BaseControllerTest {
         userRepository.save(new User("Name111"));
         userRepository.save(new User("name112"));
         userRepository.save(new User("name222"));
-        String url = "/users/find-by-name" + "?name=name1";
+        String url = "/api/users/find-by-name" + "?name=name1";
         mockMvc.perform(get(url)
                 .contentType(contentType))
                 .andExpect(status().isOk())
@@ -162,7 +162,7 @@ public class UserControllerTest extends BaseControllerTest {
     @Test
     public void testFindByUsernameEmptyResult() throws Exception {
         userRepository.save(new User("user123"));
-        String url = "/users/find-by-name" + "?name=name";
+        String url = "/api/users/find-by-name" + "?name=name";
         mockMvc.perform(get(url)
                 .contentType(contentType))
                 .andExpect(status().isOk())
@@ -175,7 +175,7 @@ public class UserControllerTest extends BaseControllerTest {
         User user = new User();
         user.setGoogleId(token);
         userRepository.save(user);
-        String url = "/users/verify-security-token";
+        String url = "/api/users/verify-security-token";
         mockMvc.perform(post(url)
                 .contentType(contentType)
                 .content(token))
@@ -191,7 +191,7 @@ public class UserControllerTest extends BaseControllerTest {
     @Test
     public void testCreatePlayer() throws Exception {
         User user = userRepository.save(new User("Test user"));
-        String url = "/users/" + user.getId() + "/create-player";
+        String url = "/api/users/" + user.getId() + "/create-player";
         mockMvc.perform(post(url)
                 .contentType(contentType)
                 .content(league.getId()))

@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@RequestMapping("/api")
 @Api(value = "users", description = "Users API")
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);

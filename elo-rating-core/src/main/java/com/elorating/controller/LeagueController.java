@@ -2,6 +2,7 @@ package com.elorating.controller;
 
 import com.elorating.model.League;
 import com.elorating.repository.LeagueRepository;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
+@Api(value = "Leagues", description = "Leagues API")
 public class LeagueController {
 
     private static final Logger logger = LoggerFactory.getLogger(LeagueController.class);

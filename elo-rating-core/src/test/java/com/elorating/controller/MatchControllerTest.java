@@ -51,7 +51,7 @@ public class MatchControllerTest extends BaseControllerTest {
 
     @Test
     public void testGet() throws Exception {
-        mockMvc.perform(get("/leagues/" + league.getId() + "/matches")
+        mockMvc.perform(get("/api/leagues/" + league.getId() + "/matches")
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(RETRIES * 2)));
@@ -59,17 +59,17 @@ public class MatchControllerTest extends BaseControllerTest {
 
     @Test
     public void testGetCompleted() throws Exception {
-        mockMvc.perform(get("/leagues/" + league.getId() + "/completed-matches?page=0")
+        mockMvc.perform(get("/api/leagues/" + league.getId() + "/completed-matches?page=0")
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", Matchers.hasSize(6)))
                 .andExpect(jsonPath("$.totalElements", is(6)));
-        mockMvc.perform(get("/leagues/" + league.getId() + "/completed-matches?page=1")
+        mockMvc.perform(get("/api/leagues/" + league.getId() + "/completed-matches?page=1")
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", Matchers.hasSize(0)))
                 .andExpect(jsonPath("$.totalElements", is(6)));
-        mockMvc.perform(get("/leagues/" + league.getId() + "/completed-matches?page=0&pageSize=2")
+        mockMvc.perform(get("/api/leagues/" + league.getId() + "/completed-matches?page=0&pageSize=2")
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", Matchers.hasSize(2)))
@@ -78,11 +78,11 @@ public class MatchControllerTest extends BaseControllerTest {
 
     @Test
     public void testGetScheduled() throws Exception {
-        mockMvc.perform(get("/leagues/" + league.getId() + "/scheduled-matches")
+        mockMvc.perform(get("/api/leagues/" + league.getId() + "/scheduled-matches")
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(RETRIES)));
-        mockMvc.perform(get("/leagues/" + league.getId() + "/scheduled-matches?sort=asc")
+        mockMvc.perform(get("/api/leagues/" + league.getId() + "/scheduled-matches?sort=asc")
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(RETRIES)));
@@ -95,7 +95,7 @@ public class MatchControllerTest extends BaseControllerTest {
         Match match = new Match(playerOne, playerTwo, 2, 0);
         match.setLeague(league);
         String matchJson = objectMapper.writeValueAsString(match);
-        mockMvc.perform(post("/leagues/" + league.getId() + "/matches")
+        mockMvc.perform(post("/api/leagues/" + league.getId() + "/matches")
             .content(matchJson)
             .contentType(contentType))
             .andExpect(status().isOk())
@@ -119,7 +119,7 @@ public class MatchControllerTest extends BaseControllerTest {
         match.setLeague(league);
         match = matchRepository.save(match);
 
-        mockMvc.perform(delete("/matches/" + match.getId())
+        mockMvc.perform(delete("/api/matches/" + match.getId())
                 .contentType(contentType))
                 .andExpect(status().isOk());
         Assert.assertNull(matchRepository.findOne(match.getId()));
@@ -130,7 +130,7 @@ public class MatchControllerTest extends BaseControllerTest {
         Player playerOne = playerRepository.save(new Player("PlayerOne", league));
         Player playerTwo = playerRepository.save(new Player("PlayerOne", league));
         Match match = matchRepository.save(new Match(playerOne, playerTwo));
-        mockMvc.perform(get("/matches/" + match.getId())
+        mockMvc.perform(get("/api/matches/" + match.getId())
             .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(match.getId())));
@@ -142,11 +142,11 @@ public class MatchControllerTest extends BaseControllerTest {
         Player playerTwo = playerRepository.save(new Player("PlayerTwo", league, 800));
         Match match = matchRepository.save(new Match(playerOne, playerTwo, 1, 2, league));
         String matchJson = objectMapper.writeValueAsString(match);
-        mockMvc.perform(post("/leagues/" + league.getId() + "/matches")
+        mockMvc.perform(post("/api/leagues/" + league.getId() + "/matches")
                 .content(matchJson)
                 .contentType(contentType))
                 .andExpect(status().isOk());
-        mockMvc.perform(get("/matches/" + match.getId() + "/revert")
+        mockMvc.perform(get("/api/matches/" + match.getId() + "/revert")
                 .contentType(contentType))
                 .andExpect(status().isOk());
         Assert.assertNull(matchRepository.findOne(match.getId()));

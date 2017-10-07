@@ -48,7 +48,7 @@ public class PlayerControllerTest extends BaseControllerTest {
 
     @Test
     public void testGet() throws Exception {
-        mockMvc.perform(get("/leagues/" + league.getId() + "/players")
+        mockMvc.perform(get("/api/leagues/" + league.getId() + "/players")
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(RETRIES)));
@@ -58,7 +58,7 @@ public class PlayerControllerTest extends BaseControllerTest {
     public void testGetById() throws Exception {
         Player player = new Player("playerToFind", league);
         playerRepository.save(player);
-        mockMvc.perform(get("/players/" + player.getId())
+        mockMvc.perform(get("/api/players/" + player.getId())
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.username", is("playerToFind")))
@@ -71,7 +71,7 @@ public class PlayerControllerTest extends BaseControllerTest {
         Player inactivePlayer = new Player("InactivePlayer", league);
         inactivePlayer.setActive(false);
         playerRepository.save(inactivePlayer);
-        mockMvc.perform(get("/leagues/" + league.getId() + "/players/ranking")
+        mockMvc.perform(get("/api/leagues/" + league.getId() + "/players/ranking")
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(RETRIES)))
@@ -84,7 +84,7 @@ public class PlayerControllerTest extends BaseControllerTest {
     public void testCreate() throws Exception {
         Player player = new Player("testplayer");
         String playerJson = objectMapper.writeValueAsString(player);
-        mockMvc.perform(post("/leagues/" + league.getId() + "/players")
+        mockMvc.perform(post("/api/leagues/" + league.getId() + "/players")
                 .content(playerJson)
                 .contentType(contentType))
                 .andExpect(status().isOk())
@@ -101,7 +101,7 @@ public class PlayerControllerTest extends BaseControllerTest {
         player.setLeague(null);
         player.setActive(false);
         String editedPlayerJson = objectMapper.writeValueAsString(player);
-        mockMvc.perform(put("/players/" + player.getId())
+        mockMvc.perform(put("/api/players/" + player.getId())
                 .contentType(contentType)
                 .content(editedPlayerJson))
                 .andExpect(status().isOk())
@@ -114,7 +114,7 @@ public class PlayerControllerTest extends BaseControllerTest {
     @Test
     public void testDelete() throws Exception {
         Player player = playerRepository.save(new Player("PlayerToDelete", league));
-        mockMvc.perform(delete("/players/" + player.getId())
+        mockMvc.perform(delete("/api/players/" + player.getId())
                 .contentType(contentType))
                 .andExpect(status().isOk());
         Assert.assertNull(playerRepository.findOne(player.getId()));
@@ -122,7 +122,7 @@ public class PlayerControllerTest extends BaseControllerTest {
 
     @Test
     public void testFindByUsernameAndLeague() throws Exception {
-        String url = "/leagues/" + league.getId() + "/players/find-by-username?username=yer_";
+        String url = "/api/leagues/" + league.getId() + "/players/find-by-username?username=yer_";
         playerRepository.save(new Player("Other player", league));
         League otherLeague = leagueRepository.save(new League(null, "Other league"));
         playerRepository.save(new Player("Player_20", otherLeague));
@@ -141,7 +141,7 @@ public class PlayerControllerTest extends BaseControllerTest {
 
         Match match = MatchTestUtils.generateMatch(league, players.get(0), players.get(1), true);
 
-        mockMvc.perform(get("/leagues/" + league.getId() + "/players/ranking/stats")
+        mockMvc.perform(get("/api/leagues/" + league.getId() + "/players/ranking/stats")
             .contentType(contentType))
             .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
@@ -153,7 +153,7 @@ public class PlayerControllerTest extends BaseControllerTest {
         Player player = PlayerTestUtils.generatePlayer("testPlayerStats", league);
         player = playerRepository.save(player);
 
-        mockMvc.perform(get("/players/" + player.getId() + "/stats")
+        mockMvc.perform(get("/api/players/" + player.getId() + "/stats")
             .contentType(contentType))
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());

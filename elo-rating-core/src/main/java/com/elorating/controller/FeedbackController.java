@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/api")
 @Api(value = "Feedback", description = "Feedback API")
 public class FeedbackController {
 

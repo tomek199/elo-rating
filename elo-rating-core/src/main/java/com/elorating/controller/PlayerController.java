@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
 @Api(value = "players", description = "Players API")
 public class PlayerController {
 

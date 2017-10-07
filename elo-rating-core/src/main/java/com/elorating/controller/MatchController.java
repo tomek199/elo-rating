@@ -6,6 +6,7 @@ import com.elorating.model.Match;
 import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
 import com.elorating.utils.SortUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,8 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api")
+@Api(value = "Matches", description = "Matches API")
 public class MatchController {
 
     @Autowired

@@ -23,7 +23,7 @@ public class FeedbackControllerTest extends BaseControllerTest {
 
     @Test
     public void testSend() throws Exception {
-        String url = "/feedback/send";
+        String url = "/api/feedback/send";
         Feedback feedback = new Feedback("test@mail.com", "Test feedback body");
         mockMvc.perform(MockMvcRequestBuilders.post(url)
                 .contentType(contentType)
