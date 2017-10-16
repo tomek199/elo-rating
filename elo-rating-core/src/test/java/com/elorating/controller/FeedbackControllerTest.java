@@ -29,6 +29,6 @@ public class FeedbackControllerTest extends BaseControllerTest {
                 .contentType(contentType)
                 .content(objectMapper.writeValueAsString(feedback)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is(true)));
+                .andExpect(jsonPath("$", is(false)));
     }
 }

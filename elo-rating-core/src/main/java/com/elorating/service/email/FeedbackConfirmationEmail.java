@@ -2,14 +2,12 @@ package com.elorating.service.email;
 
 import org.thymeleaf.context.Context;
 
-public class FeedbackEmail extends EmailBuilder {
+public class FeedbackConfirmationEmail extends EmailBuilder {
 
-    private String sender;
     private String recipient;
     private String text;
 
-    public FeedbackEmail(String sender, String recipient, String text) {
-        this.sender = sender;
+    public FeedbackConfirmationEmail(String recipient, String text) {
         this.recipient = recipient;
         this.text = text;
     }
@@ -21,18 +19,18 @@ public class FeedbackEmail extends EmailBuilder {
 
     @Override
     public void buildSubject() {
-        email.setSubject("EloRating feedback");
+        email.setSubject("EloRating feedback confirmation");
     }
 
     @Override
     public void buildTemplateName() {
-        email.setTemplateName("feedback");
+        email.setTemplateName("feedbackConfirmation");
     }
 
     @Override
     public void buildContext() {
         Context context = email.getContext();
-        context.setVariable("sender", sender);
         context.setVariable("text", text);
+        email.setContext(context);
     }
 }
