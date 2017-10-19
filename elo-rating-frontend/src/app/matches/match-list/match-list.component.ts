@@ -37,14 +37,12 @@ export class MatchListComponent implements OnInit, OnDestroy {
     this.getLeagueId();
     this.pageNumber = 1;
     this.getMatches();
-    this.matchesSubscription = IntervalObservable.create(environment.matchesRefreshTime)
-      .subscribe(() => {
-        this.getScheduledMatches();
-      });
+    this.subscribeMatches();
   }
 
   ngOnDestroy() {
-    this.matchesSubscription.unsubscribe();
+    if (this.matchesSubscription)
+      this.matchesSubscription.unsubscribe();
   }
 
   getLeagueId() {
@@ -55,6 +53,13 @@ export class MatchListComponent implements OnInit, OnDestroy {
   getMatches() {
     this.getCompletedMatches();
     this.getScheduledMatches();
+  }
+
+  private subscribeMatches() {
+    if (environment.matchesRefreshing) {
+      this.matchesSubscription = IntervalObservable.create(environment.matchesRefreshTime)
+        .subscribe(() => this.getScheduledMatches());
+    }
   }
 
   getPage(page: number) {

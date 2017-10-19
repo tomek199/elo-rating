@@ -38,14 +38,12 @@ export class PlayerMatchesComponent implements OnInit, OnChanges, OnDestroy {
     this.getPlayerId();
     this.pageNumber = 1;
     this.getMatches();
-    this.matchesSubscription = IntervalObservable.create(environment.matchesRefreshTime)
-      .subscribe(() => {
-        this.getScheduledMatches();
-      });
+    this.subscribeMatches();
   }
 
   ngOnDestroy() {
-    this.matchesSubscription.unsubscribe();
+    if (this.matchesSubscription)
+      this.matchesSubscription.unsubscribe();
   }
 
   getLeagueId() {
@@ -73,6 +71,13 @@ export class PlayerMatchesComponent implements OnInit, OnChanges, OnDestroy {
     if (this.playerId != undefined) {
       this.getCompletedMatches();
       this.getScheduledMatches();
+    }
+  }
+
+  private subscribeMatches() {
+    if (environment.matchesRefreshing) {
+      this.matchesSubscription = IntervalObservable.create(environment.matchesRefreshTime)
+        .subscribe(() => this.getScheduledMatches());
     }
   }
 
