@@ -9,7 +9,6 @@ public class EmailDirector {
 
     public Email build() {
         builder.newEmail();
-        builder.buildSender();
         builder.buildRecipient();
         builder.buildSubject();
         builder.buildTemplateName();

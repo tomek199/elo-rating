@@ -11,7 +11,6 @@ public abstract class EmailBuilder {
         return email;
     }
 
-    public abstract void buildSender();
     public abstract void buildRecipient();
     public abstract void buildSubject();
     public abstract void buildTemplateName();

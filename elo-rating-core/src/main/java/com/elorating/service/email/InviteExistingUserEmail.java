@@ -19,11 +19,6 @@ public class InviteExistingUserEmail extends EmailBuilder {
     }
 
     @Override
-    public void buildSender() {
-        email.setSender("eloratingcore@gmail.com");
-    }
-
-    @Override
     public void buildRecipient() {
         email.setRecipient(recipient);
     }
