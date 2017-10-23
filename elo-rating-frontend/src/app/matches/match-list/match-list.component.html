@@ -5,7 +5,7 @@
 <app-spinner [resource]="scheduledMatches"></app-spinner>
 <h2 *ngIf="hasScheduledMatches()">Scheduled matches list</h2>
 <table id="scheduledMatches" class="shadedtable table table-bordered" *ngIf="hasScheduledMatches()">
-  <thead class="thead-default">
+  <thead class="thead-light">
     <tr>
       <th>Time</th>
       <th>First player</th>
@@ -33,7 +33,7 @@
 <app-spinner [resource]="page"></app-spinner>
 <h2 *ngIf="hasCompletedMatches()">Completed matches list</h2>
 <table id="completedMatches" class="shadedtable table table-bordered" *ngIf="hasCompletedMatches()">
-  <thead class="thead-default">
+  <thead class="thead-light">
     <tr>
       <th>Date</th>
       <th>First player</th>

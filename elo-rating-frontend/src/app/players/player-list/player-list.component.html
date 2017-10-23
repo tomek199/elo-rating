@@ -6,7 +6,7 @@
   <a [routerLink]="['/leagues', leagueId, 'players', 'add']" class="alert-link" *ngIf="isAuthorized()">Add player</a>
 </div>
 <table class="shadedtable table" *ngIf="hasPlayers()">
-  <thead class="thead-default">
+  <thead class="thead-light">
     <tr>
       <th>Username</th>
       <th class="text-center">Rating</th>
