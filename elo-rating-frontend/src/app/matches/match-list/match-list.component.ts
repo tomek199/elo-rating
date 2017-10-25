@@ -83,7 +83,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
   }
 
   displayAlert(): boolean {
-    if (this.page && this.scheduledMatches) 
+    if (this.page && this.scheduledMatches)
       return this.page.content.length == 0 && this.scheduledMatches.length == 0;
     return false;
   }
@@ -93,7 +93,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
   }
 
   hasScheduledMatches(): boolean {
-    return (this.scheduledMatches != undefined && this.scheduledMatches.length > 0);    
+    return (this.scheduledMatches != undefined && this.scheduledMatches.length > 0);
   }
 
   getScore(index: number, player: Player): number {
@@ -172,7 +172,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
   }
 
   editMatch(matchId: string) {
-    this.router.navigate(['/leagues', this.leagueId, 'matches', 'save', matchId, 'edit']);    
+    this.router.navigate(['/leagues', this.leagueId, 'matches', 'save', matchId, 'edit']);
   }
 
   isAuthorized(): boolean {
@@ -184,5 +184,17 @@ export class MatchListComponent implements OnInit, OnDestroy {
     let matchDate = new Date(timestamp);
     matchDate.setMinutes(matchDate.getMinutes() + environment.matchDuration);
     return now > matchDate;
+  }
+
+  showRescheduleBtn(): boolean {
+    let timeAfter = false;
+    for (let match of this.scheduledMatches) {
+      let timestamp = new Date(match.date).getTime();
+      timeAfter = this.isTimeAfter(timestamp);
+      if (timeAfter) {
+        break;
+      }
+    }
+    return timeAfter;
   }
 }

@@ -17,7 +17,7 @@ import { async, ComponentFixture, TestBed, tick, fakeAsync, discardPeriodicTasks
 
 import { MatchListComponent } from './match-list.component';
 
-describe('MatchListComponent', () => {
+fdescribe('MatchListComponent', () => {
   let component: MatchListComponent;
   let fixture: ComponentFixture<MatchListComponent>;
   let activatedRoute: ActivatedRouteStub;
@@ -25,27 +25,27 @@ describe('MatchListComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [ 
-        MatchListComponent, 
-        PageSizeComponent, 
-        PlayerCellStubComponent, 
-        SpinnerComponent 
+      declarations: [
+        MatchListComponent,
+        PageSizeComponent,
+        PlayerCellStubComponent,
+        SpinnerComponent
       ],
-      imports: [ RouterTestingModule, FormsModule, NgbModule.forRoot() ],
+      imports: [RouterTestingModule, FormsModule, NgbModule.forRoot()],
       providers: [
-        {provide: MatchService, useClass: MatchServiceStub},
-        {provide: ActivatedRoute, useValue: activatedRoute},
-        {provide: GoogleAuthService, useClass: GoogleAuthServiceStub},
+        { provide: MatchService, useClass: MatchServiceStub },
+        { provide: ActivatedRoute, useValue: activatedRoute },
+        { provide: GoogleAuthService, useClass: GoogleAuthServiceStub },
         CookieService
       ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   function createComponent() {
     fixture = TestBed.createComponent(MatchListComponent);
     component = fixture.componentInstance;
-    activatedRoute.testParams = {league_id: '123'}
+    activatedRoute.testParams = { league_id: '123' }
     fixture.detectChanges();
     tick();
     discardPeriodicTasks();
@@ -96,7 +96,7 @@ describe('MatchListComponent', () => {
     fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('table#completedMatches tbody tr'));
     expect(debugElement[0].query(By.css('td.table-success')).nativeElement.textContent).toContain('Player 1');
-    expect(debugElement[1].query(By.css('td.table-success')).nativeElement.textContent).toContain('Player 2');    
+    expect(debugElement[1].query(By.css('td.table-success')).nativeElement.textContent).toContain('Player 2');
   }));
 
   it('should display delete button for matches where both players are deleted', fakeAsync(() => {
@@ -139,4 +139,20 @@ describe('MatchListComponent', () => {
     let debugElement = fixture.debugElement.query(By.css('table#scheduledMatches tbody tr td.table-danger'));
     expect(debugElement).toBeTruthy();
   }))
+
+  it('should not show reschedule button if matches are not after time', fakeAsync(() => {
+    createComponent();
+    let rescheduleBtn = fixture.debugElement.query(By.css('table#scheduledMatches tbody tr td button#rescheduleBtn'));
+    expect(rescheduleBtn).toBeNull();
+  }));
+
+  it('should show reschedule button if one of matches is after time', fakeAsync(() => {
+    createComponent();
+    let pastDate = new Date();
+    pastDate.setMinutes(pastDate.getMinutes() - 15);
+    component.scheduledMatches[0].date = pastDate;
+    fixture.detectChanges();
+    let rescheduleBtn = fixture.debugElement.query(By.css('table#scheduledMatches tbody tr td button#rescheduleBtn'));
+    expect(rescheduleBtn).toBeTruthy();
+  }));
 });
