@@ -19,6 +19,7 @@ public class User {
     private String email;
     private String pictureUrl;
     private Date lastSignIn;
+    private String invitationToken;
     @DBRef(lazy = true)
     @JsonIgnoreProperties("users")
     private List<League> leagues;
@@ -102,10 +103,6 @@ public class User {
         this.googleId = googleId;
     }
 
-    public void clearGoogleId() {
-        this.googleId = "";
-    }
-
     public List<Player> getPlayers() {
         return players;
     }
@@ -114,5 +111,17 @@ public class User {
         if (players == null)
             players = new ArrayList<>();
         players.add(player);
+    }
+
+    public void setInvitationToken(String invitationToken) {
+        this.invitationToken = invitationToken;
+    }
+
+    public String getInvitationToken() {
+        return invitationToken;
+    }
+
+    public void clearInvitationToken() {
+        invitationToken = null;
     }
 }

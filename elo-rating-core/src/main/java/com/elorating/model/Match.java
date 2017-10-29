@@ -1,5 +1,6 @@
 package com.elorating.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
@@ -11,12 +12,15 @@ public class Match {
     private String id;
 
     @DBRef
+    @JsonIgnoreProperties("users")
     private League league;
 
     @DBRef
+    @JsonIgnoreProperties({"user", "league"})
     private Player playerOne;
 
     @DBRef
+    @JsonIgnoreProperties({"user", "league"})
     private Player playerTwo;
 
     private Map<String, Integer> scores;
