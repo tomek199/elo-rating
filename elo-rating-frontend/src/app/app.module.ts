@@ -45,6 +45,7 @@ import { GoogleButtonComponent } from './auth/google-button/google-button.compon
 import { UserConfirmInvitationComponent } from './users/user-confirm-invitation/user-confirm-invitation.component';
 import { UserCreatePlayerComponent } from './users/user-create-player/user-create-player.component';
 import { FeedbackSendComponent } from './feedback/feedback-send/feedback-send.component';
+import { LeagueEditComponent } from './leagues/league-edit/league-edit.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { FeedbackSendComponent } from './feedback/feedback-send/feedback-send.co
     GoogleButtonComponent,
     UserConfirmInvitationComponent,
     UserCreatePlayerComponent,
-    FeedbackSendComponent
+    FeedbackSendComponent,
+    LeagueEditComponent
   ],
   imports: [
     BrowserModule,
