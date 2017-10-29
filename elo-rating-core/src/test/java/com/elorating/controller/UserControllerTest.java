@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isEmptyString;
+import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -80,7 +80,8 @@ public class UserControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.email", is(userToInvite.getEmail())))
-                .andExpect(jsonPath("$.googleId", isEmptyString()))
+                .andExpect(jsonPath("$.googleId", isEmptyOrNullString()))
+                .andExpect(jsonPath("$.invitationToken", isEmptyOrNullString()))
                 .andExpect(jsonPath("$.leagues", Matchers.hasSize(1)));
     }
 
@@ -118,7 +119,8 @@ public class UserControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.email", is(userToInvite.getEmail())))
-                .andExpect(jsonPath("$.googleId", isEmptyString()))
+                .andExpect(jsonPath("$.googleId", isEmptyOrNullString()))
+                .andExpect(jsonPath("$.invitationToken", isEmptyOrNullString()))
                 .andExpect(jsonPath("$.leagues", Matchers.hasSize(1)))
                 .andExpect(jsonPath("$.players[0].id", is(player.getId())));
     }
@@ -173,7 +175,7 @@ public class UserControllerTest extends BaseControllerTest {
     public void testVerifySecurityToken() throws Exception {
         String token = UUID.randomUUID().toString();
         User user = new User();
-        user.setGoogleId(token);
+        user.setInvitationToken(token);
         userRepository.save(user);
         String url = "/api/users/verify-security-token";
         mockMvc.perform(post(url)

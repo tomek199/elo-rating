@@ -61,7 +61,9 @@ public class UserController {
         GoogleIdToken idToken = verifyGoogleIdToken(token);
         if (idToken != null) {
             Payload payload = idToken.getPayload();
-            User user = saveOrUpdateUser(payload);
+            User user = checkForPendingInvitation(payload);
+            if (user == null)
+                user = saveOrUpdateUser(payload);
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);
@@ -71,7 +73,7 @@ public class UserController {
     @RequestMapping(value = "/users/verify-security-token", method = RequestMethod.POST)
     @ApiOperation(value = "Verify security token", notes = "Verify security token")
     public ResponseEntity<Boolean> verifySecurityToken(@RequestBody String token) {
-        User user = userRepository.findByGoogleId(token);
+        User user = userRepository.findByInvitationToken(token);
         Boolean tokenVerified = (user != null);
         return new ResponseEntity<>(tokenVerified, HttpStatus.OK);
     }
@@ -84,16 +86,21 @@ public class UserController {
         GoogleIdToken idToken = verifyGoogleIdToken(invitation.getGoogleIdToken());
         if (idToken != null) {
             User userFromGoogle = new User(idToken.getPayload());
-            User userFromDB = userRepository.findByGoogleId(invitation.getSecurityToken());
+            User userFromDB = userRepository.findByInvitationToken(invitation.getSecurityToken());
             userFromDB.update(userFromGoogle);
-            userFromDB.setGoogleId(userFromGoogle.getGoogleId());
+            userFromDB.clearInvitationToken();
             userRepository.save(userFromDB);
-            connectUserToLeague(userFromDB);
-            if (userFromDB.getPlayers() != null && userFromDB.getPlayers().size() > 0)
-                connectUserToPlayer(userFromDB);
+            connectUserToLeagueAndPlayer(userFromDB);
             return new ResponseEntity<>(userFromDB, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    private User connectUserToLeagueAndPlayer(User user) {
+        connectUserToLeague(user);
+        if (user.getPlayers() != null && user.getPlayers().size() > 0)
+            connectUserToPlayer(user);
+        return user;
     }
 
     private User connectUserToLeague(User user) {
@@ -125,6 +132,19 @@ public class UserController {
         } finally {
             return idToken;
         }
+    }
+
+    private User checkForPendingInvitation(Payload payload) {
+        User userFromGoogle = new User(payload);
+        User user = userRepository.findByEmailAndInvitationTokenExists(userFromGoogle.getEmail());
+        if (user != null) {
+            user.clearInvitationToken();
+            user.update(userFromGoogle);
+            user.setGoogleId(userFromGoogle.getGoogleId());
+            userRepository.save(user);
+            user = connectUserToLeagueAndPlayer(user);
+        }
+        return user;
     }
 
     private User saveOrUpdateUser(Payload payload) {
@@ -188,11 +208,11 @@ public class UserController {
 
     private User inviteNewUser(String currentUser, User userToInvite, String originUrl) {
         String token = UUID.randomUUID().toString();
-        userToInvite.setGoogleId(token);
+        userToInvite.setInvitationToken(token);
         userRepository.save(userToInvite);
         EmailBuilder emailBuilder = new InviteNewUserEmail(userToInvite.getEmail(), currentUser, originUrl, token);
         sendEmail(emailBuilder);
-        userToInvite.clearGoogleId();
+        userToInvite.clearInvitationToken();
         return userToInvite;
     }
 
