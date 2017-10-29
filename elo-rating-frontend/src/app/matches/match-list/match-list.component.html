@@ -28,7 +28,7 @@
                 <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(match.id)">Delete</button>
             </td>
         </tr>
-        <tr *ngIf="showRescheduleBtn()">
+        <tr class="table-active" *ngIf="showRescheduleBtn()">
             <td colspan="4">
                 <button id="rescheduleBtn" class="float-right btn btn-primary">Reschedule</button>
             </td>
