@@ -17,7 +17,7 @@ import { async, ComponentFixture, TestBed, tick, fakeAsync, discardPeriodicTasks
 
 import { MatchListComponent } from './match-list.component';
 
-fdescribe('MatchListComponent', () => {
+describe('MatchListComponent', () => {
   let component: MatchListComponent;
   let fixture: ComponentFixture<MatchListComponent>;
   let activatedRoute: ActivatedRouteStub;

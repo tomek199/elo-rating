@@ -3,6 +3,7 @@ package com.elorating.controller;
 import com.elorating.algorithm.Elo;
 import com.elorating.model.League;
 import com.elorating.model.Match;
+import com.elorating.model.Player;
 import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
 import com.elorating.utils.SortUtils;
@@ -92,10 +93,16 @@ public class MatchController {
         match.getPlayerOne().setRating(elo.getPlayerOneRating());
         match.getPlayerTwo().setRating(elo.getPlayerTwoRating());
         match.setRatingDelta(elo.getMatch().getRatingDelta());
-        playerRepository.save(match.getPlayerOne());
-        playerRepository.save(match.getPlayerTwo());
+        updatePlayerRating(match.getPlayerOne());
+        updatePlayerRating(match.getPlayerTwo());
         match.setCompleted();
         return matchRepository.save(match);
+    }
+
+    private void updatePlayerRating(Player player) {
+        Player playerToUpdate = playerRepository.findOne(player.getId());
+        playerToUpdate.setRating(player.getRating());
+        playerRepository.save(playerToUpdate);
     }
 
     @CrossOrigin
@@ -120,8 +127,8 @@ public class MatchController {
     private boolean restorePlayersRatings(Match match) {
         if (match.getPlayerOne() != null && match.getPlayerTwo() != null) {
             match.restorePlayersRating();
-            playerRepository.save(match.getPlayerOne());
-            playerRepository.save(match.getPlayerTwo());
+            updatePlayerRating(match.getPlayerOne());
+            updatePlayerRating(match.getPlayerTwo());
             return true;
         } else {
             return false;
