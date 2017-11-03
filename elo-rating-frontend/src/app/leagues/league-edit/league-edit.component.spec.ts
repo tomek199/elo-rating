@@ -9,7 +9,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { LeagueEditComponent } from './league-edit.component';
 
-fdescribe('LeagueEditComponent', () => {
+describe('LeagueEditComponent', () => {
   let component: LeagueEditComponent;
   let fixture: ComponentFixture<LeagueEditComponent>;
 
