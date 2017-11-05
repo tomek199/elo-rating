@@ -1,3 +1,4 @@
+import { LeagueEditComponent } from './../../leagues/league-edit/league-edit.component';
 import { FeedbackSendComponent } from './../../feedback/feedback-send/feedback-send.component';
 import { AuthGuardService } from './../../auth/shared/auth-guard.service';
 import { UserConfirmInvitationComponent } from './../../users/user-confirm-invitation/user-confirm-invitation.component';
@@ -19,6 +20,7 @@ export const routes: Routes = [
   { path: '', redirectTo: '/leagues', pathMatch: 'full' },
   { path: 'leagues', component: LeagueAddComponent },
   { path: 'leagues/:league_id', component: LeagueDetailComponent },
+  { path: 'leagues/:league_id/edit', component: LeagueEditComponent, canActivate: [AuthGuardService]},
   { path: 'leagues/:league_id/players', component: PlayerListComponent },
   { path: 'leagues/:league_id/players/ranking', component: PlayerRankingComponent },
   { path: 'leagues/:league_id/players/add', component: PlayerAddComponent, canActivate: [ AuthGuardService ] },

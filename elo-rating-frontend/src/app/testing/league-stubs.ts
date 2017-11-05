@@ -30,6 +30,10 @@ export class LeagueServiceStub {
     LEAGUES.push(league);
     return Promise.resolve(league);
   }
+
+  update(league: League): Promise<League> {
+    return Promise.resolve(league);
+  }
 }
 
 @Component({

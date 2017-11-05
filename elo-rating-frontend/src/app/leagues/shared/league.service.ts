@@ -41,4 +41,12 @@ export class LeagueService extends BaseApiService {
       .then(response => response.json() as League)
       .catch(this.handleError);
   }
+
+  update(league: League): Promise<League> {
+    let url = `${this.url}/leagues`;
+    return this.http.put(url, JSON.stringify(league), {headers: this.headers})
+      .toPromise()
+      .then(response => response.json() as League)
+      .catch(this.handleError);
+  }
 }
