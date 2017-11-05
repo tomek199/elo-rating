@@ -30,7 +30,7 @@
         </tr>
         <tr class="table-active" *ngIf="showRescheduleBtn()">
             <td colspan="4">
-                <button id="rescheduleBtn" class="float-right btn btn-primary">Reschedule</button>
+                <button id="rescheduleBtn" class="float-right btn btn-primary" (click)="rescheduleMatches()">Reschedule</button>
             </td>
         </tr>
     </tbody>

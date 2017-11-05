@@ -197,4 +197,33 @@ export class MatchListComponent implements OnInit, OnDestroy {
     }
     return timeAfter;
   }
+
+  isGapBeetweenMatches(match: Match, matchAfter: Match): boolean {
+    let minutes = new Date(matchAfter.date).getTime() - new Date(match.date).getTime();
+    minutes = Math.abs(minutes / 60000);
+    return minutes > (environment.matchDuration * 2) ? true : false;
+  }
+
+  rescheduleMatches(): void {
+    let gapIndex = -1;
+    if (this.scheduledMatches.length === 1) {
+      gapIndex = 0;
+    }
+    if (this.scheduledMatches.length > 1) {
+      for (let i = 0; i < this.scheduledMatches.length; i++) {
+        if (this.isGapBeetweenMatches(this.scheduledMatches[i], this.scheduledMatches[i + 1])) {
+          gapIndex = i;
+          break;
+        }
+      }
+    }
+
+    if (gapIndex > -1) {
+      for (let i = 0; i <= gapIndex; i++) {
+        let matchDate = new Date(this.scheduledMatches[i].date);
+        matchDate.setMinutes(matchDate.getMinutes() + environment.matchDuration);
+        this.scheduledMatches[i].date = matchDate;
+      }
+    }
+  }
 }
