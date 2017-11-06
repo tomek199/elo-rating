@@ -4,6 +4,9 @@
 </div>
 <app-spinner [resource]="scheduledMatches"></app-spinner>
 <h2 *ngIf="hasScheduledMatches()">Scheduled matches list</h2>
+<p>
+
+</p>
 <table id="scheduledMatches" class="shadedtable table table-bordered" *ngIf="hasScheduledMatches()">
     <thead class="thead-light">
         <tr>
@@ -30,7 +33,7 @@
         </tr>
         <tr class="table-active" *ngIf="showRescheduleBtn()">
             <td colspan="4">
-                <button id="rescheduleBtn" class="float-right btn btn-primary" (click)="rescheduleMatches()">Reschedule</button>
+                <button id="rescheduleBtn" class="btn btn-primary float-right" (click)="rescheduleMatches()" ngbPopover="{{popoverText}}" triggers="mouseenter:mouseleave">Reschedule</button>
             </td>
         </tr>
     </tbody>

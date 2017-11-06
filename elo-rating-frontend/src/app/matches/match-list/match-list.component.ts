@@ -23,6 +23,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
   pageSize: number;
   page: Page<Match>;
   scheduledMatches: Match[];
+  private popoverText: string;
   private matchesSubscription: Subscription;
 
   constructor(
@@ -31,7 +32,9 @@ export class MatchListComponent implements OnInit, OnDestroy {
     private router: Router,
     private modalService: NgbModal,
     private googleAuthService: GoogleAuthService
-  ) { }
+  ) {
+    this.popoverText = this.getPopoverText();
+  }
 
   ngOnInit() {
     this.getLeagueId();
@@ -225,5 +228,9 @@ export class MatchListComponent implements OnInit, OnDestroy {
         this.scheduledMatches[i].date = matchDate;
       }
     }
+  }
+
+  private getPopoverText(): string {
+    return 'Reschedule matches that are late for ' + environment.matchDuration + ' minutes';
   }
 }
