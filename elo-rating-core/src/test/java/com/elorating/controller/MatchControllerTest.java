@@ -5,6 +5,7 @@ import com.elorating.model.Match;
 import com.elorating.model.Player;
 import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
+import com.elorating.service.MatchService;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Assert;
@@ -21,6 +22,9 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 public class MatchControllerTest extends BaseControllerTest {
 
     private static final int RETRIES = 6;
+
+    @Autowired
+    private MatchService matchService;
 
     @Autowired
     private PlayerRepository playerRepository;
@@ -154,5 +158,11 @@ public class MatchControllerTest extends BaseControllerTest {
         Assert.assertEquals(1200, playerOne.getRating());
         playerTwo = playerRepository.findOne(playerTwo.getId());
         Assert.assertEquals(800, playerTwo.getRating());
+    }
+
+    @Test
+    public void test_rescheduleMatches() throws Exception {
+        // TODO: write test for rescheduled matches in MatchController
+
     }
 }
