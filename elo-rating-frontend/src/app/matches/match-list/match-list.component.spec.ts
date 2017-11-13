@@ -157,42 +157,4 @@ describe('MatchListComponent', () => {
     let rescheduleBtn = fixture.debugElement.query(By.css('table#scheduledMatches tbody tr td button#rescheduleBtn'));
     expect(rescheduleBtn).toBeTruthy();
   }));
-
-  it('should return true for gap between matches', fakeAsync(() => {
-    createComponent();
-    let match = component.scheduledMatches[0];
-    let matchAfter = component.scheduledMatches[1];
-
-    match.date = new Date();
-    matchAfter.date = new Date();
-    matchAfter.date.setMinutes(matchAfter.date.getMinutes() + 21);
-
-    let gapBetweenMatches = component.isGapBeetweenMatches(matchAfter, match);
-    expect(gapBetweenMatches).toBeTruthy();
-  }));
-
-  it('should reschedule matches', fakeAsync(() => {
-    createComponent();
-    let pastDate = new Date();
-    pastDate.setMinutes(pastDate.getMinutes() - 20);
-    component.scheduledMatches[0].date = pastDate;
-    fixture.detectChanges();
-
-    pastDate.setMinutes(pastDate.getMinutes() - 20);
-    component.scheduledMatches[0].date = pastDate;
-    fixture.detectChanges();
-
-    let matches = component.scheduledMatches;
-    let firstMatchMinutes = component.scheduledMatches[0].date.getMinutes();
-    let secondMatchMinutes = component.scheduledMatches[1].date.getMinutes();
-    let rescheduleBtn = fixture.debugElement.query(By.css('table#scheduledMatches tbody tr td button#rescheduleBtn'));
-    expect(rescheduleBtn).toBeTruthy();
-
-    rescheduleBtn.triggerEventHandler('click', null);
-    tick();
-    fixture.detectChanges();
-    let rescheduledMatches = component.scheduledMatches;
-    expect(rescheduledMatches[0].date.getMinutes()).toEqual(firstMatchMinutes + environment.matchDuration);
-    expect(rescheduledMatches[1].date.getMinutes()).toEqual(secondMatchMinutes);
-  }));
 });
