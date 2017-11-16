@@ -88,6 +88,7 @@ public class UserController {
             User userFromGoogle = new User(idToken.getPayload());
             User userFromDB = userRepository.findByInvitationToken(invitation.getSecurityToken());
             userFromDB.update(userFromGoogle);
+            userFromDB.setGoogleId(userFromGoogle.getGoogleId());
             userFromDB.clearInvitationToken();
             userRepository.save(userFromDB);
             connectUserToLeagueAndPlayer(userFromDB);

@@ -6,6 +6,7 @@ import com.elorating.model.Match;
 import com.elorating.model.Player;
 import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
+import com.elorating.service.MatchService;
 import com.elorating.utils.SortUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +31,9 @@ public class MatchController {
 
     @Autowired
     private PlayerRepository playerRepository;
+
+    @Autowired
+    private MatchService matchService;
 
     @CrossOrigin
     @RequestMapping(value = "/matches/{matchId}", method = RequestMethod.GET)
@@ -72,6 +76,19 @@ public class MatchController {
         List<Match> matches = matchRepository.findByLeagueIdAndCompletedIsFalse(leagueId, sortByDate);
         return new ResponseEntity<List<Match>>(matches, HttpStatus.OK);
     }
+
+    @CrossOrigin
+    @RequestMapping(value = "/league/{leagueId}/reschedule-matches/{minutes}", method = RequestMethod.GET)
+    @ApiOperation(value = "Reschedule scheduled matches by {minutes} defined in request",
+        notes = "Return page with rescheduled matches")
+    public ResponseEntity<List<Match>> rescheduleMatches(@PathVariable String leagueId,
+                                                         @PathVariable int minutes,
+                                                         @RequestParam(required = false) String sort) {
+        Sort sortByDate = SortUtils.getSort(sort);
+        List<Match> matches = matchService.rescheduleMatchesInLeague(leagueId, minutes, sortByDate);
+        return new ResponseEntity<List<Match>>(matches, HttpStatus.OK);
+    }
+
 
     @CrossOrigin
     @RequestMapping(value = "/leagues/{leagueId}/matches", method = RequestMethod.POST)

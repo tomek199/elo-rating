@@ -19,4 +19,4 @@ export function getPlayersStats(): Map<string, PlayerStats> {
   return playersStats;
 };
 
-export const PLAYERS_STATS = this.getPlayersStats();
+export const PLAYERS_STATS = getPlayersStats();

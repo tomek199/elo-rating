@@ -1,3 +1,32 @@
-<p>
-  league-edit works!
-</p>
+<app-spinner [resource]="league"></app-spinner>
+<div *ngIf="displayWarning()" class="alert alert-warning">
+  League doesn't exist!  
+</div>
+<div *ngIf="showSuccessAlert" class="alert alert-success">
+  <strong>Success!</strong>
+  Changes has been saved.
+  <button type="button" class="close" (click)="closeSuccessAlert()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<ng-container *ngIf="league">
+  <h1>
+    League
+    <small class="text-muted">{{league.name}}</small>
+    settings
+  </h1>
+  <div class="card">
+    <div class="card-header">Main</div>
+    <div class="card-body">
+      <form #leagueEdit="ngForm" name="leagueEdit">
+        <div class="form-group row">
+          <label for="name" class="col-3 col-form-label">Name</label>
+          <div class="col-9">
+            <input type="text" name="name" [(ngModel)]="league.name" class="form-control" required>
+          </div>
+        </div>
+        <button type="button" class="btn btn-success float-right" [disabled]="!leagueEdit.form.valid" (click)="save()">Save</button>
+      </form>
+    </div>
+  </div>
+</ng-container>
