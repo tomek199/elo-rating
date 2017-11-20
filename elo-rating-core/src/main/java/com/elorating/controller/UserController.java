@@ -10,8 +10,6 @@ import com.elorating.repository.UserRepository;
 import com.elorating.service.EmailService;
 import com.elorating.service.GoogleAuthService;
 import com.elorating.service.email.*;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -50,12 +48,11 @@ public class UserController {
     @RequestMapping(value = "/users/sign-in", method = RequestMethod.POST)
     @ApiOperation(value = "Sign in", notes = "Verify Google's id token")
     public ResponseEntity<User> signIn(@RequestBody String token) {
-        GoogleIdToken idToken = googleAuthService.verifyGoogleIdToken(token);
-        if (idToken != null) {
-            Payload payload = idToken.getPayload();
-            User user = checkForPendingInvitation(payload);
+        User userFromGoogle = googleAuthService.getUserFromToken(token);
+        if (userFromGoogle != null) {
+            User user = checkForPendingInvitation(userFromGoogle);
             if (user == null)
-                user = saveOrUpdateUser(payload);
+                user = saveOrUpdateUser(userFromGoogle);
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);
@@ -75,9 +72,8 @@ public class UserController {
     @ApiOperation(value = "Confirm invitation",
             notes = "Confirm invitation to application, assign user to league and sign in")
     public ResponseEntity<User> confirmInvitation(@RequestBody Invitation invitation) {
-        GoogleIdToken idToken = googleAuthService.verifyGoogleIdToken(invitation.getGoogleIdToken());
-        if (idToken != null) {
-            User userFromGoogle = new User(idToken.getPayload());
+        User userFromGoogle = googleAuthService.getUserFromToken(invitation.getGoogleIdToken());
+        if (userFromGoogle != null) {
             User userFromDB = userRepository.findByInvitationToken(invitation.getSecurityToken());
             userFromDB.update(userFromGoogle);
             userFromDB.setGoogleId(userFromGoogle.getGoogleId());
@@ -112,8 +108,7 @@ public class UserController {
         return user;
     }
 
-    private User checkForPendingInvitation(Payload payload) {
-        User userFromGoogle = new User(payload);
+    private User checkForPendingInvitation(User userFromGoogle) {
         User user = userRepository.findByEmailAndInvitationTokenExists(userFromGoogle.getEmail());
         if (user != null) {
             user.clearInvitationToken();
@@ -125,8 +120,7 @@ public class UserController {
         return user;
     }
 
-    private User saveOrUpdateUser(Payload payload) {
-        User userFromGoogle = new User(payload);
+    private User saveOrUpdateUser(User userFromGoogle) {
         User savedUser = userRepository.findByGoogleId(userFromGoogle.getGoogleId());
         if (savedUser != null) {
             savedUser.update(userFromGoogle);

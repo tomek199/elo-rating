@@ -1,7 +1,6 @@
 package com.elorating.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 
@@ -33,16 +32,6 @@ public class User {
         this.name = name;
     }
 
-    public User(Payload payload) {
-        this.googleId = payload.getSubject();
-        this.name = (String) payload.get("name");
-        this.givenName = (String) payload.get("given_name");
-        this.familyName = (String) payload.get("family_name");
-        this.email = payload.getEmail();
-        this.pictureUrl = (String) payload.get("picture");
-        this.lastSignIn = new Date();
-    }
-
     public User(String name, String email) {
         this(name);
         this.email = email;
@@ -69,24 +58,48 @@ public class User {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getGivenName() {
         return givenName;
+    }
+
+    public void setGivenName(String givenName) {
+        this.givenName = givenName;
     }
 
     public String getFamilyName() {
         return familyName;
     }
 
+    public void setFamilyName(String familyName) {
+        this.familyName = familyName;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPictureUrl() {
         return pictureUrl;
     }
 
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
+
     public Date getLastSignIn() {
         return lastSignIn;
+    }
+
+    public void setLastSignIn(Date lastSignIn) {
+        this.lastSignIn = lastSignIn;
     }
 
     public List<League> getLeagues() {
