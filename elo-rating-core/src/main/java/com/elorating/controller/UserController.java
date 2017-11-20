@@ -8,26 +8,20 @@ import com.elorating.repository.LeagueRepository;
 import com.elorating.repository.PlayerRepository;
 import com.elorating.repository.UserRepository;
 import com.elorating.service.EmailService;
+import com.elorating.service.GoogleAuthService;
 import com.elorating.service.email.*;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,11 +30,6 @@ import java.util.UUID;
 @Api(value = "users", description = "Users API")
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-    private static final JacksonFactory jacksonFactory = new JacksonFactory();
-    private static final NetHttpTransport httpTransport = new NetHttpTransport();
-
-    @Value("${google.client.id}")
-    private String clientId;
 
     @Autowired
     private UserRepository userRepository;
@@ -52,13 +41,16 @@ public class UserController {
     private PlayerRepository playerRepository;
 
     @Autowired
+    private GoogleAuthService googleAuthService;
+
+    @Autowired
     private EmailService emailService;
 
     @CrossOrigin
     @RequestMapping(value = "/users/sign-in", method = RequestMethod.POST)
     @ApiOperation(value = "Sign in", notes = "Verify Google's id token")
     public ResponseEntity<User> signIn(@RequestBody String token) {
-        GoogleIdToken idToken = verifyGoogleIdToken(token);
+        GoogleIdToken idToken = googleAuthService.verifyGoogleIdToken(token);
         if (idToken != null) {
             Payload payload = idToken.getPayload();
             User user = checkForPendingInvitation(payload);
@@ -83,7 +75,7 @@ public class UserController {
     @ApiOperation(value = "Confirm invitation",
             notes = "Confirm invitation to application, assign user to league and sign in")
     public ResponseEntity<User> confirmInvitation(@RequestBody Invitation invitation) {
-        GoogleIdToken idToken = verifyGoogleIdToken(invitation.getGoogleIdToken());
+        GoogleIdToken idToken = googleAuthService.verifyGoogleIdToken(invitation.getGoogleIdToken());
         if (idToken != null) {
             User userFromGoogle = new User(idToken.getPayload());
             User userFromDB = userRepository.findByInvitationToken(invitation.getSecurityToken());
@@ -118,21 +110,6 @@ public class UserController {
         player.setUser(user);
         playerRepository.save(player);
         return user;
-    }
-
-    private GoogleIdToken verifyGoogleIdToken(String token) {
-        GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(httpTransport, jacksonFactory)
-                .setAudience(Collections.singletonList(clientId)).build();
-        GoogleIdToken idToken = null;
-        try {
-            idToken = verifier.verify(token);
-        } catch (GeneralSecurityException e) {
-            logger.error(e.getMessage());
-        } catch (IOException e) {
-            logger.error(e.getMessage());
-        } finally {
-            return idToken;
-        }
     }
 
     private User checkForPendingInvitation(Payload payload) {
