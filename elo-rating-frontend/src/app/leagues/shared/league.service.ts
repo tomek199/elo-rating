@@ -1,3 +1,4 @@
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
@@ -8,8 +9,8 @@ import { BaseApiService } from "../../core/shared/base-api.service";
 @Injectable()
 export class LeagueService extends BaseApiService {
 
-  constructor(private http: Http) {
-    super();
+  constructor(private http: Http, protected googleAuthService: GoogleAuthService) {
+    super(googleAuthService);
   }
 
   getLeague(id: string): Promise<League> {

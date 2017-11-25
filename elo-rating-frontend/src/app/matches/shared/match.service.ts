@@ -1,3 +1,4 @@
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { Page } from './../../core/utils/pagination/page.model';
 import { Http } from '@angular/http';
 import { Match } from './match.model';
@@ -8,8 +9,8 @@ import { BaseApiService } from "../../core/shared/base-api.service";
 @Injectable()
 export class MatchService extends BaseApiService {
 
-  constructor(private http: Http) { 
-    super();
+  constructor(private http: Http, protected googleAuthService: GoogleAuthService) { 
+    super(googleAuthService);
   }
 
   getMatchById(matchId: string): Promise<Match> {
@@ -87,7 +88,7 @@ export class MatchService extends BaseApiService {
 
   delete(id: string): Promise<boolean> {
     let url = `${this.url}/matches/${id}`;
-    return this.http.delete(url)
+    return this.http.delete(url, { headers: this.headers })
       .toPromise()
       .then(response => response.ok)
       .catch(this.handleError);

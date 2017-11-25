@@ -6,13 +6,14 @@ import { Http } from '@angular/http';
 import { Player } from './player.model';
 import { Injectable } from '@angular/core';
 import { BaseApiService } from "../../core/shared/base-api.service";
+import { GoogleAuthService } from 'app/auth/shared/google-auth.service';
 
 
 @Injectable()
 export class PlayerService extends BaseApiService {
 
-  constructor(private http: Http) { 
-    super();
+  constructor(private http: Http, protected googleAuthService: GoogleAuthService) { 
+    super(googleAuthService);
   }
 
   getPlayers(leagueId: string): Promise<Player[]> {
@@ -57,7 +58,7 @@ export class PlayerService extends BaseApiService {
 
   delete(id: string): Promise<boolean> {
     let url = `${this.url}/players/${id}`;
-    return this.http.delete(url)
+    return this.http.delete(url, { headers: this.headers })
       .toPromise()
       .then(response => response.ok)
       .catch(this.handleError);

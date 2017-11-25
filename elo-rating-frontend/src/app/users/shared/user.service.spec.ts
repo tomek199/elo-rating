@@ -1,3 +1,5 @@
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
+import { GoogleAuthServiceStub } from './../../testing/google-stubs';
 import { HttpModule } from '@angular/http';
 import { TestBed, inject } from '@angular/core/testing';
 
@@ -7,7 +9,10 @@ describe('UserService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
-      providers: [UserService]
+      providers: [
+        UserService,
+        {provide: GoogleAuthService, useClass: GoogleAuthServiceStub}
+      ]
     });
   });
 

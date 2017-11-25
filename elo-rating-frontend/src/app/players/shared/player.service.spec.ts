@@ -1,3 +1,5 @@
+import { GoogleAuthServiceStub } from './../../testing/google-stubs';
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { HttpModule } from '@angular/http';
 /* tslint:disable:no-unused-variable */
 
@@ -8,7 +10,10 @@ describe('PlayerService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
-      providers: [PlayerService]
+      providers: [
+        PlayerService, 
+        {provide: GoogleAuthService, useClass: GoogleAuthServiceStub}
+      ]
     });
   });
 
