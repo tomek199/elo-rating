@@ -2,8 +2,15 @@
 <app-user-create-player></app-user-create-player>
 <app-spinner [resource]="activePlayers"></app-spinner>
 <div class="alert alert-info" *ngIf="displayAlert()">
-  Players list is empty!  
+  Players list is empty!
   <a [routerLink]="['/leagues', leagueId, 'players', 'add']" class="alert-link" *ngIf="isAuthorized()">Add player</a>
+</div>
+<div class="mb-3 mt-3">
+  <ul class="nav justify-content-end">
+    <li>
+      <a [routerLink]="['/leagues', leagueId, 'players', 'add']" *ngIf="isAuthorized()">Add player</a>
+    </li>
+  </ul>
 </div>
 <table class="shadedtable table" *ngIf="hasPlayers()">
   <thead class="thead-light">
@@ -40,8 +47,10 @@
     </tr>
   </tbody>
 </table>
-<ul class="nav justify-content-end">
-  <li>
-    <a [routerLink]="['/leagues', leagueId, 'players', 'add']" *ngIf="isAuthorized()">Add player</a>
-  </li>
-</ul>
+<div class="mb-3 mt-3">
+  <ul class="nav justify-content-end">
+    <li>
+      <a [routerLink]="['/leagues', leagueId, 'players', 'add']" *ngIf="isAuthorized()">Add player</a>
+    </li>
+  </ul>
+</div>
