@@ -50,4 +50,8 @@ public class League {
             users = new ArrayList<>();
         users.add(user);
     }
+
+    public boolean isAssigned() {
+        return users != null && users.size() > 0;
+    }
 }
