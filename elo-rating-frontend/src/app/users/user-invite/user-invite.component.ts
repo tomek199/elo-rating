@@ -61,7 +61,7 @@ export class UserInviteComponent implements OnInit {
   sendInvitation() {
     this.showSuccessAlert = undefined;
     let userToInvite = this.prepareUser();
-    this.userService.inviteUser(this.currentUser.id, userToInvite)
+    this.userService.inviteUser(this.leagueId, this.currentUser.id, userToInvite)
       .then(user => {
         this.showSuccessAlert = true;
       });

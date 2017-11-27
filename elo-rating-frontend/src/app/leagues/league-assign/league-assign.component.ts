@@ -39,7 +39,7 @@ export class LeagueAssignComponent implements OnChanges {
   assignLeague() {
     let userId = this.googleAuthService.getCurrentUser().id;
     let leagueId = this.league.id;
-    this.userService.assignLeague(userId, leagueId)
+    this.userService.assignLeague(leagueId, userId)
       .then(user => {
         sessionStorage.setItem(this.googleAuthService.USER, JSON.stringify(user));
         this.showSuccessAlert = true;

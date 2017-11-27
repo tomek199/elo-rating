@@ -6,12 +6,12 @@ import { Injectable, Component } from '@angular/core';
 @Injectable()
 export class UserServiceStub {
 
-  assignLeague(userId: string, leagueId: string) {
+  assignLeague(leagueId: string, userId: string) {
     let user = this.getUserWithLeague(userId);
     return Promise.resolve(user);
   }
 
-  inviteUser(currentUserId: string, userToInvite: User): Promise<User> {
+  inviteUser(leagueId: string, currentUserId: string, userToInvite: User): Promise<User> {
     let user = new User();
     let league = new League();
     user.leagues = [];
@@ -28,7 +28,7 @@ export class UserServiceStub {
     return Promise.resolve(user);
   }
 
-  createPlayer(userId: string, leagueId: string): Promise<User> {
+  createPlayer(leagueId: string, userId: string): Promise<User> {
     let user = this.getUserWithLeague('123');
     user.players = [];
     let player = new Player();

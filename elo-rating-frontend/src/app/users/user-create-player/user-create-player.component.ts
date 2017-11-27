@@ -33,7 +33,7 @@ export class UserCreatePlayerComponent implements OnInit {
   }
 
   create() {
-    this.userService.createPlayer(this.user.id, this.leagueId)
+    this.userService.createPlayer(this.leagueId, this.user.id)
       .then(user => {
         sessionStorage.setItem(this.googleAuthService.USER, JSON.stringify(user));
         this.goToPlayer();

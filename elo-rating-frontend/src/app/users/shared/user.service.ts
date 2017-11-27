@@ -28,16 +28,16 @@ export class UserService extends BaseApiService {
       .map(response => response.json() as User[]);
   }
 
-  assignLeague(userId: string, leagueId: string): Promise<User> {
-    let url = `${this.url}/users/${userId}/assign-league/${leagueId}`;
+  assignLeague(leagueId: string, userId: string): Promise<User> {
+    let url = `${this.url}/leagues/${leagueId}/users/${userId}/assign-league`;
     return this.http.post(url, null, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as User)
       .catch(this.handleError);
   }
 
-  inviteUser(currentUserId: string, userToInvite: User): Promise<User> {
-    let url = `${this.url}/users/${currentUserId}/invite-user`;
+  inviteUser(leagueId: string, currentUserId: string, userToInvite: User): Promise<User> {
+    let url = `${this.url}/leagues/${leagueId}/users/${currentUserId}/invite`;
     return this.http.post(url, userToInvite, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as User)
@@ -61,9 +61,9 @@ export class UserService extends BaseApiService {
       .catch(this.handleError);
   }
 
-  createPlayer(userId: string, leagueId: string): Promise<User> {
-    let url = `${this.url}/users/${userId}/create-player`;
-    return this.http.post(url, leagueId, { headers: this.headers })
+  createPlayer(leagueId: string, userId: string): Promise<User> {
+    let url = `${this.url}/leagues/${leagueId}/users/${userId}/create-player`;
+    return this.http.post(url, null, { headers: this.headers })
       .toPromise()
       .then(response => response.json() as User)
       .catch(this.handleError);

@@ -75,10 +75,10 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/users/{id}/assign-league/{leagueId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/leagues/{leagueId}/users/{id}/assign-league", method = RequestMethod.POST)
     @ApiOperation(value = "Assign league", notes = "Assign league to user")
-    public ResponseEntity<User> assignLeague(@PathVariable String id,
-                                             @PathVariable String leagueId) {
+    public ResponseEntity<User> assignLeague(@PathVariable String leagueId,
+                                             @PathVariable String id) {
         User user = userService.connectUserAndLeague(id, leagueId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -92,19 +92,18 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/users/{id}/create-player", method = RequestMethod.POST)
+    @RequestMapping(value = "/leagues/{leagueId}/users/{id}/create-player", method = RequestMethod.POST)
     @ApiOperation(value = "Create player",
                     notes =  "Create new player and connect it with user")
-    public ResponseEntity<User> createPlayer(@PathVariable String id,
-                                             @RequestBody String leagueId) {
-
+    public ResponseEntity<User> createPlayer(@PathVariable String leagueId,
+                                             @PathVariable String id) {
         Player player = userService.createPlayerForUser(id, leagueId);
         User currentUser = userService.connectUserAndPlayer(id, player.getId());
         return new ResponseEntity<>(currentUser, HttpStatus.OK);
     }
 
     @CrossOrigin
-    @RequestMapping(value = "users/{id}/invite-user", method = RequestMethod.POST)
+    @RequestMapping(value = "/leagues/{leagueId}/users/{id}/invite", method = RequestMethod.POST)
     @ApiOperation(value = "Invite user", notes = "Invite user and assign to league")
     public ResponseEntity<User> inviteUser(HttpServletRequest request,
                                            @PathVariable String id,
