@@ -123,7 +123,7 @@ public class MatchController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/matches/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/leagues/{leagueId}/matches/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete match", notes = "Delete match by match id")
     public ResponseEntity<Match> delete(@PathVariable String id) {
         matchRepository.delete(id);
@@ -131,7 +131,7 @@ public class MatchController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/matches/{id}/revert", method = RequestMethod.GET)
+    @RequestMapping(value = "/leagues/{leagueId}/matches/{id}/revert", method = RequestMethod.POST)
     @ApiOperation(value = "Revert match",
                 notes = "Delete match and revert players rating to previous state")
     public ResponseEntity<Match> revert(@PathVariable String id) {

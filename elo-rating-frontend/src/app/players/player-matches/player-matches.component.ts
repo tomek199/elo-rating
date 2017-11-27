@@ -149,7 +149,7 @@ export class PlayerMatchesComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   delete(matchId: string) {
-    this.matchService.delete(matchId)
+    this.matchService.delete(this.leagueId, matchId)
       .then(result => {
         if (result) {
           this.getMatches();

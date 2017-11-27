@@ -68,25 +68,20 @@ export class MatchServiceStub {
     return Promise.resolve(new Match());
   }
 
-  add(leagueId: string, match: Match): Promise<Match> {
+  save(leagueId: string, match: Match): Promise<Match> {
     match.id = '111';
     match.league = LEAGUES[0];
     MATCHES.push(match);
     return Promise.resolve(match);
   }
 
-  delete(id: string): Promise<boolean> {
-    let index = MATCHES.findIndex(match => match.id === id);
+  delete(leagueId: string, matchId: string): Promise<boolean> {
+    let index = MATCHES.findIndex(match => match.id === matchId);
     MATCHES.splice(index, 1);
     return Promise.resolve(true);
   }
 
-  update(match: Match): Promise<Match> {
-    // todo
-    return Promise.resolve(new Match());
-  }
-
-  revertMatch(id: string): Promise<boolean> {
+  revertMatch(leagueId: string, id: string): Promise<boolean> {
     return Promise.resolve(true);
   }
 

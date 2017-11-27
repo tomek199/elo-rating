@@ -78,7 +78,7 @@ export class MatchService extends BaseApiService {
       .then(response => response.json() as Match[]);
   }
 
-  add(leagueId: string, match: Match): Promise<Match> {
+  save(leagueId: string, match: Match): Promise<Match> {
     let url = `${this.url}/leagues/${leagueId}/matches`;
     return this.http.post(url, JSON.stringify(match), { headers: this.headers })
       .toPromise()
@@ -86,17 +86,17 @@ export class MatchService extends BaseApiService {
       .catch(this.handleError);
   }
 
-  delete(id: string): Promise<boolean> {
-    let url = `${this.url}/matches/${id}`;
+  delete(leagueId: string, id: string): Promise<boolean> {
+    let url = `${this.url}/leagues/${leagueId}/matches/${id}`;
     return this.http.delete(url, { headers: this.headers })
       .toPromise()
       .then(response => response.ok)
       .catch(this.handleError);
   }
 
-  revertMatch(id: string): Promise<boolean> {
-    let url = `${this.url}/matches/${id}/revert`;
-    return this.http.get(url)
+  revertMatch(leagueId: string, id: string): Promise<boolean> {
+    let url = `${this.url}/leagues/${leagueId}/matches/${id}/revert`;
+    return this.http.post(url, null, { headers: this.headers })
       .toPromise()
       .then(response => response.ok)
       .catch(this.handleError);

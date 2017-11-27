@@ -122,8 +122,8 @@ public class MatchControllerTest extends BaseControllerTest {
         Match match = new Match(playerOne, playerTwo);
         match.setLeague(league);
         match = matchRepository.save(match);
-
-        mockMvc.perform(delete("/api/matches/" + match.getId())
+        String url = "/api/leagues/" + league.getId() + "/matches/" + match.getId();
+        mockMvc.perform(delete(url)
                 .contentType(contentType))
                 .andExpect(status().isOk());
         Assert.assertNull(matchRepository.findOne(match.getId()));
@@ -150,7 +150,8 @@ public class MatchControllerTest extends BaseControllerTest {
                 .content(matchJson)
                 .contentType(contentType))
                 .andExpect(status().isOk());
-        mockMvc.perform(get("/api/matches/" + match.getId() + "/revert")
+        String revertUrl = "/api/leagues/" + league.getId() + "/matches/" + match.getId() + "/revert";
+        mockMvc.perform(post(revertUrl)
                 .contentType(contentType))
                 .andExpect(status().isOk());
         Assert.assertNull(matchRepository.findOne(match.getId()));

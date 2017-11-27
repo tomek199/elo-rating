@@ -138,7 +138,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
   }
 
   delete(matchId: string) {
-    this.matchService.delete(matchId)
+    this.matchService.delete(this.leagueId, matchId)
       .then(result => {
         if (result) {
           this.getMatches();
@@ -160,7 +160,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
   }
 
   revertMatch(matchId: string) {
-    this.matchService.revertMatch(matchId)
+    this.matchService.revertMatch(this.leagueId, matchId)
       .then(result => {
         this.getCompletedMatches();
       })
