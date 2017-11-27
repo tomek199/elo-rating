@@ -67,7 +67,7 @@ export class PlayerListComponent implements OnInit {
 
   delete(index: number): void {
     let id = this.inactivePlayers[index].id;
-    this.playerService.delete(id)
+    this.playerService.delete(this.leagueId, id)
       .then(result => {
         if (result) {
           this.getPlayers();
@@ -90,7 +90,7 @@ export class PlayerListComponent implements OnInit {
   disable(index: number): void {
     let player = this.activePlayers[index];
     player.active = false;
-    this.playerService.update(player)
+    this.playerService.update(this.leagueId, player)
       .then(result => {
         if (result) {
           this.getPlayers();

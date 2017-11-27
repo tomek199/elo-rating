@@ -101,7 +101,8 @@ public class PlayerControllerTest extends BaseControllerTest {
         player.setLeague(null);
         player.setActive(false);
         String editedPlayerJson = objectMapper.writeValueAsString(player);
-        mockMvc.perform(put("/api/players/" + player.getId())
+        String url = "/api/leagues/" + league.getId() + "/players/" + player.getId();
+        mockMvc.perform(put(url)
                 .contentType(contentType)
                 .content(editedPlayerJson))
                 .andExpect(status().isOk())
@@ -114,7 +115,8 @@ public class PlayerControllerTest extends BaseControllerTest {
     @Test
     public void testDelete() throws Exception {
         Player player = playerRepository.save(new Player("PlayerToDelete", league));
-        mockMvc.perform(delete("/api/players/" + player.getId())
+        String url = "/api/leagues/" + league.getId() + "/players/" + player.getId();
+        mockMvc.perform(delete(url)
                 .contentType(contentType))
                 .andExpect(status().isOk());
         Assert.assertNull(playerRepository.findOne(player.getId()));

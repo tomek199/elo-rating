@@ -64,7 +64,7 @@ public class PlayerController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/players/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/leagues/{leagueId}/players/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "Edit player", notes = "Edit player by player id")
     public ResponseEntity<Player> edit(@PathVariable String id, @RequestBody Player player) {
         Player currentPlayer = playerRepository.findOne(id);
@@ -74,7 +74,7 @@ public class PlayerController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/players/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/leagues/{leagueId}/players/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Remove player", notes = "Remove player by player id")
     public ResponseEntity<Player> delete(@PathVariable String id) {
         removePlayerFromMatches(id);

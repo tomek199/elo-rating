@@ -56,16 +56,16 @@ export class PlayerService extends BaseApiService {
       .catch(this.handleError);
   }
 
-  delete(id: string): Promise<boolean> {
-    let url = `${this.url}/players/${id}`;
+  delete(leagueId: string, playerId: string): Promise<boolean> {
+    let url = `${this.url}/leagues/${leagueId}/players/${playerId}`;
     return this.http.delete(url, { headers: this.headers })
       .toPromise()
       .then(response => response.ok)
       .catch(this.handleError);
   }
 
-  update(player: Player): Promise<Player> {
-    let url = `${this.url}/players/${player.id}`;
+  update(leagueId: string, player: Player): Promise<Player> {
+    let url = `${this.url}/leagues/${leagueId}/players/${player.id}`;
     return this.http.put(url, JSON.stringify(player), { headers: this.headers })
       .toPromise()
       .then(response => response.json() as Player)

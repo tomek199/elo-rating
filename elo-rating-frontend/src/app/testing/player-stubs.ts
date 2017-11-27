@@ -34,12 +34,12 @@ export class PlayerServiceStub {
     return Promise.resolve(player);
   }
 
-  delete(id: string): Promise<boolean> {
+  delete(leagueId: string, playerId: string): Promise<boolean> {
     PLAYERS.splice(0, 1);
     return Promise.resolve(true);
   }
 
-  update(player: Player): Promise<Player> {
+  update(leagueId: string, player: Player): Promise<Player> {
     let playerToUpdate = PLAYERS.find(p => p.id == player.id)
     playerToUpdate.username = player.username;
     playerToUpdate.rating = player.rating;
