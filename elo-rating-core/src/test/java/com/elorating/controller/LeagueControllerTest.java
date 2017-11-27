@@ -90,7 +90,8 @@ public class LeagueControllerTest extends BaseControllerTest {
         League leagueToUpdate = new League("123", "League to update");
         String leagueJson = objectMapper.writeValueAsString(leagueToUpdate);
         when(leagueRepository.save(any(League.class))).thenReturn(leagueToUpdate);
-        mockMvc.perform(put("/api/leagues")
+        String url = "/api/leagues/" + leagueToUpdate.getId();
+        mockMvc.perform(put(url)
                 .content(leagueJson)
                 .contentType(contentType))
                 .andExpect(status().isOk())

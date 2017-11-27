@@ -73,7 +73,7 @@ public class LeagueController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/leagues", method = RequestMethod.PUT)
+    @RequestMapping(value = "/leagues/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "Update league", notes = "Update existing league details")
     public ResponseEntity<League> update(@RequestBody League league) {
         repository.save(league);
@@ -81,7 +81,7 @@ public class LeagueController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/leagues/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/leagues/{id}/delete", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete league", notes = "Delete league by league id")
     public ResponseEntity<League> deleteLeague(@PathVariable("id") String id) {
         repository.delete(id);

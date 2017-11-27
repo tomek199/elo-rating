@@ -44,7 +44,7 @@ export class LeagueService extends BaseApiService {
   }
 
   update(league: League): Promise<League> {
-    let url = `${this.url}/leagues`;
+    let url = `${this.url}/leagues/${league.id}`;
     return this.http.put(url, JSON.stringify(league), {headers: this.headers})
       .toPromise()
       .then(response => response.json() as League)
