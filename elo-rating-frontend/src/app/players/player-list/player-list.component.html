@@ -5,7 +5,7 @@
   Players list is empty!
   <a [routerLink]="['/leagues', leagueId, 'players', 'add']" class="alert-link" *ngIf="isAuthorized()">Add player</a>
 </div>
-<div class="mb-3 mt-3">
+<div class="mb-3 mt-3" *ngIf="hasActivePlayers()">
   <ul class="nav justify-content-end">
     <li>
       <a [routerLink]="['/leagues', leagueId, 'players', 'add']" *ngIf="isAuthorized()">Add player</a>
@@ -47,7 +47,7 @@
     </tr>
   </tbody>
 </table>
-<div class="mb-3 mt-3">
+<div class="mb-3 mt-3" *ngIf="hasActivePlayers()">
   <ul class="nav justify-content-end">
     <li>
       <a [routerLink]="['/leagues', leagueId, 'players', 'add']" *ngIf="isAuthorized()">Add player</a>

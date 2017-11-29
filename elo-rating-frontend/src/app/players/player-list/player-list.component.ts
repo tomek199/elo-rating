@@ -20,7 +20,7 @@ export class PlayerListComponent implements OnInit {
   constructor(
     private playerService: PlayerService,
     private route: ActivatedRoute,
-    private modalService: NgbModal, 
+    private modalService: NgbModal,
     private googleAuthService: GoogleAuthService
   ) { }
 
@@ -100,5 +100,9 @@ export class PlayerListComponent implements OnInit {
 
   isAuthorized(): boolean {
     return (!this.googleAuthService.isLeagueAssigned() || this.googleAuthService.isAuthorized());
+  }
+
+  hasActivePlayers(): boolean {
+    return this.activePlayers !== null && this.activePlayers.length > 0;
   }
 }
