@@ -111,7 +111,14 @@ export class MatchService extends BaseApiService {
     output.ratings = match.ratings;
     output.date = new Date(match.date);
     output.ratingDelta = match.ratingDelta;
-
     return output;
+  }
+
+  rescheduleMatches(leagueId: string, minutes: number) {
+    let url = `${this.url}/league/${leagueId}/reschedule-matches/${minutes}?sort=asc`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.ok)
+      .catch(this.handleError);
   }
 }
