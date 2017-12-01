@@ -78,7 +78,7 @@ public class MatchController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/league/{leagueId}/reschedule-matches/{minutes}", method = RequestMethod.GET)
+    @RequestMapping(value = "/league/{leagueId}/reschedule-matches/{minutes}", method = RequestMethod.POST)
     @ApiOperation(value = "Reschedule scheduled matches by {minutes} defined in request",
         notes = "Return page with rescheduled matches")
     public ResponseEntity<List<Match>> rescheduleMatches(@PathVariable String leagueId,
