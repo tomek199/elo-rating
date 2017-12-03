@@ -21,4 +21,8 @@ public class DateUtils {
     public String getDateString(Date date) {
         return new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(date);
     }
+
+    public String getDateTime(Date date) {
+        return new SimpleDateFormat("HH:mm").format(date);
+    }
 }
