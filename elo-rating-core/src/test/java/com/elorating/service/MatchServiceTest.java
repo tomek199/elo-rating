@@ -27,6 +27,7 @@ public class MatchServiceTest extends BaseServiceTest {
     private static final Logger logger = LoggerFactory.getLogger(MatchServiceTest.class);
 
     final int MATCHES_TO_DELAY = 2;
+    final int MINUTES = 10;
     final Sort SORT_BY_DATE = SortUtils.getSort("asc");
 
     @Autowired
@@ -68,7 +69,7 @@ public class MatchServiceTest extends BaseServiceTest {
         setupMatches(4);
         setMatchesDateForRescheduling(MATCHES_TO_DELAY);
         List<Match> matchesBeforeRescheduling = this.matchRepository.findByLeagueIdAndCompletedIsFalse(this.league.getId(), SORT_BY_DATE);
-        this.matchList = this.matchService.rescheduleMatchesInLeague(this.league.getId(), 10, SORT_BY_DATE);
+        this.matchList = this.matchService.rescheduleMatchesInLeague(this.league.getId(), MINUTES, SORT_BY_DATE);
         for (int i = 0; i < this.matchList.size(); i++) {
             Match oldMatch = matchesBeforeRescheduling.get(i);
             Match newMatch = this.matchList.get(i);
@@ -86,7 +87,7 @@ public class MatchServiceTest extends BaseServiceTest {
     public void test_rescheduleMatchesWithMatchAtCurrentTime() {
         setupCustomMatches();
         List<Match> matchesBeforeRescheduling = this.matchRepository.findByLeagueIdAndCompletedIsFalse(this.league.getId(), SORT_BY_DATE);
-        this.matchList = this.matchService.rescheduleMatchesInLeague(this.league.getId(), 10, SORT_BY_DATE);
+        this.matchList = this.matchService.rescheduleMatchesInLeague(this.league.getId(), MINUTES, SORT_BY_DATE);
         Date now = new Date();
         logger.info("Current Time: " + dateUtils.getDateTime(now));
         for (int i = 0; i < this.matchList.size(); i++) {
@@ -104,12 +105,49 @@ public class MatchServiceTest extends BaseServiceTest {
                 Assert.assertTrue(
                         "Next Match should have date in the future",
                         nextMatch.getDate().getTime() > newMatch.getDate().getTime());
-                Date nextMatchExpectedDate = dateUtils.adjustTimeByMinutes(newMatch.getDate(), 10, false);
+                Date nextMatchExpectedDate = dateUtils.adjustTimeByMinutes(newMatch.getDate(), MINUTES, false);
                 Assert.assertTrue(
                         "Next match should have date: " + dateUtils.getDateTime(nextMatchExpectedDate),
                         dateUtils.getDateTime(nextMatch.getDate()).equals(dateUtils.getDateTime(nextMatchExpectedDate)));
             }
         }
+    }
+
+    @Test
+    public void test_rescheduleMatchesWithGapBellowSpecifiedTime() {
+        Match match1 = new Match(this.players.get(0), this.players.get(1), this.league);
+        match1.setDate(dateUtils.adjustTimeByMinutes(match1.getDate(), 10, true));
+        Match match2 = new Match(this.players.get(0), this.players.get(1), this.league);
+        match2.setDate(dateUtils.adjustTimeByMinutes(match2.getDate(), 5, true));
+        Match match3 = new Match(this.players.get(0), this.players.get(1), this.league);
+
+        this.matchList.add(match1);
+        this.matchList.add(match2);
+        this.matchList.add(match3);
+
+        saveMatches();
+
+        List<Match> matchesBeforeRescheduling = this.matchRepository.findByLeagueIdAndCompletedIsFalse(this.league.getId(), SORT_BY_DATE);
+        this.matchList = this.matchService.rescheduleMatchesInLeague(this.league.getId(), MINUTES, SORT_BY_DATE);
+        Date now = new Date();
+        logger.info("Current Time: " + dateUtils.getDateTime(now));
+        for (int i = 0; i < this.matchList.size(); i++) {
+            Match oldMatch = matchesBeforeRescheduling.get(i);
+            Match newMatch = this.matchList.get(i);
+            logger.info("Match " + i + " ID: " + newMatch.getId());
+            logger.info(dateUtils.getDateTime(oldMatch.getDate()) + " => " + dateUtils.getDateTime(newMatch.getDate()));
+            if (i == 0) {
+                Assert.assertTrue(
+                        "New match day should be " + MINUTES + " into the future",
+                        dateUtils.getDateTime(newMatch.getDate()).equals(dateUtils.getDateTime(dateUtils.adjustTimeByMinutes(oldMatch.getDate(), MINUTES, false))));
+            } else {
+                Date previousMatchDate = this.matchList.get(i - 1).getDate();
+                Assert.assertTrue(
+                        "New match time should be: " + dateUtils.getDateTime(dateUtils.adjustTimeByMinutes(previousMatchDate, MINUTES, false)) + ", is: " + dateUtils.getDateTime(newMatch.getDate()),
+                        dateUtils.getDateTime(newMatch.getDate()).equals(dateUtils.getDateTime(dateUtils.adjustTimeByMinutes(previousMatchDate, MINUTES, false))));
+            }
+        }
+
     }
 
     private void setupCustomMatches() {
@@ -148,9 +186,9 @@ public class MatchServiceTest extends BaseServiceTest {
         for (int i = 0; i < this.matchList.size(); i++) {
             Match match = this.matchList.get(i);
             if (i < matchesToDelay) {
-                match.setDate(new DateUtils().adjustTimeByMinutes(match.getDate(), (i + 1) * 10, true));
+                match.setDate(new DateUtils().adjustTimeByMinutes(match.getDate(), (i + 1) * MINUTES, true));
             } else {
-                match.setDate(new DateUtils().adjustTimeByMinutes(match.getDate(), i * 20, false));
+                match.setDate(new DateUtils().adjustTimeByMinutes(match.getDate(), i * (MINUTES * 2), false));
             }
             this.matchList.set(i, match);
         }
