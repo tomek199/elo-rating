@@ -26,9 +26,9 @@ public class MatchServiceImpl implements MatchService {
         for (int i = 0; i < matchesToReschedule.size(); i++) {
             Match match = matchesToReschedule.get(i);
             if (i == 0 && match.getDate().getTime() <= rescheduleTime.getTime()) {
-                match.setDate(dateUtils.adjustTimeByMinutes(match.getDate(), minutes, false));
+                match.setDate(dateUtils.adjustTimeByMinutesIntoFuture(match.getDate(), minutes));
             } else {
-                Date matchRescheduleTime = dateUtils.adjustTimeByMinutes(matchesToReschedule.get(i - 1).getDate(), minutes, false);
+                Date matchRescheduleTime = dateUtils.adjustTimeByMinutesIntoFuture(matchesToReschedule.get(i - 1).getDate(), minutes);
                 Date currentMatchTime = match.getDate();
                 if (currentMatchTime.getTime() < matchRescheduleTime.getTime()) {
                     match.setDate(matchRescheduleTime);
@@ -40,8 +40,7 @@ public class MatchServiceImpl implements MatchService {
 
         saveMatches(matchesToReschedule);
 
-        List<Match> rescheduledMatches = matchRepository.findByLeagueIdAndCompletedIsFalse(leagueId, sort);
-        return rescheduledMatches;
+        return matchRepository.findByLeagueIdAndCompletedIsFalse(leagueId, sort);
     }
 
     private void saveMatches(List<Match> matches) {

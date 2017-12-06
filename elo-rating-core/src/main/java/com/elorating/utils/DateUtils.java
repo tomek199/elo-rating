@@ -7,7 +7,7 @@ public class DateUtils {
 
     public final static long ONE_MINUTE_IN_MILLIS = 60000;
 
-    public Date adjustTimeByMinutes(Date date, int minutes, boolean back) {
+    private Date adjustTimeByMinutes(Date date, int minutes, boolean back) {
         long currentTime = date.getTime();
         Date newDate = null;
         if (back) {
@@ -16,6 +16,14 @@ public class DateUtils {
             newDate = new Date(currentTime + (minutes * ONE_MINUTE_IN_MILLIS));
         }
         return newDate;
+    }
+
+    public Date adjustTimeByMinutesIntoFuture(Date date, int minutes) {
+        return adjustTimeByMinutes(date, minutes, false);
+    }
+
+    public Date adjustTimeByMinutesIntoPast(Date date, int minutes) {
+        return adjustTimeByMinutes(date, minutes, true);
     }
 
     public String getDateString(Date date) {
