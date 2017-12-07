@@ -16,8 +16,6 @@ public class MatchServiceImpl implements MatchService {
     @Resource
     MatchRepository matchRepository;
 
-    private DateUtils dateUtils = new DateUtils();
-
     @Override
     public List<Match> rescheduleMatchesInLeague(String leagueId, int minutes, Sort sort) {
         List<Match> matchesToReschedule = matchRepository.findByLeagueIdAndCompletedIsFalse(leagueId, sort);
@@ -26,9 +24,9 @@ public class MatchServiceImpl implements MatchService {
         for (int i = 0; i < matchesToReschedule.size(); i++) {
             Match match = matchesToReschedule.get(i);
             if (i == 0 && match.getDate().getTime() <= rescheduleTime.getTime()) {
-                match.setDate(dateUtils.adjustTimeByMinutesIntoFuture(match.getDate(), minutes));
+                match.setDate(DateUtils.adjustTimeByMinutesIntoFuture(match.getDate(), minutes));
             } else {
-                Date matchRescheduleTime = dateUtils.adjustTimeByMinutesIntoFuture(matchesToReschedule.get(i - 1).getDate(), minutes);
+                Date matchRescheduleTime = DateUtils.adjustTimeByMinutesIntoFuture(matchesToReschedule.get(i - 1).getDate(), minutes);
                 Date currentMatchTime = match.getDate();
                 if (currentMatchTime.getTime() < matchRescheduleTime.getTime()) {
                     match.setDate(matchRescheduleTime);

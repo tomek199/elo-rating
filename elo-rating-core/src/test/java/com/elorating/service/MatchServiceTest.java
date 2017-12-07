@@ -45,7 +45,6 @@ public class MatchServiceTest extends BaseServiceTest {
     private League league;
     private List<Player> players = new ArrayList<>();
     private List<Match> matchList= new ArrayList<>();
-    private DateUtils dateUtils = new DateUtils();
 
     @Before
     public void setup() {
@@ -74,7 +73,7 @@ public class MatchServiceTest extends BaseServiceTest {
             Match oldMatch = matchesBeforeRescheduling.get(i);
             Match newMatch = this.matchList.get(i);
             logger.info("Match ID: " + newMatch.getId());
-            logger.info(dateUtils.getDateTime(oldMatch.getDate()) + " => " + dateUtils.getDateTime(newMatch.getDate()));
+            logger.info(DateUtils.getDateTime(oldMatch.getDate()) + " => " + DateUtils.getDateTime(newMatch.getDate()));
             if (i < MATCHES_TO_DELAY) {
                 Assert.assertFalse("Matches should not have same date", oldMatch.getDate().getTime() == newMatch.getDate().getTime());
             } else {
@@ -89,26 +88,26 @@ public class MatchServiceTest extends BaseServiceTest {
         List<Match> matchesBeforeRescheduling = this.matchRepository.findByLeagueIdAndCompletedIsFalse(this.league.getId(), SORT_BY_DATE);
         this.matchList = this.matchService.rescheduleMatchesInLeague(this.league.getId(), MINUTES, SORT_BY_DATE);
         Date now = new Date();
-        logger.info("Current Time: " + dateUtils.getDateTime(now));
+        logger.info("Current Time: " + DateUtils.getDateTime(now));
         for (int i = 0; i < this.matchList.size(); i++) {
             Match oldMatch = matchesBeforeRescheduling.get(i);
             Match newMatch = this.matchList.get(i);
             logger.info("Match " + i + " ID: " + newMatch.getId());
-            logger.info(dateUtils.getDateTime(oldMatch.getDate()) + " => " + dateUtils.getDateTime(newMatch.getDate()));
+            logger.info(DateUtils.getDateTime(oldMatch.getDate()) + " => " + DateUtils.getDateTime(newMatch.getDate()));
 
             if ((i + 1) < this.matchList.size()) {
                 Match nextMatch = this.matchList.get(i + 1);
-                logger.info("Next match time: " + dateUtils.getDateTime(nextMatch.getDate()));
+                logger.info("Next match time: " + DateUtils.getDateTime(nextMatch.getDate()));
                 Assert.assertTrue(
-                        "Matches should not have the same time, " + dateUtils.getDateTime(newMatch.getDate()) + " | " + dateUtils.getDateTime(nextMatch.getDate()),
-                        !dateUtils.getDateTime(newMatch.getDate()).equals(dateUtils.getDateTime(nextMatch.getDate())));
+                        "Matches should not have the same time, " + DateUtils.getDateTime(newMatch.getDate()) + " | " + DateUtils.getDateTime(nextMatch.getDate()),
+                        !DateUtils.getDateTime(newMatch.getDate()).equals(DateUtils.getDateTime(nextMatch.getDate())));
                 Assert.assertTrue(
                         "Next Match should have date in the future",
                         nextMatch.getDate().getTime() > newMatch.getDate().getTime());
-                Date nextMatchExpectedDate = dateUtils.adjustTimeByMinutesIntoFuture(newMatch.getDate(), MINUTES);
+                Date nextMatchExpectedDate = DateUtils.adjustTimeByMinutesIntoFuture(newMatch.getDate(), MINUTES);
                 Assert.assertTrue(
-                        "Next match should have date: " + dateUtils.getDateTime(nextMatchExpectedDate),
-                        dateUtils.getDateTime(nextMatch.getDate()).equals(dateUtils.getDateTime(nextMatchExpectedDate)));
+                        "Next match should have date: " + DateUtils.getDateTime(nextMatchExpectedDate),
+                        DateUtils.getDateTime(nextMatch.getDate()).equals(DateUtils.getDateTime(nextMatchExpectedDate)));
             }
         }
     }
@@ -116,9 +115,9 @@ public class MatchServiceTest extends BaseServiceTest {
     @Test
     public void test_rescheduleMatchesWithGapBellowSpecifiedTime() {
         Match match1 = new Match(this.players.get(0), this.players.get(1), this.league);
-        match1.setDate(dateUtils.adjustTimeByMinutesIntoPast(match1.getDate(), 10));
+        match1.setDate(DateUtils.adjustTimeByMinutesIntoPast(match1.getDate(), 10));
         Match match2 = new Match(this.players.get(0), this.players.get(1), this.league);
-        match2.setDate(dateUtils.adjustTimeByMinutesIntoPast(match2.getDate(), 5));
+        match2.setDate(DateUtils.adjustTimeByMinutesIntoPast(match2.getDate(), 5));
         Match match3 = new Match(this.players.get(0), this.players.get(1), this.league);
 
         this.matchList.add(match1);
@@ -130,21 +129,21 @@ public class MatchServiceTest extends BaseServiceTest {
         List<Match> matchesBeforeRescheduling = this.matchRepository.findByLeagueIdAndCompletedIsFalse(this.league.getId(), SORT_BY_DATE);
         this.matchList = this.matchService.rescheduleMatchesInLeague(this.league.getId(), MINUTES, SORT_BY_DATE);
         Date now = new Date();
-        logger.info("Current Time: " + dateUtils.getDateTime(now));
+        logger.info("Current Time: " + DateUtils.getDateTime(now));
         for (int i = 0; i < this.matchList.size(); i++) {
             Match oldMatch = matchesBeforeRescheduling.get(i);
             Match newMatch = this.matchList.get(i);
             logger.info("Match " + i + " ID: " + newMatch.getId());
-            logger.info(dateUtils.getDateTime(oldMatch.getDate()) + " => " + dateUtils.getDateTime(newMatch.getDate()));
+            logger.info(DateUtils.getDateTime(oldMatch.getDate()) + " => " + DateUtils.getDateTime(newMatch.getDate()));
             if (i == 0) {
                 Assert.assertTrue(
                         "New match day should be " + MINUTES + " into the future",
-                        dateUtils.getDateTime(newMatch.getDate()).equals(dateUtils.getDateTime(dateUtils.adjustTimeByMinutesIntoFuture(oldMatch.getDate(), MINUTES))));
+                        DateUtils.getDateTime(newMatch.getDate()).equals(DateUtils.getDateTime(DateUtils.adjustTimeByMinutesIntoFuture(oldMatch.getDate(), MINUTES))));
             } else {
                 Date previousMatchDate = this.matchList.get(i - 1).getDate();
                 Assert.assertTrue(
-                        "New match time should be: " + dateUtils.getDateTime(dateUtils.adjustTimeByMinutesIntoFuture(previousMatchDate, MINUTES)) + ", is: " + dateUtils.getDateTime(newMatch.getDate()),
-                        dateUtils.getDateTime(newMatch.getDate()).equals(dateUtils.getDateTime(dateUtils.adjustTimeByMinutesIntoFuture(previousMatchDate, MINUTES))));
+                        "New match time should be: " + DateUtils.getDateTime(DateUtils.adjustTimeByMinutesIntoFuture(previousMatchDate, MINUTES)) + ", is: " + DateUtils.getDateTime(newMatch.getDate()),
+                        DateUtils.getDateTime(newMatch.getDate()).equals(DateUtils.getDateTime(DateUtils.adjustTimeByMinutesIntoFuture(previousMatchDate, MINUTES))));
             }
         }
 
@@ -154,14 +153,14 @@ public class MatchServiceTest extends BaseServiceTest {
         this.matchList.clear();
 
         Match match1 = new Match(this.players.get(0), this.players.get(1), this.league);
-        match1.setDate(dateUtils.adjustTimeByMinutesIntoPast(match1.getDate(), 20));
+        match1.setDate(DateUtils.adjustTimeByMinutesIntoPast(match1.getDate(), 20));
         Match match2 = new Match(this.players.get(0), this.players.get(1), this.league);
-        match2.setDate(dateUtils.adjustTimeByMinutesIntoPast(match2.getDate(), 10));
+        match2.setDate(DateUtils.adjustTimeByMinutesIntoPast(match2.getDate(), 10));
         Match match3 = new Match(this.players.get(0), this.players.get(1), this.league);
         Match match4 = new Match(this.players.get(0), this.players.get(1), this.league);
-        match4.setDate(dateUtils.adjustTimeByMinutesIntoFuture(match4.getDate(), 10));
+        match4.setDate(DateUtils.adjustTimeByMinutesIntoFuture(match4.getDate(), 10));
         Match match5 = new Match(this.players.get(0), this.players.get(1), this.league);
-        match5.setDate(dateUtils.adjustTimeByMinutesIntoFuture(match5.getDate(), 20));
+        match5.setDate(DateUtils.adjustTimeByMinutesIntoFuture(match5.getDate(), 20));
 
         this.matchList.add(match1);
         this.matchList.add(match2);
@@ -186,9 +185,9 @@ public class MatchServiceTest extends BaseServiceTest {
         for (int i = 0; i < this.matchList.size(); i++) {
             Match match = this.matchList.get(i);
             if (i < matchesToDelay) {
-                match.setDate(new DateUtils().adjustTimeByMinutesIntoPast(match.getDate(), (i + 1) * MINUTES));
+                match.setDate(DateUtils.adjustTimeByMinutesIntoPast(match.getDate(), (i + 1) * MINUTES));
             } else {
-                match.setDate(new DateUtils().adjustTimeByMinutesIntoFuture(match.getDate(), i * (MINUTES * 2)));
+                match.setDate(DateUtils.adjustTimeByMinutesIntoFuture(match.getDate(), i * (MINUTES * 2)));
             }
             this.matchList.set(i, match);
         }
