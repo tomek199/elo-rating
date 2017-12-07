@@ -6,12 +6,15 @@ import com.elorating.model.Player;
 import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
 import com.elorating.service.MatchService;
+import com.elorating.utils.MatchTestUtils;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -163,7 +166,15 @@ public class MatchControllerTest extends BaseControllerTest {
 
     @Test
     public void test_rescheduleMatches() throws Exception {
-        // TODO: write test for rescheduled matches in MatchController
-
+        int matchesAmount = 4;
+        int minutes = 10;
+        Player playerOne = playerRepository.save(new Player("PlayerOne", league, 1200));
+        Player playerTwo = playerRepository.save(new Player("PlayerTwo", league, 800));
+        List<Match> matchList = MatchTestUtils.setupMatches(playerOne, playerTwo, league, matchesAmount);
+        matchList.forEach(match -> matchRepository.save(match));
+        mockMvc.perform(post("/api/league/" + this.league.getId() + "/reschedule-matches/" + minutes)
+            .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray());
     }
 }

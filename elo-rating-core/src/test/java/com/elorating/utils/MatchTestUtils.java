@@ -4,6 +4,9 @@ import com.elorating.model.League;
 import com.elorating.model.Match;
 import com.elorating.model.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by pokor on 10.06.2017.
  */
@@ -19,4 +22,15 @@ public class MatchTestUtils {
 
         return match;
     }
+
+    public static List<Match> setupMatches(Player playerOne, Player playerTwo, League league, int amount) {
+        List<Match> matchList = new ArrayList<>();
+        for (int i = 0; i < amount; i++) {
+            Match match = new Match(playerOne, playerTwo, league);
+            matchList.add(match);
+        }
+
+        return matchList;
+    }
+
 }

@@ -27,8 +27,7 @@ public class MatchServiceImpl implements MatchService {
                 match.setDate(DateUtils.adjustTimeByMinutesIntoFuture(match.getDate(), minutes));
             } else {
                 Date matchRescheduleTime = DateUtils.adjustTimeByMinutesIntoFuture(matchesToReschedule.get(i - 1).getDate(), minutes);
-                Date currentMatchTime = match.getDate();
-                if (currentMatchTime.getTime() < matchRescheduleTime.getTime()) {
+                if (match.getDate().getTime() < matchRescheduleTime.getTime()) {
                     match.setDate(matchRescheduleTime);
                 }
             }

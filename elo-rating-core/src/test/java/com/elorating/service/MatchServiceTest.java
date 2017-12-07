@@ -7,6 +7,7 @@ import com.elorating.repository.LeagueRepository;
 import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
 import com.elorating.utils.DateUtils;
+import com.elorating.utils.MatchTestUtils;
 import com.elorating.utils.PlayerTestUtils;
 import com.elorating.utils.SortUtils;
 import org.junit.After;
@@ -44,7 +45,7 @@ public class MatchServiceTest extends BaseServiceTest {
 
     private League league;
     private List<Player> players = new ArrayList<>();
-    private List<Match> matchList= new ArrayList<>();
+    private List<Match> matchList = new ArrayList<>();
 
     @Before
     public void setup() {
@@ -65,7 +66,8 @@ public class MatchServiceTest extends BaseServiceTest {
 
     @Test
     public void test_rescheduleMatchesByTenMinutes() {
-        setupMatches(4);
+        this.matchList = MatchTestUtils.setupMatches(this.players.get(0), this.players.get(1), this.league, 4);
+        saveMatches();
         setMatchesDateForRescheduling(MATCHES_TO_DELAY);
         List<Match> matchesBeforeRescheduling = this.matchRepository.findByLeagueIdAndCompletedIsFalse(this.league.getId(), SORT_BY_DATE);
         this.matchList = this.matchService.rescheduleMatchesInLeague(this.league.getId(), MINUTES, SORT_BY_DATE);
@@ -171,16 +173,6 @@ public class MatchServiceTest extends BaseServiceTest {
         saveMatches();
     }
 
-    private void setupMatches(int amount) {
-        this.matchList.clear();
-        for (int i = 0; i < amount; i++) {
-            Match match = new Match(this.players.get(0), this.players.get(1), this.league);
-            this.matchList.add(match);
-        }
-
-        saveMatches();
-    }
-
     void setMatchesDateForRescheduling(int matchesToDelay) {
         for (int i = 0; i < this.matchList.size(); i++) {
             Match match = this.matchList.get(i);
@@ -196,9 +188,7 @@ public class MatchServiceTest extends BaseServiceTest {
     }
 
     private void saveMatches() {
-        for (int i = 0; i < matchList.size(); i++) {
-            matchList.set(i, matchRepository.save(matchList.get(i)));
-        }
+        this.matchList.forEach(match -> this.matchRepository.save(match));
     }
 
 }
