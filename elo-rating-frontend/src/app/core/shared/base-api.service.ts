@@ -9,9 +9,13 @@ export abstract class BaseApiService {
   protected url = environment.serverUrl;
   protected headers = new Headers({'Content-Type': 'application/json'});
 
-  constructor(protected googleAuthService: GoogleAuthService) { 
-    let token = this.googleAuthService.getIdToken();
-    this.headers.append('X-Authorization', token);
+  constructor(protected googleAuthService: GoogleAuthService) { }
+
+  protected generateHeaders(): Headers {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    headers.append('X-Authorization', this.googleAuthService.getIdToken());
+    return headers;
   }
 
   protected handleError(error: any): Promise<any> {

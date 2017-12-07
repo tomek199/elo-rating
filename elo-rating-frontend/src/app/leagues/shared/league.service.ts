@@ -37,7 +37,7 @@ export class LeagueService extends BaseApiService {
 
   create(league: League): Promise<League> {
     let url = `${this.url}/leagues`;
-    return this.http.post(url, JSON.stringify(league), {headers: this.headers})
+    return this.http.post(url, JSON.stringify(league), {headers: this.generateHeaders()})
       .toPromise()
       .then(response => response.json() as League)
       .catch(this.handleError);
@@ -45,7 +45,7 @@ export class LeagueService extends BaseApiService {
 
   update(league: League): Promise<League> {
     let url = `${this.url}/leagues/${league.id}`;
-    return this.http.put(url, JSON.stringify(league), {headers: this.headers})
+    return this.http.put(url, JSON.stringify(league), {headers: this.generateHeaders()})
       .toPromise()
       .then(response => response.json() as League)
       .catch(this.handleError);

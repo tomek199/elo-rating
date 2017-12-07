@@ -54,7 +54,13 @@ public class AuthFilter extends OncePerRequestFilter {
     }
 
     private boolean isMethodToAuthorize(HttpServletRequest request) {
-        return request.getMethod().equals(HttpMethod.GET.name()) ? false : true;
+        String method = request.getMethod();
+        if (HttpMethod.GET.name().equals(method))
+            return false;
+        else if(HttpMethod.OPTIONS.name().equals(method))
+            return false;
+        else
+            return true;
     }
 
     private String getLeagueId(String uri) {

@@ -34,7 +34,7 @@ export class PlayerService extends BaseApiService {
 
   addPlayer(leagueId: string, player: Player): Promise<Player> {
     let url = `${this.url}/leagues/${leagueId}/players`;
-    return this.http.post(url, JSON.stringify(player), { headers: this.headers })
+    return this.http.post(url, JSON.stringify(player), { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.json() as Player)
       .catch(this.handleError);
@@ -58,7 +58,7 @@ export class PlayerService extends BaseApiService {
 
   delete(leagueId: string, playerId: string): Promise<boolean> {
     let url = `${this.url}/leagues/${leagueId}/players/${playerId}`;
-    return this.http.delete(url, { headers: this.headers })
+    return this.http.delete(url, { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.ok)
       .catch(this.handleError);
@@ -66,7 +66,7 @@ export class PlayerService extends BaseApiService {
 
   update(leagueId: string, player: Player): Promise<Player> {
     let url = `${this.url}/leagues/${leagueId}/players/${player.id}`;
-    return this.http.put(url, JSON.stringify(player), { headers: this.headers })
+    return this.http.put(url, JSON.stringify(player), { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.json() as Player)
       .catch(this.handleError);

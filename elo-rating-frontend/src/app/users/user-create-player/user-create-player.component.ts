@@ -3,6 +3,7 @@ import { User } from './../shared/user.model';
 import { UserService } from './../shared/user.service';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { Component, OnInit } from '@angular/core';
+import { currentId } from 'async_hooks';
 
 @Component({
   selector: 'app-user-create-player',
@@ -11,7 +12,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserCreatePlayerComponent implements OnInit {
   private leagueId: string;
-  private user: User;
 
   constructor(
     private googleAuthService: GoogleAuthService,
@@ -21,7 +21,6 @@ export class UserCreatePlayerComponent implements OnInit {
 
   ngOnInit() {
     this.leagueId = this.googleAuthService.getCurrentLeagueId();
-    this.user = this.googleAuthService.getCurrentUser();
   }
 
   show(): boolean {
@@ -33,7 +32,8 @@ export class UserCreatePlayerComponent implements OnInit {
   }
 
   create() {
-    this.userService.createPlayer(this.leagueId, this.user.id)
+    let currentUser = this.googleAuthService.getCurrentUser();
+    this.userService.createPlayer(this.leagueId, currentUser.id)
       .then(user => {
         sessionStorage.setItem(this.googleAuthService.USER, JSON.stringify(user));
         this.goToPlayer();

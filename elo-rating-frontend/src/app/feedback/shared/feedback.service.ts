@@ -14,7 +14,7 @@ export class FeedbackService extends BaseApiService {
 
   send(feedback: Feedback): Promise<boolean> {
     let url = `${this.url}/feedback/send`;
-    return this.http.post(url, JSON.stringify(feedback), { headers: this.headers })
+    return this.http.post(url, JSON.stringify(feedback), { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.json() as boolean)
       .catch(this.handleError);

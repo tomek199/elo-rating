@@ -17,7 +17,6 @@ export class UserInviteComponent implements OnInit {
   player: Player;
   showSuccessAlert: boolean;
   private leagueId: string;
-  private currentUser: User;
 
   constructor(
     private userService: UserService,
@@ -28,7 +27,6 @@ export class UserInviteComponent implements OnInit {
   ngOnInit() {
     this.showSuccessAlert = false;
     this.leagueId = this.googleAuthService.getCurrentLeagueId();
-    this.currentUser = this.googleAuthService.getCurrentUser();
   }
 
   searchUsers = (text$: Observable<string>) =>
@@ -61,7 +59,8 @@ export class UserInviteComponent implements OnInit {
   sendInvitation() {
     this.showSuccessAlert = undefined;
     let userToInvite = this.prepareUser();
-    this.userService.inviteUser(this.leagueId, this.currentUser.id, userToInvite)
+    let currentUser = this.googleAuthService.getCurrentUser();
+    this.userService.inviteUser(this.leagueId, currentUser.id, userToInvite)
       .then(user => {
         this.showSuccessAlert = true;
       });
