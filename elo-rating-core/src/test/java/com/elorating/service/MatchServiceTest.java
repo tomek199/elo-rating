@@ -29,7 +29,7 @@ public class MatchServiceTest extends BaseServiceTest {
 
     final int MATCHES_TO_DELAY = 2;
     final int MINUTES = 10;
-    final Sort SORT_BY_DATE = SortUtils.getSort("asc");
+    final Sort SORT_BY_DATE = SortUtils.getSortAscending();
 
     @Autowired
     private MatchService matchService;

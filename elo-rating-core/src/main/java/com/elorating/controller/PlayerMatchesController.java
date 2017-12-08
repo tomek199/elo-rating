@@ -66,7 +66,7 @@ public class PlayerMatchesController {
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date from,
             @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date to) {
         List<Match> matches;
-        Sort sort = SortUtils.getSort("asc");
+        Sort sort = SortUtils.getSortAscending();
         if (from != null && to != null)
             matches = matchRepository.findCompletedByPlayerIdAndDate(playerId, from, to, sort);
         else if (from != null)

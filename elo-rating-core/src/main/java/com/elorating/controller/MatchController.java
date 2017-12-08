@@ -47,7 +47,7 @@ public class MatchController {
     @RequestMapping(value = "/leagues/{leagueId}/matches", method = RequestMethod.GET)
     @ApiOperation(value = "Get matches list", notes = "Return all matches list by league id")
     public ResponseEntity<List<Match>> get(@PathVariable String leagueId) {
-        Sort sortByDate = SortUtils.getSort("desc");
+        Sort sortByDate = SortUtils.getSortDescending();
         List<Match> matches = matchRepository.findByLeagueId(leagueId, sortByDate);
         return new ResponseEntity<List<Match>>(matches, HttpStatus.OK);
     }
