@@ -1,3 +1,4 @@
+import { RouterTestingModule } from '@angular/router/testing';
 import { PlayerServiceStub } from './../../testing/player-stubs';
 import { PlayerService } from './../../players/shared/player.service';
 import { By } from '@angular/platform-browser';
@@ -11,22 +12,28 @@ import { SpinnerComponent } from './../../core/directives/spinner/spinner.compon
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { UserInviteComponent } from './user-invite.component';
+import { ActivatedRouteStub } from 'app/testing/routing-stubs';
+import { ActivatedRoute } from '@angular/router';
 
 describe('UserInviteComponent', () => {
   let component: UserInviteComponent;
   let fixture: ComponentFixture<UserInviteComponent>;
+  let activatedRoute: ActivatedRouteStub;  
 
   beforeEach(async(() => {
+    activatedRoute = new ActivatedRouteStub();    
     TestBed.configureTestingModule({
       declarations: [ 
         UserInviteComponent,
         SpinnerComponent, 
       ], 
       imports: [
+        RouterTestingModule,
         FormsModule,
         NgbModule.forRoot()
       ],
       providers: [
+        {provide: ActivatedRoute, useValue: activatedRoute},        
         {provide: UserService, useClass: UserServiceStub},
         {provide: PlayerService, useClass: PlayerServiceStub},
         {provide: GoogleAuthService, useClass: GoogleAuthServiceStub}
@@ -38,6 +45,7 @@ describe('UserInviteComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UserInviteComponent);
     component = fixture.componentInstance;
+    activatedRoute.testParams = {league_id: '123'}
     fixture.detectChanges();
   });
 

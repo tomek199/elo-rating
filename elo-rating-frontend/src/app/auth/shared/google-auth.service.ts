@@ -31,7 +31,7 @@ export class GoogleAuthService {
     return league;
   }
 
-  getCurrentLeagueId(): string {
+  private getCurrentLeagueId(): string {
     return this.getCurrentLeague() ? this.getCurrentLeague().id : null;
   }
 

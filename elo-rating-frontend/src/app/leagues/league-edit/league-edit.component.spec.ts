@@ -8,18 +8,22 @@ import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { LeagueEditComponent } from './league-edit.component';
+import { ActivatedRoute } from '@angular/router';
+import { ActivatedRouteStub } from 'app/testing/routing-stubs';
 
 describe('LeagueEditComponent', () => {
   let component: LeagueEditComponent;
   let fixture: ComponentFixture<LeagueEditComponent>;
+  let activatedRoute: ActivatedRouteStub;
 
   beforeEach(async(() => {
+    activatedRoute = new ActivatedRouteStub();    
     TestBed.configureTestingModule({
       declarations: [ LeagueEditComponent, SpinnerComponent ],
       imports: [ FormsModule ],
       providers: [
-        {provide: GoogleAuthService, useClass: GoogleAuthServiceStub},
-        {provide: LeagueService, useClass: LeagueServiceStub}
+        { provide: ActivatedRoute, useValue: activatedRoute },        
+        { provide: LeagueService, useClass: LeagueServiceStub }
       ]
     })
     .compileComponents();
@@ -28,6 +32,7 @@ describe('LeagueEditComponent', () => {
   function createComponent () {
     fixture = TestBed.createComponent(LeagueEditComponent);
     component = fixture.componentInstance;
+    activatedRoute.testParams = { league_id: '123' }
     fixture.detectChanges();
     tick();
   }

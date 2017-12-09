@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { User } from './../shared/user.model';
 import { UserService } from './../shared/user.service';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
@@ -16,11 +16,17 @@ export class UserCreatePlayerComponent implements OnInit {
   constructor(
     private googleAuthService: GoogleAuthService,
     private userService: UserService, 
+    private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.leagueId = this.googleAuthService.getCurrentLeagueId();
+    this.getLeagueId();
+  }
+
+  getLeagueId() {
+    this.route.params.map(param => param['league_id'])
+      .forEach(league_id => this.leagueId = league_id);
   }
 
   show(): boolean {

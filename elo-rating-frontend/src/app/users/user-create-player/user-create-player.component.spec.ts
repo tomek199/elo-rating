@@ -1,8 +1,8 @@
-import { RouterStub } from './../../testing/routing-stubs';
+import { RouterStub, ActivatedRouteStub } from './../../testing/routing-stubs';
 import { UserServiceStub } from './../../testing/user-stubs';
 import { UserService } from './../shared/user.service';
 import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Player } from './../../players/shared/player.model';
 import { User } from './../shared/user.model';
 import { By } from '@angular/platform-browser';
@@ -14,13 +14,16 @@ import { UserCreatePlayerComponent } from './user-create-player.component';
 describe('UserCreatePlayerComponent', () => {
   let component: UserCreatePlayerComponent;
   let fixture: ComponentFixture<UserCreatePlayerComponent>;
+  let activatedRoute: ActivatedRouteStub;  
 
   beforeEach(async(() => {
+    activatedRoute = new ActivatedRouteStub();    
     TestBed.configureTestingModule({
       declarations: [ UserCreatePlayerComponent ],
       providers: [
         {provide: GoogleAuthService, useClass: GoogleAuthServiceStub}, 
         {provide: UserService, useClass: UserServiceStub},
+        {provide: ActivatedRoute, useValue: activatedRoute},        
         {provide: Router, useClass: RouterStub}
       ]
     })
@@ -30,6 +33,7 @@ describe('UserCreatePlayerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UserCreatePlayerComponent);
     component = fixture.componentInstance;
+    activatedRoute.testParams = {league_id: '123'}
     fixture.detectChanges();
   });
 
