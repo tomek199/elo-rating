@@ -7,6 +7,7 @@ import { setTimeout } from 'timers';
 export class BtnSpinnerDirective implements AfterContentInit {
 
   buttonElem: HTMLElement;
+  originalText: string;
   isPromiseFinished: boolean;
   promise: any;
 
@@ -26,7 +27,11 @@ export class BtnSpinnerDirective implements AfterContentInit {
   }
 
   changeButtonText() {
-    // TODO: change button text
+    this.buttonElem.innerText = 'Loading...';
+  }
+
+  restoreBtnOriginalText() {
+    this.buttonElem.innerText = this.originalText;
   }
 
   disableBtn() {
@@ -37,23 +42,25 @@ export class BtnSpinnerDirective implements AfterContentInit {
     this.buttonElem.removeAttribute('disabled');
   }
 
-  waitState() {
+  changeBtnToWaitState() {
     this.disableBtn();
+    this.changeButtonText();
   }
 
   restoreBtnStateAfterPromise() {
     this.enableBtn();
+    this.restoreBtnOriginalText();
   }
 
   initPromiseHandler() {
     if (this.promise) {
+      this.originalText = this.buttonElem.innerText;
       const promise = this.promise;
       this.isPromiseFinished = false;
 
       const resolveLoadingState = () => {
         this.isPromiseFinished = true;
         this.restoreBtnStateAfterPromise();
-        console.log('Finished');
       };
 
       promise.then(resolveLoadingState)
@@ -70,7 +77,7 @@ export class BtnSpinnerDirective implements AfterContentInit {
     }
 
     setTimeout(() => {
-      this.waitState();
+      this.changeBtnToWaitState();
     }, 0);
   }
 
