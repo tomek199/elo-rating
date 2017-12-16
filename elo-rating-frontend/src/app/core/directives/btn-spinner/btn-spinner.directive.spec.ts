@@ -18,7 +18,7 @@ class TestDirectiveComponent {
   }
 }
 
-fdescribe('BtnSpinnerDirective', () => {
+describe('BtnSpinnerDirective', () => {
 
   let component: TestDirectiveComponent;
   let fixture: ComponentFixture<TestDirectiveComponent>;
@@ -43,7 +43,7 @@ fdescribe('BtnSpinnerDirective', () => {
     expect(button).toBeTruthy();
   }));
 
-  it('should have text "Loading..." after click', async(() => {
+  it('should have click method detected', async(() => {
     spyOn(component, 'setPromise');
     button.triggerEventHandler('click', null);
     fixture.detectChanges();
