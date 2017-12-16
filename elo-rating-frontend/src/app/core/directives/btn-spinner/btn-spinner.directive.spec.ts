@@ -1,25 +1,55 @@
+import { setTimeout } from 'timers';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BtnSpinnerDirective } from './btn-spinner.directive';
+import { Component, DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
-describe('BtnSpinnerComponent', () => {
-  let component: BtnSpinnerDirective;
-  let fixture: ComponentFixture<BtnSpinnerDirective>;
+@Component({
+  selector: 'app-test-component',
+  template: '<button [btnSpinner]="testPromise" (click)="setPromise()">TestButton</button>'
+})
+class TestDirectiveComponent {
+  testPromise: Promise<any>;
+
+  setPromise() {
+    this.testPromise = new Promise(() => {
+    });
+  }
+}
+
+fdescribe('BtnSpinnerDirective', () => {
+
+  let component: TestDirectiveComponent;
+  let fixture: ComponentFixture<TestDirectiveComponent>;
+  let button: DebugElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BtnSpinnerDirective ]
-    })
-    .compileComponents();
+      declarations: [
+        TestDirectiveComponent,
+        BtnSpinnerDirective
+      ]
+    });
+
+    fixture = TestBed.createComponent(TestDirectiveComponent);
+    component = fixture.componentInstance;
+    button = fixture.debugElement.query(By.css('button'));
+
+    fixture.detectChanges();
   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(BtnSpinnerDirective);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+  it('should pass', async(() => {
+    expect(button).toBeTruthy();
+  }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+  it('should have text "Loading..." after click', async(() => {
+    spyOn(component, 'setPromise');
+    button.triggerEventHandler('click', null);
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      expect(component.setPromise).toHaveBeenCalled();
+      // TODO: check if value checked during click
+    })
+  }));
 });
