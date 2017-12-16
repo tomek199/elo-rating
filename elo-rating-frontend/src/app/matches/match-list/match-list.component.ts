@@ -202,7 +202,8 @@ export class MatchListComponent implements OnInit, OnDestroy {
   }
 
   rescheduleMatches(): void {
-
+    this.matchService.rescheduleMatches(this.leagueId, environment.matchDuration)
+      .then(matches => this.scheduledMatches = matches);
   }
 
   private getPopoverText(): string {

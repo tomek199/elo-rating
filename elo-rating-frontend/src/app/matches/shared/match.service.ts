@@ -116,9 +116,9 @@ export class MatchService extends BaseApiService {
 
   rescheduleMatches(leagueId: string, minutes: number) {
     let url = `${this.url}/league/${leagueId}/reschedule-matches/${minutes}?sort=asc`;
-    return this.http.get(url)
+    return this.http.post(url, null, { headers: this.generateHeaders() })
       .toPromise()
-      .then(response => response.ok)
+      .then(response => response.json() as Match[])
       .catch(this.handleError);
   }
 }
