@@ -18,6 +18,7 @@
 		<swagger.version>2.6.1</swagger.version>
 		<google.api.version>1.22.0</google.api.version>
 		<jjwt.version>0.7.0</jjwt.version>
+		<maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
 	</properties>
 
 	<dependencies>
