@@ -6,7 +6,6 @@ import com.elorating.repository.LeagueRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service("leagueService")
@@ -48,5 +47,10 @@ public class LeagueServiceImpl implements LeagueService {
     @Override
     public League findLeagueByIdAndUser(String leagueId, User user) {
         return leagueRepository.findByIdAndUsers(leagueId, user);
+    }
+
+    @Override
+    public void deleteAll() {
+        leagueRepository.deleteAll();
     }
 }

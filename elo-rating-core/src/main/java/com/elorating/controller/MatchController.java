@@ -4,7 +4,6 @@ import com.elorating.algorithm.Elo;
 import com.elorating.model.League;
 import com.elorating.model.Match;
 import com.elorating.model.Player;
-import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
 import com.elorating.service.MatchService;
 import com.elorating.utils.SortUtils;
@@ -27,9 +26,6 @@ import java.util.List;
 public class MatchController {
 
     @Autowired
-    private MatchRepository matchRepository;
-
-    @Autowired
     private PlayerRepository playerRepository;
 
     @Autowired
@@ -39,7 +35,7 @@ public class MatchController {
     @RequestMapping(value = "/matches/{matchId}", method = RequestMethod.GET)
     @ApiOperation(value = "Get match", notes = "Return match by match id")
     public ResponseEntity<Match> getMatch(@PathVariable("matchId") String matchId) {
-        Match match = matchRepository.findOne(matchId);
+        Match match = matchService.getById(matchId);
         return new ResponseEntity<Match>(match, HttpStatus.OK);
     }
 
@@ -48,7 +44,7 @@ public class MatchController {
     @ApiOperation(value = "Get matches list", notes = "Return all matches list by league id")
     public ResponseEntity<List<Match>> get(@PathVariable String leagueId) {
         Sort sortByDate = SortUtils.getSortDescending();
-        List<Match> matches = matchRepository.findByLeagueId(leagueId, sortByDate);
+        List<Match> matches = ((MatchService) matchService).findMatchesByLeagueId(leagueId, sortByDate);
         return new ResponseEntity<List<Match>>(matches, HttpStatus.OK);
     }
 
@@ -62,7 +58,7 @@ public class MatchController {
                                                     @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
         PageRequest pageRequest = new PageRequest(page, pageSize, sortByDate);
-        Page<Match> matches = matchRepository.findByLeagueIdAndCompletedIsTrue(leagueId, pageRequest);
+        Page<Match> matches = ((MatchService) matchService).findMatchesByLeagueIdAndCompletedIsTrue(leagueId, pageRequest);
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 
@@ -73,7 +69,7 @@ public class MatchController {
     public ResponseEntity<List<Match>> getScheduled(@PathVariable String leagueId,
                                                     @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
-        List<Match> matches = matchRepository.findByLeagueIdAndCompletedIsFalse(leagueId, sortByDate);
+        List<Match> matches = ((MatchService) matchService).findMatchesByLeagueIdAndCompletedIsFalse(leagueId, sortByDate);
         return new ResponseEntity<List<Match>>(matches, HttpStatus.OK);
     }
 
@@ -85,7 +81,7 @@ public class MatchController {
                                                          @PathVariable int minutes,
                                                          @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
-        List<Match> matches = matchService.rescheduleMatchesInLeague(leagueId, minutes, sortByDate);
+        List<Match> matches = ((MatchService)matchService).rescheduleMatchesInLeague(leagueId, minutes, sortByDate);
         return new ResponseEntity<List<Match>>(matches, HttpStatus.OK);
     }
 
@@ -100,7 +96,7 @@ public class MatchController {
             match = saveMatchWithRatings(match);
         }
         else {
-            match = matchRepository.save(match);
+            match = matchService.save(match);
         }
         return new ResponseEntity<Match>(match, HttpStatus.OK);
     }
@@ -113,7 +109,7 @@ public class MatchController {
         updatePlayerRating(match.getPlayerOne());
         updatePlayerRating(match.getPlayerTwo());
         match.setCompleted();
-        return matchRepository.save(match);
+        return matchService.save(match);
     }
 
     private void updatePlayerRating(Player player) {
@@ -126,7 +122,7 @@ public class MatchController {
     @RequestMapping(value = "/leagues/{leagueId}/matches/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete match", notes = "Delete match by match id")
     public ResponseEntity<Match> delete(@PathVariable String id) {
-        matchRepository.delete(id);
+        matchService.deleteById(id);
         return new ResponseEntity<Match>(HttpStatus.OK);
     }
 
@@ -135,9 +131,9 @@ public class MatchController {
     @ApiOperation(value = "Revert match",
                 notes = "Delete match and revert players rating to previous state")
     public ResponseEntity<Match> revert(@PathVariable String id) {
-        Match match = matchRepository.findOne(id);
+        Match match = matchService.getById(id);
         if (restorePlayersRatings(match))
-            matchRepository.delete(match.getId());
+            matchService.deleteById(match.getId());
         return new ResponseEntity<>(match, HttpStatus.OK);
     }
 

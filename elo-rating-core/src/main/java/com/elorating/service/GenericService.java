@@ -8,4 +8,6 @@ public interface GenericService<T> {
     List<T> getAll();
     T save(T t);
     void deleteById(String id);
+
+    void deleteAll();
 }
