@@ -1,7 +1,10 @@
 package com.elorating.controller;
 
 import com.elorating.model.League;
-import com.elorating.repository.LeagueRepository;
+import com.elorating.service.GenericService;
+import com.elorating.service.LeagueService;
+import com.elorating.service.LeagueServiceImpl;
+import com.elorating.utils.LeagueTestUtils;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -29,7 +32,7 @@ public class LeagueControllerTest extends BaseControllerTest {
     private static final Logger logger = LoggerFactory.getLogger(LeagueControllerTest.class);
 
     @Mock
-    LeagueRepository leagueRepository;
+    LeagueServiceImpl leagueService;
 
     @InjectMocks
     LeagueController leagueController;
@@ -49,7 +52,7 @@ public class LeagueControllerTest extends BaseControllerTest {
 
     @Test
     public void testGet() throws Exception {
-        when(leagueRepository.findOne(league.getId())).thenReturn(league);
+        when(leagueService.getById(league.getId())).thenReturn(league);
         mockMvc.perform(get("/api/leagues/" + league.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(league.getId())))
@@ -58,9 +61,11 @@ public class LeagueControllerTest extends BaseControllerTest {
 
     @Test
     public void testGetAll() throws Exception {
-        when(leagueRepository.findOne(league.getId())).thenReturn(league);
-        mockMvc.perform(get("/api/leagues/" + league.getId()))
-                .andExpect(status().isOk());
+        List<League> leagues = LeagueTestUtils.generateLeagues(2, "League");
+        when(leagueService.getAll()).thenReturn(leagues);
+        mockMvc.perform(get("/api/leagues/"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray());
     }
 
     @Test
@@ -68,7 +73,7 @@ public class LeagueControllerTest extends BaseControllerTest {
         List<League> leagues = new ArrayList<>();
         leagues.add(new League("111", "League 1"));
         leagues.add(new League("222", "league 2"));
-        when(leagueRepository.findByNameLikeIgnoreCase("Lea")).thenReturn(leagues);
+        when((leagueService).findLeagueByName("Lea")).thenReturn(leagues);
         mockMvc.perform(get("/api/leagues/find-by-name?name=Lea"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(leagues.size())));
@@ -77,7 +82,7 @@ public class LeagueControllerTest extends BaseControllerTest {
     @Test
     public void testCreate() throws Exception {
         String leagueJson = objectMapper.writeValueAsString(new League(null, "New league"));
-        when(leagueRepository.save(any(League.class))).thenReturn(league);
+        when(leagueService.save(any(League.class))).thenReturn(league);
         mockMvc.perform(post("/api/leagues")
                 .content(leagueJson)
                 .contentType(contentType))
@@ -89,7 +94,7 @@ public class LeagueControllerTest extends BaseControllerTest {
     public void testUpdate() throws Exception {
         League leagueToUpdate = new League("123", "League to update");
         String leagueJson = objectMapper.writeValueAsString(leagueToUpdate);
-        when(leagueRepository.save(any(League.class))).thenReturn(leagueToUpdate);
+        when(leagueService.save(any(League.class))).thenReturn(leagueToUpdate);
         String url = "/api/leagues/" + leagueToUpdate.getId();
         mockMvc.perform(put(url)
                 .content(leagueJson)
