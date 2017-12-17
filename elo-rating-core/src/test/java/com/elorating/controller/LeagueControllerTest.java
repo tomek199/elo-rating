@@ -1,9 +1,8 @@
 package com.elorating.controller;
 
 import com.elorating.model.League;
-import com.elorating.service.GenericService;
+
 import com.elorating.service.LeagueService;
-import com.elorating.service.LeagueServiceImpl;
 import com.elorating.utils.LeagueTestUtils;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -32,7 +31,7 @@ public class LeagueControllerTest extends BaseControllerTest {
     private static final Logger logger = LoggerFactory.getLogger(LeagueControllerTest.class);
 
     @Mock
-    LeagueServiceImpl leagueService;
+    LeagueService leagueService;
 
     @InjectMocks
     LeagueController leagueController;
@@ -73,7 +72,7 @@ public class LeagueControllerTest extends BaseControllerTest {
         List<League> leagues = new ArrayList<>();
         leagues.add(new League("111", "League 1"));
         leagues.add(new League("222", "league 2"));
-        when((leagueService).findLeagueByName("Lea")).thenReturn(leagues);
+        when(leagueService.findLeagueByName("Lea")).thenReturn(leagues);
         mockMvc.perform(get("/api/leagues/find-by-name?name=Lea"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(leagues.size())));

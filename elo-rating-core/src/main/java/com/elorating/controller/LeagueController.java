@@ -1,10 +1,7 @@
 package com.elorating.controller;
 
 import com.elorating.model.League;
-import com.elorating.repository.LeagueRepository;
-import com.elorating.service.GenericService;
 import com.elorating.service.LeagueService;
-import com.elorating.service.LeagueServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -25,7 +22,7 @@ public class LeagueController {
     private static final Logger logger = LoggerFactory.getLogger(LeagueController.class);
 
     @Autowired
-    private GenericService<League> leagueService;
+    private LeagueService leagueService;
 
     @CrossOrigin
     @RequestMapping(value = "/leagues/{id}", method = RequestMethod.GET)
@@ -54,7 +51,7 @@ public class LeagueController {
     @ApiOperation(value = "Find leagues by name",
                 notes = "Return leagues list filtered by league name")
     public ResponseEntity<List<League>> findByName(@RequestParam String name) {
-        List<League> leagues = ((LeagueService)leagueService).findLeagueByName(name);
+        List<League> leagues = leagueService.findLeagueByName(name);
         if (leagues.isEmpty()) {
             return new ResponseEntity<List<League>>(HttpStatus.NO_CONTENT);
         }

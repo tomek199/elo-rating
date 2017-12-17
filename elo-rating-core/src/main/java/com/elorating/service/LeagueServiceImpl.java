@@ -6,6 +6,7 @@ import com.elorating.repository.LeagueRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service("leagueService")
