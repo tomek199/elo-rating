@@ -17,7 +17,7 @@ import java.util.List;
 public class MatchServiceImpl implements MatchService {
 
     @Resource
-    MatchRepository matchRepository;
+    private MatchRepository matchRepository;
 
     @Override
     public Match getById(String id) {

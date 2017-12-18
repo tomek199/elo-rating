@@ -12,7 +12,7 @@ import java.util.List;
 public class LeagueServiceImpl implements LeagueService {
 
     @Resource
-    LeagueRepository leagueRepository;
+    private LeagueRepository leagueRepository;
 
     @Override
     public League getById(String id) {
