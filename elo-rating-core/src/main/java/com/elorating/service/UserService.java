@@ -3,7 +3,7 @@ package com.elorating.service;
 import com.elorating.model.Player;
 import com.elorating.model.User;
 
-public interface UserService {
+public interface UserService extends GenericService<User> {
     User connectUserToLeagueAndPlayer(User user);
     User connectUserToLeague(User user);
     User connectUserToPlayer(User user);
