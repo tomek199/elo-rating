@@ -1,3 +1,4 @@
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { Page } from './../../core/utils/pagination/page.model';
 import { Http } from '@angular/http';
 import { Match } from './match.model';
@@ -8,8 +9,8 @@ import { BaseApiService } from "../../core/shared/base-api.service";
 @Injectable()
 export class MatchService extends BaseApiService {
 
-  constructor(private http: Http) { 
-    super();
+  constructor(private http: Http, protected googleAuthService: GoogleAuthService) { 
+    super(googleAuthService);
   }
 
   getMatchById(matchId: string): Promise<Match> {
@@ -77,25 +78,25 @@ export class MatchService extends BaseApiService {
       .then(response => response.json() as Match[]);
   }
 
-  add(leagueId: string, match: Match): Promise<Match> {
+  save(leagueId: string, match: Match): Promise<Match> {
     let url = `${this.url}/leagues/${leagueId}/matches`;
-    return this.http.post(url, JSON.stringify(match), { headers: this.headers })
+    return this.http.post(url, JSON.stringify(match), { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.json() as Match)
       .catch(this.handleError);
   }
 
-  delete(id: string): Promise<boolean> {
-    let url = `${this.url}/matches/${id}`;
-    return this.http.delete(url)
+  delete(leagueId: string, id: string): Promise<boolean> {
+    let url = `${this.url}/leagues/${leagueId}/matches/${id}`;
+    return this.http.delete(url, { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.ok)
       .catch(this.handleError);
   }
 
-  revertMatch(id: string): Promise<boolean> {
-    let url = `${this.url}/matches/${id}/revert`;
-    return this.http.get(url)
+  revertMatch(leagueId: string, id: string): Promise<boolean> {
+    let url = `${this.url}/leagues/${leagueId}/matches/${id}/revert`;
+    return this.http.post(url, null, { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.ok)
       .catch(this.handleError);
@@ -110,7 +111,14 @@ export class MatchService extends BaseApiService {
     output.ratings = match.ratings;
     output.date = new Date(match.date);
     output.ratingDelta = match.ratingDelta;
-
     return output;
+  }
+
+  rescheduleMatches(leagueId: string, minutes: number) {
+    let url = `${this.url}/league/${leagueId}/reschedule-matches/${minutes}?sort=asc`;
+    return this.http.post(url, null, { headers: this.generateHeaders() })
+      .toPromise()
+      .then(response => response.json() as Match[])
+      .catch(this.handleError);
   }
 }

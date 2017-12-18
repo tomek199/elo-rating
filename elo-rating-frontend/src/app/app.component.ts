@@ -51,7 +51,7 @@ export class AppComponent {
       this.leagueService.getLeague(leagueId)
         .then(league => {
           this.googleAuthService.setCurrentLeague(league);
-          this.leagueId = this.googleAuthService.getCurrentLeagueId();
+          this.leagueId = leagueId;
         });
     }
   }

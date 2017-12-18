@@ -1,3 +1,4 @@
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { Observable } from 'rxjs/Observable';
 import { User } from './user.model';
 import { Http } from '@angular/http';
@@ -9,13 +10,13 @@ import { BaseApiService } from "../../core/shared/base-api.service";
 @Injectable()
 export class UserService extends BaseApiService {
 
-  constructor(private http: Http) { 
-    super();
+  constructor(private http: Http, protected googleAuthService: GoogleAuthService) { 
+    super(googleAuthService);
   }
 
   signIn(idToken: string): Promise<User> {
     let url = `${this.url}/users/sign-in`;
-    return this.http.post(url, idToken)
+    return this.http.post(url, idToken, { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.json() as User)
       .catch(this.handleError);
@@ -27,17 +28,17 @@ export class UserService extends BaseApiService {
       .map(response => response.json() as User[]);
   }
 
-  assignLeague(userId: string, leagueId: string): Promise<User> {
-    let url = `${this.url}/users/${userId}/assign-league/${leagueId}`;
-    return this.http.post(url, null)
+  assignLeague(leagueId: string, userId: string): Promise<User> {
+    let url = `${this.url}/leagues/${leagueId}/users/${userId}/assign-league`;
+    return this.http.post(url, null, { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.json() as User)
       .catch(this.handleError);
   }
 
-  inviteUser(currentUserId: string, userToInvite: User): Promise<User> {
-    let url = `${this.url}/users/${currentUserId}/invite-user`;
-    return this.http.post(url, userToInvite)
+  inviteUser(leagueId: string, currentUserId: string, userToInvite: User): Promise<User> {
+    let url = `${this.url}/leagues/${leagueId}/users/${currentUserId}/invite`;
+    return this.http.post(url, userToInvite, { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.json() as User)
       .catch(this.handleError);
@@ -45,7 +46,7 @@ export class UserService extends BaseApiService {
 
   verifySecurityToken(token: string): Promise<boolean> {
     let url = `${this.url}/users/verify-security-token`;
-    return this.http.post(url, token)
+    return this.http.post(url, token, { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.json() as boolean)
       .catch(this.handleError);
@@ -54,15 +55,15 @@ export class UserService extends BaseApiService {
   completeInvitation(googleIdToken: string, securityToken: string): Promise<User> {
     let url = `${this.url}/users/confirm-invitation`;
     let requestBody = {googleIdToken: googleIdToken, securityToken: securityToken};
-    return this.http.post(url, requestBody)
+    return this.http.post(url, requestBody, { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.json() as User)
       .catch(this.handleError);
   }
 
-  createPlayer(userId: string, leagueId: string): Promise<User> {
-    let url = `${this.url}/users/${userId}/create-player`;
-    return this.http.post(url, leagueId)
+  createPlayer(leagueId: string, userId: string): Promise<User> {
+    let url = `${this.url}/leagues/${leagueId}/users/${userId}/create-player`;
+    return this.http.post(url, null, { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.json() as User)
       .catch(this.handleError);

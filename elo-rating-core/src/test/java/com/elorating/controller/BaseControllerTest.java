@@ -3,6 +3,7 @@ package com.elorating.controller;
 import com.elorating.CoreApplication;
 import com.elorating.model.League;
 import com.elorating.repository.LeagueRepository;
+import com.elorating.service.LeagueService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,4 +38,7 @@ public abstract class BaseControllerTest {
 
     @Autowired
     protected LeagueRepository leagueRepository;
+
+    @Autowired
+    protected LeagueService leagueService;
 }

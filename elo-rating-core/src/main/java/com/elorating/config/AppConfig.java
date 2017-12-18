@@ -1,7 +1,5 @@
 package com.elorating.config;
 
-import com.elorating.service.PlayerStatsService;
-import com.elorating.service.PlayerStatsServiceImpl;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.context.annotation.Bean;
@@ -13,11 +11,6 @@ import org.springframework.http.HttpStatus;
  */
 @Configuration
 public class AppConfig {
-
-    @Bean(name = "playerStatsService")
-    public PlayerStatsService getPlayerStatsService() {
-        return new PlayerStatsServiceImpl();
-    }
 
     /**
      * Bean for handling single page application that always redirect to /

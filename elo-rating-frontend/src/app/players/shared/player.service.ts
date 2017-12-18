@@ -6,13 +6,14 @@ import { Http } from '@angular/http';
 import { Player } from './player.model';
 import { Injectable } from '@angular/core';
 import { BaseApiService } from "../../core/shared/base-api.service";
+import { GoogleAuthService } from 'app/auth/shared/google-auth.service';
 
 
 @Injectable()
 export class PlayerService extends BaseApiService {
 
-  constructor(private http: Http) { 
-    super();
+  constructor(private http: Http, protected googleAuthService: GoogleAuthService) { 
+    super(googleAuthService);
   }
 
   getPlayers(leagueId: string): Promise<Player[]> {
@@ -33,7 +34,7 @@ export class PlayerService extends BaseApiService {
 
   addPlayer(leagueId: string, player: Player): Promise<Player> {
     let url = `${this.url}/leagues/${leagueId}/players`;
-    return this.http.post(url, JSON.stringify(player), { headers: this.headers })
+    return this.http.post(url, JSON.stringify(player), { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.json() as Player)
       .catch(this.handleError);
@@ -55,17 +56,17 @@ export class PlayerService extends BaseApiService {
       .catch(this.handleError);
   }
 
-  delete(id: string): Promise<boolean> {
-    let url = `${this.url}/players/${id}`;
-    return this.http.delete(url)
+  delete(leagueId: string, playerId: string): Promise<boolean> {
+    let url = `${this.url}/leagues/${leagueId}/players/${playerId}`;
+    return this.http.delete(url, { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.ok)
       .catch(this.handleError);
   }
 
-  update(player: Player): Promise<Player> {
-    let url = `${this.url}/players/${player.id}`;
-    return this.http.put(url, JSON.stringify(player), { headers: this.headers })
+  update(leagueId: string, player: Player): Promise<Player> {
+    let url = `${this.url}/leagues/${leagueId}/players/${player.id}`;
+    return this.http.put(url, JSON.stringify(player), { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.json() as Player)
       .catch(this.handleError);

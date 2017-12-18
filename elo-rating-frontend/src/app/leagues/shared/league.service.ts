@@ -1,3 +1,4 @@
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { Injectable } from '@angular/core';
@@ -8,8 +9,8 @@ import { BaseApiService } from "../../core/shared/base-api.service";
 @Injectable()
 export class LeagueService extends BaseApiService {
 
-  constructor(private http: Http) {
-    super();
+  constructor(private http: Http, protected googleAuthService: GoogleAuthService) {
+    super(googleAuthService);
   }
 
   getLeague(id: string): Promise<League> {
@@ -36,15 +37,15 @@ export class LeagueService extends BaseApiService {
 
   create(league: League): Promise<League> {
     let url = `${this.url}/leagues`;
-    return this.http.post(url, JSON.stringify(league), {headers: this.headers})
+    return this.http.post(url, JSON.stringify(league), {headers: this.generateHeaders()})
       .toPromise()
       .then(response => response.json() as League)
       .catch(this.handleError);
   }
 
   update(league: League): Promise<League> {
-    let url = `${this.url}/leagues`;
-    return this.http.put(url, JSON.stringify(league), {headers: this.headers})
+    let url = `${this.url}/leagues/${league.id}`;
+    return this.http.put(url, JSON.stringify(league), {headers: this.generateHeaders()})
       .toPromise()
       .then(response => response.json() as League)
       .catch(this.handleError);

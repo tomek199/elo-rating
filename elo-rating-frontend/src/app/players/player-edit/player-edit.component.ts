@@ -40,7 +40,7 @@ export class PlayerEditComponent implements OnInit {
   }
 
   save() {
-    this.playerService.update(this.player)
+    this.playerService.update(this.leagueId, this.player)
       .then(player => {
         this.player = player;
         this.goToList();

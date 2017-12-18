@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { Player } from './../../players/shared/player.model';
 import { PlayerService } from './../../players/shared/player.service';
 import { League } from 'app/leagues/shared/league.model';
@@ -17,9 +18,9 @@ export class UserInviteComponent implements OnInit {
   player: Player;
   showSuccessAlert: boolean;
   private leagueId: string;
-  private currentUser: User;
 
   constructor(
+    private route: ActivatedRoute,
     private userService: UserService,
     private playerService: PlayerService,
     private googleAuthService: GoogleAuthService
@@ -27,8 +28,12 @@ export class UserInviteComponent implements OnInit {
 
   ngOnInit() {
     this.showSuccessAlert = false;
-    this.leagueId = this.googleAuthService.getCurrentLeagueId();
-    this.currentUser = this.googleAuthService.getCurrentUser();
+    this.getLeagueId();
+  }
+
+  getLeagueId() {
+    this.route.params.map(param => param['league_id'])
+      .forEach(league_id => this.leagueId = league_id);
   }
 
   searchUsers = (text$: Observable<string>) =>
@@ -61,7 +66,8 @@ export class UserInviteComponent implements OnInit {
   sendInvitation() {
     this.showSuccessAlert = undefined;
     let userToInvite = this.prepareUser();
-    this.userService.inviteUser(this.currentUser.id, userToInvite)
+    let currentUser = this.googleAuthService.getCurrentUser();
+    this.userService.inviteUser(this.leagueId, currentUser.id, userToInvite)
       .then(user => {
         this.showSuccessAlert = true;
       });

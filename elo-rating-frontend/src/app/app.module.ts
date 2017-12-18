@@ -46,6 +46,7 @@ import { UserConfirmInvitationComponent } from './users/user-confirm-invitation/
 import { UserCreatePlayerComponent } from './users/user-create-player/user-create-player.component';
 import { FeedbackSendComponent } from './feedback/feedback-send/feedback-send.component';
 import { LeagueEditComponent } from './leagues/league-edit/league-edit.component';
+import { BtnSpinnerDirective } from './core/directives/btn-spinner/btn-spinner.directive';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { LeagueEditComponent } from './leagues/league-edit/league-edit.component
     UserConfirmInvitationComponent,
     UserCreatePlayerComponent,
     FeedbackSendComponent,
-    LeagueEditComponent
+    LeagueEditComponent,
+    BtnSpinnerDirective
   ],
   imports: [
     BrowserModule,

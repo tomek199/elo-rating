@@ -20,7 +20,7 @@ export class PlayerListComponent implements OnInit {
   constructor(
     private playerService: PlayerService,
     private route: ActivatedRoute,
-    private modalService: NgbModal, 
+    private modalService: NgbModal,
     private googleAuthService: GoogleAuthService
   ) { }
 
@@ -67,7 +67,7 @@ export class PlayerListComponent implements OnInit {
 
   delete(index: number): void {
     let id = this.inactivePlayers[index].id;
-    this.playerService.delete(id)
+    this.playerService.delete(this.leagueId, id)
       .then(result => {
         if (result) {
           this.getPlayers();
@@ -90,7 +90,7 @@ export class PlayerListComponent implements OnInit {
   disable(index: number): void {
     let player = this.activePlayers[index];
     player.active = false;
-    this.playerService.update(player)
+    this.playerService.update(this.leagueId, player)
       .then(result => {
         if (result) {
           this.getPlayers();
@@ -100,5 +100,9 @@ export class PlayerListComponent implements OnInit {
 
   isAuthorized(): boolean {
     return (!this.googleAuthService.isLeagueAssigned() || this.googleAuthService.isAuthorized());
+  }
+
+  hasActivePlayers(): boolean {
+    return this.activePlayers != null && this.activePlayers.length > 0;
   }
 }

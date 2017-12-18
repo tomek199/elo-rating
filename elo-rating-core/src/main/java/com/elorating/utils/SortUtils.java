@@ -14,4 +14,12 @@ public class SortUtils {
         }
         return new Sort(Sort.Direction.DESC, "date");
     }
+
+    public static Sort getSortAscending() {
+        return getSort("asc");
+    }
+
+    public static Sort getSortDescending() {
+        return getSort("desc");
+    }
 }

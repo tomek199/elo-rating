@@ -27,10 +27,6 @@ export class GoogleAuthServiceStub {
     return null;
   }
 
-  getCurrentLeagueId(): string {
-    return '123';
-  }
-
   setCurrentLeague(leagueId: string) {
   }
 

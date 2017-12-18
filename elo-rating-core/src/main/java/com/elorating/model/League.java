@@ -41,6 +41,10 @@ public class League {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public List<User> getUsers() {
         return users;
     }
@@ -49,5 +53,9 @@ public class League {
         if (users == null)
             users = new ArrayList<>();
         users.add(user);
+    }
+
+    public boolean isAssigned() {
+        return users != null && users.size() > 0;
     }
 }

@@ -18,6 +18,7 @@ import { ActivatedRoute } from '@angular/router';
 import { async, ComponentFixture, TestBed, tick, fakeAsync, discardPeriodicTasks } from '@angular/core/testing';
 
 import { MatchListComponent } from './match-list.component';
+import { BtnSpinnerDirective } from 'app/core/directives/btn-spinner/btn-spinner.directive';
 
 describe('MatchListComponent', () => {
   let component: MatchListComponent;
@@ -31,7 +32,8 @@ describe('MatchListComponent', () => {
         MatchListComponent,
         PageSizeComponent,
         PlayerCellStubComponent,
-        SpinnerComponent
+        SpinnerComponent,
+        BtnSpinnerDirective
       ],
       imports: [RouterTestingModule, FormsModule, NgbModule.forRoot()],
       providers: [

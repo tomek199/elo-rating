@@ -1,3 +1,5 @@
+import { GoogleAuthServiceStub } from './../../testing/google-stubs';
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
@@ -9,7 +11,10 @@ describe('LeagueService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpModule],
-      providers: [LeagueService]
+      providers: [
+        LeagueService,
+        {provide: GoogleAuthService, useClass: GoogleAuthServiceStub}
+      ]
     });
   });
 

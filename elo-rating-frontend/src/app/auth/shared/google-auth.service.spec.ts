@@ -95,20 +95,9 @@ describe('GoogleAuthService', () => {
     expect(service.getCurrentLeague()).toBeNull();
   }));
 
-  it('getCurrentLeagueId() should return league id when league is selected', inject([GoogleAuthService], (service: GoogleAuthService) => {
-    let league = new League('123', 'Test league');
-    setLeague(league);
-    expect(service.getCurrentLeagueId()).toEqual('123');
-  }));
-
-  it('getCurrentLeagueId() should return null when league is not selected', inject([GoogleAuthService], (service: GoogleAuthService) => {
-    expect(service.getCurrentLeagueId()).toBeNull();
-  }));
-
   it('setCurrentLeague() should set current league id and store it in sessionStorage', inject([GoogleAuthService], (service: GoogleAuthService) => {
     let league = new League('987', 'Test league');
     service.setCurrentLeague(league);
-    expect(service.getCurrentLeagueId()).toEqual(league.id);
     expect(service.getCurrentLeague().name).toEqual(league.name);
   }));
 

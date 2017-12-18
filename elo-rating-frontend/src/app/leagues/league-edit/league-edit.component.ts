@@ -2,6 +2,7 @@ import { LeagueService } from './../shared/league.service';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { League } from 'app/leagues/shared/league.model';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-league-edit',
@@ -13,7 +14,7 @@ export class LeagueEditComponent implements OnInit {
   showSuccessAlert: boolean;
 
   constructor(
-    private googleAuthService: GoogleAuthService, 
+    private route: ActivatedRoute,    
     private leagueService: LeagueService
   ) { }
 
@@ -23,9 +24,11 @@ export class LeagueEditComponent implements OnInit {
   }
 
   private getLeague() {
-    let leagueId = this.googleAuthService.getCurrentLeagueId();
-    this.leagueService.getLeague(leagueId)
-      .then(response => this.league = response);
+    this.route.params.map(param => param['league_id'])
+    .forEach(leagueId => {
+      this.leagueService.getLeague(leagueId)
+        .then(response => this.league = response);
+    });
   }
 
   displayWarning(): boolean {

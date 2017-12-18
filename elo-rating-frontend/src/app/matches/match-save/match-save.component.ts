@@ -222,7 +222,7 @@ export class MatchSaveComponent implements OnInit {
 
   save() {
     this.setMatchDate();
-    this.matchService.add(this.leagueId, this.match)
+    this.matchService.save(this.leagueId, this.match)
       .then(match => {
         this.goToList();
       });

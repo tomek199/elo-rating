@@ -33,7 +33,7 @@
         </tr>
         <tr class="table-active" *ngIf="showRescheduleBtn()">
             <td colspan="4">
-                <button id="rescheduleBtn" class="btn btn-primary float-right" (click)="rescheduleMatches()" ngbPopover="{{popoverText}}" triggers="mouseenter:mouseleave">Reschedule</button>
+                <button [btnSpinner]="reschedulePromise" id="rescheduleBtn" class="btn btn-primary float-right" (click)="rescheduleMatches()" ngbPopover="{{popoverText}}" triggers="mouseenter:mouseleave">Reschedule</button>
             </td>
         </tr>
     </tbody>

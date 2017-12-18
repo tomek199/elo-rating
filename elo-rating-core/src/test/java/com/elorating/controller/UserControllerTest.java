@@ -58,7 +58,7 @@ public class UserControllerTest extends BaseControllerTest {
         user.addLeague(league);
         userRepository.save(user);
         League leagueToAssign = leagueRepository.save(new League(null, "To assign"));
-        String url = "/api/users/" + user.getId() + "/assign-league/" + leagueToAssign.getId();
+        String url = "/api/leagues/" + leagueToAssign.getId() + "/users/" + user.getId() + "/assign-league/";
         mockMvc.perform(post(url)
                 .contentType(contentType))
                 .andExpect(status().isOk())
@@ -72,7 +72,7 @@ public class UserControllerTest extends BaseControllerTest {
         User user = userRepository.save(new User("User who invite"));
         User userToInvite = new User("User to invite", "t.morek@gmail.com");
         userToInvite.addLeague(league);
-        String url = "/api/users/" + user.getId() + "/invite-user";
+        String url = "/api/leagues/" + league.getId() + "/users/" + user.getId() + "/invite";
         mockMvc.perform(post(url)
                 .contentType(contentType)
                 .header("Origin", "http://elo.com")
@@ -90,7 +90,7 @@ public class UserControllerTest extends BaseControllerTest {
         User user = userRepository.save(new User("User who invite"));
         User userToInvite = userRepository.save(new User("User to invite", "t.morek@gmail.com"));
         userToInvite.addLeague(league);
-        String url = "/api/users/" + user.getId() + "/invite-user";
+        String url = "/api/leagues/" + league.getId() + "/users/" + user.getId() + "/invite";
         mockMvc.perform(post(url)
                 .contentType(contentType)
                 .header("Origin", "http://elo.com")
@@ -103,7 +103,6 @@ public class UserControllerTest extends BaseControllerTest {
         Assert.assertEquals(updatedLeague.getUsers().size(), 1);
     }
 
-    @Ignore // Test failing when is run with other tests. WTF?
     @Test
     public void testInviteNewUserWithPlayer() throws Exception {
         User user = userRepository.save(new User("User who invite"));
@@ -111,7 +110,7 @@ public class UserControllerTest extends BaseControllerTest {
         Player player = playerRepository.save(new Player("Player to connect", league));
         userToInvite.addPlayer(player);
         userToInvite.addLeague(league);
-        String url = "/api/users/" + user.getId() + "/invite-user";
+        String url = "/api/leagues/" + league.getId() + "/users/" + user.getId() + "/invite";
         mockMvc.perform(post(url)
                 .contentType(contentType)
                 .header("Origin", "http://elo.com")
@@ -125,7 +124,6 @@ public class UserControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$.players[0].id", is(player.getId())));
     }
 
-    @Ignore // Test failing when is run with other tests. WTF?
     @Test
     public void testInviteExistingUserWithPlayer() throws Exception {
         User user = userRepository.save(new User("User who invite"));
@@ -133,7 +131,7 @@ public class UserControllerTest extends BaseControllerTest {
         Player player = playerRepository.save(new Player("Player to connect", league));
         userToInvite.addPlayer(player);
         userToInvite.addLeague(league);
-        String url = "/api/users/" + user.getId() + "/invite-user";
+        String url = "/api/leagues/" + league.getId() + "/users/" + user.getId() + "/invite";
         mockMvc.perform(post(url)
                 .contentType(contentType)
                 .header("Origin", "http://elo.com")
@@ -193,7 +191,7 @@ public class UserControllerTest extends BaseControllerTest {
     @Test
     public void testCreatePlayer() throws Exception {
         User user = userRepository.save(new User("Test user"));
-        String url = "/api/users/" + user.getId() + "/create-player";
+        String url = "/api/leagues/" + league.getId() + "/users/" + user.getId() + "/create-player";
         mockMvc.perform(post(url)
                 .contentType(contentType)
                 .content(league.getId()))

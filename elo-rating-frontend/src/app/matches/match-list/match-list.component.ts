@@ -25,6 +25,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
   scheduledMatches: Match[];
   private popoverText: string;
   private matchesSubscription: Subscription;
+  private reschedulePromise: Promise<any>;
 
   constructor(
     private matchService: MatchService,
@@ -138,7 +139,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
   }
 
   delete(matchId: string) {
-    this.matchService.delete(matchId)
+    this.matchService.delete(this.leagueId, matchId)
       .then(result => {
         if (result) {
           this.getMatches();
@@ -160,7 +161,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
   }
 
   revertMatch(matchId: string) {
-    this.matchService.revertMatch(matchId)
+    this.matchService.revertMatch(this.leagueId, matchId)
       .then(result => {
         this.getCompletedMatches();
       })
@@ -202,7 +203,8 @@ export class MatchListComponent implements OnInit, OnDestroy {
   }
 
   rescheduleMatches(): void {
-
+    this.reschedulePromise = this.matchService.rescheduleMatches(this.leagueId, environment.matchDuration)
+      .then(matches => this.scheduledMatches = matches);
   }
 
   private getPopoverText(): string {

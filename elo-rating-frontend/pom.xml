@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 
 	<name>elo-rating-frontend</name>
-	<description>Celo-rating frontend</description>
+	<description>elo-rating frontend</description>
 
 	<properties>
     <node.version>v6.10.1</node.version>
