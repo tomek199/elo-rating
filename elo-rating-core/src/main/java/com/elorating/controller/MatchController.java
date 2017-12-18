@@ -4,8 +4,8 @@ import com.elorating.algorithm.Elo;
 import com.elorating.model.League;
 import com.elorating.model.Match;
 import com.elorating.model.Player;
-import com.elorating.repository.PlayerRepository;
 import com.elorating.service.MatchService;
+import com.elorating.service.PlayerService;
 import com.elorating.utils.SortUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,10 +26,10 @@ import java.util.List;
 public class MatchController {
 
     @Autowired
-    private PlayerRepository playerRepository;
+    private MatchService matchService;
 
     @Autowired
-    private MatchService matchService;
+    private PlayerService playerService;
 
     @CrossOrigin
     @RequestMapping(value = "/matches/{matchId}", method = RequestMethod.GET)
@@ -113,9 +113,9 @@ public class MatchController {
     }
 
     private void updatePlayerRating(Player player) {
-        Player playerToUpdate = playerRepository.findOne(player.getId());
+        Player playerToUpdate = playerService.getById(player.getId());
         playerToUpdate.setRating(player.getRating());
-        playerRepository.save(playerToUpdate);
+        playerService.save(playerToUpdate);
     }
 
     @CrossOrigin
