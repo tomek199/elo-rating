@@ -7,6 +7,7 @@ public interface GenericService<T> {
     T getById(String id);
     List<T> getAll();
     T save(T t);
+    List<T> save(Iterable<T> t);
     void deleteById(String id);
 
     void deleteAll();

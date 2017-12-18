@@ -34,6 +34,11 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
+    public List<Match> save(Iterable<Match> matches) {
+        return matchRepository.save(matches);
+    }
+
+    @Override
     public void deleteById(String id) {
         matchRepository.delete(id);
     }
@@ -51,6 +56,11 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public List<Match> findMatchesByLeagueIdAndCompletedIsFalse(String leagueId, Sort sortByDate) {
         return matchRepository.findByLeagueIdAndCompletedIsFalse(leagueId, sortByDate);
+    }
+
+    @Override
+    public List<Match> findMatchesByPlayerId(String playerId) {
+        return matchRepository.findByPlayerId(playerId);
     }
 
     @Override

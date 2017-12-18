@@ -30,6 +30,11 @@ public class LeagueServiceImpl implements LeagueService {
     }
 
     @Override
+    public List<League> save(Iterable<League> leagues) {
+        return leagueRepository.save(leagues);
+    }
+
+    @Override
     public void deleteById(String id) {
         leagueRepository.delete(id);
     }

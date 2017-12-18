@@ -1,8 +1,8 @@
 package com.elorating.controller;
 
 import com.elorating.model.*;
-import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
+import com.elorating.service.MatchService;
 import com.elorating.service.PlayerStatsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,7 +24,7 @@ public class PlayerController {
     private PlayerRepository playerRepository;
 
     @Autowired
-    private MatchRepository matchRepository;
+    private MatchService matchService;
 
     @Autowired
     private PlayerStatsService playerStatsService;
@@ -84,12 +84,12 @@ public class PlayerController {
     }
 
     private void removePlayerFromMatches(String playerId) {
-        List<Match> matches = matchRepository.findByPlayerId(playerId);
+        List<Match> matches = matchService.findMatchesByPlayerId(playerId);
         for (Match match : matches) {
             match.removePlayerId(playerId);
         }
 
-        matchRepository.save(matches);
+        matchService.save(matches);
     }
 
     @CrossOrigin
