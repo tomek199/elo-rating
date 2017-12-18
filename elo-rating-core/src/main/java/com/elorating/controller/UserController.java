@@ -3,7 +3,6 @@ package com.elorating.controller;
 import com.elorating.model.Invitation;
 import com.elorating.model.Player;
 import com.elorating.model.User;
-import com.elorating.repository.UserRepository;
 import com.elorating.service.GoogleAuthService;
 import com.elorating.service.UserService;
 import io.swagger.annotations.Api;
@@ -23,9 +22,6 @@ import java.util.List;
 @Api(value = "users", description = "Users API")
 public class UserController {
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private GoogleAuthService googleAuthService;
@@ -51,7 +47,7 @@ public class UserController {
     @RequestMapping(value = "/users/verify-security-token", method = RequestMethod.POST)
     @ApiOperation(value = "Verify security token", notes = "Verify security token")
     public ResponseEntity<Boolean> verifySecurityToken(@RequestBody String token) {
-        User user = userRepository.findByInvitationToken(token);
+        User user = userService.findByInvitationToken(token);
         Boolean tokenVerified = (user != null);
         return new ResponseEntity<>(tokenVerified, HttpStatus.OK);
     }
@@ -63,11 +59,11 @@ public class UserController {
     public ResponseEntity<User> confirmInvitation(@RequestBody Invitation invitation) {
         User userFromGoogle = googleAuthService.getUserFromToken(invitation.getGoogleIdToken());
         if (userFromGoogle != null) {
-            User userFromDB = userRepository.findByInvitationToken(invitation.getSecurityToken());
+            User userFromDB = userService.findByInvitationToken(invitation.getSecurityToken());
             userFromDB.update(userFromGoogle);
             userFromDB.setGoogleId(userFromGoogle.getGoogleId());
             userFromDB.clearInvitationToken();
-            userRepository.save(userFromDB);
+            userService.save(userFromDB);
             userService.connectUserToLeagueAndPlayer(userFromDB);
             return new ResponseEntity<>(userFromDB, HttpStatus.OK);
         }
@@ -87,7 +83,7 @@ public class UserController {
     @RequestMapping(value = "/users/find-by-name", method = RequestMethod.GET)
     @ApiOperation(value = "Find by name", notes = "Find user by name")
     public ResponseEntity<List<User>> findByName(@RequestParam String name) {
-        List<User> users = userRepository.findByNameLikeIgnoreCase(name);
+        List<User> users = userService.findByNameLikeIgnoreCase(name);
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
@@ -108,9 +104,9 @@ public class UserController {
     public ResponseEntity<User> inviteUser(HttpServletRequest request,
                                            @PathVariable String id,
                                            @RequestBody User requestUser) {
-        User currentUser = userRepository.findOne(id);
+        User currentUser = userService.getById(id);
         String originUrl = request.getHeader("Origin");
-        User userFromDB = userRepository.findByEmail(requestUser.getEmail());
+        User userFromDB = userService.findByEmail(requestUser.getEmail());
         if (userFromDB == null)
             requestUser = userService.inviteNewUser(currentUser.getName(), requestUser, originUrl);
         else

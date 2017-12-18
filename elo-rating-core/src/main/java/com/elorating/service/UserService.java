@@ -3,7 +3,12 @@ package com.elorating.service;
 import com.elorating.model.Player;
 import com.elorating.model.User;
 
+import java.util.List;
+
 public interface UserService extends GenericService<User> {
+    User findByEmail(String email);
+    User findByInvitationToken(String token);
+    List<User> findByNameLikeIgnoreCase(String name);
     User connectUserToLeagueAndPlayer(User user);
     User connectUserToLeague(User user);
     User connectUserToPlayer(User user);
