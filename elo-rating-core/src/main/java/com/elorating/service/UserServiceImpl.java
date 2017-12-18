@@ -10,6 +10,7 @@ import com.elorating.service.email.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -26,6 +27,36 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private EmailService emailService;
+
+    @Override
+    public User getById(String id) {
+        return userRepository.findOne(id);
+    }
+
+    @Override
+    public List<User> getAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public List<User> save(Iterable<User> users) {
+        return userRepository.save(users);
+    }
+
+    @Override
+    public void deleteById(String id) {
+        userRepository.delete(id);
+    }
+
+    @Override
+    public void deleteAll() {
+        userRepository.deleteAll();
+    }
 
     @Override
     public User connectUserToLeagueAndPlayer(User user) {

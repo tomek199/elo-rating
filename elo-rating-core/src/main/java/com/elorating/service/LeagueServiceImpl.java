@@ -12,7 +12,7 @@ import java.util.List;
 public class LeagueServiceImpl implements LeagueService {
 
     @Resource
-    LeagueRepository leagueRepository;
+    private LeagueRepository leagueRepository;
 
     @Override
     public League getById(String id) {
@@ -30,12 +30,17 @@ public class LeagueServiceImpl implements LeagueService {
     }
 
     @Override
+    public List<League> save(Iterable<League> leagues) {
+        return leagueRepository.save(leagues);
+    }
+
+    @Override
     public void deleteById(String id) {
         leagueRepository.delete(id);
     }
 
     @Override
-    public List<League> findLeagueByName(String leagueName) {
+    public List<League> findByName(String leagueName) {
         return leagueRepository.findByNameLikeIgnoreCase(leagueName);
     }
 

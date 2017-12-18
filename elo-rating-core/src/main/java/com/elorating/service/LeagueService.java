@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface LeagueService extends GenericService<League> {
 
-    List<League> findLeagueByName(String leagueName);
+    List<League> findByName(String leagueName);
     List<League> findUnassignedLeagues();
     League findLeagueByIdAndUser(String leagueId, User user);
 }

@@ -4,6 +4,7 @@ import com.elorating.model.Match;
 import com.elorating.repository.MatchRepository;
 import com.elorating.utils.DateUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import java.util.List;
 public class MatchServiceImpl implements MatchService {
 
     @Resource
-    MatchRepository matchRepository;
+    private MatchRepository matchRepository;
 
     @Override
     public Match getById(String id) {
@@ -34,23 +35,68 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
+    public List<Match> save(Iterable<Match> matches) {
+        return matchRepository.save(matches);
+    }
+
+    @Override
     public void deleteById(String id) {
         matchRepository.delete(id);
     }
 
     @Override
-    public List<Match> findMatchesByLeagueId(String leagueId, Sort sortByDate) {
+    public List<Match> findByLeagueId(String leagueId, Sort sortByDate) {
         return matchRepository.findByLeagueId(leagueId, sortByDate);
     }
 
     @Override
-    public Page<Match> findMatchesByLeagueIdAndCompletedIsTrue(String leagueId, Pageable pageRequest) {
+    public Page<Match> findByLeagueIdAndCompletedIsTrue(String leagueId, Pageable pageRequest) {
         return matchRepository.findByLeagueIdAndCompletedIsTrue(leagueId, pageRequest);
     }
 
     @Override
-    public List<Match> findMatchesByLeagueIdAndCompletedIsFalse(String leagueId, Sort sortByDate) {
+    public List<Match> findByLeagueIdAndCompletedIsFalse(String leagueId, Sort sortByDate) {
         return matchRepository.findByLeagueIdAndCompletedIsFalse(leagueId, sortByDate);
+    }
+
+    @Override
+    public List<Match> findByPlayerId(String playerId) {
+        return matchRepository.findByPlayerId(playerId);
+    }
+
+    @Override
+    public List<Match> findByPlayerId(String playerId, Sort sort) {
+        return matchRepository.findByPlayerId(playerId, sort);
+    }
+
+    @Override
+    public List<Match> findScheduledByPlayerId(String playerId, Sort sort) {
+        return matchRepository.findScheduledByPlayerId(playerId, sort);
+    }
+
+    @Override
+    public Page<Match> findCompletedByPlayerId(String playerId, PageRequest pageRequest) {
+        return matchRepository.findCompletedByPlayerId(playerId, pageRequest);
+    }
+
+    @Override
+    public List<Match> findCompletedByPlayerId(String playerId, Sort sort) {
+        return matchRepository.findCompletedByPlayerId(playerId, sort);
+    }
+
+    @Override
+    public List<Match> findCompletedByPlayerIds(String playerId, String opponentId, Sort sort) {
+        return matchRepository.findCompletedByPlayerIds(playerId, opponentId, sort);
+    }
+
+    @Override
+    public List<Match> findCompletedByPlayerIdAndDate(String playerId, Date from, Sort sort) {
+        return matchRepository.findCompletedByPlayerIdAndDate(playerId, from, sort);
+    }
+
+    @Override
+    public List<Match> findCompletedByPlayerIdAndDate(String playerId, Date from, Date to, Sort sort) {
+        return matchRepository.findCompletedByPlayerIdAndDate(playerId, from, to, sort);
     }
 
     @Override
