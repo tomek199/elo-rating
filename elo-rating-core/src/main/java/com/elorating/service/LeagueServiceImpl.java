@@ -40,7 +40,7 @@ public class LeagueServiceImpl implements LeagueService {
     }
 
     @Override
-    public List<League> findLeagueByName(String leagueName) {
+    public List<League> findByName(String leagueName) {
         return leagueRepository.findByNameLikeIgnoreCase(leagueName);
     }
 

@@ -44,7 +44,7 @@ public class MatchController {
     @ApiOperation(value = "Get matches list", notes = "Return all matches list by league id")
     public ResponseEntity<List<Match>> get(@PathVariable String leagueId) {
         Sort sortByDate = SortUtils.getSortDescending();
-        List<Match> matches = ((MatchService) matchService).findMatchesByLeagueId(leagueId, sortByDate);
+        List<Match> matches = ((MatchService) matchService).findByLeagueId(leagueId, sortByDate);
         return new ResponseEntity<List<Match>>(matches, HttpStatus.OK);
     }
 
@@ -58,7 +58,7 @@ public class MatchController {
                                                     @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
         PageRequest pageRequest = new PageRequest(page, pageSize, sortByDate);
-        Page<Match> matches = ((MatchService) matchService).findMatchesByLeagueIdAndCompletedIsTrue(leagueId, pageRequest);
+        Page<Match> matches = ((MatchService) matchService).findByLeagueIdAndCompletedIsTrue(leagueId, pageRequest);
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 
@@ -69,7 +69,7 @@ public class MatchController {
     public ResponseEntity<List<Match>> getScheduled(@PathVariable String leagueId,
                                                     @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
-        List<Match> matches = ((MatchService) matchService).findMatchesByLeagueIdAndCompletedIsFalse(leagueId, sortByDate);
+        List<Match> matches = ((MatchService) matchService).findByLeagueIdAndCompletedIsFalse(leagueId, sortByDate);
         return new ResponseEntity<List<Match>>(matches, HttpStatus.OK);
     }
 

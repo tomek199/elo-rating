@@ -5,6 +5,7 @@ import com.elorating.model.Match;
 import com.elorating.model.Player;
 import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
+import com.elorating.service.MatchService;
 import com.elorating.utils.SortUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,6 +32,9 @@ public class PlayerMatchesController {
 
     @Autowired
     private PlayerRepository playerRepository;
+
+    @Autowired
+    private MatchService matchService;
 
     @CrossOrigin
     @RequestMapping(value = "/players/{playerId}/matches", method = RequestMethod.GET)

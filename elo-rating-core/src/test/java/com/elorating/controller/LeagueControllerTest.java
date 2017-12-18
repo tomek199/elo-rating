@@ -72,7 +72,7 @@ public class LeagueControllerTest extends BaseControllerTest {
         List<League> leagues = new ArrayList<>();
         leagues.add(new League("111", "League 1"));
         leagues.add(new League("222", "league 2"));
-        when(leagueService.findLeagueByName("Lea")).thenReturn(leagues);
+        when(leagueService.findByName("Lea")).thenReturn(leagues);
         mockMvc.perform(get("/api/leagues/find-by-name?name=Lea"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(leagues.size())));

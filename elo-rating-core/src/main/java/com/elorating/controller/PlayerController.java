@@ -84,7 +84,7 @@ public class PlayerController {
     }
 
     private void removePlayerFromMatches(String playerId) {
-        List<Match> matches = matchService.findMatchesByPlayerId(playerId);
+        List<Match> matches = matchService.findByPlayerId(playerId);
         for (Match match : matches) {
             match.removePlayerId(playerId);
         }

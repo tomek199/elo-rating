@@ -44,22 +44,22 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public List<Match> findMatchesByLeagueId(String leagueId, Sort sortByDate) {
+    public List<Match> findByLeagueId(String leagueId, Sort sortByDate) {
         return matchRepository.findByLeagueId(leagueId, sortByDate);
     }
 
     @Override
-    public Page<Match> findMatchesByLeagueIdAndCompletedIsTrue(String leagueId, Pageable pageRequest) {
+    public Page<Match> findByLeagueIdAndCompletedIsTrue(String leagueId, Pageable pageRequest) {
         return matchRepository.findByLeagueIdAndCompletedIsTrue(leagueId, pageRequest);
     }
 
     @Override
-    public List<Match> findMatchesByLeagueIdAndCompletedIsFalse(String leagueId, Sort sortByDate) {
+    public List<Match> findByLeagueIdAndCompletedIsFalse(String leagueId, Sort sortByDate) {
         return matchRepository.findByLeagueIdAndCompletedIsFalse(leagueId, sortByDate);
     }
 
     @Override
-    public List<Match> findMatchesByPlayerId(String playerId) {
+    public List<Match> findByPlayerId(String playerId) {
         return matchRepository.findByPlayerId(playerId);
     }
 
