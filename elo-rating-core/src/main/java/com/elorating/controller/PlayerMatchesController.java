@@ -3,7 +3,6 @@ package com.elorating.controller;
 import com.elorating.algorithm.Elo;
 import com.elorating.model.Match;
 import com.elorating.model.Player;
-import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
 import com.elorating.service.MatchService;
 import com.elorating.utils.SortUtils;
@@ -28,9 +27,6 @@ import java.util.List;
 public class PlayerMatchesController {
 
     @Autowired
-    private MatchRepository matchRepository;
-
-    @Autowired
     private PlayerRepository playerRepository;
 
     @Autowired
@@ -42,7 +38,7 @@ public class PlayerMatchesController {
     public ResponseEntity<List<Match>> getPlayerMatches(@PathVariable String playerId,
                                                         @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
-        List<Match> matches = matchRepository.findByPlayerId(playerId, sortByDate);
+        List<Match> matches = matchService.findByPlayerId(playerId, sortByDate);
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 
@@ -56,7 +52,7 @@ public class PlayerMatchesController {
                                                                  @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
         PageRequest pageRequest = new PageRequest(page, pageSize, sortByDate);
-        Page<Match> matches = matchRepository.findCompletedByPlayerId(playerId, pageRequest);
+        Page<Match> matches = matchService.findCompletedByPlayerId(playerId, pageRequest);
         return new ResponseEntity<>(matches, HttpStatus.OK);
 
     }
@@ -72,11 +68,11 @@ public class PlayerMatchesController {
         List<Match> matches;
         Sort sort = SortUtils.getSortAscending();
         if (from != null && to != null)
-            matches = matchRepository.findCompletedByPlayerIdAndDate(playerId, from, to, sort);
+            matches = matchService.findCompletedByPlayerIdAndDate(playerId, from, to, sort);
         else if (from != null)
-            matches = matchRepository.findCompletedByPlayerIdAndDate(playerId, from, sort);
+            matches = matchService.findCompletedByPlayerIdAndDate(playerId, from, sort);
         else
-            matches = matchRepository.findCompletedByPlayerId(playerId, sort);
+            matches = matchService.findCompletedByPlayerId(playerId, sort);
 
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }
@@ -88,7 +84,7 @@ public class PlayerMatchesController {
     public ResponseEntity<List<Match>> getPlayerScheduledMatches(@PathVariable String playerId,
                                                                  @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
-        List<Match> matches = matchRepository.findScheduledByPlayerId(playerId, sortByDate);
+        List<Match> matches = matchService.findScheduledByPlayerId(playerId, sortByDate);
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 
@@ -98,7 +94,7 @@ public class PlayerMatchesController {
     public ResponseEntity<List<Match>> getPlayerMatchesAgainstOpponent(@PathVariable String playerId, @PathVariable String opponentId,
                                                                        @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
-        List<Match> matches = matchRepository.findCompletedByPlayerIds(playerId, opponentId, sortByDate);
+        List<Match> matches = matchService.findCompletedByPlayerIds(playerId, opponentId, sortByDate);
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 

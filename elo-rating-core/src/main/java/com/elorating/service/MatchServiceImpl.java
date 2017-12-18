@@ -4,6 +4,7 @@ import com.elorating.model.Match;
 import com.elorating.repository.MatchRepository;
 import com.elorating.utils.DateUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -61,6 +62,41 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public List<Match> findByPlayerId(String playerId) {
         return matchRepository.findByPlayerId(playerId);
+    }
+
+    @Override
+    public List<Match> findByPlayerId(String playerId, Sort sort) {
+        return matchRepository.findByPlayerId(playerId, sort);
+    }
+
+    @Override
+    public List<Match> findScheduledByPlayerId(String playerId, Sort sort) {
+        return matchRepository.findScheduledByPlayerId(playerId, sort);
+    }
+
+    @Override
+    public Page<Match> findCompletedByPlayerId(String playerId, PageRequest pageRequest) {
+        return matchRepository.findCompletedByPlayerId(playerId, pageRequest);
+    }
+
+    @Override
+    public List<Match> findCompletedByPlayerId(String playerId, Sort sort) {
+        return matchRepository.findCompletedByPlayerId(playerId, sort);
+    }
+
+    @Override
+    public List<Match> findCompletedByPlayerIds(String playerId, String opponentId, Sort sort) {
+        return matchRepository.findCompletedByPlayerIds(playerId, opponentId, sort);
+    }
+
+    @Override
+    public List<Match> findCompletedByPlayerIdAndDate(String playerId, Date from, Sort sort) {
+        return matchRepository.findCompletedByPlayerIdAndDate(playerId, from, sort);
+    }
+
+    @Override
+    public List<Match> findCompletedByPlayerIdAndDate(String playerId, Date from, Date to, Sort sort) {
+        return matchRepository.findCompletedByPlayerIdAndDate(playerId, from, to, sort);
     }
 
     @Override
