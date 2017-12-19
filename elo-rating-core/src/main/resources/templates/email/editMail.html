@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:remove="all">Scheduled Match date change</title>
+</head>
+<body>
+<h2>EloRating match rescheduled!</h2>
+<p>
+    Your match with <strong th:text="${username}"></strong> was rescheduled to: <strong th:text="${time}"></strong>
+</p>
+<h3>Good luck!</h3>
+<p>
+    Go to this link
+    <a th:href="@{${redirectUrl}}" th:text="@{${redirectUrl}}"></a>
+    to see matches details.
+</p>
+</body>
+</html>
