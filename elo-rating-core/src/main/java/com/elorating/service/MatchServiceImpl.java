@@ -70,6 +70,11 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
+    public List<Match> findByCompletedIsFalse() {
+        return matchRepository.findByCompletedIsFalse();
+    }
+
+    @Override
     public List<Match> findScheduledByPlayerId(String playerId, Sort sort) {
         return matchRepository.findScheduledByPlayerId(playerId, sort);
     }
