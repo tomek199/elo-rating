@@ -3,8 +3,8 @@ package com.elorating.controller;
 import com.elorating.algorithm.Elo;
 import com.elorating.model.Match;
 import com.elorating.model.Player;
-import com.elorating.repository.PlayerRepository;
 import com.elorating.service.MatchService;
+import com.elorating.service.PlayerService;
 import com.elorating.utils.SortUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,7 +27,7 @@ import java.util.List;
 public class PlayerMatchesController {
 
     @Autowired
-    private PlayerRepository playerRepository;
+    private PlayerService playerService;
 
     @Autowired
     private MatchService matchService;
@@ -104,8 +104,8 @@ public class PlayerMatchesController {
             notes = "Return list of matches with all possible scores")
     public ResponseEntity<List<Match>> getMatchForecast(@PathVariable String playerId,
                                                         @PathVariable String opponentId) {
-        Player player = playerRepository.findOne(playerId);
-        Player opponent = playerRepository.findOne(opponentId);
+        Player player = playerService.getById(playerId);
+        Player opponent = playerService.getById(opponentId);
         List<Match> matches = generateForecast(player, opponent);
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }

@@ -16,6 +16,7 @@ public interface MatchService extends GenericService<Match> {
     List<Match> findByLeagueIdAndCompletedIsFalse(String leagueId, Sort sortByDate);
     List<Match> findByPlayerId(String playerId);
     List<Match> findByPlayerId(String playerId, Sort sort);
+    List<Match> findByCompletedIsFalse();
     List<Match> findScheduledByPlayerId(String playerId, Sort sort);
     Page<Match> findCompletedByPlayerId(String playerId, PageRequest pageRequest);
     List<Match> findCompletedByPlayerId(String playerId, Sort sort);

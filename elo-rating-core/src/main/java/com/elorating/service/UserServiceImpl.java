@@ -59,6 +59,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public User findByInvitationToken(String token) {
+        return userRepository.findByInvitationToken(token);
+    }
+
+    @Override
+    public List<User> findByNameLikeIgnoreCase(String name) {
+        return userRepository.findByNameLikeIgnoreCase(name);
+    }
+
+    @Override
     public User connectUserToLeagueAndPlayer(User user) {
         connectUserToLeague(user);
         if (user.getPlayers() != null && user.getPlayers().size() > 0)
