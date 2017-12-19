@@ -1,7 +1,10 @@
 package com.elorating.service;
 
+import com.elorating.algorithm.Elo;
 import com.elorating.model.Match;
+import com.elorating.model.Player;
 import com.elorating.repository.MatchRepository;
+import com.elorating.repository.PlayerRepository;
 import com.elorating.utils.DateUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +21,9 @@ public class MatchServiceImpl implements MatchService {
 
     @Resource
     private MatchRepository matchRepository;
+
+    @Resource
+    private PlayerRepository playerRepository;
 
     @Override
     public Match getById(String id) {
@@ -42,6 +48,37 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public void deleteById(String id) {
         matchRepository.delete(id);
+    }
+
+    @Override
+    public Match saveMatchWithPlayers(Match match) {
+        Elo elo = new Elo(match);
+        match.getPlayerOne().setRating(elo.getPlayerOneRating());
+        match.getPlayerTwo().setRating(elo.getPlayerTwoRating());
+        match.setRatingDelta(elo.getMatch().getRatingDelta());
+        updatePlayerRating(match.getPlayerOne());
+        updatePlayerRating(match.getPlayerTwo());
+        match.setCompleted();
+        match.setDate(new Date());
+        return save(match);
+    }
+
+    private void updatePlayerRating(Player player) {
+        Player playerToUpdate = playerRepository.findOne(player.getId());
+        playerToUpdate.setRating(player.getRating());
+        playerRepository.save(playerToUpdate);
+    }
+
+    @Override
+    public boolean restorePlayers(Match match) {
+        if (match.getPlayerOne() != null && match.getPlayerTwo() != null) {
+            match.restorePlayersRating();
+            updatePlayerRating(match.getPlayerOne());
+            updatePlayerRating(match.getPlayerTwo());
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
