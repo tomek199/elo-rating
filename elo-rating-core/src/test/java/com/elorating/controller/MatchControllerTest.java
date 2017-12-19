@@ -92,7 +92,7 @@ public class MatchControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void testCreate() throws Exception {
+    public void testSave() throws Exception {
         Player playerOne = playerRepository.save(new Player("PlayerOne", league));
         Player playerTwo = playerRepository.save(new Player("PlayerTwo", league));
         Match match = new Match(playerOne, playerTwo, 2, 0);
@@ -109,9 +109,16 @@ public class MatchControllerTest extends BaseControllerTest {
             .andExpect(jsonPath("$.scores['" + playerTwo.getId() + "']", is(0)))
             .andExpect(jsonPath("$.ratings['" + playerOne.getId() + "']", is(1024)))
             .andExpect(jsonPath("$.ratings['" + playerTwo.getId() + "']", is(976)))
-            .andExpect(jsonPath("$.playerOne.rating", is(1024)))
-            .andExpect(jsonPath("$.playerTwo.rating", is(976)))
             .andExpect(jsonPath("$.date").exists());
+        playerOne = playerRepository.findOne(playerOne.getId());
+        playerTwo = playerRepository.findOne(playerTwo.getId());
+        Assert.assertEquals(1024, playerOne.getRating());
+        Assert.assertEquals(976, playerTwo.getRating());
+        Assert.assertEquals(1, playerOne.getStatistics().getWins());
+        Assert.assertEquals(0, playerOne.getStatistics().getLooses());
+        Assert.assertEquals(0, playerTwo.getStatistics().getWins());
+        Assert.assertEquals(1, playerTwo.getStatistics().getLooses());
+
     }
 
     @Test
@@ -156,8 +163,12 @@ public class MatchControllerTest extends BaseControllerTest {
         Assert.assertNull(matchService.getById(match.getId()));
         playerOne = playerRepository.findOne(playerOne.getId());
         Assert.assertEquals(1200, playerOne.getRating());
+        Assert.assertEquals(0, playerOne.getStatistics().getWins());
+        Assert.assertEquals(0, playerOne.getStatistics().getLooses());
         playerTwo = playerRepository.findOne(playerTwo.getId());
         Assert.assertEquals(800, playerTwo.getRating());
+        Assert.assertEquals(0, playerTwo.getStatistics().getWins());
+        Assert.assertEquals(0, playerTwo.getStatistics().getLooses());
     }
 
     @Test

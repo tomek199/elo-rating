@@ -56,29 +56,18 @@ public class MatchServiceImpl implements MatchService {
         match.getPlayerOne().setRating(elo.getPlayerOneRating());
         match.getPlayerTwo().setRating(elo.getPlayerTwoRating());
         match.setRatingDelta(elo.getMatch().getRatingDelta());
-        updatePlayerRating(match.getPlayerOne());
-        updatePlayerRating(match.getPlayerTwo());
+        updatePlayer(match.getPlayerOne(), match.getWinnerId());
+        updatePlayer(match.getPlayerTwo(), match.getWinnerId());
         match.setCompleted();
         match.setDate(new Date());
         return save(match);
     }
 
-    private void updatePlayerRating(Player player) {
+    private void updatePlayer(Player player, String winnerId) {
         Player playerToUpdate = playerRepository.findOne(player.getId());
         playerToUpdate.setRating(player.getRating());
+        playerToUpdate.updateStatistics(winnerId);
         playerRepository.save(playerToUpdate);
-    }
-
-    @Override
-    public boolean restorePlayers(Match match) {
-        if (match.getPlayerOne() != null && match.getPlayerTwo() != null) {
-            match.restorePlayersRating();
-            updatePlayerRating(match.getPlayerOne());
-            updatePlayerRating(match.getPlayerTwo());
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override

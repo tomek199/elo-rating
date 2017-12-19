@@ -17,10 +17,12 @@ public class Player {
     @DBRef
     @JsonIgnoreProperties({"leagues", "players"})
     protected User user;
+    private PlayerStatistics statistics;
 
     public Player() {
         this.rating = 1000;
         this.active = true;
+        this.statistics = new PlayerStatistics();
     }
 
     public Player(String username) {
@@ -98,5 +100,27 @@ public class Player {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public PlayerStatistics getStatistics() {
+        return statistics;
+    }
+
+    public void updateStatistics(String winnerId) {
+        if (id.equals(winnerId))
+            statistics.addWin();
+        else
+            statistics.addLoss();
+    }
+
+    public void restore(int ratingDelta) {
+        if (ratingDelta > 0) {
+            int wins = statistics.getWins();
+            statistics.setWins(--wins);
+        } else if (ratingDelta < 0) {
+            int looses = statistics.getLooses();
+            statistics.setLooses(--looses);
+        }
+        this.rating -= ratingDelta;
     }
 }

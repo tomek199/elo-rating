@@ -224,12 +224,6 @@ public class Match {
         return null;
     }
 
-    public void restorePlayersRating() {
-        playerOne.setRating(playerOne.getRating() - ratingDelta);
-        playerTwo.setRating(playerTwo.getRating() + ratingDelta);
-    }
-
-
     public boolean isPlayerInMatch(String pid) {
         if (playerOne != null && playerOne.getId().equals(pid)) {
             return true;
