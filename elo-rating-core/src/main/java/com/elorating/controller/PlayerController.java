@@ -102,32 +102,6 @@ public class PlayerController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/leagues/{leagueId}/players/ranking/stats", method = RequestMethod.GET)
-    @ApiOperation(value = "Get players stats", notes = "Returns active players stats list by league id")
-    public ResponseEntity<List<PlayerStats>> getPlayersStats(@PathVariable("leagueId") String leagueId) {
-        List<PlayerStats> playerStatsList = playerStatsService.getAllPlayerStatsByLeague(leagueId);
-
-        if (playerStatsList == null || playerStatsList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(playerStatsList, HttpStatus.OK);
-    }
-
-    @CrossOrigin
-    @RequestMapping(value = "/players/{playerId}/stats", method = RequestMethod.GET)
-    @ApiOperation(value = "Get player stats", notes = "Returns player stats for player id")
-    public ResponseEntity<PlayerStats> getPlayerStats(@PathVariable("playerId") String playerId) {
-        PlayerStats playerStats = playerStatsService.getPlayerStats(playerId);
-
-        if (playerStats == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(playerStats, HttpStatus.OK);
-    }
-
-    @CrossOrigin
     @RequestMapping(value = "/players/{playerId}/opponents/{opponentId}", method = RequestMethod.GET)
     @ApiOperation(value = "Get player stats against a specific opponent", notes = "Returns player stats for player id against opponent id")
     public ResponseEntity<OpponentStats> getPlayerStatsAgainstOpponent(@PathVariable("playerId") String playerId, @PathVariable("opponentId") String opponentId) {
