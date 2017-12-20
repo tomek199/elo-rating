@@ -1,6 +1,6 @@
 package com.elorating.model;
 
-public class PlayerStatistics {
+public class PlayerStats {
 
     private int won;
     private int lost;
@@ -13,7 +13,7 @@ public class PlayerStatistics {
         return lost;
     }
 
-    public PlayerStatistics() {
+    public PlayerStats() {
         this.won = 0;
         this.lost = 0;
     }

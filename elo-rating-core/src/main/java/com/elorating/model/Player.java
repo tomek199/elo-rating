@@ -17,12 +17,12 @@ public class Player {
     @DBRef
     @JsonIgnoreProperties({"leagues", "players"})
     protected User user;
-    private PlayerStatistics statistics;
+    private PlayerStats statistics;
 
     public Player() {
         this.rating = 1000;
         this.active = true;
-        this.statistics = new PlayerStatistics();
+        this.statistics = new PlayerStats();
     }
 
     public Player(String username) {
@@ -102,7 +102,7 @@ public class Player {
         this.user = user;
     }
 
-    public PlayerStatistics getStatistics() {
+    public PlayerStats getStatistics() {
         return statistics;
     }
 
