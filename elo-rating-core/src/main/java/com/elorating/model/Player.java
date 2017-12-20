@@ -108,18 +108,18 @@ public class Player {
 
     public void updateStatistics(String winnerId) {
         if (id.equals(winnerId))
-            statistics.addWin();
+            statistics.addWon();
         else
-            statistics.addLoss();
+            statistics.addLost();
     }
 
     public void restore(int ratingDelta) {
         if (ratingDelta > 0) {
-            int wins = statistics.getWins();
-            statistics.setWins(--wins);
+            int won = statistics.getWon();
+            statistics.setWon(--won);
         } else if (ratingDelta < 0) {
-            int looses = statistics.getLooses();
-            statistics.setLooses(--looses);
+            int lost = statistics.getLost();
+            statistics.setLost(--lost);
         }
         this.rating -= ratingDelta;
     }

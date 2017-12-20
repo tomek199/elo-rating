@@ -114,10 +114,10 @@ public class MatchControllerTest extends BaseControllerTest {
         playerTwo = playerRepository.findOne(playerTwo.getId());
         Assert.assertEquals(1024, playerOne.getRating());
         Assert.assertEquals(976, playerTwo.getRating());
-        Assert.assertEquals(1, playerOne.getStatistics().getWins());
-        Assert.assertEquals(0, playerOne.getStatistics().getLooses());
-        Assert.assertEquals(0, playerTwo.getStatistics().getWins());
-        Assert.assertEquals(1, playerTwo.getStatistics().getLooses());
+        Assert.assertEquals(1, playerOne.getStatistics().getWon());
+        Assert.assertEquals(0, playerOne.getStatistics().getLost());
+        Assert.assertEquals(0, playerTwo.getStatistics().getWon());
+        Assert.assertEquals(1, playerTwo.getStatistics().getLost());
 
     }
 
@@ -163,12 +163,12 @@ public class MatchControllerTest extends BaseControllerTest {
         Assert.assertNull(matchService.getById(match.getId()));
         playerOne = playerRepository.findOne(playerOne.getId());
         Assert.assertEquals(1200, playerOne.getRating());
-        Assert.assertEquals(0, playerOne.getStatistics().getWins());
-        Assert.assertEquals(0, playerOne.getStatistics().getLooses());
+        Assert.assertEquals(0, playerOne.getStatistics().getWon());
+        Assert.assertEquals(0, playerOne.getStatistics().getLost());
         playerTwo = playerRepository.findOne(playerTwo.getId());
         Assert.assertEquals(800, playerTwo.getRating());
-        Assert.assertEquals(0, playerTwo.getStatistics().getWins());
-        Assert.assertEquals(0, playerTwo.getStatistics().getLooses());
+        Assert.assertEquals(0, playerTwo.getStatistics().getWon());
+        Assert.assertEquals(0, playerTwo.getStatistics().getLost());
     }
 
     @Test

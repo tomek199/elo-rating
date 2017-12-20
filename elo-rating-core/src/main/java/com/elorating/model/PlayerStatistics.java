@@ -2,35 +2,35 @@ package com.elorating.model;
 
 public class PlayerStatistics {
 
-    private int wins;
-    private int looses;
+    private int won;
+    private int lost;
 
-    public int getWins() {
-        return wins;
+    public int getWon() {
+        return won;
     }
 
-    public int getLooses() {
-        return looses;
+    public int getLost() {
+        return lost;
     }
 
     public PlayerStatistics() {
-        this.wins = 0;
-        this.looses = 0;
+        this.won = 0;
+        this.lost = 0;
     }
 
-    public void addWin() {
-        wins++;
+    public void addWon() {
+        won++;
     }
 
-    public void addLoss() {
-        looses++;
+    public void addLost() {
+        lost++;
     }
 
-    public void setWins(int wins) {
-        this.wins = wins;
+    public void setWon(int won) {
+        this.won = won;
     }
 
-    public void setLooses(int looses) {
-        this.looses = looses;
+    public void setLost(int lost) {
+        this.lost = lost;
     }
 }
