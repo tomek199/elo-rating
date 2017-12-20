@@ -1,10 +1,12 @@
 import { League } from 'app/leagues/shared/league.model';
 import { User } from './../../users/shared/user.model';
+import { PlayerStatistics } from 'app/players/shared/player-statistics.model';
 export class Player {
   id: string;
   username: string;
   rating: number;
   active: boolean;
+  statistics: PlayerStatistics;
   user: User;
   league: League;
 

@@ -1,6 +1,5 @@
 import { Observable } from 'rxjs/Observable';
 import { Match } from './../../matches/shared/match.model';
-import { PlayerStats } from './player-stats.model';
 import { OpponentStats } from './opponent-stats.model';
 import { Http } from '@angular/http';
 import { Player } from './player.model';
@@ -45,14 +44,6 @@ export class PlayerService extends BaseApiService {
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as Player[])
-      .catch(this.handleError);
-  }
-
-  getPlayerStats(playerId: string): Promise<PlayerStats> {
-    let url = `${this.url}/players/${playerId}/stats`;
-    return this.http.get(url)
-      .toPromise()
-      .then(response => response.json() as PlayerStats)
       .catch(this.handleError);
   }
 
