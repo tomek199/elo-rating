@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:remove="all">Match cancellation</title>
+</head>
+<body>
+<h2>EloRating match cancelled!</h2>
+<p>
+    Your match with <strong th:text="${username}"></strong> was cancelled.
+</p>
+<p>
+    Go to this link
+    <a th:href="@{${redirectUrl}}" th:text="@{${redirectUrl}}"></a>
+    to see matches details.
+</p>
+</body>
+</html>
