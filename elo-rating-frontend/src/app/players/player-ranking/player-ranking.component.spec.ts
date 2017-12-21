@@ -31,6 +31,7 @@ describe('PlayerRankingComponent', () => {
     fixture = TestBed.createComponent(PlayerRankingComponent);
     component = fixture.componentInstance;
     activatedRoute.testParams = { league_id: '123' }
+    component.ngOnChanges();
     fixture.detectChanges();
     tick();
   };
