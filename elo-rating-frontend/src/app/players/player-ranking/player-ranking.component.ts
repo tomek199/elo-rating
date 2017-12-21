@@ -1,14 +1,14 @@
 import { ActivatedRoute } from '@angular/router';
 import { PlayerService } from './../shared/player.service';
 import { Player } from './../shared/player.model';
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 
 @Component({
   selector: 'app-player-ranking',
   templateUrl: './player-ranking.component.html',
   styleUrls: ['./player-ranking.component.css']
 })
-export class PlayerRankingComponent implements OnInit, OnChanges {
+export class PlayerRankingComponent implements OnChanges {
   
   @Input() leagueId: string;
   rankedPlayers: Player[];
@@ -18,13 +18,9 @@ export class PlayerRankingComponent implements OnInit, OnChanges {
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit() {
-    this.getLeagueId();
-    this.getRanking();
-  }
-
   ngOnChanges() {
     this.rankedPlayers = undefined;
+    this.getLeagueId();
     this.getRanking();
   }
 
