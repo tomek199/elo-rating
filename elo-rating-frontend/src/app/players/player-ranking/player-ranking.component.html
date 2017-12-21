@@ -25,13 +25,11 @@
             <td>
                 <a [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.username}}</a>
             </td>
-            <td [ngSwitch]="rankedPlayersStats.get(player.id)">
-                <app-small-spinner *ngSwitchCase="undefined"></app-small-spinner>
-                <span *ngSwitchDefault class="won text-success">{{ rankedPlayersStats.get(player.id).wins }}</span>
+            <td>
+                <span class="won text-success">{{player.statistics.won}}</span>
             </td>
-            <td [ngSwitch]="rankedPlayersStats.get(player.id)">
-                <app-small-spinner *ngSwitchCase="undefined"></app-small-spinner>
-                <span *ngSwitchDefault class="lost text-danger">{{ rankedPlayersStats.get(player.id).loses }}</span>
+            <td>
+                <span class="lost text-danger">{{player.statistics.lost}}</span>
             </td>
             <td class="font-weight-bold">
                 {{player.rating}}

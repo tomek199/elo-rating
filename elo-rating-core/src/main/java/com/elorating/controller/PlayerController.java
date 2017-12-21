@@ -1,8 +1,8 @@
 package com.elorating.controller;
 
 import com.elorating.model.*;
-import com.elorating.repository.MatchRepository;
-import com.elorating.repository.PlayerRepository;
+import com.elorating.service.MatchService;
+import com.elorating.service.PlayerService;
 import com.elorating.service.PlayerStatsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,10 +21,10 @@ import java.util.List;
 public class PlayerController {
 
     @Autowired
-    private PlayerRepository playerRepository;
+    private PlayerService playerService;
 
     @Autowired
-    private MatchRepository matchRepository;
+    private MatchService matchService;
 
     @Autowired
     private PlayerStatsService playerStatsService;
@@ -33,7 +33,7 @@ public class PlayerController {
     @RequestMapping(value = "/leagues/{leagueId}/players", method = RequestMethod.GET)
     @ApiOperation(value = "Get players list", notes = "Return players list by league id")
     public ResponseEntity<List<Player>> get(@PathVariable String leagueId) {
-        List<Player> player = playerRepository.findByLeagueId(leagueId);
+        List<Player> player = playerService.findByLeagueId(leagueId);
         return new ResponseEntity<>(player, HttpStatus.OK);
     }
 
@@ -41,7 +41,7 @@ public class PlayerController {
     @RequestMapping(value = "/players/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "Get player", notes = "Return player by player id")
     public ResponseEntity<Player> getById(@PathVariable String id) {
-        Player player = playerRepository.findOne(id);
+        Player player = playerService.getById(id);
         return new ResponseEntity<>(player, HttpStatus.OK);
     }
 
@@ -50,7 +50,7 @@ public class PlayerController {
     @ApiOperation(value = "Get players ranking", notes = "Return active players list by league id")
     public ResponseEntity<List<Player>> getRanking(@PathVariable String leagueId) {
         Sort sortByRating = new Sort(Sort.Direction.DESC, "rating");
-        List<Player> ranking = playerRepository.getRanking(leagueId, sortByRating);
+        List<Player> ranking = playerService.getRanking(leagueId, sortByRating);
         return new ResponseEntity<>(ranking, HttpStatus.OK);
     }
 
@@ -59,7 +59,7 @@ public class PlayerController {
     @ApiOperation(value = "Create player", notes = "Create player")
     public ResponseEntity<Player> create(@PathVariable String leagueId, @RequestBody Player player) {
         player.setLeague(new League(leagueId));
-        player = playerRepository.save(player);
+        player = playerService.save(player);
         return new ResponseEntity<>(player, HttpStatus.OK);
     }
 
@@ -67,9 +67,9 @@ public class PlayerController {
     @RequestMapping(value = "/leagues/{leagueId}/players/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "Edit player", notes = "Edit player by player id")
     public ResponseEntity<Player> edit(@PathVariable String id, @RequestBody Player player) {
-        Player currentPlayer = playerRepository.findOne(id);
+        Player currentPlayer = playerService.getById(id);;
         player.setLeague(currentPlayer.getLeague());
-        player = playerRepository.save(player);
+        player = playerService.save(player);
         return new ResponseEntity<>(player, HttpStatus.OK);
     }
 
@@ -78,18 +78,18 @@ public class PlayerController {
     @ApiOperation(value = "Remove player", notes = "Remove player by player id")
     public ResponseEntity<Player> delete(@PathVariable String id) {
         removePlayerFromMatches(id);
-        playerRepository.delete(id);
+        playerService.deleteById(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     private void removePlayerFromMatches(String playerId) {
-        List<Match> matches = matchRepository.findByPlayerId(playerId);
+        List<Match> matches = matchService.findByPlayerId(playerId);
         for (Match match : matches) {
             match.removePlayerId(playerId);
         }
 
-        matchRepository.save(matches);
+        matchService.save(matches);
     }
 
     @CrossOrigin
@@ -97,34 +97,8 @@ public class PlayerController {
     @ApiOperation(value = "Find by username", notes = "Find player by username and league")
     public ResponseEntity<List<Player>> findByUsernameAndLeague(@PathVariable String leagueId,
                                                                 @RequestParam String username) {
-        List<Player> players = playerRepository.findByLeagueIdAndUsernameLikeIgnoreCase(leagueId, username);
+        List<Player> players = playerService.findByLeagueIdAndUsernameLikeIgnoreCase(leagueId, username);
         return new ResponseEntity<>(players, HttpStatus.OK);
-    }
-
-    @CrossOrigin
-    @RequestMapping(value = "/leagues/{leagueId}/players/ranking/stats", method = RequestMethod.GET)
-    @ApiOperation(value = "Get players stats", notes = "Returns active players stats list by league id")
-    public ResponseEntity<List<PlayerStats>> getPlayersStats(@PathVariable("leagueId") String leagueId) {
-        List<PlayerStats> playerStatsList = playerStatsService.getAllPlayerStatsByLeague(leagueId);
-
-        if (playerStatsList == null || playerStatsList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(playerStatsList, HttpStatus.OK);
-    }
-
-    @CrossOrigin
-    @RequestMapping(value = "/players/{playerId}/stats", method = RequestMethod.GET)
-    @ApiOperation(value = "Get player stats", notes = "Returns player stats for player id")
-    public ResponseEntity<PlayerStats> getPlayerStats(@PathVariable("playerId") String playerId) {
-        PlayerStats playerStats = playerStatsService.getPlayerStats(playerId);
-
-        if (playerStats == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(playerStats, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -144,8 +118,8 @@ public class PlayerController {
     @RequestMapping(value = "/players/{playerId}/opponents", method = RequestMethod.GET)
     @ApiOperation(value = "Get player stats against all opponents", notes = "Returns player stats for player id against all opponents")
     public ResponseEntity<List<OpponentStats>> getPlayerStatsAgainstOpponents(@PathVariable("playerId") String playerId) {
-        Player player = playerRepository.findOne(playerId);
-        List<Player> opponents = playerRepository.findByLeagueId(player.getLeague().getId());
+        Player player = playerService.getById(playerId);
+        List<Player> opponents = playerService.findByLeagueId(player.getLeague().getId());
 
         ArrayList<OpponentStats> opponentStatsList = new ArrayList<>(opponents.size());
         for (Player opponent : opponents) {

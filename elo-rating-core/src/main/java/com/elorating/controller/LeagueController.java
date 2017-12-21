@@ -51,7 +51,7 @@ public class LeagueController {
     @ApiOperation(value = "Find leagues by name",
                 notes = "Return leagues list filtered by league name")
     public ResponseEntity<List<League>> findByName(@RequestParam String name) {
-        List<League> leagues = leagueService.findLeagueByName(name);
+        List<League> leagues = leagueService.findByName(name);
         if (leagues.isEmpty()) {
             return new ResponseEntity<List<League>>(HttpStatus.NO_CONTENT);
         }

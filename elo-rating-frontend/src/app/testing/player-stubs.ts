@@ -1,9 +1,8 @@
 import { Observable } from 'rxjs/Observable';
 import { OpponentStats } from './../players/shared/opponent-stats.model';
 import { Match } from './../matches/shared/match.model';
-import { PLAYERS, PLAYERS_STATS } from './data/players';
+import { PLAYERS} from './data/players';
 import { Player } from './../players/shared/player.model';
-import { PlayerStats } from './../players/shared/player-stats.model';
 import { Injectable, OnInit, Component, Input } from '@angular/core';
 
 @Injectable()
@@ -21,10 +20,6 @@ export class PlayerServiceStub {
     return Promise.resolve(PLAYERS
       .sort((playerOne, playerTwo) => playerTwo.rating - playerOne.rating)
       .filter(player => player.active == true));
-  }
-
-  getPlayerStats(playerId: string): Promise<Map<string, PlayerStats>> {
-    return Promise.resolve(PLAYERS_STATS);
   }
 
   addPlayer(leagueId: string, player: Player): Promise<Player> {

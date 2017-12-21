@@ -1,4 +1,3 @@
-import { PlayerStats } from './../shared/player-stats.model';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerService } from './../shared/player.service';
 import { Player } from './../shared/player.model';
@@ -13,7 +12,6 @@ export class PlayerRankingComponent implements OnInit, OnChanges {
   
   @Input() leagueId: string;
   rankedPlayers: Player[];
-  rankedPlayersStats = new Map<string, PlayerStats>();
 
   constructor(
     private playerService: PlayerService,
@@ -37,20 +35,7 @@ export class PlayerRankingComponent implements OnInit, OnChanges {
 
   getRanking() {
     this.playerService.getRanking(this.leagueId)
-      .then(players => {
-        this.rankedPlayers = players
-        this.getPlayersStats();
-      }
-      );
-  }
-
-  getPlayersStats() {
-    for (let player of this.rankedPlayers) {
-      this.playerService.getPlayerStats(player.id)
-        .then(playerStats => {
-          this.rankedPlayersStats.set(playerStats.id, playerStats);
-        });
-    }
+      .then(players => this.rankedPlayers = players);
   }
 
   hasRankedPlayers(): boolean {
