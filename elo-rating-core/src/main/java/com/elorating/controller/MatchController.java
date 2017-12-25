@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -89,14 +90,16 @@ public class MatchController {
     @CrossOrigin
     @RequestMapping(value = "/leagues/{leagueId}/matches", method = RequestMethod.POST)
     @ApiOperation(value = "Create match", notes = "Create new match")
-    public ResponseEntity<Match> create(@PathVariable String leagueId, @RequestBody Match match) {
+    public ResponseEntity<Match> create(HttpServletRequest request, @PathVariable String leagueId, @RequestBody Match match) {
+        String originUrl = request.getHeader("Origin");
         match.setLeague(new League(leagueId));
         if (match.isCompleted()) {
             match.setDate(new Date());
             match = saveMatchWithRatings(match);
         }
         else {
-            match = matchService.save(match);
+            //match = matchService.save(match);
+            match = matchService.saveAndNotify(match, originUrl);
         }
         return new ResponseEntity<Match>(match, HttpStatus.OK);
     }

@@ -2,7 +2,11 @@ package com.elorating.service;
 
 import com.elorating.model.Match;
 import com.elorating.repository.MatchRepository;
+import com.elorating.service.email.EmailBuilder;
+import com.elorating.service.email.EmailDirector;
+import com.elorating.service.email.ScheduledMatchEmail;
 import com.elorating.utils.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +23,9 @@ public class MatchServiceImpl implements MatchService {
     @Resource
     private MatchRepository matchRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     @Override
     public Match getById(String id) {
         return matchRepository.findOne(id);
@@ -32,6 +39,13 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public Match save(Match match) {
         return matchRepository.save(match);
+    }
+
+    @Override
+    public Match saveAndNotify(Match match, String originUrl) {
+        match = save(match);
+        sendEmail(new ScheduledMatchEmail(matchRepository.findOne(match.getId()), originUrl));
+        return match;
     }
 
     @Override
@@ -137,5 +151,11 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public void deleteAll() {
         matchRepository.deleteAll();
+    }
+
+    private boolean sendEmail(EmailBuilder emailBuilder) {
+        EmailDirector emailDirector = new EmailDirector();
+        emailDirector.setBuilder(emailBuilder);
+        return emailService.send(emailDirector.build());
     }
 }
