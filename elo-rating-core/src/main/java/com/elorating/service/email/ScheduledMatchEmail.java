@@ -21,12 +21,12 @@ public class ScheduledMatchEmail extends EmailBuilder {
 
     @Override
     public void buildSubject() {
-        email.setSubject(EmailTopicStrings.SCHEDULED_MATCH);
+        email.setSubject(EmailStrings.SCHEDULED_MATCH);
     }
 
     @Override
     public void buildTemplateName() {
-        email.setTemplateName("scheduledMatch");
+        email.setTemplateName(EmailStrings.SCHEDULED_MATCH_TEMPLATE);
     }
 
     @Override
