@@ -6,8 +6,6 @@ import org.thymeleaf.context.Context;
 public class CancelledMatchEmail extends EmailBuilder {
 
     private String opponent;
-    private String recipient;
-    private String originUrl;
     private League league;
 
     public CancelledMatchEmail(String opponent, String recipient, String originUrl, League league) {

@@ -7,7 +7,6 @@ import org.thymeleaf.context.Context;
 public class ScheduledMatchEmail extends EmailBuilder {
 
     private Match scheduledMatch;
-    private String originUrl;
 
     public ScheduledMatchEmail(Match scheduledMatch, String originUrl) {
         this.scheduledMatch = scheduledMatch;

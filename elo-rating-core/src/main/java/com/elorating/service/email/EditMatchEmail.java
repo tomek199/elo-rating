@@ -6,9 +6,7 @@ import org.thymeleaf.context.Context;
 public class EditMatchEmail extends EmailBuilder {
 
     private String opponent;
-    private String recipient;
     private String matchtime;
-    private String originUrl;
     private League league;
 
     public EditMatchEmail(String opponent, String recipient, String matchtime, String originUrl, League league) {

@@ -5,9 +5,7 @@ import org.thymeleaf.context.Context;
 
 public class InviteExistingUserEmail extends EmailBuilder {
 
-    private String recipient;
     private String currentUser;
-    private String originUrl;
     private League league;
 
     public InviteExistingUserEmail(String recipient, String currentUser,
