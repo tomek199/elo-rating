@@ -9,7 +9,7 @@ import { PlayerServiceStub } from './../../testing/player-stubs';
 import { PlayerService } from './../shared/player.service';
 import { ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from './../../testing/routing-stubs';
-import { fakeAsync, tick } from '@angular/core/testing';
+import { fakeAsync, tick, inject } from '@angular/core/testing';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
@@ -96,4 +96,21 @@ describe('PlayerListComponent', () => {
     let playersCountAfterDelete = component.activePlayers.length + component.inactivePlayers.length;
     expect(playersCountAfterDelete).toEqual(playersCount - 1);
   }))
+
+  it('should show buttons for authorized user', fakeAsync(() => {
+    createComponent();
+    fixture.detectChanges();
+    let column = fixture.debugElement.queryAll(By.css('table tbody tr:first-child td'));
+    let buttonsColumn = column[2];
+    expect(buttonsColumn).toBeTruthy();
+  }));
+
+  it('should hide buttons for unauthorized user', inject([GoogleAuthService], fakeAsync((googleAuthService: GoogleAuthService) => {
+    createComponent();
+    spyOn(googleAuthService, 'isAuthorized').and.returnValue(false);
+    fixture.detectChanges();
+    let column = fixture.debugElement.queryAll(By.css('table tbody tr:first-child td'));
+    let buttonsColumn = column[2];
+    expect(buttonsColumn).toBeUndefined();
+  })))
 });
