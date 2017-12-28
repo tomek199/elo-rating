@@ -100,8 +100,7 @@ describe('PlayerListComponent', () => {
   it('should show buttons for authorized user', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
-    let column = fixture.debugElement.queryAll(By.css('table tbody tr:first-child td'));
-    let buttonsColumn = column[2];
+    let buttonsColumn = fixture.debugElement.query(By.css('table tbody tr:first-child td.text-right'));
     expect(buttonsColumn).toBeTruthy();
   }));
 
@@ -109,8 +108,23 @@ describe('PlayerListComponent', () => {
     createComponent();
     spyOn(googleAuthService, 'isAuthorized').and.returnValue(false);
     fixture.detectChanges();
-    let column = fixture.debugElement.queryAll(By.css('table tbody tr:first-child td'));
-    let buttonsColumn = column[2];
-    expect(buttonsColumn).toBeUndefined();
+    let buttonsColumn = fixture.debugElement.query(By.css('table tbody tr:first-child td.text-right'));
+    expect(buttonsColumn).toBeFalsy();
   })))
+
+  it('should show player\'s email for authorized user', fakeAsync(() => {
+    createComponent();
+    fixture.detectChanges();
+    let emailColumn = fixture.debugElement.query(By.css('table tbody tr:first-child td[name=email]'));
+    expect(emailColumn).toBeTruthy();
+    expect(emailColumn.nativeElement.textContent).toContain('unregistered');
+  }));
+
+  it('should hide player\'s email for unauthorized user', inject([GoogleAuthService], fakeAsync((googleAuthService: GoogleAuthService) => {
+    createComponent();
+    spyOn(googleAuthService, 'isAuthorized').and.returnValue(false);
+    fixture.detectChanges();
+    let emailColumn = fixture.debugElement.query(By.css('table tbody tr:first-child td[name=email]'));
+    expect(emailColumn).toBeFalsy();
+  })));
 });

@@ -16,6 +16,7 @@
   <thead class="thead-light">
     <tr>
       <th>Username</th>
+      <th *ngIf="isAuthorized()">Email</th>
       <th class="text-center">Rating</th>
       <th class="text-right" *ngIf="isAuthorized()">Actions</th>
     </tr>
@@ -24,6 +25,10 @@
     <tr *ngFor="let player of activePlayers; let i=index">
       <td width="20%" [routerLink]="['/leagues', leagueId, 'players', player.id]">
         <a [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.username}}</a>
+      </td>
+      <td name="email" *ngIf="isAuthorized()" [ngSwitch]="hasUser(player)">
+        <span *ngSwitchCase="true">{{player.user.email}}</span>
+        <span *ngSwitchDefault class="text-secondary">unregistered</span>
       </td>
       <td width="65%" class="text-center" [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.rating}}</td>
       <td width="15%" class="text-right" *ngIf="isAuthorized()">
@@ -37,6 +42,10 @@
           <del class="font-italic">{{player.username}}</del>
         </a>
       </td>
+      <td name="email" *ngIf="isAuthorized()" [ngSwitch]="hasUser(player)">
+          <span *ngSwitchCase="true">{{player.user.email}}</span>
+          <span *ngSwitchDefault class="text-secondary">unregistered</span>
+        </td>
       <td class="text-center">
         <del class="font-italic">{{player.rating}}</del>
       </td>
