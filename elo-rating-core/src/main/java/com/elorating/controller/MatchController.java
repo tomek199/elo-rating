@@ -91,7 +91,6 @@ public class MatchController {
     @RequestMapping(value = "/leagues/{leagueId}/matches", method = RequestMethod.POST)
     @ApiOperation(value = "Create match", notes = "Create new match")
     public ResponseEntity<Match> create(HttpServletRequest request, @PathVariable String leagueId, @RequestBody Match match) {
-        String originUrl = request.getHeader("Origin");
         match.setLeague(new League(leagueId));
         if (match.isCompleted()) {
             match.setDate(new Date());
@@ -99,7 +98,7 @@ public class MatchController {
         }
         else {
             //match = matchService.save(match);
-            match = matchService.saveAndNotify(match, originUrl);
+            match = matchService.saveAndNotify(match, getOriginUrl(request));
         }
         return new ResponseEntity<Match>(match, HttpStatus.OK);
     }
@@ -124,8 +123,8 @@ public class MatchController {
     @CrossOrigin
     @RequestMapping(value = "/leagues/{leagueId}/matches/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete match", notes = "Delete match by match id")
-    public ResponseEntity<Match> delete(@PathVariable String id) {
-        matchService.deleteById(id);
+    public ResponseEntity<Match> delete(HttpServletRequest request, @PathVariable String id) {
+        matchService.deleteByIdWithNotification(id, getOriginUrl(request));
         return new ResponseEntity<Match>(HttpStatus.OK);
     }
 
@@ -138,6 +137,10 @@ public class MatchController {
         if (restorePlayersRatings(match))
             matchService.deleteById(match.getId());
         return new ResponseEntity<>(match, HttpStatus.OK);
+    }
+
+    private String getOriginUrl(HttpServletRequest request) {
+        return request.getHeader("Origin");
     }
 
     private boolean restorePlayersRatings(Match match) {

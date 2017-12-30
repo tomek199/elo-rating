@@ -25,4 +25,5 @@ public interface MatchService extends GenericService<Match> {
     List<Match> findCompletedByPlayerIdAndDate(String playerId, Date from, Sort sort);
     List<Match> findCompletedByPlayerIdAndDate(String playerId, Date from, Date to, Sort sort);
     List<Match> rescheduleMatchesInLeague(String leagueId, int minutes, Sort sort);
+    void deleteByIdWithNotification(String id, String originUrl);
 }

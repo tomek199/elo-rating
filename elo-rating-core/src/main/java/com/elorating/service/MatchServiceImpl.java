@@ -2,10 +2,13 @@ package com.elorating.service;
 
 import com.elorating.model.Match;
 import com.elorating.repository.MatchRepository;
+import com.elorating.service.email.CancelledMatchEmail;
 import com.elorating.service.email.EmailBuilder;
 import com.elorating.service.email.EmailDirector;
 import com.elorating.service.email.ScheduledMatchEmail;
 import com.elorating.utils.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +22,8 @@ import java.util.List;
 
 @Service("matchService")
 public class MatchServiceImpl implements MatchService {
+
+    private static final Logger logger = LoggerFactory.getLogger(MatchServiceImpl.class);
 
     @Resource
     private MatchRepository matchRepository;
@@ -56,6 +61,15 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public void deleteById(String id) {
         matchRepository.delete(id);
+    }
+
+    @Override
+    public void deleteByIdWithNotification(String id, String originUrl) {
+        Match matchToDelete = matchRepository.findOne(id);
+        matchRepository.delete(id);
+        if (matchRepository.findOne(id) == null) {
+            sendCancellationEmails(generateCancellationEmails(matchToDelete, originUrl));
+        }
     }
 
     @Override
@@ -151,6 +165,24 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public void deleteAll() {
         matchRepository.deleteAll();
+    }
+
+    private CancelledMatchEmail[] generateCancellationEmails(Match match, String originUrl) {
+        CancelledMatchEmail[] cancelledMatchEmails = {
+                new CancelledMatchEmail(match.getPlayerOne().getUsername(), match.getPlayerTwo().getUser() != null ? match.getPlayerTwo().getUser().getEmail() : "" , originUrl, match.getLeague()),
+                new CancelledMatchEmail(match.getPlayerTwo().getUsername(), match.getPlayerOne().getUser() != null ? match.getPlayerOne().getUser().getEmail() : "", originUrl, match.getLeague())
+        };
+        return cancelledMatchEmails;
+    }
+
+    private void sendCancellationEmails(CancelledMatchEmail[] cancelledMatchEmails) {
+        try {
+            for (EmailBuilder emailBuilder: cancelledMatchEmails) {
+                sendEmail(emailBuilder);
+            }
+        } catch (Exception e) {
+            logger.error("Error while sending cancellation emails");
+        }
     }
 
     private boolean sendEmail(EmailBuilder emailBuilder) {
