@@ -1,32 +1,26 @@
-import { PlayerStats } from './../shared/player-stats.model';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerService } from './../shared/player.service';
 import { Player } from './../shared/player.model';
-import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 
 @Component({
   selector: 'app-player-ranking',
   templateUrl: './player-ranking.component.html',
   styleUrls: ['./player-ranking.component.css']
 })
-export class PlayerRankingComponent implements OnInit, OnChanges {
+export class PlayerRankingComponent implements OnChanges {
   
   @Input() leagueId: string;
   rankedPlayers: Player[];
-  rankedPlayersStats = new Map<string, PlayerStats>();
 
   constructor(
     private playerService: PlayerService,
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit() {
-    this.getLeagueId();
-    this.getRanking();
-  }
-
   ngOnChanges() {
     this.rankedPlayers = undefined;
+    this.getLeagueId();
     this.getRanking();
   }
 
@@ -37,20 +31,7 @@ export class PlayerRankingComponent implements OnInit, OnChanges {
 
   getRanking() {
     this.playerService.getRanking(this.leagueId)
-      .then(players => {
-        this.rankedPlayers = players
-        this.getPlayersStats();
-      }
-      );
-  }
-
-  getPlayersStats() {
-    for (let player of this.rankedPlayers) {
-      this.playerService.getPlayerStats(player.id)
-        .then(playerStats => {
-          this.rankedPlayersStats.set(playerStats.id, playerStats);
-        });
-    }
+      .then(players => this.rankedPlayers = players);
   }
 
   hasRankedPlayers(): boolean {

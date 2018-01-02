@@ -10,7 +10,7 @@
       <span class="font-italic text-muted">{{match.playerTwo.rating}}</span>  
     </button>
     <a class="dropdown-item disabled" *ngIf="isScheduledMatchesEmpty()" [routerLink]="[ '/leagues', leagueId, 'matches', 'add']">Queue is empty</a>
-    <div class=" dropdown-divider"></div>
+    <div class=" dropdown-divider" *ngIf="isAuthorized()"></div>
     <a class="dropdown-item " [routerLink]="[ '/leagues', leagueId, 'matches', 'add']" *ngIf="isAuthorized()">Add match to queue</a>
   </div>
 </li>

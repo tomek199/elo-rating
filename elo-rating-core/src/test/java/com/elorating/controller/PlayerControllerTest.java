@@ -1,18 +1,15 @@
 package com.elorating.controller;
 
 import com.elorating.model.League;
-import com.elorating.model.Match;
 import com.elorating.model.Player;
 import com.elorating.service.MatchService;
 import com.elorating.service.PlayerService;
-import com.elorating.utils.MatchTestUtils;
-import com.elorating.utils.PlayerTestUtils;
 import org.hamcrest.Matchers;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-
-import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -132,32 +129,5 @@ public class PlayerControllerTest extends BaseControllerTest {
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(RETRIES)));
-    }
-
-    @Test
-    public void test_getPlayersStats() throws Exception {
-        List<Player> players = PlayerTestUtils.generatePlayerList(2, league);
-        for (int i = 0; i < players.size(); i++) {
-            players.set(i, playerService.save(players.get(i)));
-        }
-
-        Match match = MatchTestUtils.generateMatch(league, players.get(0), players.get(1), true);
-
-        mockMvc.perform(get("/api/leagues/" + league.getId() + "/players/ranking/stats")
-            .contentType(contentType))
-            .andExpect(status().isOk())
-                .andDo(MockMvcResultHandlers.print());
-
-    }
-
-    @Test
-    public void test_getPlayerByIdStats() throws Exception {
-        Player player = PlayerTestUtils.generatePlayer("testPlayerStats", league);
-        player = playerService.save(player);
-
-        mockMvc.perform(get("/api/players/" + player.getId() + "/stats")
-            .contentType(contentType))
-                .andExpect(status().isOk())
-                .andDo(MockMvcResultHandlers.print());
     }
 }

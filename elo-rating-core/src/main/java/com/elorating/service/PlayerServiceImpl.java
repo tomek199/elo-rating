@@ -1,5 +1,6 @@
 package com.elorating.service;
 
+import com.elorating.model.Match;
 import com.elorating.model.Player;
 import com.elorating.repository.PlayerRepository;
 import org.springframework.data.domain.Sort;
@@ -57,5 +58,15 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public List<Player> findByLeagueIdAndUsernameLikeIgnoreCase(String leagueId, String username) {
         return playerRepository.findByLeagueIdAndUsernameLikeIgnoreCase(leagueId, username);
+    }
+
+    @Override
+    public void restorePlayers(Match match) {
+        Player playerOne = playerRepository.findOne(match.getPlayerOne().getId());
+        playerOne.restore(match.getRatingDelta());
+        playerRepository.save(playerOne);
+        Player playerTwo = playerRepository.findOne(match.getPlayerTwo().getId());
+        playerTwo.restore(-match.getRatingDelta());
+        playerRepository.save(playerTwo);
     }
 }

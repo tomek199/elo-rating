@@ -105,4 +105,8 @@ export class PlayerListComponent implements OnInit {
   hasActivePlayers(): boolean {
     return this.activePlayers != null && this.activePlayers.length > 0;
   }
+
+  hasUser(player: Player): boolean {
+    return player.user != undefined;
+  }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface MatchService extends GenericService<Match> {
 
+    Match saveMatchWithPlayers(Match match);
     List<Match> findByLeagueId(String leagueId, Sort sortByDate);
     Page<Match> findByLeagueIdAndCompletedIsTrue(String leagueId, Pageable pageRequest);
     List<Match> findByLeagueIdAndCompletedIsFalse(String leagueId, Sort sortByDate);

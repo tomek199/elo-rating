@@ -1,9 +1,7 @@
 package com.elorating.controller;
 
-import com.elorating.algorithm.Elo;
 import com.elorating.model.League;
 import com.elorating.model.Match;
-import com.elorating.model.Player;
 import com.elorating.service.MatchService;
 import com.elorating.service.PlayerService;
 import com.elorating.utils.SortUtils;
@@ -17,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -89,33 +86,15 @@ public class MatchController {
     @CrossOrigin
     @RequestMapping(value = "/leagues/{leagueId}/matches", method = RequestMethod.POST)
     @ApiOperation(value = "Create match", notes = "Create new match")
-    public ResponseEntity<Match> create(@PathVariable String leagueId, @RequestBody Match match) {
+    public ResponseEntity<Match> save(@PathVariable String leagueId, @RequestBody Match match) {
         match.setLeague(new League(leagueId));
         if (match.isCompleted()) {
-            match.setDate(new Date());
-            match = saveMatchWithRatings(match);
+            match = matchService.saveMatchWithPlayers(match);
         }
         else {
             match = matchService.save(match);
         }
         return new ResponseEntity<Match>(match, HttpStatus.OK);
-    }
-
-    private Match saveMatchWithRatings(Match match) {
-        Elo elo = new Elo(match);
-        match.getPlayerOne().setRating(elo.getPlayerOneRating());
-        match.getPlayerTwo().setRating(elo.getPlayerTwoRating());
-        match.setRatingDelta(elo.getMatch().getRatingDelta());
-        updatePlayerRating(match.getPlayerOne());
-        updatePlayerRating(match.getPlayerTwo());
-        match.setCompleted();
-        return matchService.save(match);
-    }
-
-    private void updatePlayerRating(Player player) {
-        Player playerToUpdate = playerService.getById(player.getId());
-        playerToUpdate.setRating(player.getRating());
-        playerService.save(playerToUpdate);
     }
 
     @CrossOrigin
@@ -132,19 +111,8 @@ public class MatchController {
                 notes = "Delete match and revert players rating to previous state")
     public ResponseEntity<Match> revert(@PathVariable String id) {
         Match match = matchService.getById(id);
-        if (restorePlayersRatings(match))
-            matchService.deleteById(match.getId());
+        playerService.restorePlayers(match);
+        matchService.deleteById(match.getId());
         return new ResponseEntity<>(match, HttpStatus.OK);
-    }
-
-    private boolean restorePlayersRatings(Match match) {
-        if (match.getPlayerOne() != null && match.getPlayerTwo() != null) {
-            match.restorePlayersRating();
-            updatePlayerRating(match.getPlayerOne());
-            updatePlayerRating(match.getPlayerTwo());
-            return true;
-        } else {
-            return false;
-        }
     }
 }
