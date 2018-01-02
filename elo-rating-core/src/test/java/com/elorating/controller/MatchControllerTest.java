@@ -3,8 +3,8 @@ package com.elorating.controller;
 import com.elorating.model.League;
 import com.elorating.model.Match;
 import com.elorating.model.Player;
-import com.elorating.repository.PlayerRepository;
 import com.elorating.service.MatchService;
+import com.elorating.service.PlayerService;
 import com.elorating.utils.MatchTestUtils;
 import org.hamcrest.Matchers;
 import org.junit.After;
@@ -29,14 +29,14 @@ public class MatchControllerTest extends BaseControllerTest {
     private MatchService matchService;
 
     @Autowired
-    private PlayerRepository playerRepository;
+    private PlayerService playerService;
 
     @Before
     public void setUp() throws Exception {
         mockMvc = webAppContextSetup(webApplicationContext).build();
         league = leagueService.save(new League(null, "League"));
-        Player playerOne = playerRepository.save(new Player("Player 1", league));
-        Player playerTwo = playerRepository.save(new Player("Player 2", league));
+        Player playerOne = playerService.save(new Player("Player 1", league));
+        Player playerTwo = playerService.save(new Player("Player 2", league));
         for (int i = 0; i < RETRIES; i++) {
             matchService.save(new Match(playerOne, playerTwo, 2, 1, league));
         }
@@ -48,8 +48,8 @@ public class MatchControllerTest extends BaseControllerTest {
     @After
     public void tearDown() throws Exception {
         matchService.deleteAll();
-        playerRepository.deleteAll();
-        leagueRepository.deleteAll();
+        playerService.deleteAll();
+        leagueService.deleteAll();
     }
 
     @Test
@@ -93,8 +93,8 @@ public class MatchControllerTest extends BaseControllerTest {
 
     @Test
     public void testCreate() throws Exception {
-        Player playerOne = playerRepository.save(new Player("PlayerOne", league));
-        Player playerTwo = playerRepository.save(new Player("PlayerTwo", league));
+        Player playerOne = playerService.save(new Player("PlayerOne", league));
+        Player playerTwo = playerService.save(new Player("PlayerTwo", league));
         Match match = new Match(playerOne, playerTwo, 2, 0);
         match.setLeague(league);
         String matchJson = objectMapper.writeValueAsString(match);
@@ -116,8 +116,8 @@ public class MatchControllerTest extends BaseControllerTest {
 
     @Test
     public void testDelete() throws Exception {
-        Player playerOne = playerRepository.save(new Player("PlayerOne", league));
-        Player playerTwo = playerRepository.save(new Player("PlayerOne", league));
+        Player playerOne = playerService.save(new Player("PlayerOne", league));
+        Player playerTwo = playerService.save(new Player("PlayerOne", league));
         Match match = new Match(playerOne, playerTwo);
         match.setLeague(league);
         match = matchService.save(match);
@@ -130,8 +130,8 @@ public class MatchControllerTest extends BaseControllerTest {
 
     @Test
     public void testGetMatchByMatchId() throws Exception {
-        Player playerOne = playerRepository.save(new Player("PlayerOne", league));
-        Player playerTwo = playerRepository.save(new Player("PlayerOne", league));
+        Player playerOne = playerService.save(new Player("PlayerOne", league));
+        Player playerTwo = playerService.save(new Player("PlayerOne", league));
         Match match = matchService.save(new Match(playerOne, playerTwo));
         mockMvc.perform(get("/api/matches/" + match.getId())
             .contentType(contentType))
@@ -141,8 +141,8 @@ public class MatchControllerTest extends BaseControllerTest {
 
     @Test
     public void testRevert() throws Exception {
-        Player playerOne = playerRepository.save(new Player("PlayerOne", league, 1200));
-        Player playerTwo = playerRepository.save(new Player("PlayerTwo", league, 800));
+        Player playerOne = playerService.save(new Player("PlayerOne", league, 1200));
+        Player playerTwo = playerService.save(new Player("PlayerTwo", league, 800));
         Match match = matchService.save(new Match(playerOne, playerTwo, 1, 2, league));
         String matchJson = objectMapper.writeValueAsString(match);
         mockMvc.perform(post("/api/leagues/" + league.getId() + "/matches")
@@ -154,9 +154,9 @@ public class MatchControllerTest extends BaseControllerTest {
                 .contentType(contentType))
                 .andExpect(status().isOk());
         Assert.assertNull(matchService.getById(match.getId()));
-        playerOne = playerRepository.findOne(playerOne.getId());
+        playerOne = playerService.getById(playerOne.getId());
         Assert.assertEquals(1200, playerOne.getRating());
-        playerTwo = playerRepository.findOne(playerTwo.getId());
+        playerTwo = playerService.getById(playerTwo.getId());
         Assert.assertEquals(800, playerTwo.getRating());
     }
 
@@ -164,8 +164,8 @@ public class MatchControllerTest extends BaseControllerTest {
     public void test_rescheduleMatches() throws Exception {
         int matchesAmount = 4;
         int minutes = 10;
-        Player playerOne = playerRepository.save(new Player("PlayerOne", league, 1200));
-        Player playerTwo = playerRepository.save(new Player("PlayerTwo", league, 800));
+        Player playerOne = playerService.save(new Player("PlayerOne", league, 1200));
+        Player playerTwo = playerService.save(new Player("PlayerTwo", league, 800));
         List<Match> matchList = MatchTestUtils.setupMatches(playerOne, playerTwo, league, matchesAmount);
         matchList.forEach(match -> matchService.save(match));
         mockMvc.perform(post("/api/league/" + this.league.getId() + "/reschedule-matches/" + minutes)
