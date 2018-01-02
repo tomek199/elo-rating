@@ -3,8 +3,8 @@ package com.elorating.controller;
 import com.elorating.model.League;
 import com.elorating.model.Match;
 import com.elorating.model.Player;
-import com.elorating.repository.MatchRepository;
-import com.elorating.repository.PlayerRepository;
+import com.elorating.service.MatchService;
+import com.elorating.service.PlayerService;
 import com.elorating.utils.MatchTestUtils;
 import com.elorating.utils.PlayerTestUtils;
 import org.hamcrest.Matchers;
@@ -25,25 +25,25 @@ public class PlayerControllerTest extends BaseControllerTest {
     private static final int RETRIES = 5;
 
     @Autowired
-    private PlayerRepository playerRepository;
+    private PlayerService playerService;
 
     @Autowired
-    private MatchRepository matchRepository;
+    private MatchService matchService;
 
     @Before
     public void setUp() throws Exception {
         mockMvc = webAppContextSetup(webApplicationContext).build();
-        league = leagueRepository.save(new League(null, "League"));
+        league = leagueService.save(new League(null, "League"));
         for (int i = 0; i < RETRIES; i++) {
-            playerRepository.save(new Player("Player_" + i, league, 1000 + 100 * i));
+            playerService.save(new Player("Player_" + i, league, 1000 + 100 * i));
         }
     }
 
     @After
     public void tearDown() throws Exception {
-        matchRepository.deleteAll();
-        playerRepository.deleteAll();
-        leagueRepository.deleteAll();
+        matchService.deleteAll();
+        playerService.deleteAll();
+        leagueService.deleteAll();
     }
 
     @Test
@@ -57,7 +57,7 @@ public class PlayerControllerTest extends BaseControllerTest {
     @Test
     public void testGetById() throws Exception {
         Player player = new Player("playerToFind", league);
-        playerRepository.save(player);
+        playerService.save(player);
         mockMvc.perform(get("/api/players/" + player.getId())
                 .contentType(contentType))
                 .andExpect(status().isOk())
@@ -70,7 +70,7 @@ public class PlayerControllerTest extends BaseControllerTest {
     public void testGetRanking() throws Exception {
         Player inactivePlayer = new Player("InactivePlayer", league);
         inactivePlayer.setActive(false);
-        playerRepository.save(inactivePlayer);
+        playerService.save(inactivePlayer);
         mockMvc.perform(get("/api/leagues/" + league.getId() + "/players/ranking")
                 .contentType(contentType))
                 .andExpect(status().isOk())
@@ -95,7 +95,7 @@ public class PlayerControllerTest extends BaseControllerTest {
     @Test
     public void testEdit() throws Exception {
         Player player = new Player("playerToEdit", league);
-        playerRepository.save(player);
+        playerService.save(player);
         player.setUsername("editedUsername");
         player.setRating(2000);
         player.setLeague(null);
@@ -114,20 +114,20 @@ public class PlayerControllerTest extends BaseControllerTest {
 
     @Test
     public void testDelete() throws Exception {
-        Player player = playerRepository.save(new Player("PlayerToDelete", league));
+        Player player = playerService.save(new Player("PlayerToDelete", league));
         String url = "/api/leagues/" + league.getId() + "/players/" + player.getId();
         mockMvc.perform(delete(url)
                 .contentType(contentType))
                 .andExpect(status().isOk());
-        Assert.assertNull(playerRepository.findOne(player.getId()));
+        Assert.assertNull(playerService.getById(player.getId()));
     }
 
     @Test
     public void testFindByUsernameAndLeague() throws Exception {
         String url = "/api/leagues/" + league.getId() + "/players/find-by-username?username=yer_";
-        playerRepository.save(new Player("Other player", league));
-        League otherLeague = leagueRepository.save(new League(null, "Other league"));
-        playerRepository.save(new Player("Player_20", otherLeague));
+        playerService.save(new Player("Other player", league));
+        League otherLeague = leagueService.save(new League(null, "Other league"));
+        playerService.save(new Player("Player_20", otherLeague));
         mockMvc.perform(get(url)
                 .contentType(contentType))
                 .andExpect(status().isOk())
@@ -138,7 +138,7 @@ public class PlayerControllerTest extends BaseControllerTest {
     public void test_getPlayersStats() throws Exception {
         List<Player> players = PlayerTestUtils.generatePlayerList(2, league);
         for (int i = 0; i < players.size(); i++) {
-            players.set(i, playerRepository.save(players.get(i)));
+            players.set(i, playerService.save(players.get(i)));
         }
 
         Match match = MatchTestUtils.generateMatch(league, players.get(0), players.get(1), true);
@@ -153,7 +153,7 @@ public class PlayerControllerTest extends BaseControllerTest {
     @Test
     public void test_getPlayerByIdStats() throws Exception {
         Player player = PlayerTestUtils.generatePlayer("testPlayerStats", league);
-        player = playerRepository.save(player);
+        player = playerService.save(player);
 
         mockMvc.perform(get("/api/players/" + player.getId() + "/stats")
             .contentType(contentType))
