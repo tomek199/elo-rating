@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Player } from './../shared/player.model';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-player-user-info',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PlayerUserInfoComponent implements OnInit {
 
+  @Input() player: Player;
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { } 
 
+  playerHasUser(): boolean {
+    return this.player != undefined && this.player.user != undefined;
+  }
 }

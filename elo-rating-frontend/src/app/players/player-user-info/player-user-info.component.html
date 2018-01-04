@@ -1,3 +1,12 @@
-<p>
-  player-user-info works!
-</p>
+<div *ngIf="playerHasUser()" class="card">
+  <img [src]="player.user.pictureUrl" class="card-img-top">
+  <div class="card-body">
+    <p class="card-text">{{player.user.email}}</p>
+    <p class="card-text">
+      <small class="text-muted">{{player.user.lastSignIn | date:"yyyy-MM-dd HH:mm:ss"}}</small>
+    </p>
+  </div>
+</div>
+<div *ngIf="!playerHasUser()" class="alert alert-secondary">
+  Player is not assigned to any user.
+</div>

@@ -1,3 +1,4 @@
+import { USERS } from './users';
 import { Player } from './../../players/shared/player.model';
 
 export const PLAYERS: Player[] = [
@@ -37,7 +38,7 @@ export const PLAYERS: Player[] = [
     username: 'Player 5', 
     rating: 700, 
     active: false, 
-    user: null, 
+    user: USERS[0], 
     league: null,
     statistics: { won: 0, lost: 0 } 
   },
