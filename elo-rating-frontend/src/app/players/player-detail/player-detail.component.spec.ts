@@ -1,5 +1,8 @@
+import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
+import { GoogleAuthServiceStub } from './../../testing/google-stubs';
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PlayerMatchesStubComponent, PlayerStatisticsStubComponent, PlayerForecastStubComponent, PlayerOpponentsStubComponent } from './../../testing/player-stubs';
+import { PlayerMatchesStubComponent, PlayerStatisticsStubComponent, PlayerForecastStubComponent, PlayerOpponentsStubComponent, PlayerUserInfoStubComponent } from './../../testing/player-stubs';
 import { By } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -21,15 +24,18 @@ describe('PlayerDetailComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ 
         PlayerDetailComponent, 
+        PlayerUserInfoStubComponent,
         PlayerMatchesStubComponent, 
         PlayerStatisticsStubComponent,
         PlayerForecastStubComponent,
-        PlayerOpponentsStubComponent
+        PlayerOpponentsStubComponent,
+        SpinnerComponent
       ],
       imports: [ RouterTestingModule, FormsModule, NgbModule.forRoot()],
       providers: [
         {provide: PlayerService, useClass: PlayerServiceStub},
-        {provide: ActivatedRoute, useValue: activatedRoute}
+        {provide: ActivatedRoute, useValue: activatedRoute},
+        {provide: GoogleAuthService, useClass: GoogleAuthServiceStub}
       ]
     })
     .compileComponents();
