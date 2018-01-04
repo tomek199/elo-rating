@@ -41,13 +41,13 @@ describe('PlayerUserInfoComponent', () => {
 
   it('should show card with user info', () => {
     fixture.detectChanges();
-    let card = fixture.debugElement.query(By.css('div.card'));
-    expect(card).toBeTruthy();
-    let image = card.query(By.css('img'));
+    let cardBody = fixture.debugElement.query(By.css('div.card div.card-body'));
+    expect(cardBody).toBeTruthy();
+    let image = cardBody.query(By.css('div.col-2 img'));
     expect(image).toBeTruthy();
-    let email = card.query(By.css('div.card-body p:first-child'));
+    let email = cardBody.query(By.css('div.col p span'));
     expect(email.nativeElement.textContent).toEqual(USERS[0].email);
-    let lastSignedIn = card.query(By.css('div.card-body p small'));
+    let lastSignedIn = cardBody.query(By.css('div.col p small'));
     expect(lastSignedIn.nativeElement.textContent).toBeTruthy();
   });
 });

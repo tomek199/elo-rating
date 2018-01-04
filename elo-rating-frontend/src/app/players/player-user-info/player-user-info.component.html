@@ -1,10 +1,15 @@
 <div *ngIf="playerHasUser()" class="card">
-  <img [src]="player.user.pictureUrl" class="card-img-top">
-  <div class="card-body">
-    <p class="card-text">{{player.user.email}}</p>
-    <p class="card-text">
-      <small class="text-muted">{{player.user.lastSignIn | date:"yyyy-MM-dd HH:mm:ss"}}</small>
-    </p>
+  <div class="card-body row">
+    <div class="col-2">
+      <img [src]="player.user.pictureUrl" class="rounded img-fluid">    
+    </div>
+    <div class="col">
+      <p class="card-text">
+        <span>{{player.user.email}}</span>
+        <br>
+        <small class="text-muted">Last signed in: {{player.user.lastSignIn | date:"yyyy-MM-dd HH:mm:ss"}}</small>
+      </p>
+    </div>
   </div>
 </div>
 <div *ngIf="!playerHasUser()" class="alert alert-secondary">
