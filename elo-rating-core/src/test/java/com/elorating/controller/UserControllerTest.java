@@ -3,8 +3,8 @@ package com.elorating.controller;
 import com.elorating.model.League;
 import com.elorating.model.Player;
 import com.elorating.model.User;
-import com.elorating.repository.PlayerRepository;
-import com.elorating.repository.UserRepository;
+import com.elorating.service.PlayerService;
+import com.elorating.service.UserService;
 import org.hamcrest.Matchers;
 import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +22,22 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 public class UserControllerTest extends BaseControllerTest {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private PlayerRepository playerRepository;
+    private PlayerService playerService;
 
     @Before
     public void setUp() throws Exception {
         mockMvc = webAppContextSetup(webApplicationContext).build();
-        this.league = leagueRepository.save(new League(null, "Test league"));
+        this.league = leagueService.save(new League(null, "Test league"));
     }
 
     @After
     public void tearDown() throws Exception {
-        userRepository.deleteAll();
-        playerRepository.deleteAll();
-        leagueRepository.deleteAll();
+        userService.deleteAll();
+        playerService.deleteAll();
+        leagueService.deleteAll();
     }
 
     @Ignore
@@ -56,20 +56,20 @@ public class UserControllerTest extends BaseControllerTest {
     public void testAssignLeague() throws Exception {
         User user = new User("Test user");
         user.addLeague(league);
-        userRepository.save(user);
-        League leagueToAssign = leagueRepository.save(new League(null, "To assign"));
+        userService.save(user);
+        League leagueToAssign = leagueService.save(new League(null, "To assign"));
         String url = "/api/leagues/" + leagueToAssign.getId() + "/users/" + user.getId() + "/assign-league/";
         mockMvc.perform(post(url)
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.leagues", Matchers.hasSize(2)));
-        League updatedLeague = leagueRepository.findOne(leagueToAssign.getId());
+        League updatedLeague = leagueService.getById(leagueToAssign.getId());
         Assert.assertTrue(updatedLeague.getUsers().size() == 1);
     }
 
     @Test
     public void testInviteNewUser() throws Exception {
-        User user = userRepository.save(new User("User who invite"));
+        User user = userService.save(new User("User who invite"));
         User userToInvite = new User("User to invite", "t.morek@gmail.com");
         userToInvite.addLeague(league);
         String url = "/api/leagues/" + league.getId() + "/users/" + user.getId() + "/invite";
@@ -87,8 +87,8 @@ public class UserControllerTest extends BaseControllerTest {
 
     @Test
     public void testInviteExistingUser() throws Exception {
-        User user = userRepository.save(new User("User who invite"));
-        User userToInvite = userRepository.save(new User("User to invite", "t.morek@gmail.com"));
+        User user = userService.save(new User("User who invite"));
+        User userToInvite = userService.save(new User("User to invite", "t.morek@gmail.com"));
         userToInvite.addLeague(league);
         String url = "/api/leagues/" + league.getId() + "/users/" + user.getId() + "/invite";
         mockMvc.perform(post(url)
@@ -99,16 +99,16 @@ public class UserControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$.id", is(userToInvite.getId())))
                 .andExpect(jsonPath("$.email", is(userToInvite.getEmail())))
                 .andExpect(jsonPath("$.leagues[0].id", is(league.getId())));
-        League updatedLeague = leagueRepository.findOne(league.getId());
+        League updatedLeague = leagueService.getById(league.getId());
         Assert.assertEquals(updatedLeague.getUsers().size(), 1);
     }
 
     @Ignore // Test failing when is run with other tests. WTF?
     @Test
     public void testInviteNewUserWithPlayer() throws Exception {
-        User user = userRepository.save(new User("User who invite"));
+        User user = userService.save(new User("User who invite"));
         User userToInvite = new User("User to invite", "t.morek@gmail.com");
-        Player player = playerRepository.save(new Player("Player to connect", league));
+        Player player = playerService.save(new Player("Player to connect", league));
         userToInvite.addPlayer(player);
         userToInvite.addLeague(league);
         String url = "/api/leagues/" + league.getId() + "/users/" + user.getId() + "/invite";
@@ -128,9 +128,9 @@ public class UserControllerTest extends BaseControllerTest {
     @Ignore // Test failing when is run with other tests. WTF?
     @Test
     public void testInviteExistingUserWithPlayer() throws Exception {
-        User user = userRepository.save(new User("User who invite"));
-        User userToInvite = userRepository.save(new User("User to invite", "t.morek@gmail.com"));
-        Player player = playerRepository.save(new Player("Player to connect", league));
+        User user = userService.save(new User("User who invite"));
+        User userToInvite = userService.save(new User("User to invite", "t.morek@gmail.com"));
+        Player player = playerService.save(new Player("Player to connect", league));
         userToInvite.addPlayer(player);
         userToInvite.addLeague(league);
         String url = "/api/leagues/" + league.getId() + "/users/" + user.getId() + "/invite";
@@ -143,17 +143,17 @@ public class UserControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$.email", is(userToInvite.getEmail())))
                 .andExpect(jsonPath("$.leagues[0].id", is(league.getId())))
                 .andExpect(jsonPath("$.players[0].id", is(player.getId())));
-        League updatedLeague = leagueRepository.findOne(league.getId());
-        Player updatedPlayer = playerRepository.findOne(player.getId());
+        League updatedLeague = leagueService.getById(league.getId());
+        Player updatedPlayer = playerService.getById(player.getId());
         Assert.assertEquals(updatedLeague.getUsers().size(), 1);
         Assert.assertEquals(updatedPlayer.getUser().getId(), userToInvite.getId());
     }
 
     @Test
     public void testFindByUsername() throws Exception {
-        userRepository.save(new User("Name111"));
-        userRepository.save(new User("name112"));
-        userRepository.save(new User("name222"));
+        userService.save(new User("Name111"));
+        userService.save(new User("name112"));
+        userService.save(new User("name222"));
         String url = "/api/users/find-by-name" + "?name=name1";
         mockMvc.perform(get(url)
                 .contentType(contentType))
@@ -163,7 +163,7 @@ public class UserControllerTest extends BaseControllerTest {
 
     @Test
     public void testFindByUsernameEmptyResult() throws Exception {
-        userRepository.save(new User("user123"));
+        userService.save(new User("user123"));
         String url = "/api/users/find-by-name" + "?name=name";
         mockMvc.perform(get(url)
                 .contentType(contentType))
@@ -176,7 +176,7 @@ public class UserControllerTest extends BaseControllerTest {
         String token = UUID.randomUUID().toString();
         User user = new User();
         user.setInvitationToken(token);
-        userRepository.save(user);
+        userService.save(user);
         String url = "/api/users/verify-security-token";
         mockMvc.perform(post(url)
                 .contentType(contentType)
@@ -192,7 +192,7 @@ public class UserControllerTest extends BaseControllerTest {
 
     @Test
     public void testCreatePlayer() throws Exception {
-        User user = userRepository.save(new User("Test user"));
+        User user = userService.save(new User("Test user"));
         String url = "/api/leagues/" + league.getId() + "/users/" + user.getId() + "/create-player";
         mockMvc.perform(post(url)
                 .contentType(contentType)

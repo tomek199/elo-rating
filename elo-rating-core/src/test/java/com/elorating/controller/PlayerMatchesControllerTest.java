@@ -3,8 +3,8 @@ package com.elorating.controller;
 import com.elorating.model.League;
 import com.elorating.model.Match;
 import com.elorating.model.Player;
-import com.elorating.repository.MatchRepository;
-import com.elorating.repository.PlayerRepository;
+import com.elorating.service.MatchService;
+import com.elorating.service.PlayerService;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -25,10 +25,10 @@ public class PlayerMatchesControllerTest extends BaseControllerTest {
     private static final int RETRIES = 6;
 
     @Autowired
-    private PlayerRepository playerRepository;
+    private PlayerService playerService;
 
     @Autowired
-    private MatchRepository matchRepository;
+    private MatchService matchService;
 
     private Player playerOne;
 
@@ -37,27 +37,27 @@ public class PlayerMatchesControllerTest extends BaseControllerTest {
     @Before
     public void setUp() throws Exception {
         mockMvc = webAppContextSetup(webApplicationContext).build();
-        league = leagueRepository.save(new League(null, "League"));
-        playerOne = playerRepository.save(new Player("PlayerOne", league));
-        playerTwo = playerRepository.save(new Player("PlayerTwo", league));
+        league = leagueService.save(new League(null, "League"));
+        playerOne = playerService.save(new Player("PlayerOne", league));
+        playerTwo = playerService.save(new Player("PlayerTwo", league));
         Calendar calendar = Calendar.getInstance();
         for (int i = 0; i < RETRIES; i++) {
             calendar.add(Calendar.DATE, -5);
-            matchRepository.save(new Match(playerOne, playerTwo, 2, 1, calendar.getTime()));
+            matchService.save(new Match(playerOne, playerTwo, 2, 1, calendar.getTime()));
         }
     }
 
     @After
     public void tearDown() throws Exception {
-        matchRepository.deleteAll();
-        playerRepository.deleteAll();
-        leagueRepository.deleteAll();
+        matchService.deleteAll();
+        playerService.deleteAll();
+        leagueService.deleteAll();
     }
 
     @Test
     public void testGetPlayerMatches() throws Exception {
-        matchRepository.save(new Match(playerOne, playerTwo, 2, 0));
-        matchRepository.save(new Match(playerTwo, playerOne));
+        matchService.save(new Match(playerOne, playerTwo, 2, 0));
+        matchService.save(new Match(playerTwo, playerOne));
         mockMvc.perform(get("/api/players/" + playerOne.getId() + "/matches")
                 .contentType(contentType))
                 .andExpect(status().isOk())
@@ -112,8 +112,8 @@ public class PlayerMatchesControllerTest extends BaseControllerTest {
 
     @Test
     public void testGetPlayerScheduledMatches() throws Exception {
-        matchRepository.save(new Match(playerOne, playerTwo));
-        matchRepository.save(new Match(playerTwo, playerOne));
+        matchService.save(new Match(playerOne, playerTwo));
+        matchService.save(new Match(playerTwo, playerOne));
         mockMvc.perform(get("/api/players/" + playerOne.getId() + "/scheduled-matches")
                 .contentType(contentType))
                 .andExpect(status().isOk())
