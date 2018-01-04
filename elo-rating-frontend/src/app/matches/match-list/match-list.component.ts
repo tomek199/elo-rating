@@ -199,7 +199,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
         break;
       }
     }
-    return timeAfter;
+    return timeAfter && this.isAuthorized();
   }
 
   rescheduleMatches(): void {
