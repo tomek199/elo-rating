@@ -88,13 +88,13 @@ public class MatchController {
     @ApiOperation(value = "Create match", notes = "Create new match")
     public ResponseEntity<Match> save(@PathVariable String leagueId, @RequestBody Match match) {
         match.setLeague(new League(leagueId));
-        if (match.isCompleted()) {
+        if (matchService.checkIfCompleted(match))
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else if (match.isCompleted())
             match = matchService.saveMatchWithPlayers(match);
-        }
-        else {
+        else
             match = matchService.save(match);
-        }
-        return new ResponseEntity<Match>(match, HttpStatus.OK);
+        return new ResponseEntity<>(match, HttpStatus.OK);
     }
 
     @CrossOrigin
