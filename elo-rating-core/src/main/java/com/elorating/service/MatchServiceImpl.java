@@ -2,10 +2,7 @@ package com.elorating.service;
 
 import com.elorating.model.Match;
 import com.elorating.repository.MatchRepository;
-import com.elorating.service.email.CancelledMatchEmail;
-import com.elorating.service.email.EmailBuilder;
-import com.elorating.service.email.EmailDirector;
-import com.elorating.service.email.ScheduledMatchEmail;
+import com.elorating.service.email.*;
 import com.elorating.utils.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service("matchService")
 public class MatchServiceImpl implements MatchService {
@@ -48,8 +44,15 @@ public class MatchServiceImpl implements MatchService {
 
     @Override
     public Match saveAndNotify(Match match, String originUrl) {
+        boolean update = checkIfMatchToUpdate(match);
         match = save(match);
-        sendEmail(new ScheduledMatchEmail(matchRepository.findOne(match.getId()), originUrl));
+        EmailBuilder email = null;
+        if (update) {
+            sendEmails(generateEditMatchEmails(match, originUrl));
+        } else {
+            email = new ScheduledMatchEmail(matchRepository.findOne(match.getId()), originUrl);
+            sendEmail(email);
+        }
         return match;
     }
 
@@ -68,7 +71,7 @@ public class MatchServiceImpl implements MatchService {
         Match matchToDelete = matchRepository.findOne(id);
         matchRepository.delete(id);
         if (matchRepository.findOne(id) == null) {
-            sendCancellationEmails(generateCancellationEmails(matchToDelete, originUrl));
+            sendEmails(generateCancellationEmails(matchToDelete, originUrl));
         }
     }
 
@@ -167,18 +170,33 @@ public class MatchServiceImpl implements MatchService {
         matchRepository.deleteAll();
     }
 
-    private CancelledMatchEmail[] generateCancellationEmails(Match match, String originUrl) {
-        CancelledMatchEmail[] cancelledMatchEmails = {
-                new CancelledMatchEmail(match.getPlayerOne().getUsername(), match.getPlayerTwo().getUser() != null ? match.getPlayerTwo().getUser().getEmail() : "" , originUrl, match.getLeague()),
-                new CancelledMatchEmail(match.getPlayerTwo().getUsername(), match.getPlayerOne().getUser() != null ? match.getPlayerOne().getUser().getEmail() : "", originUrl, match.getLeague())
-        };
-        return cancelledMatchEmails;
+    private Set generateCancellationEmails(Match match, String originUrl) {
+        Set cancelledMatchEmailSet = new HashSet();
+        cancelledMatchEmailSet.add(new CancelledMatchEmail(match.getPlayerOne().getUsername(),
+                match.getPlayerTwo().getUser() != null ? match.getPlayerTwo().getUser().getEmail() : "" ,
+                originUrl, match.getLeague()));
+        cancelledMatchEmailSet.add(new CancelledMatchEmail(match.getPlayerTwo().getUsername(),
+                match.getPlayerOne().getUser() != null ? match.getPlayerOne().getUser().getEmail() : "",
+                originUrl, match.getLeague()));
+        return cancelledMatchEmailSet;
     }
 
-    private void sendCancellationEmails(CancelledMatchEmail[] cancelledMatchEmails) {
+    private Set generateEditMatchEmails(Match match, String originUrl) {
+        Set editMatchEmailSet = new HashSet();
+        editMatchEmailSet.add(new EditMatchEmail(match.getPlayerOne().getUsername(),
+                match.getPlayerTwo().getUser() != null ? match.getPlayerTwo().getUser().getEmail() : "" ,
+                DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+        editMatchEmailSet.add(new EditMatchEmail(match.getPlayerTwo().getUsername(),
+                match.getPlayerOne().getUser() != null ? match.getPlayerOne().getUser().getEmail() : "" ,
+                DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+        return editMatchEmailSet;
+    }
+
+    private void sendEmails(Set emails) {
         try {
-            for (EmailBuilder emailBuilder: cancelledMatchEmails) {
-                sendEmail(emailBuilder);
+            Iterator iterator = emails.iterator();
+            while(iterator.hasNext()) {
+                sendEmail((EmailBuilder) iterator.next());
             }
         } catch (Exception e) {
             logger.error("Error while sending cancellation emails");
@@ -189,5 +207,9 @@ public class MatchServiceImpl implements MatchService {
         EmailDirector emailDirector = new EmailDirector();
         emailDirector.setBuilder(emailBuilder);
         return emailService.send(emailDirector.build());
+    }
+
+    private boolean checkIfMatchToUpdate(Match match) {
+        return !match.getId().equals("") || match.getId() != null ? true : false;
     }
 }
