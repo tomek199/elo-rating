@@ -1,21 +1,28 @@
 package com.elorating.service.email;
 
+import com.elorating.model.League;
 import com.elorating.model.Match;
 import com.elorating.utils.DateUtils;
 import org.thymeleaf.context.Context;
 
 public class ScheduledMatchEmail extends EmailBuilder {
 
-    private Match scheduledMatch;
+    private String opponent;
+    private String recipient;
+    private String matchtime;
+    private League league;
 
-    public ScheduledMatchEmail(Match scheduledMatch, String originUrl) {
-        this.scheduledMatch = scheduledMatch;
+    public ScheduledMatchEmail(String opponent, String recipient, String matchtime, String originUrl, League league) {
+        this.opponent = opponent;
+        this.recipient = recipient;
+        this.matchtime = matchtime;
         this.originUrl = originUrl;
+        this.league = league;
     }
 
     @Override
     public void buildRecipient() {
-        email.setRecipient(scheduledMatch.getPlayerTwo().getUser().getEmail());
+        email.setRecipient(recipient);
     }
 
     @Override
@@ -31,9 +38,9 @@ public class ScheduledMatchEmail extends EmailBuilder {
     @Override
     public void buildContext() {
         Context context = email.getContext();
-        String redirectUrl = originUrl + "/leagues/" + this.scheduledMatch.getLeague().getId();
+        String redirectUrl = originUrl + "/leagues/" + this.league.getId();
         context.setVariable("redirectUrl", redirectUrl);
-        context.setVariable("username", this.scheduledMatch.getPlayerOne().getUsername());
-        context.setVariable("matchtime", DateUtils.getDateTime(this.scheduledMatch.getDate()));
+        context.setVariable("username", this.opponent);
+        context.setVariable("matchtime", matchtime);
     }
 }

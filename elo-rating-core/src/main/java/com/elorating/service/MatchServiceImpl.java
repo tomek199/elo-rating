@@ -50,8 +50,7 @@ public class MatchServiceImpl implements MatchService {
         if (update) {
             sendEmails(generateEditMatchEmails(match, originUrl));
         } else {
-            email = new ScheduledMatchEmail(matchRepository.findOne(match.getId()), originUrl);
-            sendEmail(email);
+            sendEmails(generateNewMatchEmails(match, originUrl));
         }
         return match;
     }
@@ -192,6 +191,17 @@ public class MatchServiceImpl implements MatchService {
         return editMatchEmailSet;
     }
 
+    private Set generateNewMatchEmails(Match match, String originUrl) {
+        Set newMatchEmails = new HashSet();
+        newMatchEmails.add(new ScheduledMatchEmail(match.getPlayerOne().getUsername(),
+                match.getPlayerTwo().getUser() != null ? match.getPlayerTwo().getUser().getEmail() : "" ,
+                DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+        newMatchEmails.add(new ScheduledMatchEmail(match.getPlayerTwo().getUsername(),
+                match.getPlayerOne().getUser() != null ? match.getPlayerOne().getUser().getEmail() : "" ,
+                DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+        return newMatchEmails;
+    }
+
     private void sendEmails(Set emails) {
         try {
             Iterator iterator = emails.iterator();
@@ -210,6 +220,6 @@ public class MatchServiceImpl implements MatchService {
     }
 
     private boolean checkIfMatchToUpdate(Match match) {
-        return !match.getId().equals("") || match.getId() != null ? true : false;
+        return match.getId() != null ? true : false;
     }
 }
