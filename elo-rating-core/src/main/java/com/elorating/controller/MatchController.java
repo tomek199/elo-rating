@@ -92,31 +92,13 @@ public class MatchController {
     @ApiOperation(value = "Create match", notes = "Create new match")
     public ResponseEntity<Match> save(HttpServletRequest request, @PathVariable String leagueId, @RequestBody Match match) {
         match.setLeague(new League(leagueId));
-        if (match.isCompleted()) {
+        if (matchService.checkIfCompleted(match))
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else if (match.isCompleted())
             match = matchService.saveMatchWithPlayers(match);
-        }
-        else {
-            //match = matchService.save(match);
+        else
             match = matchService.saveAndNotify(match, getOriginUrl(request));
-        }
-        return new ResponseEntity<Match>(match, HttpStatus.OK);
-    }
-
-    private Match saveMatchWithRatings(Match match) {
-        Elo elo = new Elo(match);
-        match.getPlayerOne().setRating(elo.getPlayerOneRating());
-        match.getPlayerTwo().setRating(elo.getPlayerTwoRating());
-        match.setRatingDelta(elo.getMatch().getRatingDelta());
-        updatePlayerRating(match.getPlayerOne());
-        updatePlayerRating(match.getPlayerTwo());
-        match.setCompleted();
-        return matchService.save(match);
-    }
-
-    private void updatePlayerRating(Player player) {
-        Player playerToUpdate = playerService.getById(player.getId());
-        playerToUpdate.setRating(player.getRating());
-        playerService.save(playerToUpdate);
+        return new ResponseEntity<>(match, HttpStatus.OK);
     }
 
     @CrossOrigin

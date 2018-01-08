@@ -9,6 +9,7 @@ export class User {
   familyName: string;
   email: string;
   pictureUrl: string;
+  lastSignIn: Date;
   leagues: League[];
   players: Player[];
 }

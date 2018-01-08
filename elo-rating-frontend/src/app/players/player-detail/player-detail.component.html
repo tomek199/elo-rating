@@ -1,50 +1,58 @@
-<h2>
-  Player
-  <small class="text-muted">{{player.username}}</small>
-</h2>
-<form #playerDetail class="col-6">
-  <div class="form-group row">
-    <label for="username" class="col-3 col-form-label">Username</label>
-    <div class="col-9">
-      <input type="text" name="username" [(ngModel)]="player.username" class="form-control" readonly>
+<app-spinner [resource]="player"></app-spinner>
+<ng-container *ngIf="hasPlayer()">
+  <h2 *ngIf="player">
+    Player
+    <small class="text-muted">{{player.username}}</small>
+  </h2>
+  <div class="row" *ngIf="player">
+    <form #playerDetail class="col-6">
+      <div class="form-group row">
+        <label for="username" class="col-3 col-form-label">Name</label>
+        <div class="col-9">
+          <input type="text" name="username" [(ngModel)]="player.username" class="form-control" readonly>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="rating" class="col-3 col-form-label">Rating</label>
+        <div class="col-9">
+          <input type="text" name="rating" [(ngModel)]="player.rating" class="form-control" readonly>
+        </div>
+      </div>
+    </form>
+    <div class="col-6" *ngIf="isAuthorized()">
+      <app-player-user-info [player]="player"></app-player-user-info>
     </div>
   </div>
-  <div class="form-group row">
-    <label for="rating" class="col-3 col-form-label">Rating</label>
-    <div class="col-9">
-      <input type="text" name="rating" [(ngModel)]="player.rating" class="form-control" readonly>
-    </div>
-  </div>
-</form>
-<ul class="nav justify-content-end">
-  <li>
-    <a [routerLink]="['/leagues', leagueId, 'players']">Back to list</a>
-  </li>
-</ul>
-<ngb-tabset>
-  <ngb-tab title="Matches">
-    <ng-template ngbTabContent>
-      <app-player-matches [leagueId]="leagueId" [playerId]="player.id"></app-player-matches>    
-    </ng-template>
-  </ngb-tab>
-  <ngb-tab title="Statistics">
-    <ng-template ngbTabContent>
-      <app-player-statistics [leagueId]="leagueId" [playerId]="player.id"></app-player-statistics>    
-    </ng-template>
-  </ngb-tab>
-  <ngb-tab title="Forecast">
-    <ng-template ngbTabContent>
-      <app-player-forecast [leagueId]="leagueId" [playerId]="player.id"></app-player-forecast>    
-    </ng-template>
-  </ngb-tab>
-  <ngb-tab title="Opponents">
-    <ng-template ngbTabContent>
-      <app-player-opponents [leagueId]="leagueId" [playerId]="player.id"></app-player-opponents>
-    </ng-template>
-  </ngb-tab>
-</ngb-tabset>
-<ul class="nav justify-content-end">
-  <li>
-    <a [routerLink]="['/leagues', leagueId, 'players']">Back to list</a>
-  </li>
-</ul>
+  <ul class="nav justify-content-end">
+    <li>
+      <a [routerLink]="['/leagues', leagueId, 'players']">Back to list</a>
+    </li>
+  </ul>
+  <ngb-tabset>
+    <ngb-tab title="Matches">
+      <ng-template ngbTabContent>
+        <app-player-matches [leagueId]="leagueId" [playerId]="player.id"></app-player-matches>    
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Statistics">
+      <ng-template ngbTabContent>
+        <app-player-statistics [leagueId]="leagueId" [playerId]="player.id"></app-player-statistics>    
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Forecast">
+      <ng-template ngbTabContent>
+        <app-player-forecast [leagueId]="leagueId" [playerId]="player.id"></app-player-forecast>    
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab title="Opponents">
+      <ng-template ngbTabContent>
+        <app-player-opponents [leagueId]="leagueId" [playerId]="player.id"></app-player-opponents>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+  <ul class="nav justify-content-end">
+    <li>
+      <a [routerLink]="['/leagues', leagueId, 'players']">Back to list</a>
+    </li>
+  </ul>
+</ng-container>

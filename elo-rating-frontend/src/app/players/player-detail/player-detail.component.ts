@@ -1,3 +1,4 @@
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerService } from './../shared/player.service';
 import { Player } from './../shared/player.model';
@@ -15,10 +16,9 @@ export class PlayerDetailComponent implements OnInit {
   
   constructor(
     private playerService: PlayerService,
-    private route: ActivatedRoute
-  ) {
-    this.player = new Player();
-   }
+    private route: ActivatedRoute,
+    private googleAuthService: GoogleAuthService
+  ) { }
 
   ngOnInit() {
     this.getLeagueId();
@@ -36,5 +36,13 @@ export class PlayerDetailComponent implements OnInit {
         this.playerService.getPlayer(playerId)
           .then(player => this.player = player);     
       });
+  }
+
+  hasPlayer(): boolean {
+    return this.player !== undefined;
+  }
+
+  isAuthorized(): boolean {
+    return this.googleAuthService.isAuthorized();
   }
 }

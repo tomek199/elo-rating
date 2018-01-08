@@ -188,6 +188,15 @@ public class MatchServiceImpl implements MatchService {
         return matchRepository.findByLeagueIdAndCompletedIsFalse(leagueId, sort);
     }
 
+    @Override
+    public boolean checkIfCompleted(Match match) {
+        if (match.getId() != null && match.getId().length() > 0) {
+            Match matchToCheck = matchRepository.findByIdAndCompletedIsTrue(match.getId());
+            return (matchToCheck != null) ? true : false;
+        }
+        return false;
+    }
+
     private void saveMatches(List<Match> matches) {
         for (Match match : matches) {
             this.matchRepository.save(match);

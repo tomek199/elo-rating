@@ -19,6 +19,8 @@ public interface MatchRepository extends MongoRepository<Match, String> {
 
     List<Match> findByLeagueIdAndCompletedIsFalse(String id, Sort sort);
 
+    Match findByIdAndCompletedIsTrue(String id);
+
     List<Match> findByCompletedIsFalse();
 
     @Query(value = "{'$or': [{'playerOne.id': ?0}, {'playerTwo.id': ?0}]}")

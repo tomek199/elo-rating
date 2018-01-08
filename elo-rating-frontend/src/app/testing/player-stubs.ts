@@ -134,3 +134,13 @@ export class PlayerCellStubComponent implements OnInit {
   constructor() {};
   ngOnInit() {}
 }
+
+@Component({
+  selector: 'app-player-user-info',
+  template: ''
+})
+export class PlayerUserInfoStubComponent implements OnInit {
+  @Input() player: Player;
+  constructor() {};
+  ngOnInit() {}
+}

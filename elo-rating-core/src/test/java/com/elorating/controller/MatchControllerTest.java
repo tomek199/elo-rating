@@ -6,12 +6,14 @@ import com.elorating.model.Player;
 import com.elorating.service.MatchService;
 import com.elorating.service.PlayerService;
 import com.elorating.utils.MatchTestUtils;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 
@@ -118,7 +120,20 @@ public class MatchControllerTest extends BaseControllerTest {
         Assert.assertEquals(0, playerOne.getStatistics().getLost());
         Assert.assertEquals(0, playerTwo.getStatistics().getWon());
         Assert.assertEquals(1, playerTwo.getStatistics().getLost());
+    }
 
+    @Test
+    public void testSaveAlreadyCompleted() throws Exception {
+        Player playerOne = playerService.save(new Player("PlayerOne", league));
+        Player playerTwo = playerService.save(new Player("PlayerTwo", league));
+        Match match = new Match(playerOne, playerTwo, 2, 0, league);
+        match.setCompleted();
+        matchService.save(match);
+        String matchJson = objectMapper.writeValueAsString(match);
+        mockMvc.perform(post("/api/leagues/" + league.getId() + "/matches")
+                .content(matchJson)
+                .contentType(contentType))
+                .andExpect(status().isNoContent());
     }
 
     @Test
@@ -150,17 +165,20 @@ public class MatchControllerTest extends BaseControllerTest {
     public void testRevert() throws Exception {
         Player playerOne = playerService.save(new Player("PlayerOne", league, 1200));
         Player playerTwo = playerService.save(new Player("PlayerTwo", league, 800));
-        Match match = matchService.save(new Match(playerOne, playerTwo, 1, 2, league));
+        Match match = new Match(playerOne, playerTwo, 1, 2, league);
         String matchJson = objectMapper.writeValueAsString(match);
-        mockMvc.perform(post("/api/leagues/" + league.getId() + "/matches")
+        MvcResult result = mockMvc.perform(post("/api/leagues/" + league.getId() + "/matches")
                 .content(matchJson)
                 .contentType(contentType))
-                .andExpect(status().isOk());
-        String revertUrl = "/api/leagues/" + league.getId() + "/matches/" + match.getId() + "/revert";
+                .andExpect(status().isOk())
+                .andReturn();
+        JsonNode jsonResult = objectMapper.readTree(result.getResponse().getContentAsString());
+        String matchId = jsonResult.get("id").asText();
+        String revertUrl = "/api/leagues/" + league.getId() + "/matches/" + matchId + "/revert";
         mockMvc.perform(post(revertUrl)
                 .contentType(contentType))
                 .andExpect(status().isOk());
-        Assert.assertNull(matchService.getById(match.getId()));
+        Assert.assertNull(matchService.getById(matchId));
         playerOne = playerService.getById(playerOne.getId());
         Assert.assertEquals(1200, playerOne.getRating());
         playerTwo = playerService.getById(playerTwo.getId());
