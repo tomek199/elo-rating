@@ -3,15 +3,14 @@ package com.elorating.service.email;
 import com.elorating.model.League;
 import org.thymeleaf.context.Context;
 
-public class InviteExistingUserEmail extends EmailBuilder {
+public class CancelledMatchEmail extends EmailBuilder {
 
-    private String currentUser;
+    private String opponent;
     private League league;
 
-    public InviteExistingUserEmail(String recipient, String currentUser,
-                                   String originUrl, League league) {
+    public CancelledMatchEmail(String opponent, String recipient, String originUrl, League league) {
+        this.opponent = opponent;
         this.recipient = recipient;
-        this.currentUser = currentUser;
         this.originUrl = originUrl;
         this.league = league;
     }
@@ -23,20 +22,19 @@ public class InviteExistingUserEmail extends EmailBuilder {
 
     @Override
     public void buildSubject() {
-        email.setSubject("EloRating invitation");
+        email.setSubject(EmailStrings.CANCELLED_MATCH);
     }
 
     @Override
     public void buildTemplateName() {
-        email.setTemplateName("inviteExisting");
+        email.setTemplateName(EmailStrings.CANCELLED_MATCH_TEMPLATE);
     }
 
     @Override
     public void buildContext() {
         Context context = email.getContext();
-        String redirectUrl = originUrl + "/leagues/" + league.getId();
+        String redirectUrl = originUrl + "/leagues/" + this.league.getId();
         context.setVariable("redirectUrl", redirectUrl);
-        context.setVariable("leagueName", league.getName());
-        context.setVariable("username", currentUser);
+        context.setVariable("opponent", opponent);
     }
 }

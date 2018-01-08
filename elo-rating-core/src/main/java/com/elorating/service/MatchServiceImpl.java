@@ -5,25 +5,37 @@ import com.elorating.model.Match;
 import com.elorating.model.Player;
 import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
+import com.elorating.service.email.*;
 import com.elorating.utils.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service("matchService")
 public class MatchServiceImpl implements MatchService {
+
+    private static final Logger logger = LoggerFactory.getLogger(MatchServiceImpl.class);
 
     @Resource
     private MatchRepository matchRepository;
 
     @Resource
     private PlayerRepository playerRepository;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private PlayerService playerService;
 
     @Override
     public Match getById(String id) {
@@ -41,6 +53,19 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
+    public Match saveAndNotify(Match match, String originUrl) {
+        boolean update = checkIfMatchToUpdate(match);
+        match = save(match);
+        EmailBuilder email = null;
+        if (update) {
+            sendEmails(generateEditMatchEmails(match, originUrl));
+        } else {
+            sendEmails(generateNewMatchEmails(match, originUrl));
+        }
+        return match;
+    }
+
+    @Override
     public List<Match> save(Iterable<Match> matches) {
         return matchRepository.save(matches);
     }
@@ -48,6 +73,15 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public void deleteById(String id) {
         matchRepository.delete(id);
+    }
+
+    @Override
+    public void deleteByIdWithNotification(String id, String originUrl) {
+        Match matchToDelete = matchRepository.findOne(id);
+        matchRepository.delete(id);
+        if (matchRepository.findOne(id) == null) {
+            sendEmails(generateCancellationEmails(matchToDelete, originUrl));
+        }
     }
 
     @Override
@@ -163,5 +197,92 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public void deleteAll() {
         matchRepository.deleteAll();
+    }
+
+    private Set generateCancellationEmails(Match match, String originUrl) {
+        Set cancelledMatchEmailSet = new HashSet();
+
+        match.setPlayerOne(playerService.getById(match.getPlayerOne().getId()));
+
+        if (match.getPlayerOne().getUser() != null) {
+            cancelledMatchEmailSet.add(new CancelledMatchEmail(match.getPlayerTwo().getUsername(),
+                    match.getPlayerOne().getUser().getEmail(),
+                    originUrl, match.getLeague()));
+        }
+
+        match.setPlayerTwo(playerService.getById(match.getPlayerTwo().getId()));
+
+        if (match.getPlayerTwo().getUser() != null) {
+            cancelledMatchEmailSet.add(new CancelledMatchEmail(match.getPlayerOne().getUsername(),
+                    match.getPlayerTwo().getUser().getEmail(),
+                    originUrl, match.getLeague()));
+        }
+        return cancelledMatchEmailSet;
+    }
+
+    private Set generateEditMatchEmails(Match match, String originUrl) {
+        Set editMatchEmailSet = new HashSet();
+
+        match.setPlayerOne(playerService.getById(match.getPlayerOne().getId()));
+
+        if (match.getPlayerOne().getUser() != null) {
+            editMatchEmailSet.add(new EditMatchEmail(match.getPlayerTwo().getUsername(),
+                    match.getPlayerOne().getUser().getEmail(),
+                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+        }
+
+        match.setPlayerTwo(playerService.getById(match.getPlayerTwo().getId()));
+
+        if (match.getPlayerTwo().getUser() != null) {
+            editMatchEmailSet.add(new EditMatchEmail(match.getPlayerOne().getUsername(),
+                    match.getPlayerTwo().getUser().getEmail(),
+                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+        }
+
+        return editMatchEmailSet;
+    }
+
+    private Set generateNewMatchEmails(Match match, String originUrl) {
+        Set newMatchEmails = new HashSet();
+
+        match.setPlayerOne(playerService.getById(match.getPlayerOne().getId()));
+
+        if (match.getPlayerOne().getUser() != null) {
+            newMatchEmails.add(new ScheduledMatchEmail(match.getPlayerTwo().getUsername(),
+                    match.getPlayerOne().getUser().getEmail(),
+                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+
+        }
+
+        match.setPlayerTwo(playerService.getById(match.getPlayerTwo().getId()));
+
+        if (match.getPlayerTwo().getUser() != null) {
+            newMatchEmails.add(new ScheduledMatchEmail(match.getPlayerOne().getUsername(),
+                    match.getPlayerTwo().getUser().getEmail(),
+                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+        }
+        return newMatchEmails;
+    }
+
+    private void sendEmails(Set emails) {
+        try {
+            Iterator iterator = emails.iterator();
+            while(iterator.hasNext()) {
+                sendEmail((EmailBuilder) iterator.next());
+            }
+        } catch (Exception e) {
+            logger.error("Error while sending email");
+        }
+    }
+
+    @Async
+    private boolean sendEmail(EmailBuilder emailBuilder) {
+        EmailDirector emailDirector = new EmailDirector();
+        emailDirector.setBuilder(emailBuilder);
+        return emailService.send(emailDirector.build());
+    }
+
+    private boolean checkIfMatchToUpdate(Match match) {
+        return match.getId() != null ? true : false;
     }
 }

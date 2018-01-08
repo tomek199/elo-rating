@@ -5,7 +5,6 @@ import org.thymeleaf.context.Context;
 public class FeedbackEmail extends EmailBuilder {
 
     private String sender;
-    private String recipient;
     private String text;
 
     public FeedbackEmail(String sender, String recipient, String text) {
