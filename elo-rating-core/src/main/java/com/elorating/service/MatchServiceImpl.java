@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -26,6 +27,9 @@ public class MatchServiceImpl implements MatchService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private PlayerService playerService;
 
     @Override
     public Match getById(String id) {
@@ -171,34 +175,66 @@ public class MatchServiceImpl implements MatchService {
 
     private Set generateCancellationEmails(Match match, String originUrl) {
         Set cancelledMatchEmailSet = new HashSet();
-        cancelledMatchEmailSet.add(new CancelledMatchEmail(match.getPlayerOne().getUsername(),
-                match.getPlayerTwo().getUser() != null ? match.getPlayerTwo().getUser().getEmail() : "" ,
-                originUrl, match.getLeague()));
-        cancelledMatchEmailSet.add(new CancelledMatchEmail(match.getPlayerTwo().getUsername(),
-                match.getPlayerOne().getUser() != null ? match.getPlayerOne().getUser().getEmail() : "",
-                originUrl, match.getLeague()));
+
+        match.setPlayerOne(playerService.getById(match.getPlayerOne().getId()));
+
+        if (match.getPlayerOne().getUser() != null) {
+            cancelledMatchEmailSet.add(new CancelledMatchEmail(match.getPlayerTwo().getUsername(),
+                    match.getPlayerOne().getUser().getEmail(),
+                    originUrl, match.getLeague()));
+        }
+
+        match.setPlayerTwo(playerService.getById(match.getPlayerTwo().getId()));
+
+        if (match.getPlayerTwo().getUser() != null) {
+            cancelledMatchEmailSet.add(new CancelledMatchEmail(match.getPlayerOne().getUsername(),
+                    match.getPlayerTwo().getUser().getEmail(),
+                    originUrl, match.getLeague()));
+        }
         return cancelledMatchEmailSet;
     }
 
     private Set generateEditMatchEmails(Match match, String originUrl) {
         Set editMatchEmailSet = new HashSet();
-        editMatchEmailSet.add(new EditMatchEmail(match.getPlayerOne().getUsername(),
-                match.getPlayerTwo().getUser() != null ? match.getPlayerTwo().getUser().getEmail() : "" ,
-                DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
-        editMatchEmailSet.add(new EditMatchEmail(match.getPlayerTwo().getUsername(),
-                match.getPlayerOne().getUser() != null ? match.getPlayerOne().getUser().getEmail() : "" ,
-                DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+
+        match.setPlayerOne(playerService.getById(match.getPlayerOne().getId()));
+
+        if (match.getPlayerOne().getUser() != null) {
+            editMatchEmailSet.add(new EditMatchEmail(match.getPlayerTwo().getUsername(),
+                    match.getPlayerOne().getUser().getEmail(),
+                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+        }
+
+        match.setPlayerTwo(playerService.getById(match.getPlayerTwo().getId()));
+
+        if (match.getPlayerTwo().getUser() != null) {
+            editMatchEmailSet.add(new EditMatchEmail(match.getPlayerOne().getUsername(),
+                    match.getPlayerTwo().getUser().getEmail(),
+                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+        }
+
         return editMatchEmailSet;
     }
 
     private Set generateNewMatchEmails(Match match, String originUrl) {
         Set newMatchEmails = new HashSet();
-        newMatchEmails.add(new ScheduledMatchEmail(match.getPlayerOne().getUsername(),
-                match.getPlayerTwo().getUser() != null ? match.getPlayerTwo().getUser().getEmail() : "" ,
-                DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
-        newMatchEmails.add(new ScheduledMatchEmail(match.getPlayerTwo().getUsername(),
-                match.getPlayerOne().getUser() != null ? match.getPlayerOne().getUser().getEmail() : "" ,
-                DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+
+        match.setPlayerOne(playerService.getById(match.getPlayerOne().getId()));
+
+        if (match.getPlayerOne().getUser() != null) {
+            newMatchEmails.add(new ScheduledMatchEmail(match.getPlayerTwo().getUsername(),
+                    match.getPlayerOne().getUser().getEmail(),
+                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+
+        }
+
+        match.setPlayerTwo(playerService.getById(match.getPlayerTwo().getId()));
+
+        if (match.getPlayerTwo().getUser() != null) {
+            newMatchEmails.add(new ScheduledMatchEmail(match.getPlayerOne().getUsername(),
+                    match.getPlayerTwo().getUser().getEmail(),
+                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+        }
         return newMatchEmails;
     }
 
@@ -209,10 +245,11 @@ public class MatchServiceImpl implements MatchService {
                 sendEmail((EmailBuilder) iterator.next());
             }
         } catch (Exception e) {
-            logger.error("Error while sending cancellation emails");
+            logger.error("Error while sending email");
         }
     }
 
+    @Async
     private boolean sendEmail(EmailBuilder emailBuilder) {
         EmailDirector emailDirector = new EmailDirector();
         emailDirector.setBuilder(emailBuilder);

@@ -29,7 +29,7 @@ public class EditMatchEmail extends EmailBuilder {
 
     @Override
     public void buildTemplateName() {
-        email.setTemplateName(EmailStrings.CANCELLED_MATCH_TEMPLATE);
+        email.setTemplateName(EmailStrings.EDITED_MATCH_TEMPLATE);
     }
 
     @Override
