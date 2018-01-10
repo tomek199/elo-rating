@@ -37,6 +37,9 @@ public class MatchServiceImpl implements MatchService {
     @Autowired
     private PlayerService playerService;
 
+    @Autowired
+    private EmailGenerator emailGenerator;
+
     @Override
     public Match getById(String id) {
         return matchRepository.findOne(id);
@@ -56,11 +59,11 @@ public class MatchServiceImpl implements MatchService {
     public Match saveAndNotify(Match match, String originUrl) {
         boolean update = checkIfMatchToUpdate(match);
         match = save(match);
-        EmailBuilder email = null;
+        match = fulfillPlayersInfo(match);
         if (update) {
-            sendEmails(generateEditMatchEmails(match, originUrl));
+            sendEmails(emailGenerator.generateEmails(matchRepository.findOne(match.getId()), emailGenerator.EDIT_MATCH, originUrl));
         } else {
-            sendEmails(generateNewMatchEmails(match, originUrl));
+            sendEmails(emailGenerator.generateEmails(matchRepository.findOne(match.getId()), emailGenerator.SCHEDULE_MATCH, originUrl));
         }
         return match;
     }
@@ -79,8 +82,9 @@ public class MatchServiceImpl implements MatchService {
     public void deleteByIdWithNotification(String id, String originUrl) {
         Match matchToDelete = matchRepository.findOne(id);
         matchRepository.delete(id);
+        matchToDelete = fulfillPlayersInfo(matchToDelete);
         if (matchRepository.findOne(id) == null) {
-            sendEmails(generateCancellationEmails(matchToDelete, originUrl));
+            sendEmails(emailGenerator.generateEmails(matchToDelete, emailGenerator.CANCEL_MATCH, originUrl));
         }
     }
 
@@ -208,71 +212,6 @@ public class MatchServiceImpl implements MatchService {
         matchRepository.deleteAll();
     }
 
-    private Set generateCancellationEmails(Match match, String originUrl) {
-        Set cancelledMatchEmailSet = new HashSet();
-
-        match.setPlayerOne(playerService.getById(match.getPlayerOne().getId()));
-
-        if (match.getPlayerOne().getUser() != null) {
-            cancelledMatchEmailSet.add(new CancelledMatchEmail(match.getPlayerTwo().getUsername(),
-                    match.getPlayerOne().getUser().getEmail(),
-                    originUrl, match.getLeague()));
-        }
-
-        match.setPlayerTwo(playerService.getById(match.getPlayerTwo().getId()));
-
-        if (match.getPlayerTwo().getUser() != null) {
-            cancelledMatchEmailSet.add(new CancelledMatchEmail(match.getPlayerOne().getUsername(),
-                    match.getPlayerTwo().getUser().getEmail(),
-                    originUrl, match.getLeague()));
-        }
-        return cancelledMatchEmailSet;
-    }
-
-    private Set generateEditMatchEmails(Match match, String originUrl) {
-        Set editMatchEmailSet = new HashSet();
-
-        match.setPlayerOne(playerService.getById(match.getPlayerOne().getId()));
-
-        if (match.getPlayerOne().getUser() != null) {
-            editMatchEmailSet.add(new EditMatchEmail(match.getPlayerTwo().getUsername(),
-                    match.getPlayerOne().getUser().getEmail(),
-                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
-        }
-
-        match.setPlayerTwo(playerService.getById(match.getPlayerTwo().getId()));
-
-        if (match.getPlayerTwo().getUser() != null) {
-            editMatchEmailSet.add(new EditMatchEmail(match.getPlayerOne().getUsername(),
-                    match.getPlayerTwo().getUser().getEmail(),
-                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
-        }
-
-        return editMatchEmailSet;
-    }
-
-    private Set generateNewMatchEmails(Match match, String originUrl) {
-        Set newMatchEmails = new HashSet();
-
-        match.setPlayerOne(playerService.getById(match.getPlayerOne().getId()));
-
-        if (match.getPlayerOne().getUser() != null) {
-            newMatchEmails.add(new ScheduledMatchEmail(match.getPlayerTwo().getUsername(),
-                    match.getPlayerOne().getUser().getEmail(),
-                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
-
-        }
-
-        match.setPlayerTwo(playerService.getById(match.getPlayerTwo().getId()));
-
-        if (match.getPlayerTwo().getUser() != null) {
-            newMatchEmails.add(new ScheduledMatchEmail(match.getPlayerOne().getUsername(),
-                    match.getPlayerTwo().getUser().getEmail(),
-                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
-        }
-        return newMatchEmails;
-    }
-
     private void sendEmails(Set emails) {
         try {
             Iterator iterator = emails.iterator();
@@ -293,5 +232,11 @@ public class MatchServiceImpl implements MatchService {
 
     private boolean checkIfMatchToUpdate(Match match) {
         return match.getId() != null ? true : false;
+    }
+
+    private Match fulfillPlayersInfo(Match match) {
+        match.setPlayerOne(playerService.getById(match.getPlayerOne().getId()));
+        match.setPlayerTwo(playerService.getById(match.getPlayerTwo().getId()));
+        return match;
     }
 }
