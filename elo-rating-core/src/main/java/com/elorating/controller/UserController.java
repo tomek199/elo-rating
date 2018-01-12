@@ -30,6 +30,14 @@ public class UserController {
     private UserService userService;
 
     @CrossOrigin
+    @RequestMapping(value = "/leagues/{leagueId}/users/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "Get user", notes = "Get user by id")
+    public ResponseEntity<User> get(@PathVariable String id) {
+        User user = userService.getById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @CrossOrigin
     @RequestMapping(value = "/users/sign-in", method = RequestMethod.POST)
     @ApiOperation(value = "Sign in", notes = "Verify Google's id token")
     public ResponseEntity<User> signIn(@RequestBody String token) {
