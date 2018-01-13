@@ -41,9 +41,18 @@ export class AppComponent {
     let splitted = url.split('/');
     if (splitted[1] == 'leagues') {
       this.showNavbar = true;
-      return splitted[2];
+      return this.checkLeagueId(splitted[2]);
     }
     return null;
+  }
+
+  private checkLeagueId(id: string): string | null {
+    if (!id) return null;
+    let regex = new RegExp('^[a-f\\d]{24}$');
+    if (regex.test(id))
+      return id;
+    else
+      return null;
   }
 
   private getLeague(leagueId: string) {
