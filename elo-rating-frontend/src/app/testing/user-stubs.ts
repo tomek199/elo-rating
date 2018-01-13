@@ -1,3 +1,4 @@
+import { USERS } from './data/users';
 import { Player } from './../players/shared/player.model';
 import { League } from './../leagues/shared/league.model';
 import { User } from './../users/shared/user.model';
@@ -5,6 +6,10 @@ import { Injectable, Component } from '@angular/core';
 
 @Injectable()
 export class UserServiceStub {
+
+  get(id: string): Promise<User> {
+    return Promise.resolve(USERS[0]);
+  }
 
   assignLeague(leagueId: string, userId: string) {
     let user = this.getUserWithLeague(userId);
