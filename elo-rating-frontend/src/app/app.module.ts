@@ -48,6 +48,7 @@ import { FeedbackSendComponent } from './feedback/feedback-send/feedback-send.co
 import { LeagueEditComponent } from './leagues/league-edit/league-edit.component';
 import { BtnSpinnerDirective } from './core/directives/btn-spinner/btn-spinner.directive';
 import { PlayerUserInfoComponent } from './players/player-user-info/player-user-info.component';
+import { UserProfileComponent } from './users/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,8 @@ import { PlayerUserInfoComponent } from './players/player-user-info/player-user-
     FeedbackSendComponent,
     LeagueEditComponent,
     BtnSpinnerDirective,
-    PlayerUserInfoComponent
+    PlayerUserInfoComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
