@@ -30,7 +30,7 @@ public class UserController {
     private UserService userService;
 
     @CrossOrigin
-    @RequestMapping(value = "/leagues/{leagueId}/users/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "Get user", notes = "Get user by id")
     public ResponseEntity<User> get(@PathVariable String id) {
         User user = userService.getById(id);

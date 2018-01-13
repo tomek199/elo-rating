@@ -43,7 +43,7 @@ public class UserControllerTest extends BaseControllerTest {
     @Test
     public void testGet() throws Exception {
         User user = userService.save(new User("Test user", "test@mail.com"));
-        String url = "/api/leagues/" + league.getId() + "/users/" + user.getId();
+        String url = "/api/users/" + user.getId();
         mockMvc.perform(get(url)
                 .contentType(contentType))
                 .andExpect(status().isOk())
