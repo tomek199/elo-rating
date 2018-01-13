@@ -8,7 +8,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 
 import { UserProfileComponent } from './user-profile.component';
 
-fdescribe('UserProfileComponent', () => {
+describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
   let fixture: ComponentFixture<UserProfileComponent>;
   let stubUser: User;
