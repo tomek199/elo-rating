@@ -1,4 +1,7 @@
+import { User } from './../shared/user.model';
+import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { Component, OnInit } from '@angular/core';
+import { UserService } from 'app/users/shared/user.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -7,9 +10,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserProfileComponent implements OnInit {
 
-  constructor() { }
+  user: User;
+
+  constructor(private googleAuthService: GoogleAuthService,
+              private userService: UserService) { }
 
   ngOnInit() {
+    this.getUser();
   }
 
+  private getUser() {
+    let userId = this.googleAuthService.getCurrentUser().id;
+    this.userService.get(userId)
+      .then(response => this.user = response);
+  }
 }
