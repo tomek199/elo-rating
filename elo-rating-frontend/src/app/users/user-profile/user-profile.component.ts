@@ -11,17 +11,31 @@ import { UserService } from 'app/users/shared/user.service';
 export class UserProfileComponent implements OnInit {
 
   user: User;
+  component: string;
 
   constructor(private googleAuthService: GoogleAuthService,
               private userService: UserService) { }
 
   ngOnInit() {
     this.getUser();
+    this.component = 'info';
   }
 
   private getUser() {
     let userId = this.googleAuthService.getCurrentUser().id;
     this.userService.get(userId)
       .then(response => this.user = response);
+  }
+
+  hasUser(): boolean { 
+    return this.user !== undefined;
+  }
+
+  changeComponent(component: string) {
+    this.component = component;
+  }
+
+  isActive(component: string) {
+    return this.component == component;
   }
 }

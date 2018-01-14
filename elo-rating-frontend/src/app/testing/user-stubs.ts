@@ -2,7 +2,7 @@ import { USERS } from './data/users';
 import { Player } from './../players/shared/player.model';
 import { League } from './../leagues/shared/league.model';
 import { User } from './../users/shared/user.model';
-import { Injectable, Component } from '@angular/core';
+import { Injectable, Component, Input, OnInit } from '@angular/core';
 
 @Injectable()
 export class UserServiceStub {
@@ -58,3 +58,13 @@ export class UserServiceStub {
   template: ''
 })
 export class UserCreatePlayerStubComponent { }
+
+@Component({
+  selector: 'app-user-profile-info',
+  template: ''
+})
+export class UserProfileInfoStubComponent implements OnInit {
+  @Input() user: User;
+  ngOnInit(): void { }
+  constructor() { }
+}

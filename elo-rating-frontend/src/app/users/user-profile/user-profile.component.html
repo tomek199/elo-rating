@@ -1,3 +1,20 @@
-<p>
-  user-profile works!
-</p>
+<app-spinner [resource]="user"></app-spinner>
+<ng-container *ngIf="hasUser()">
+  <h2>Your profile</h2>
+  <div class="row">
+    <div class="list-group col-3">
+      <button type="button" class="list-group-item list-group-item-action" [ngClass]="{'active': isActive('info')}" (click)="changeComponent('info')">Info</button>
+      <button type="button" class="list-group-item list-group-item-action" [ngClass]="{'active': isActive('emails')}" (click)="changeComponent('emails')" disabled>Emails</button>
+      <button type="button" class="list-group-item list-group-item-action" [ngClass]="{'active': isActive('leagues')}" (click)="changeComponent('leagues')" disabled>Leagues</button>
+      <button type="button" class="list-group-item list-group-item-action" [ngClass]="{'active': isActive('players')}" (click)="changeComponent('players')" disabled>Players</button>  
+    </div>
+    <div class="col-9" [ngSwitch]="component">
+      <div *ngSwitchCase="'info'">
+        <app-user-profile-info [user]="user"></app-user-profile-info>
+      </div>
+      <div *ngSwitchCase="'emails'">
+        todo
+      </div>
+    </div>
+  </div>
+</ng-container>
