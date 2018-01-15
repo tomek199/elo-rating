@@ -14,6 +14,14 @@ export class UserService extends BaseApiService {
     super(googleAuthService);
   }
 
+  get(id: string): Promise<User> {
+    let url = `${this.url}/users/${id}`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as User)
+      .catch(this.handleError);
+  }
+
   signIn(idToken: string): Promise<User> {
     let url = `${this.url}/users/sign-in`;
     return this.http.post(url, idToken, { headers: this.generateHeaders() })

@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface MatchService extends GenericService<Match> {
 
+    Match saveAndNotify(Match match, String originUrl);
     Match saveMatchWithPlayers(Match match);
     List<Match> findByLeagueId(String leagueId, Sort sortByDate);
     Page<Match> findByLeagueIdAndCompletedIsTrue(String leagueId, Pageable pageRequest);
@@ -25,4 +26,6 @@ public interface MatchService extends GenericService<Match> {
     List<Match> findCompletedByPlayerIdAndDate(String playerId, Date from, Sort sort);
     List<Match> findCompletedByPlayerIdAndDate(String playerId, Date from, Date to, Sort sort);
     List<Match> rescheduleMatchesInLeague(String leagueId, int minutes, Sort sort);
+    void deleteByIdWithNotification(String id, String originUrl);
+    boolean checkIfCompleted(Match match);
 }

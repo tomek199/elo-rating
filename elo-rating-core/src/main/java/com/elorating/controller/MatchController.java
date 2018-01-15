@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -86,21 +87,21 @@ public class MatchController {
     @CrossOrigin
     @RequestMapping(value = "/leagues/{leagueId}/matches", method = RequestMethod.POST)
     @ApiOperation(value = "Create match", notes = "Create new match")
-    public ResponseEntity<Match> save(@PathVariable String leagueId, @RequestBody Match match) {
+    public ResponseEntity<Match> save(HttpServletRequest request, @PathVariable String leagueId, @RequestBody Match match) {
         match.setLeague(new League(leagueId));
-        if (match.isCompleted()) {
+        if (matchService.checkIfCompleted(match))
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        else if (match.isCompleted())
             match = matchService.saveMatchWithPlayers(match);
-        }
-        else {
+        else
             match = matchService.save(match);
-        }
-        return new ResponseEntity<Match>(match, HttpStatus.OK);
+        return new ResponseEntity<>(match, HttpStatus.OK);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/leagues/{leagueId}/matches/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete match", notes = "Delete match by match id")
-    public ResponseEntity<Match> delete(@PathVariable String id) {
+    public ResponseEntity<Match> delete(HttpServletRequest request, @PathVariable String id) {
         matchService.deleteById(id);
         return new ResponseEntity<Match>(HttpStatus.OK);
     }
@@ -115,4 +116,9 @@ public class MatchController {
         matchService.deleteById(match.getId());
         return new ResponseEntity<>(match, HttpStatus.OK);
     }
+
+    private String getOriginUrl(HttpServletRequest request) {
+        return request.getHeader("Origin");
+    }
+
 }

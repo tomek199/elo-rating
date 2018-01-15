@@ -17,6 +17,7 @@ import { AppComponent } from './app.component';
 describe('AppComponent', () => {
   let routerStub: RouterStub;
   let activatedRoute: ActivatedRouteStub;
+  const LEAGUE_ID = '5a5a26f148a203c09141efe1';
   
   beforeEach(() => {
     activatedRoute = new ActivatedRouteStub();
@@ -50,7 +51,7 @@ describe('AppComponent', () => {
 
   it('should contain NavComponent', fakeAsync(() => {
     let fixture = TestBed.createComponent(AppComponent);
-    activatedRoute.testParams = {league_id: '123'};
+    activatedRoute.testParams = {league_id: LEAGUE_ID};
     fixture.detectChanges();    
     tick();
     let debugElement = fixture.debugElement.query(By.directive(NavComponentStub))
@@ -71,9 +72,9 @@ describe('AppComponent', () => {
 
   it('should have league Id after changing url', fakeAsync(() => {
     let fixture = TestBed.createComponent(AppComponent);
-    activatedRoute.testParams = {league_id: '123'};
+    activatedRoute.testParams = {league_id: LEAGUE_ID};
     fixture.detectChanges();    
     tick();
-    expect(fixture.componentInstance.leagueId).toEqual('123');
+    expect(fixture.componentInstance.leagueId).toEqual(LEAGUE_ID);
   }));
 });

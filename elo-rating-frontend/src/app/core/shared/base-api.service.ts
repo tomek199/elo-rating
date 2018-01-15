@@ -1,5 +1,5 @@
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { environment } from './../../../environments/environment.prod';
+import { environment } from './../../../environments/environment';
 import { Headers } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/toPromise';

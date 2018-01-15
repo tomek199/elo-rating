@@ -5,25 +5,40 @@ import com.elorating.model.Match;
 import com.elorating.model.Player;
 import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
+import com.elorating.service.email.*;
 import com.elorating.utils.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service("matchService")
 public class MatchServiceImpl implements MatchService {
+
+    private static final Logger logger = LoggerFactory.getLogger(MatchServiceImpl.class);
 
     @Resource
     private MatchRepository matchRepository;
 
     @Resource
     private PlayerRepository playerRepository;
+
+    @Autowired
+    private EmailService emailService;
+
+    @Autowired
+    private PlayerService playerService;
+
+    @Autowired
+    private EmailGenerator emailGenerator;
 
     @Override
     public Match getById(String id) {
@@ -41,6 +56,19 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
+    public Match saveAndNotify(Match match, String originUrl) {
+        boolean update = checkIfMatchToUpdate(match);
+        match = save(match);
+        match = fulfillPlayersInfo(match);
+        if (update) {
+            sendEmails(emailGenerator.generateEmails(matchRepository.findOne(match.getId()), emailGenerator.EDIT_MATCH, originUrl));
+        } else {
+            sendEmails(emailGenerator.generateEmails(matchRepository.findOne(match.getId()), emailGenerator.SCHEDULE_MATCH, originUrl));
+        }
+        return match;
+    }
+
+    @Override
     public List<Match> save(Iterable<Match> matches) {
         return matchRepository.save(matches);
     }
@@ -48,6 +76,16 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public void deleteById(String id) {
         matchRepository.delete(id);
+    }
+
+    @Override
+    public void deleteByIdWithNotification(String id, String originUrl) {
+        Match matchToDelete = matchRepository.findOne(id);
+        matchRepository.delete(id);
+        matchToDelete = fulfillPlayersInfo(matchToDelete);
+        if (matchRepository.findOne(id) == null) {
+            sendEmails(emailGenerator.generateEmails(matchToDelete, emailGenerator.CANCEL_MATCH, originUrl));
+        }
     }
 
     @Override
@@ -154,6 +192,15 @@ public class MatchServiceImpl implements MatchService {
         return matchRepository.findByLeagueIdAndCompletedIsFalse(leagueId, sort);
     }
 
+    @Override
+    public boolean checkIfCompleted(Match match) {
+        if (match.getId() != null && match.getId().length() > 0) {
+            Match matchToCheck = matchRepository.findByIdAndCompletedIsTrue(match.getId());
+            return (matchToCheck != null) ? true : false;
+        }
+        return false;
+    }
+
     private void saveMatches(List<Match> matches) {
         for (Match match : matches) {
             this.matchRepository.save(match);
@@ -163,5 +210,33 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public void deleteAll() {
         matchRepository.deleteAll();
+    }
+
+    private void sendEmails(Set emails) {
+        try {
+            Iterator iterator = emails.iterator();
+            while(iterator.hasNext()) {
+                sendEmail((EmailBuilder) iterator.next());
+            }
+        } catch (Exception e) {
+            logger.error("Error while sending email");
+        }
+    }
+
+    @Async
+    private boolean sendEmail(EmailBuilder emailBuilder) {
+        EmailDirector emailDirector = new EmailDirector();
+        emailDirector.setBuilder(emailBuilder);
+        return emailService.send(emailDirector.build());
+    }
+
+    private boolean checkIfMatchToUpdate(Match match) {
+        return match.getId() != null ? true : false;
+    }
+
+    private Match fulfillPlayersInfo(Match match) {
+        match.setPlayerOne(playerService.getById(match.getPlayerOne().getId()));
+        match.setPlayerTwo(playerService.getById(match.getPlayerTwo().getId()));
+        return match;
     }
 }

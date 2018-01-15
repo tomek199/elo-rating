@@ -58,11 +58,22 @@ export class GoogleAuthComponent implements OnInit {
     sessionStorage.removeItem(this.googleAuthService.USER);
   }
 
+  isAuthenticated(): boolean {
+    return this.googleAuthService.isAuthenticated();
+  }
+
   isAuthorized(): boolean {
     return this.googleAuthService.isAuthorized();
   }
 
   getCurrentPlayerId(): string | null {
     return this.googleAuthService.getCurrentPlayerId();
+  }
+
+  getProfileUrl(): string[] {
+    if (this.leagueId)
+      return ['leagues', this.leagueId, 'users', 'profile'];
+    else
+      return ['leagues', 'users', 'profile'];
   }
 }

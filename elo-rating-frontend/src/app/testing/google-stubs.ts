@@ -1,3 +1,4 @@
+import { USERS } from './data/users';
 import { User } from './../users/shared/user.model';
 import { AfterViewInit, Component, Input, Injectable, Output, EventEmitter } from '@angular/core';
 
@@ -18,9 +19,7 @@ export class GoogleAuthServiceStub {
   }
 
   getCurrentUser(): User {
-    let user = new User();
-    user.id = '123';
-    return user;
+    return USERS[0];
   }
 
   getIdToken(): string {

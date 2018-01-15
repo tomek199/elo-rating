@@ -4,9 +4,7 @@ import org.thymeleaf.context.Context;
 
 public class InviteNewUserEmail extends EmailBuilder {
 
-    private String recipient;
     private String currentUser;
-    private String originUrl;
     private String token;
 
     public InviteNewUserEmail(String recipient, String currentUser,
