@@ -1,9 +1,7 @@
 package com.elorating.controller;
 
-import com.elorating.algorithm.Elo;
 import com.elorating.model.League;
 import com.elorating.model.Match;
-import com.elorating.model.Player;
 import com.elorating.service.MatchService;
 import com.elorating.service.PlayerService;
 import com.elorating.utils.SortUtils;
@@ -18,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -97,7 +94,7 @@ public class MatchController {
         else if (match.isCompleted())
             match = matchService.saveMatchWithPlayers(match);
         else
-            match = matchService.saveAndNotify(match, getOriginUrl(request));
+            match = matchService.save(match);
         return new ResponseEntity<>(match, HttpStatus.OK);
     }
 
@@ -105,7 +102,7 @@ public class MatchController {
     @RequestMapping(value = "/leagues/{leagueId}/matches/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete match", notes = "Delete match by match id")
     public ResponseEntity<Match> delete(HttpServletRequest request, @PathVariable String id) {
-        matchService.deleteByIdWithNotification(id, getOriginUrl(request));
+        matchService.deleteById(id);
         return new ResponseEntity<Match>(HttpStatus.OK);
     }
 
