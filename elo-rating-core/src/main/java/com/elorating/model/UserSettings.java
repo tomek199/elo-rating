@@ -1,18 +1,18 @@
 package com.elorating.model;
 
-public class Settings {
+public class UserSettings {
 
     private boolean scheduledMatchNotification;
     private boolean editedMatchNotification;
     private boolean cancelledMatchNotification;
 
-    public Settings() {
+    public UserSettings() {
         this.scheduledMatchNotification = true;
         this.editedMatchNotification = true;
         this.cancelledMatchNotification = true;
     }
 
-    public Settings(boolean scheduledMatchNotification, boolean editedMatchNotification, boolean cancelledMatchNotification) {
+    public UserSettings(boolean scheduledMatchNotification, boolean editedMatchNotification, boolean cancelledMatchNotification) {
         this.scheduledMatchNotification = scheduledMatchNotification;
         this.editedMatchNotification = editedMatchNotification;
         this.cancelledMatchNotification = cancelledMatchNotification;
