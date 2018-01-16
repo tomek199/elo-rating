@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { User } from './../shared/user.model';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-user-profile-leagues',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserProfileLeaguesComponent implements OnInit {
 
+  @Input() user: User;
+
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
+  hasLeagues(): boolean {
+    return this.user.leagues && this.user.leagues.length > 0;
+  }
 }

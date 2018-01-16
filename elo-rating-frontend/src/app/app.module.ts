@@ -50,6 +50,7 @@ import { BtnSpinnerDirective } from './core/directives/btn-spinner/btn-spinner.d
 import { PlayerUserInfoComponent } from './players/player-user-info/player-user-info.component';
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { UserProfileInfoComponent } from './users/user-profile-info/user-profile-info.component';
+import { UserProfileLeaguesComponent } from './users/user-profile-leagues/user-profile-leagues.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { UserProfileInfoComponent } from './users/user-profile-info/user-profile
     BtnSpinnerDirective,
     PlayerUserInfoComponent,
     UserProfileComponent,
-    UserProfileInfoComponent
+    UserProfileInfoComponent,
+    UserProfileLeaguesComponent
   ],
   imports: [
     BrowserModule,
