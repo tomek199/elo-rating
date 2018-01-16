@@ -6,12 +6,14 @@ import com.elorating.model.User;
 import com.elorating.service.PlayerService;
 import com.elorating.service.UserService;
 import org.hamcrest.Matchers;
+import org.json.JSONArray;
 import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.isA;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -200,5 +202,18 @@ public class UserControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.players[0].username", is(user.getName())))
                 .andExpect(jsonPath("$.players[0].rating", is(1000)));
+    }
+
+    @Test
+    public void test_userWithDefaultUserSettingsSetToFalse() throws Exception {
+        String userName = "user";
+        User user = userService.save(new User(userName));
+        String url = "/api/users/find-by-name" + "?name=" + userName;
+        mockMvc.perform(get(url)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].userSettings.scheduledMatchNotification", is(false)))
+                .andExpect(jsonPath("$[0].userSettings.editedMatchNotification", is(false)))
+                .andExpect(jsonPath("$[0].userSettings.cancelledMatchNotification", is(false)));
     }
 }

@@ -1,15 +1,17 @@
 package com.elorating.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserSettings {
 
+    @JsonProperty (defaultValue = "false")
     private boolean scheduledMatchNotification;
+    @JsonProperty (defaultValue = "false")
     private boolean editedMatchNotification;
+    @JsonProperty (defaultValue = "false")
     private boolean cancelledMatchNotification;
 
     public UserSettings() {
-        this.scheduledMatchNotification = true;
-        this.editedMatchNotification = true;
-        this.cancelledMatchNotification = true;
     }
 
     public UserSettings(boolean scheduledMatchNotification, boolean editedMatchNotification, boolean cancelledMatchNotification) {

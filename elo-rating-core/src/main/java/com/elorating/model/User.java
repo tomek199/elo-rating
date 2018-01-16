@@ -25,6 +25,7 @@ public class User {
     @DBRef(lazy = true)
     @JsonIgnoreProperties({"user"})
     private List<Player> players;
+    private UserSettings userSettings;
 
     public User() { }
 
@@ -136,5 +137,16 @@ public class User {
 
     public void clearInvitationToken() {
         invitationToken = null;
+    }
+
+    public UserSettings getUserSettings() {
+        if (userSettings == null) {
+            return new UserSettings();
+        }
+        return userSettings;
+    }
+
+    public void setUserSettings(UserSettings userSettings) {
+        this.userSettings = userSettings;
     }
 }
