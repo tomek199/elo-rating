@@ -2,7 +2,7 @@ import { By } from '@angular/platform-browser';
 import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { User } from './../shared/user.model';
 import { USERS } from './../../testing/data/users';
-import { UserServiceStub, UserProfileInfoStubComponent } from './../../testing/user-stubs';
+import { UserServiceStub, UserProfileInfoStubComponent, UserProfileLeaguesStubComponent } from './../../testing/user-stubs';
 import { UserService } from './../shared/user.service';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { GoogleAuthServiceStub } from './../../testing/google-stubs';
@@ -18,7 +18,12 @@ describe('UserProfileComponent', () => {
   beforeEach(async(() => {
     stubUser = USERS[0];
     TestBed.configureTestingModule({
-      declarations: [ UserProfileComponent, SpinnerComponent, UserProfileInfoStubComponent ],
+      declarations: [ 
+        UserProfileComponent, 
+        SpinnerComponent, 
+        UserProfileInfoStubComponent, 
+        UserProfileLeaguesStubComponent 
+      ],
       providers: [
         {provide: GoogleAuthService, useClass: GoogleAuthServiceStub},
         {provide: UserService, useClass: UserServiceStub}
@@ -50,6 +55,21 @@ describe('UserProfileComponent', () => {
     fixture.detectChanges();
     expect(component.component).toEqual('info');
     let infoComponent = fixture.debugElement.query(By.directive(UserProfileInfoStubComponent));
+    let leaguesComponent = fixture.debugElement.query(By.directive(UserProfileLeaguesStubComponent));
     expect(infoComponent).toBeTruthy();
+    expect(leaguesComponent).toBeFalsy();
   }));
+
+  it('should display \'leagues\' component after click', fakeAsync(() => {
+    component.ngOnInit();
+    tick();
+    fixture.detectChanges();
+    let menu = fixture.debugElement.queryAll(By.css('div.list-group button'));
+    menu[2].triggerEventHandler('click', null);
+    fixture.detectChanges();
+    let infoComponent = fixture.debugElement.query(By.directive(UserProfileInfoStubComponent));
+    let leaguesComponent = fixture.debugElement.query(By.directive(UserProfileLeaguesStubComponent));
+    expect(infoComponent).toBeFalsy();
+    expect(leaguesComponent).toBeTruthy();
+  }))
 });

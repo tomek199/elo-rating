@@ -68,3 +68,13 @@ export class UserProfileInfoStubComponent implements OnInit {
   ngOnInit(): void { }
   constructor() { }
 }
+
+@Component({
+  selector: 'app-user-profile-leagues',
+  template: ''
+})
+export class UserProfileLeaguesStubComponent implements OnInit {
+  @Input() user: User;
+  ngOnInit(): void { }
+  constructor() { }
+}
