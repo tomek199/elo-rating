@@ -11,7 +11,25 @@ export const USERS: User[] = [
     email: 'user1@mail.com',
     pictureUrl: 'https://img.com',
     lastSignIn: new Date(),
-    leagues: [ new League() ],
-    players: [ new Player() ],
+    leagues: [ 
+      new League('123', 'League 1'), 
+      new League('456', 'League 2') 
+    ],
+    players: [ 
+      new Player(), 
+      new Player() 
+    ],
+  }, 
+  {
+    id: '456',
+    googleId: '567890',
+    name: 'Test User 2',
+    givenName: 'Test',
+    familyName: 'User 2',
+    email: 'user2@mail.com',
+    pictureUrl: 'https://img.com',
+    lastSignIn: new Date(),
+    leagues: [ ],
+    players: [ ],
   }
 ]

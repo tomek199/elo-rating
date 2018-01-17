@@ -42,6 +42,17 @@ public class UserControllerTest extends BaseControllerTest {
         leagueService.deleteAll();
     }
 
+    @Test
+    public void testGet() throws Exception {
+        User user = userService.save(new User("Test user", "test@mail.com"));
+        String url = "/api/users/" + user.getId();
+        mockMvc.perform(get(url)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", is(user.getName())))
+                .andExpect(jsonPath("$.email", is(user.getEmail())));
+    }
+
     @Ignore
     @Test
     public void testSignIn() throws Exception {

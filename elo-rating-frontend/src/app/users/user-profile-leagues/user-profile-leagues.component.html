@@ -1,0 +1,14 @@
+<h3>Leagues</h3>
+<div class="alert alert-info" *ngIf="!hasLeagues()">
+  You are not assigned to any league.
+</div>
+<table class="table table-hover" *ngIf="hasLeagues()">
+  <tr *ngFor="let league of user.leagues">
+    <td>
+      <a [routerLink]="['/leagues', league.id]">{{league.name}}</a>
+    </td> 
+    <td class="text-right">
+      <a [routerLink]="['/leagues', league.id, 'edit']" class="btn btn-outline-secondary btn-sm">Settings</a>      
+    </td>
+  </tr>
+</table>
