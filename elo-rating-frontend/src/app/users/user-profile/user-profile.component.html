@@ -4,7 +4,7 @@
   <div class="row">
     <div class="list-group col-3">
       <button type="button" class="list-group-item list-group-item-action" [ngClass]="{'active': isActive('info')}" (click)="changeComponent('info')">Info</button>
-      <button type="button" class="list-group-item list-group-item-action" [ngClass]="{'active': isActive('emails')}" (click)="changeComponent('emails')" disabled>Emails</button>
+      <button type="button" class="list-group-item list-group-item-action" [ngClass]="{'active': isActive('emails')}" (click)="changeComponent('emails')">Emails</button>
       <button type="button" class="list-group-item list-group-item-action" [ngClass]="{'active': isActive('leagues')}" (click)="changeComponent('leagues')">Leagues</button>
       <button type="button" class="list-group-item list-group-item-action" [ngClass]="{'active': isActive('players')}" (click)="changeComponent('players')" disabled>Players</button>  
     </div>
@@ -13,7 +13,7 @@
         <app-user-profile-info [user]="user"></app-user-profile-info>
       </div>
       <div *ngSwitchCase="'emails'">
-        todo
+        <app-user-profile-emails-notifications [user]="user"></app-user-profile-emails-notifications>
       </div>
       <div *ngSwitchCase="'leagues'">
         <app-user-profile-leagues [user]="user"></app-user-profile-leagues>
