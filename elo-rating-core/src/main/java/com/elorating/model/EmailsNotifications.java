@@ -2,7 +2,7 @@ package com.elorating.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserSettings {
+public class EmailsNotifications {
 
     @JsonProperty (defaultValue = "false")
     private boolean scheduledMatchNotification;
@@ -11,10 +11,10 @@ public class UserSettings {
     @JsonProperty (defaultValue = "false")
     private boolean cancelledMatchNotification;
 
-    public UserSettings() {
+    public EmailsNotifications() {
     }
 
-    public UserSettings(boolean scheduledMatchNotification, boolean editedMatchNotification, boolean cancelledMatchNotification) {
+    public EmailsNotifications(boolean scheduledMatchNotification, boolean editedMatchNotification, boolean cancelledMatchNotification) {
         this.scheduledMatchNotification = scheduledMatchNotification;
         this.editedMatchNotification = editedMatchNotification;
         this.cancelledMatchNotification = cancelledMatchNotification;

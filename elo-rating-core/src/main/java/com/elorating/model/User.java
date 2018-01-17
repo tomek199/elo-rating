@@ -25,7 +25,7 @@ public class User {
     @DBRef(lazy = true)
     @JsonIgnoreProperties({"user"})
     private List<Player> players;
-    private UserSettings userSettings;
+    private EmailsNotifications emailsNotifications;
 
     public User() { }
 
@@ -139,14 +139,14 @@ public class User {
         invitationToken = null;
     }
 
-    public UserSettings getUserSettings() {
-        if (userSettings == null) {
-            return new UserSettings();
+    public EmailsNotifications getEmailsNotifications() {
+        if (emailsNotifications == null) {
+            return new EmailsNotifications();
         }
-        return userSettings;
+        return emailsNotifications;
     }
 
-    public void setUserSettings(UserSettings userSettings) {
-        this.userSettings = userSettings;
+    public void setEmailNotifications(EmailsNotifications emailsNotifications) {
+        this.emailsNotifications = emailsNotifications;
     }
 }

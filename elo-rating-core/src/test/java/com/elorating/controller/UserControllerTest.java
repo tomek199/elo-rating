@@ -216,15 +216,15 @@ public class UserControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void test_userWithDefaultUserSettingsSetToFalse() throws Exception {
+    public void test_userWithDefaultEmailNotificationsSetToFalse() throws Exception {
         String userName = "user";
         User user = userService.save(new User(userName));
         String url = "/api/users/find-by-name" + "?name=" + userName;
         mockMvc.perform(get(url)
                 .contentType(contentType))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].userSettings.scheduledMatchNotification", is(false)))
-                .andExpect(jsonPath("$[0].userSettings.editedMatchNotification", is(false)))
-                .andExpect(jsonPath("$[0].userSettings.cancelledMatchNotification", is(false)));
+                .andExpect(jsonPath("$[0].emailsNotifications.scheduledMatchNotification", is(false)))
+                .andExpect(jsonPath("$[0].emailsNotifications.editedMatchNotification", is(false)))
+                .andExpect(jsonPath("$[0].emailsNotifications.cancelledMatchNotification", is(false)));
     }
 }
