@@ -1,3 +1,4 @@
+import { LeagueWelcomeComponent } from './../../leagues/league-welcome/league-welcome.component';
 import { UserProfileComponent } from './../../users/user-profile/user-profile.component';
 import { LeagueEditComponent } from './../../leagues/league-edit/league-edit.component';
 import { FeedbackSendComponent } from './../../feedback/feedback-send/feedback-send.component';
@@ -14,12 +15,11 @@ import { PlayerListComponent } from './../../players/player-list/player-list.com
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { LeagueAddComponent } from '../../leagues/league-add/league-add.component';
 import { LeagueDetailComponent } from '../../leagues/league-detail/league-detail.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/leagues', pathMatch: 'full' },
-  { path: 'leagues', component: LeagueAddComponent },
+  { path: 'leagues', component: LeagueWelcomeComponent },
   { path: 'leagues/:league_id', component: LeagueDetailComponent },
   { path: 'leagues/:league_id/edit', component: LeagueEditComponent, canActivate: [AuthGuardService]},
   { path: 'leagues/:league_id/players', component: PlayerListComponent },

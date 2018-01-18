@@ -41,6 +41,7 @@ export class LeagueServiceStub {
   template: ''
 })
 export class LeagueSearchComponentStub implements OnInit {
+  @Input() size: string = 'md';
   ngOnInit(): void { }
 }
 
@@ -51,4 +52,12 @@ export class LeagueSearchComponentStub implements OnInit {
 export class LeagueAssignComponentStub implements OnChanges {
   @Input() league: League;
   ngOnChanges(): void { }
+}
+
+@Component({
+  selector: 'app-league-add',
+  template: ''
+})
+export class LeagueAddComponentStub implements OnInit {
+  ngOnInit(): void {}
 }

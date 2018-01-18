@@ -1,9 +1,4 @@
-<div class="jumbotron">
-  <h1 class="display-4">EloRating</h1>
-  <p>Application for managing your league's players ranking.</p>
-  <hr>
-  <form class="form-inline" #leagueAdd="ngForm">
-    <input type="text" name="name" [(ngModel)]="league.name" class="form-control form-control-lg mr-2" placeholder="League name" required>
-    <button type="submit" class="btn btn-success btn-lg" [disabled]="!leagueAdd.form.valid" (click)="addLeague()">Create league</button>
-  </form>
-</div>
+<form class="form-inline" #leagueAdd="ngForm">
+  <input type="text" name="name" [(ngModel)]="league.name" class="form-control form-control-lg mr-2" placeholder="League name" required>
+  <button type="submit" class="btn btn-primary btn-lg" [disabled]="!leagueAdd.form.valid" (click)="addLeague()">Create league</button>
+</form>
