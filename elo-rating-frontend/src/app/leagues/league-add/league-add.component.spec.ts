@@ -43,7 +43,7 @@ describe('LeagueAddComponent', () => {
     const spy = spyOn(router, 'navigate');
     component.league.name = 'New league';
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.query(By.css('div form button[type=submit]'));
+    let debugElement = fixture.debugElement.query(By.css('form button[type=submit]'));
     debugElement.triggerEventHandler('click', null);
     tick();
     expect(spy.calls.first().args[0][0]).toEqual('/leagues');
