@@ -3,11 +3,20 @@
 <ul class="list-group">
   <li class="list-group-item justify-content-between">
     Scheduled match notification
+    <span class="float-right">
+      <ui-switch color="#007bff" [(ngModel)]="user.emailsNotifications.scheduledMatchNotification"></ui-switch>
+    </span>
   </li>
   <li class="list-group-item justify-content-between">
     Edited match notification
+    <span class="float-right">
+      <ui-switch color="#007bff" [(ngModel)]="user.emailsNotifications.editedMatchNotification"></ui-switch>
+    </span>
   </li>
   <li class="list-group-item justify-content-between">
     Cancelled match notification
+    <span class="float-right">
+      <ui-switch color="#007bff" [(ngModel)]="user.emailsNotifications.cancelledMatchNotification"></ui-switch>
+    </span>
   </li>
 </ul>

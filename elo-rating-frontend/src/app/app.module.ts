@@ -52,6 +52,7 @@ import { UserProfileComponent } from './users/user-profile/user-profile.componen
 import { UserProfileInfoComponent } from './users/user-profile-info/user-profile-info.component';
 import { UserProfileLeaguesComponent } from './users/user-profile-leagues/user-profile-leagues.component';
 import { UserProfileEmailsNotificationsComponent } from './users/user-profile-emails-notifications/user-profile-emails-notifications.component';
+import { UiSwitchModule } from 'angular2-ui-switch';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { UserProfileEmailsNotificationsComponent } from './users/user-profile-em
     RoutingModule,
     NgbModule.forRoot(),
     ChartModule,
-    OrderModule
+    OrderModule,
+    UiSwitchModule
   ],
   providers: [
     LeagueService,
