@@ -14,6 +14,8 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['./league-search.component.css']
 })
 export class LeagueSearchComponent implements OnInit {
+  
+  @Input() size: string = 'md';
   league: League;
   leagues: Observable<League[]>;
 
