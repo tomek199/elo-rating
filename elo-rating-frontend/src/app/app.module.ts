@@ -51,6 +51,7 @@ import { PlayerUserInfoComponent } from './players/player-user-info/player-user-
 import { UserProfileComponent } from './users/user-profile/user-profile.component';
 import { UserProfileInfoComponent } from './users/user-profile-info/user-profile-info.component';
 import { UserProfileLeaguesComponent } from './users/user-profile-leagues/user-profile-leagues.component';
+import { LeagueWelcomeComponent } from './leagues/league-welcome/league-welcome.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { UserProfileLeaguesComponent } from './users/user-profile-leagues/user-p
     PlayerUserInfoComponent,
     UserProfileComponent,
     UserProfileInfoComponent,
-    UserProfileLeaguesComponent
+    UserProfileLeaguesComponent,
+    LeagueWelcomeComponent
   ],
   imports: [
     BrowserModule,
