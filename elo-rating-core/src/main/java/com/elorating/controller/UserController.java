@@ -52,6 +52,14 @@ public class UserController {
     }
 
     @CrossOrigin
+    @RequestMapping(value = "/users/", method = RequestMethod.POST)
+    @ApiOperation(value = "Update user", notes = "Update user settings")
+    public ResponseEntity<User> updateEmailNotifications(@RequestBody User user) {
+        User userToUpdate = userService.saveOrUpdateUser(user);
+        return new ResponseEntity<>(userToUpdate, HttpStatus.OK);
+    }
+
+    @CrossOrigin
     @RequestMapping(value = "/users/verify-security-token", method = RequestMethod.POST)
     @ApiOperation(value = "Verify security token", notes = "Verify security token")
     public ResponseEntity<Boolean> verifySecurityToken(@RequestBody String token) {

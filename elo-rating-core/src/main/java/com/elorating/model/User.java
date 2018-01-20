@@ -45,6 +45,9 @@ public class User {
         this.email = user.email;
         this.pictureUrl = user.pictureUrl;
         this.lastSignIn = new Date();
+        if (user.emailsNotifications != null) {
+            this.emailsNotifications = user.emailsNotifications;
+        }
     }
 
     public String getId() {

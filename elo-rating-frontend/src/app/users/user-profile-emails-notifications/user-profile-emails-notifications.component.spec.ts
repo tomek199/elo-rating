@@ -1,3 +1,5 @@
+import { UserServiceStub } from './../../testing/user-stubs';
+import { UserService } from 'app/users/shared/user.service';
 import { By } from '@angular/platform-browser';
 import { UiSwitchModule } from 'angular2-ui-switch';
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
@@ -6,7 +8,7 @@ import { UserProfileEmailsNotificationsComponent } from './user-profile-emails-n
 import { USERS } from 'app/testing/data/users';
 import { UiSwitcherStub } from 'app/testing/switcher-stubs';
 
-fdescribe('UserProfileEmailsNotificationsComponent', () => {
+describe('UserProfileEmailsNotificationsComponent', () => {
   let component: UserProfileEmailsNotificationsComponent;
   let fixture: ComponentFixture<UserProfileEmailsNotificationsComponent>;
 
@@ -15,6 +17,9 @@ fdescribe('UserProfileEmailsNotificationsComponent', () => {
       declarations: [
         UserProfileEmailsNotificationsComponent,
         UiSwitcherStub
+       ],
+       providers: [
+         { provide: UserService, useClass: UserServiceStub }
        ]
     })
     .compileComponents();
@@ -31,20 +36,44 @@ fdescribe('UserProfileEmailsNotificationsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should change when clicked', fakeAsync(() => {
+  it('should change when Scheduled match notification clicked', fakeAsync(() => {
     let originalScheduledMatchNotification = component.user.emailsNotifications.scheduledMatchNotification;
-    let originalEditedMatchNotification = component.user.emailsNotifications.editedMatchNotification;
-    let originalCancelledMatchNotification = component.user.emailsNotifications.cancelledMatchNotification;
     expect(originalScheduledMatchNotification).toBeFalsy();
+
+    let scheduledMatchNotificationSwitcher = fixture.debugElement.queryAll(By.css('ul li span ui-switch'))[0].nativeElement;
+    expect(scheduledMatchNotificationSwitcher).toBeTruthy();
+
+    scheduledMatchNotificationSwitcher.dispatchEvent(new Event('ngModelChange'));
+    tick();
+    let newScheduledMatchNotification = component.user.emailsNotifications.scheduledMatchNotification;
+    expect(newScheduledMatchNotification).toBeTruthy();
+  }))
+
+  it('should change when Edited match notification clicked', fakeAsync(() => {
+    let originalEditedMatchNotification = component.user.emailsNotifications.editedMatchNotification;
     expect(originalEditedMatchNotification).toBeFalsy();
+
+    let editedMatchNotificationSwitcher = fixture.debugElement.queryAll(By.css('ul li span ui-switch'))[1].nativeElement;
+    expect(editedMatchNotificationSwitcher).toBeTruthy();
+
+    editedMatchNotificationSwitcher.dispatchEvent(new Event('ngModelChange'));
+    tick();
+    let newEditedMatchNotification = component.user.emailsNotifications.editedMatchNotification;
+    expect(newEditedMatchNotification).toBeTruthy();
+
+  }))
+
+  it('should change when Cancelled match notification clicked', fakeAsync(() => {
+    let originalCancelledMatchNotification = component.user.emailsNotifications.cancelledMatchNotification;
     expect(originalCancelledMatchNotification).toBeFalsy();
 
-    let scheduledMatchNotificationSwitcher = fixture.debugElement.queryAll(By.css('ul li span ui-switch'))[0];
-    let editedMatchNotificationSwitcher = fixture.debugElement.queryAll(By.css('ul li span ui-switch'))[1];
-    let cancelledMatchNotificationSwitcher = fixture.debugElement.queryAll(By.css('ul li span ui-switch'))[2];
-    expect(scheduledMatchNotificationSwitcher).toBeTruthy();
-    expect(editedMatchNotificationSwitcher).toBeTruthy();
+    let cancelledMatchNotificationSwitcher = fixture.debugElement.queryAll(By.css('ul li span ui-switch'))[2].nativeElement;
     expect(cancelledMatchNotificationSwitcher).toBeTruthy();
+
+    cancelledMatchNotificationSwitcher.dispatchEvent(new Event('ngModelChange'));
+    tick();
+    let newCancelledMatchNotification = component.user.emailsNotifications.cancelledMatchNotification;
+    expect(newCancelledMatchNotification).toBeTruthy();
 
   }))
 });
