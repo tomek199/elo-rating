@@ -187,7 +187,7 @@ public class MatchServiceImpl implements MatchService {
             matchesToReschedule.set(i, match);
         }
 
-        saveMatches(matchesToReschedule);
+        matchRepository.save(matchesToReschedule);
 
         return matchRepository.findByLeagueIdAndCompletedIsFalse(leagueId, sort);
     }
@@ -199,12 +199,6 @@ public class MatchServiceImpl implements MatchService {
             return (matchToCheck != null) ? true : false;
         }
         return false;
-    }
-
-    private void saveMatches(List<Match> matches) {
-        for (Match match : matches) {
-            this.matchRepository.save(match);
-        }
     }
 
     @Override
