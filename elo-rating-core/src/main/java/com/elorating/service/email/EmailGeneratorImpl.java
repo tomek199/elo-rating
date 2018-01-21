@@ -27,13 +27,13 @@ public class EmailGeneratorImpl implements EmailGenerator {
     private Set<ScheduledMatchEmail> generateScheduleEmails(Match match, String originUrl) {
         Set emailSet = new HashSet();
 
-        if (match.getPlayerOne().getUser() != null) {
+        if (match.getPlayerOne().getUser() != null && match.getPlayerOne().getUser().getEmailsNotifications().isScheduledMatchNotification()) {
             emailSet.add(new ScheduledMatchEmail(match.getPlayerTwo().getUsername(),
                     match.getPlayerOne().getUser().getEmail(),
                     DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
         }
 
-        if (match.getPlayerTwo().getUser() != null) {
+        if (match.getPlayerTwo().getUser() != null && match.getPlayerTwo().getUser().getEmailsNotifications().isScheduledMatchNotification()) {
             emailSet.add(new ScheduledMatchEmail(match.getPlayerOne().getUsername(),
                     match.getPlayerTwo().getUser().getEmail(),
                     DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
@@ -45,12 +45,12 @@ public class EmailGeneratorImpl implements EmailGenerator {
     private Set<ScheduledMatchEmail> generateCancelEmails(Match match, String originUrl) {
         Set emailSet = new HashSet();
 
-        if (match.getPlayerOne().getUser() != null) {
+        if (match.getPlayerOne().getUser() != null && match.getPlayerOne().getUser().getEmailsNotifications().isCancelledMatchNotification()) {
             emailSet.add(new CancelledMatchEmail(match.getPlayerTwo().getUsername(),
                     match.getPlayerOne().getUser().getEmail(), originUrl, match.getLeague()));
         }
 
-        if (match.getPlayerTwo().getUser() != null) {
+        if (match.getPlayerTwo().getUser() != null && match.getPlayerTwo().getUser().getEmailsNotifications().isCancelledMatchNotification()) {
             emailSet.add(new CancelledMatchEmail(match.getPlayerOne().getUsername(),
                     match.getPlayerTwo().getUser().getEmail(), originUrl, match.getLeague()));
         }
@@ -60,13 +60,13 @@ public class EmailGeneratorImpl implements EmailGenerator {
     private Set<ScheduledMatchEmail> generateEditEmails(Match match, String originUrl) {
         Set emailSet = new HashSet();
 
-        if (match.getPlayerOne().getUser() != null) {
+        if (match.getPlayerOne().getUser() != null && match.getPlayerOne().getUser().getEmailsNotifications().isEditedMatchNotification()) {
             emailSet.add(new EditMatchEmail(match.getPlayerTwo().getUsername(),
                     match.getPlayerOne().getUser().getEmail(),
                     DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
         }
 
-        if (match.getPlayerTwo().getUser() != null) {
+        if (match.getPlayerTwo().getUser() != null && match.getPlayerTwo().getUser().getEmailsNotifications().isEditedMatchNotification()) {
             emailSet.add(new EditMatchEmail(match.getPlayerOne().getUsername(),
                     match.getPlayerTwo().getUser().getEmail(),
                     DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));

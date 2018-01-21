@@ -92,7 +92,7 @@ import { UiSwitchModule } from 'angular2-ui-switch';
     UserProfileComponent,
     UserProfileInfoComponent,
     UserProfileLeaguesComponent,
-    LeagueWelcomeComponent
+    LeagueWelcomeComponent,
     UserProfileLeaguesComponent,
     UserProfileEmailsNotificationsComponent
   ],
