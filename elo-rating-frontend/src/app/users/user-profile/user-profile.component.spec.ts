@@ -2,7 +2,7 @@ import { By } from '@angular/platform-browser';
 import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { User } from './../shared/user.model';
 import { USERS } from './../../testing/data/users';
-import { UserServiceStub, UserProfileInfoStubComponent, UserProfileLeaguesStubComponent } from './../../testing/user-stubs';
+import { UserServiceStub, UserProfileInfoStubComponent, UserProfileLeaguesStubComponent, UserProfileEmailsNotificationsStubComponent } from './../../testing/user-stubs';
 import { UserService } from './../shared/user.service';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { GoogleAuthServiceStub } from './../../testing/google-stubs';
@@ -22,7 +22,8 @@ describe('UserProfileComponent', () => {
         UserProfileComponent, 
         SpinnerComponent, 
         UserProfileInfoStubComponent, 
-        UserProfileLeaguesStubComponent 
+        UserProfileLeaguesStubComponent,
+        UserProfileEmailsNotificationsStubComponent
       ],
       providers: [
         {provide: GoogleAuthService, useClass: GoogleAuthServiceStub},
