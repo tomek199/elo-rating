@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/Rx';
 
 @Component({
   selector: 'app-league-search',
@@ -14,7 +15,7 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['./league-search.component.css']
 })
 export class LeagueSearchComponent implements OnInit {
-  
+
   @Input() size: string = 'md';
   league: League;
   leagues: Observable<League[]>;
@@ -37,7 +38,9 @@ export class LeagueSearchComponent implements OnInit {
     text$
       .debounceTime(300)
       .distinctUntilChanged()
-      .switchMap(term => this.leagueService.findByName(term));
+      .switchMap(term => term.length > 1
+      ? this.leagueService.findByName(term)
+      : Observable.of([]))
 
   leagueFormatter(league: League): string {
     return league.name ? league.name : '';
