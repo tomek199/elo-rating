@@ -1,10 +1,12 @@
 import { MatchesStatsChart } from './../../core/utils/charts/matches-stats-chart';
 import { ChartBuilder } from 'app/core/utils/charts/chart-builder';
 import { MatchService } from './../../matches/shared/match.service';
+import { PlayerService } from './../shared/player.service';
 import { RatingHistoryChart } from './../../core/utils/charts/rating-history-chart';
 import { ChartDirector } from './../../core/utils/charts/chart-director';
 import { Chart } from './../../core/utils/charts/chart.model';
 import { Match } from './../../matches/shared/match.model';
+import { Player } from './../shared/player.model';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -20,10 +22,16 @@ export class PlayerStatisticsComponent implements OnInit {
   period: number;
   ratingHistory: Chart;
   matchesStats: Chart;
+  player: Player;
+  maxRating: number;
+  minRating: number;
+  maxMatchDate: Date;
+  minMatchDate: Date;
 
   constructor(
     private route: ActivatedRoute,
-    private matchService: MatchService
+    private matchService: MatchService,
+    private playerService: PlayerService
   ) {
     this.chartDirector = new ChartDirector();
    }
@@ -31,6 +39,7 @@ export class PlayerStatisticsComponent implements OnInit {
   ngOnInit() {
     this.getLeagueId();
     this.getPlayerId();
+    this.getPlayer();
     this.period = 7;
     this.generateStatistics();
   }
@@ -47,6 +56,14 @@ export class PlayerStatisticsComponent implements OnInit {
       this.route.params.map(param => param['player_id'])
         .forEach(player_id => this.playerId = player_id);
     }
+  }
+
+  getPlayer() {
+    this.route.params.map(param => param['player_id'])
+      .forEach(playerId => {
+        this.playerService.getPlayer(playerId)
+          .then(player => this.player = player);
+      });
   }
 
   generateStatistics() {
@@ -70,6 +87,11 @@ export class PlayerStatisticsComponent implements OnInit {
         let chartBuilder = new MatchesStatsChart(matches, this.playerId);
         this.chartDirector.setBuilder(chartBuilder);
         this.matchesStats = this.chartDirector.build();
+
+        this.maxRating = chartBuilder.maxRating
+        this.maxMatchDate = chartBuilder.maxMatchDate
+        this.minRating = chartBuilder.minRating
+        this.minMatchDate = chartBuilder.minMatchDate
       });
   }
 
@@ -105,5 +127,13 @@ export class PlayerStatisticsComponent implements OnInit {
       return data.length == 0;
     }
     return false;
+  }
+
+  getMaxRatingDelta(): number {
+    return this.maxRating - this.player.rating
+  }
+
+  getMinRatingDelta(): number {
+    return this.minRating - this.player.rating
   }
 }

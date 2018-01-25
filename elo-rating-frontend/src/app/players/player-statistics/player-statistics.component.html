@@ -27,7 +27,7 @@
           <div class="form-check">
             <label class="form-check-label">
               <input type="radio" class="form-check-input" [(ngModel)]="period" (ngModelChange)="buildRatingHistory()" name="period" [value]="30">
-              <span ngbTooltip="Last 30 days" placement="right">Last month</span>                
+              <span ngbTooltip="Last 30 days" placement="right">Last month</span>
             </label>
           </div>
           <div class="form-check">
@@ -53,6 +53,26 @@
     Overall
   </div>
   <div class="card-body">
+    <div class="row my-2">
+      <div class="col-3">
+        <h5>Max rating:</h5>
+      </div>
+      <div class="col-9">
+        <span ngbTooltip="{{maxMatchDate | date:'yyyy-MM-dd HH:mm'}}">{{maxRating}}</span>
+        <span class="octicon small octicon-triangle-up text-success"></span>
+        <span class="small">{{getMaxRatingDelta()}}</span>
+      </div>
+    </div>
+    <div class="row my-2">
+      <div class="col-3">
+        <h5>Min rating:</h5>
+      </div>
+      <div class="col-9">
+        <span ngbTooltip="{{minMatchDate | date:'yyyy-MM-dd HH:mm'}}">{{minRating}}</span>
+        <span class="octicon small octicon-triangle-down text-danger"></span>
+        <span class="small">{{getMinRatingDelta()}}</span>
+      </div>
+    </div>
     <div class="row my-2" *ngFor="let series of matchesStats.series">
       <div class="col-3">
         <h5>{{series.name}}:</h5>

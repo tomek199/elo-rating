@@ -6,7 +6,11 @@ export class MatchesStatsChart extends ChartBuilder {
   private win: number;
   private loss: number;
   private setsWon: number;
-  private setsLost: number
+  private setsLost: number;
+  public maxRating: number;
+  public minRating: number;
+  public maxMatchDate: Date;
+  public minMatchDate: Date;
 
   constructor(private matches: Match[], private playerId: string) {
     super();
@@ -14,6 +18,8 @@ export class MatchesStatsChart extends ChartBuilder {
     this.loss = 0;
     this.setsWon = 0;
     this.setsLost = 0;
+    this.maxRating = 1000;
+    this.minRating = 1000;
   }
 
   public buildTitle() {
@@ -33,6 +39,14 @@ export class MatchesStatsChart extends ChartBuilder {
       Object.keys(match.scores).forEach(key => {
         let value = match.scores[key];
         key == this.playerId ? this.setsWon += value : this.setsLost += value;
+        if (match.ratings[this.playerId] > this.maxRating) {
+          this.maxRating = match.ratings[this.playerId];
+          this.maxMatchDate = match.date;
+        }
+        if (match.ratings[this.playerId] < this.minRating) {
+          this.minRating = match.ratings[this.playerId];
+          this.minMatchDate = match.date;
+        }
       });
     });
   }
