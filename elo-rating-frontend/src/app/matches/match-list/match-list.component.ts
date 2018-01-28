@@ -35,6 +35,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
     private googleAuthService: GoogleAuthService
   ) {
     this.popoverText = this.getPopoverText();
+    this.reschedulePromise = new Promise((resolve, reject) => {});
   }
 
   ngOnInit() {
