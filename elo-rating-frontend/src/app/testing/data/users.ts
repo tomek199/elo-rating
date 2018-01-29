@@ -1,6 +1,8 @@
 import { Player } from 'app/players/shared/player.model';
 import { User } from './../../users/shared/user.model';
 import { League } from 'app/leagues/shared/league.model';
+import { EMAILS_NOTIFICATIONS } from 'app/testing/data/emailsNotifications';
+
 export const USERS: User[] = [
   {
     id: '123',
@@ -19,6 +21,7 @@ export const USERS: User[] = [
       new Player(), 
       new Player() 
     ],
+    emailsNotifications: EMAILS_NOTIFICATIONS[0]
   }, 
   {
     id: '456',
@@ -31,5 +34,6 @@ export const USERS: User[] = [
     lastSignIn: new Date(),
     leagues: [ ],
     players: [ ],
+    emailsNotifications: EMAILS_NOTIFICATIONS[0]
   }
 ]

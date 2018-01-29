@@ -25,6 +25,7 @@ public class User {
     @DBRef(lazy = true)
     @JsonIgnoreProperties({"user"})
     private List<Player> players;
+    private EmailsNotifications emailsNotifications;
 
     public User() { }
 
@@ -44,6 +45,9 @@ public class User {
         this.email = user.email;
         this.pictureUrl = user.pictureUrl;
         this.lastSignIn = new Date();
+        if (user.emailsNotifications != null) {
+            this.emailsNotifications = user.emailsNotifications;
+        }
     }
 
     public String getId() {
@@ -136,5 +140,16 @@ public class User {
 
     public void clearInvitationToken() {
         invitationToken = null;
+    }
+
+    public EmailsNotifications getEmailsNotifications() {
+        if (emailsNotifications == null) {
+            return new EmailsNotifications();
+        }
+        return emailsNotifications;
+    }
+
+    public void setEmailNotifications(EmailsNotifications emailsNotifications) {
+        this.emailsNotifications = emailsNotifications;
     }
 }

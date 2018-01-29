@@ -1,3 +1,4 @@
+import { UserProfileEmailsNotificationsComponent } from './../users/user-profile-emails-notifications/user-profile-emails-notifications.component';
 import { USERS } from './data/users';
 import { Player } from './../players/shared/player.model';
 import { League } from './../leagues/shared/league.model';
@@ -74,6 +75,16 @@ export class UserProfileInfoStubComponent implements OnInit {
   template: ''
 })
 export class UserProfileLeaguesStubComponent implements OnInit {
+  @Input() user: User;
+  ngOnInit(): void { }
+  constructor() { }
+}
+
+@Component({
+  selector: 'app-user-profile-emails-notifications',
+  template: ''
+})
+export class UserProfileEmailsNotificationsStubComponent implements OnInit {
   @Input() user: User;
   ngOnInit(): void { }
   constructor() { }

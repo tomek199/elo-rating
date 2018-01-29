@@ -94,7 +94,7 @@ public class MatchController {
         else if (match.isCompleted())
             match = matchService.saveMatchWithPlayers(match);
         else
-            match = matchService.save(match);
+            match = matchService.saveAndNotify(match, getOriginUrl(request));
         return new ResponseEntity<>(match, HttpStatus.OK);
     }
 
@@ -102,7 +102,7 @@ public class MatchController {
     @RequestMapping(value = "/leagues/{leagueId}/matches/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "Delete match", notes = "Delete match by match id")
     public ResponseEntity<Match> delete(HttpServletRequest request, @PathVariable String id) {
-        matchService.deleteById(id);
+        matchService.deleteByIdWithNotification(id, getOriginUrl(request));
         return new ResponseEntity<Match>(HttpStatus.OK);
     }
 

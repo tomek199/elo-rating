@@ -1,5 +1,6 @@
 import { Player } from './../../players/shared/player.model';
 import { League } from './../../leagues/shared/league.model';
+import { EmailsNotifications } from 'app/users/shared/emailsNotifications.model';
 
 export class User {
   id: string;
@@ -12,4 +13,5 @@ export class User {
   lastSignIn: Date;
   leagues: League[];
   players: Player[];
+  emailsNotifications: EmailsNotifications;
 }

@@ -71,7 +71,6 @@ export class BtnSpinnerDirective implements AfterContentInit {
 
   @HostListener('click')
   handleBtnClick() {
-
     if (!this.promise) {
       return;
     }

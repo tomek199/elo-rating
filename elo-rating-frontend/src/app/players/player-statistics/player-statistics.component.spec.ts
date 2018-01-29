@@ -1,3 +1,5 @@
+import { PlayerServiceStub } from './../../testing/player-stubs';
+import { PlayerService } from './../shared/player.service';
 import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -27,7 +29,8 @@ describe('PlayerStatisticsComponent', () => {
       imports: [ NgbModule.forRoot(), FormsModule ],
       providers: [
         {provide: ActivatedRoute, useValue: activatedRoute},
-        {provide: MatchService, useClass: MatchServiceStub}
+        {provide: MatchService, useClass: MatchServiceStub},
+        {provide: PlayerService, useClass: PlayerServiceStub}
       ]
     })
     .compileComponents();

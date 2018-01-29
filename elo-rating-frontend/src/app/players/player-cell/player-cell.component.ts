@@ -18,20 +18,20 @@ export class PlayerCellComponent implements OnInit {
 
   ngOnInit() {
   }
-  
+
   isCurrent(): boolean {
-    if (this.player) 
+    if (this.player)
       return this.currentPlayerId && this.currentPlayerId == this.player.id;
     else
       return false;
   }
 
   getPlayerType(): string {
-    if (this.player == undefined) 
+    if (this.player == undefined)
       return 'deleted';
     else if (this.isCurrent())
       return 'current';
-    else if (this.player.active == false) 
+    else if (this.player.active == false)
       return 'disabled';
     else
       return 'default';
@@ -39,25 +39,34 @@ export class PlayerCellComponent implements OnInit {
 
   getRating(): number | string {
     if (this.match && this.player) {
-      if (this.player) 
+      if (this.player)
         return this.match.ratings[this.player.id];
       else
         return this.match.ratings['']
-    }   
+    }
     return ''
   }
 
   getDelta(): number {
-    if (this.match.ratingDelta && this.player && this.match.playerOne) {
-      let sign;
-      this.player.id == this.match.playerOne.id ? sign = 1 : sign = -1
+    let playerCmp, sign
+    if (this.match.playerOne) {
+      playerCmp = this.match.playerOne
+      sign = 1
+    } else {
+      playerCmp = this.match.playerTwo
+      sign = -1
+    }
+    if (this.match.ratingDelta && this.player && playerCmp) {
+      if (this.player.id != playerCmp.id) {
+        sign = sign * -1
+      }
       return this.match.ratingDelta * sign;
     }
     return 0;
   }
 
   private getOpponentId(): string {
-    return this.player.id == this.match.playerOne.id 
+    return this.player.id == this.match.playerOne.id
       ? this.match.playerTwo.id
       : this.match.playerOne.id;
   }

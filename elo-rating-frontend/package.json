@@ -29,6 +29,7 @@
     "@ng-bootstrap/ng-bootstrap": "1.0.0-beta.8",
     "angular2-click-outside": "^0.1.0",
     "angular2-highcharts": "^0.5.5",
+    "angular2-ui-switch": "^1.2.0",
     "bootstrap": "4.0.0-beta.2",
     "chart.js": "^2.7.1",
     "core-js": "^2.5.3",

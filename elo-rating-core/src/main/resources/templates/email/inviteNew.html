@@ -1,19 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:remove="all">EloRating</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title th:remove="all">EloRating invitation</title>
+    <style th:replace="emailStyles :: emailStyles"></style>
 </head>
-<body>
-    <h2>EloRating invitation</h2>
-    <p>
-        You are invited to EloRating application by user
-        <strong th:text="${username}"></strong>.
-    </p>
-    <p>
-        Go to this link
-        <a th:href="@{${redirectUrl}}" th:text="@{${redirectUrl}}"></a>
-        to finalize registration.
-    </p>
+
+<body style="margin:0; padding:0;" bgcolor="#F0F0F0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0">
+    <tr>
+        <td align="center" valign="top" bgcolor="#F0F0F0" style="background-color: #F0F0F0;">
+            <br/>
+            <table border="0" width="600" cellpadding="0" cellspacing="0" class="container" style="width:600px;max-width:600px">
+                <tr>
+                    <td class="container-padding content" align="left" style="padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff">
+                        <br/>
+                        <div class="title" style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:600;color:#374550">EloRating invitation</div>
+                        <br/>
+                        <div class="body-text" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333">
+                            You are invited to EloRating application by user
+                            <strong th:text="${username}"></strong>.
+                            <br/><br/>
+                            Go to this link
+                            <a th:href="@{${redirectUrl}}" th:text="@{${redirectUrl}}"></a>
+                            to finalize registration.
+                            <br/><br/>
+                        </div>
+                    </td>
+                </tr>
+                <tr th:replace="emailFooter :: emailFooter"></tr>
+            </table>
+        </td>
+    </tr>
+</table>
 </body>
 </html>
