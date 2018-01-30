@@ -8,7 +8,7 @@ export const PLAYERS: Player[] = [
     active: true, 
     user: null, 
     league: null,
-    statistics: { won: 0, lost: 0 }
+    statistics: { won: 5, lost: 2 }
   },
   { id: '456', 
     username: 'Player 2', 
@@ -16,7 +16,7 @@ export const PLAYERS: Player[] = [
     active: true, 
     user: null, 
     league: null,
-    statistics: { won: 0, lost: 0 }
+    statistics: { won: 0, lost: 1 }
   },
   { id: '789', 
     username: 'Player 3', 
@@ -40,6 +40,6 @@ export const PLAYERS: Player[] = [
     active: false, 
     user: USERS[0], 
     league: null,
-    statistics: { won: 0, lost: 0 } 
+    statistics: { won: 1, lost: 0 } 
   },
 ]

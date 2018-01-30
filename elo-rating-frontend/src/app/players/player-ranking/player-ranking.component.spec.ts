@@ -49,15 +49,24 @@ describe('PlayerRankingComponent', () => {
   it('should display alert if players list is empty', fakeAsync(() => {
     createComponent();
     component.rankedPlayers = [];
+    component.players = [];
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.query(By.css('div.alert.alert-info'));
-    expect(component.hasRankedPlayers()).toBeFalsy();
-    expect(debugElement.nativeElement).toBeTruthy();
+    let alert = fixture.debugElement.query(By.css('div.alert.alert-info'));
+    expect(alert.nativeElement).toBeTruthy();
+    expect(alert.nativeElement.textContent).toContain('Active players not found!');
+  }));
+
+  it('should display alert if ranked players list is empty', fakeAsync(() => {
+    createComponent();
+    component.rankedPlayers = [];
+    fixture.detectChanges();
+    let alert = fixture.debugElement.query(By.css('div.alert.alert-info'));
+    expect(alert.nativeElement).toBeTruthy();
+    expect(alert.nativeElement.textContent).toContain('No one played the match!');
   }));
 
   it('should have players list', fakeAsync(() => {
     createComponent();
-    expect(component.hasRankedPlayers()).toBeTruthy();
     expect(component.rankedPlayers.length).toBeGreaterThan(0);
   }));
 
@@ -84,5 +93,14 @@ describe('PlayerRankingComponent', () => {
     let lostElement = fixture.debugElement.queryAll(By.css('table tbody tr td span.lost'))[0];
     expect(wonElement.nativeElement.innerText).toBeTruthy();
     expect(lostElement.nativeElement.innerText).toBeTruthy();
+  }));
+
+  it('should have players that played at least one match', fakeAsync(() => {
+    createComponent()
+    fixture.detectChanges();
+    component.rankedPlayers.forEach((player) => {
+      let playedMatches = player.statistics.won + player.statistics.lost;
+      expect(playedMatches).toBeGreaterThan(0);
+    });
   }));
 });
