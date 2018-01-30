@@ -227,4 +227,10 @@ public class UserControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$[0].emailsNotifications.editedMatchNotification", is(false)))
                 .andExpect(jsonPath("$[0].emailsNotifications.cancelledMatchNotification", is(false)));
     }
+
+    @Ignore
+    @Test
+    public void test_sendEmailNotificationsToUpdate_sucess() throws Exception {
+        // TODO: write test
+    }
 }
