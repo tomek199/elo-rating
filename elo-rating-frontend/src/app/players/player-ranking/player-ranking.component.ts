@@ -11,6 +11,7 @@ import { Component, OnChanges, Input } from '@angular/core';
 export class PlayerRankingComponent implements OnChanges {
   
   @Input() leagueId: string;
+  players: Player[];
   rankedPlayers: Player[];
 
   constructor(
@@ -19,27 +20,49 @@ export class PlayerRankingComponent implements OnChanges {
   ) { }
 
   ngOnChanges() {
+    this.players = undefined;
     this.rankedPlayers = undefined;
     this.getLeagueId();
     this.getRanking();
   }
 
-  getLeagueId() {
+  private getLeagueId() {
     this.route.params.map(param => param['league_id'])
       .forEach(league_id => this.leagueId = league_id);
   }
 
-  getRanking() {
+  private getRanking() {
     this.playerService.getRanking(this.leagueId)
-      .then(players => this.rankedPlayers = players);
+      .then(players => {
+        this.players = players;
+        this.rankedPlayers = this.players.filter(player => this.playerPlayedMatch(player));
+      });
   }
 
-  hasRankedPlayers(): boolean {
+  private playerPlayedMatch(player: Player): boolean {
+    return player.statistics.won + player.statistics.lost > 0;
+  }
+
+  getContentType(): string {
+    if (this.hasNoPlayers())
+      return 'noPlayersAlert';
+    else if (this.hasNoRankedPlayers())
+      return 'noRankedPlayersAlert';
+    else if (this.hasRankedPlayers())
+      return 'rankingTable';
+    else 
+      return null;
+  }
+
+  private hasNoPlayers(): boolean { 
+    return this.players != undefined && this.players.length == 0;
+  }
+
+  private hasNoRankedPlayers(): boolean {
+    return this.rankedPlayers != undefined && this.rankedPlayers.length == 0;
+  }
+
+  private hasRankedPlayers(): boolean {
     return this.rankedPlayers != undefined && this.rankedPlayers.length > 0;
-  }
-
-  displayAlert(): boolean {
-    let display = this.rankedPlayers != undefined ? this.rankedPlayers.length == 0 : false;
-    return display;
   }
 }

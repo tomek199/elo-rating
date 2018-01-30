@@ -1,5 +1,6 @@
 package com.elorating.controller;
 
+import com.elorating.model.EmailsNotifications;
 import com.elorating.model.Invitation;
 import com.elorating.model.Player;
 import com.elorating.model.User;
@@ -52,10 +53,12 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/users/", method = RequestMethod.POST)
+    @RequestMapping(value = "/users/emails-notifications", method = RequestMethod.POST)
     @ApiOperation(value = "Update user", notes = "Update user settings")
-    public ResponseEntity<User> updateEmailNotifications(@RequestBody User user) {
-        User userToUpdate = userService.saveOrUpdateUser(user);
+    public ResponseEntity<User> updateEmailNotifications(@RequestParam("user_id") String id, @RequestBody EmailsNotifications emailsNotifications) {
+        User userToUpdate = userService.getById(id);
+        userToUpdate.setEmailNotifications(emailsNotifications);
+        userToUpdate = userService.saveOrUpdateUser(userToUpdate);
         return new ResponseEntity<>(userToUpdate, HttpStatus.OK);
     }
 

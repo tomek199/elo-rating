@@ -17,6 +17,6 @@ export class UserProfileEmailsNotificationsComponent implements OnInit {
   }
 
   updateUser() {
-    this.userService.update(this.user).then(user => this.user = user);
+    this.userService.update(this.user.id, this.user.emailsNotifications).then(user => this.user = user);
   }
 }

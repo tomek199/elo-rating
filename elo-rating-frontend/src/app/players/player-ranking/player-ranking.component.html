@@ -1,39 +1,50 @@
 <h2>Players ranking</h2>
 <app-spinner [resource]="rankedPlayers"></app-spinner>
-<div class="alert alert-info" *ngIf="displayAlert()">
+<ng-container [ngSwitch]="getContentType()">
+  <div *ngSwitchCase="'noPlayersAlert'" class="alert alert-info">
     Active players not found!
     <a [routerLink]="['/leagues', leagueId, 'players']" class="alert-link">Manage players</a>
-</div>
-<table class="shadedtable table" *ngIf="hasRankedPlayers()">
-    <thead class="thead-light">
+  </div>
+  <div *ngSwitchCase="'noRankedPlayersAlert'" class="alert alert-info">
+    No one played the match!
+    <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="alert-link">Add match</a>
+    to see player's ranking. 
+  </div>
+  <ng-container *ngSwitchCase="'rankingTable'">
+    <table class="shadedtable table">
+      <thead class="thead-light">
         <tr>
-            <th>Position</th>
-            <th>Username</th>
-            <th>Won</th>
-            <th>Lost</th>
-            <th>Rating</th>
+          <th>Position</th>
+          <th>Username</th>
+          <th>Won</th>
+          <th>Lost</th>
+          <th>Rating</th>
         </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
         <tr *ngFor="let player of rankedPlayers; let i=index" [routerLink]="['/leagues', leagueId, 'players', player.id]">
-            <td>
-                {{i + 1}}
-                <img *ngIf="i == 0" src="assets/img/medals/medal_gold.png" />
-                <img *ngIf="i == 1" src="assets/img/medals/medal_silver.png" />
-                <img *ngIf="i == 2" src="assets/img/medals/medal_bronze.png" />
-            </td>
-            <td>
-                <a [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.username}}</a>
-            </td>
-            <td>
-                <span class="won text-success">{{player.statistics.won}}</span>
-            </td>
-            <td>
-                <span class="lost text-danger">{{player.statistics.lost}}</span>
-            </td>
-            <td class="font-weight-bold">
-                {{player.rating}}
-            </td>
+          <td>
+            {{i + 1}}
+            <img *ngIf="i == 0" src="assets/img/medals/medal_gold.png" />
+            <img *ngIf="i == 1" src="assets/img/medals/medal_silver.png" />
+            <img *ngIf="i == 2" src="assets/img/medals/medal_bronze.png" />
+          </td>
+          <td>
+            <a [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.username}}</a>
+          </td>
+          <td>
+            <span class="won text-success">{{player.statistics.won}}</span>
+          </td>
+          <td>
+            <span class="lost text-danger">{{player.statistics.lost}}</span>
+          </td>
+          <td class="font-weight-bold">
+            {{player.rating}}
+          </td>
         </tr>
-    </tbody>
-</table>
+      </tbody>
+    </table>
+    <p class="text-secondary text-right">* Ranking includes players who played at least one match.</p>
+  </ng-container>
+  <ng-container *ngSwitchDefault></ng-container>
+</ng-container>

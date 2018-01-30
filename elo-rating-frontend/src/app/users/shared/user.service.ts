@@ -5,6 +5,7 @@ import { Http } from '@angular/http';
 import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { BaseApiService } from "../../core/shared/base-api.service";
+import { EmailsNotifications } from 'app/users/shared/emailsNotifications.model';
 
 
 @Injectable()
@@ -77,9 +78,9 @@ export class UserService extends BaseApiService {
       .catch(this.handleError);
   }
 
-  update(user: User): Promise<User> {
-    let url = `${this.url}/users/`;
-    return this.http.post(url, user, { headers: this.generateHeaders() })
+  update(userId: string, emailNotifications: EmailsNotifications): Promise<User> {
+    let url = `${this.url}/users/emails-notifications?user_id=${userId}`;
+    return this.http.post(url, JSON.stringify(emailNotifications), { headers: this.generateHeaders() })
       .toPromise()
       .then(response => response.json() as User)
       .catch(this.handleError);
