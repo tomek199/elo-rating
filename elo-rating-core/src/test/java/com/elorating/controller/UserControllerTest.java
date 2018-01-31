@@ -1,5 +1,6 @@
 package com.elorating.controller;
 
+import com.elorating.model.EmailsNotifications;
 import com.elorating.model.League;
 import com.elorating.model.Player;
 import com.elorating.model.User;
@@ -228,9 +229,30 @@ public class UserControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$[0].emailsNotifications.cancelledMatchNotification", is(false)));
     }
 
-    @Ignore
     @Test
-    public void test_sendEmailNotificationsToUpdate_sucess() throws Exception {
-        // TODO: write test
+    public void test_sendEmailNotificationsToUpdate_success() throws Exception {
+        String userName = "user";
+        User user = userService.save(new User(userName));
+        String findUserUrl = "/api/users/find-by-name" + "?name=" + userName;
+        mockMvc.perform(get(findUserUrl)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].emailsNotifications.scheduledMatchNotification", is(false)))
+                .andExpect(jsonPath("$[0].emailsNotifications.editedMatchNotification", is(false)))
+                .andExpect(jsonPath("$[0].emailsNotifications.cancelledMatchNotification", is(false)));
+
+        boolean newScheduledNotification = true;
+        boolean newEditedNotification = true;
+        boolean newCancelledNotification = true;
+        EmailsNotifications emailsNotifications = new EmailsNotifications(newScheduledNotification, newEditedNotification, newCancelledNotification);
+
+        String updatedNotificationsUrl = "/api/users/emails-notifications?user_id=" + user.getId();
+        mockMvc.perform(post(updatedNotificationsUrl)
+                .contentType(contentType)
+                .content(objectMapper.writeValueAsString(emailsNotifications)))
+                .andExpect(jsonPath("$.emailsNotifications.scheduledMatchNotification", is(newScheduledNotification)))
+                .andExpect(jsonPath("$.emailsNotifications.editedMatchNotification", is(newEditedNotification)))
+                .andExpect(jsonPath("$.emailsNotifications.cancelledMatchNotification", is(newCancelledNotification)));
+
     }
 }

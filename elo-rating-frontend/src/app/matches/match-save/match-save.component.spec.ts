@@ -1,3 +1,4 @@
+import { BtnSpinnerDirective } from './../../core/directives/btn-spinner/btn-spinner.directive';
 import { GoogleAuthServiceStub } from './../../testing/google-stubs';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { HttpModule } from '@angular/http';
@@ -25,8 +26,16 @@ describe('MatchSaveComponent', () => {
   beforeEach(async(() => {
     activatedRoute = new ActivatedRouteStub();
     TestBed.configureTestingModule({
-      declarations: [MatchSaveComponent, SpinnerComponent],
-      imports: [FormsModule, NgbModule.forRoot(), RouterTestingModule],
+      declarations: [
+        MatchSaveComponent, 
+        SpinnerComponent, 
+        BtnSpinnerDirective
+      ],
+      imports: [
+        FormsModule, 
+        NgbModule.forRoot(), 
+        RouterTestingModule
+      ],
       providers: [
         { provide: PlayerService, useClass: PlayerServiceStub },
         { provide: MatchService, useClass: MatchServiceStub },

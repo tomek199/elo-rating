@@ -25,6 +25,7 @@ export class MatchSaveComponent implements OnInit {
   scheduledMatches: Map<string, Match>;
   timeMessage: string;
   matchDuration: number = environment.matchDuration;
+  private savePromise: Promise<any>;
   @ViewChild('queuePopover') queuePopover: NgbPopover;
 
   constructor(
@@ -36,6 +37,7 @@ export class MatchSaveComponent implements OnInit {
   ) {
     this.match = new Match();
     this.scheduledMatches = new Map<string, Match>();
+    this.savePromise = new Promise((resolve, reject) => {});
   }
 
   ngOnInit() {

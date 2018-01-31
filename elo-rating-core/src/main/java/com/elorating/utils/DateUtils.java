@@ -2,10 +2,12 @@ package com.elorating.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class DateUtils {
 
     public final static long ONE_MINUTE_IN_MILLIS = 60000;
+    public final static String HOURS_MINUTES_TIMEZONE = "HH:mmZ";
 
     private static Date adjustTimeByMinutes(Date date, int minutes, boolean back) {
         long currentTime = date.getTime();
@@ -31,6 +33,14 @@ public class DateUtils {
     }
 
     public static String getDateTime(Date date) {
-        return new SimpleDateFormat("HH:mm").format(date);
+        return new SimpleDateFormat(HOURS_MINUTES_TIMEZONE).format(date);
+    }
+
+    public static String getDateTime(Date date, String timezone) {
+        SimpleDateFormat sdf = new SimpleDateFormat(HOURS_MINUTES_TIMEZONE);
+        if (timezone != null) {
+            sdf.setTimeZone(TimeZone.getTimeZone(timezone));
+        }
+        return sdf.format(date);
     }
 }
