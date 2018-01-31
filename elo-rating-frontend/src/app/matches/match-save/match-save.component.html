@@ -47,7 +47,7 @@
       <div [ngbPopover]="queuePopContent" popoverTitle="Queue" #queuePopover="ngbPopover" triggers="manual" placement="bottom"></div>
     </div>
   </div>
-  <button type="submit" class="btn btn-success float-right" [disabled]="!formValid()" (click)="save()">Save</button>
+  <button type="submit" id="matchSaveBtn" class="btn btn-success float-right" [disabled]="!formValid()" (click)="save()" [btnSpinner]="savePromise">Save</button>
   <button type="button" class="btn btn-link float-right" (click)="goToList()">Back to list</button>
 </form>
 <ng-template #queuePopContent>
