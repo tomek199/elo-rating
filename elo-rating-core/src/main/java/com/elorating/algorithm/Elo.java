@@ -20,21 +20,30 @@ public class Elo {
         double expectedScore = player.getExpectedScore(opponent);
         double kFactor = player.getKFactor();
         double scoreRatio = calculateScoreRatio();
-        int matchResult = isWinner(player);
+        float matchResult = getMatchResult(player, opponent);
         double ratingDelta = kFactor * scoreRatio * (matchResult - expectedScore);
         return (int) Math.round(ratingDelta);
     }
 
     private double calculateScoreRatio() {
-        int scoreSum = match.getScore(match.getPlayerOne()) + match.getScore(match.getPlayerTwo());
-        return -0.5 * scoreSum + 2.5;
+        int scoreDifference = Math.abs(match.getScore(match.getPlayerOne()) - match.getScore(match.getPlayerTwo()));
+        if (scoreDifference < 2)
+            return 1;
+        else if (scoreDifference < 3)
+            return 1.5;
+        else
+            return (11.0 + scoreDifference) / 8;
     }
 
-    private int isWinner(Player player) {
-        if (match.getScores().get(player.getId()).equals(2))
+    private float getMatchResult(Player player, Player opponent) {
+        int playerScore = match.getScores().get(player.getId());
+        int opponentScore = match.getScores().get(opponent.getId());
+        if (playerScore > opponentScore)
             return 1;
-        else
+        else if (playerScore < opponentScore)
             return 0;
+        else
+            return 0.5f;
     }
 
     public int getPlayerOneRating() {
