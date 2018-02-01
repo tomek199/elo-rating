@@ -123,6 +123,29 @@ public class MatchControllerTest extends BaseControllerTest {
     }
 
     @Test
+    public void testSaveWithDraw() throws Exception {
+        Player playerOne = playerService.save(new Player("PlayerOne", league));
+        Player playerTwo = playerService.save(new Player("PlayerTwo", league));
+        Match match = new Match(playerOne, playerTwo, 5, 5);
+        match.setLeague(league);
+        String matchJson = objectMapper.writeValueAsString(match);
+        mockMvc.perform(post("/api/leagues/" + league.getId() + "/matches")
+                .content(matchJson)
+                .contentType(contentType))
+                .andExpect(status().isOk());
+        playerOne = playerService.getById(playerOne.getId());
+        playerTwo = playerService.getById(playerTwo.getId());
+        Assert.assertEquals(1000, playerOne.getRating());
+        Assert.assertEquals(1000, playerTwo.getRating());
+        Assert.assertEquals(0, playerOne.getStatistics().getWon());
+        Assert.assertEquals(0, playerOne.getStatistics().getLost());
+        Assert.assertEquals(0, playerTwo.getStatistics().getWon());
+        Assert.assertEquals(0, playerTwo.getStatistics().getLost());
+        Assert.assertEquals(1, playerOne.getStatistics().getDraw());
+        Assert.assertEquals(1, playerTwo.getStatistics().getDraw());
+    }
+
+    @Test
     public void testSaveAlreadyCompleted() throws Exception {
         Player playerOne = playerService.save(new Player("PlayerOne", league));
         Player playerTwo = playerService.save(new Player("PlayerTwo", league));
@@ -162,10 +185,24 @@ public class MatchControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void testRevert() throws Exception {
+    public void testRevertFirstWon() throws Exception {
+        revert(2, 0);
+    }
+
+    @Test
+    public void testRevertSecondWon() throws Exception {
+        revert(2, 1);
+    }
+
+    @Test
+    public void testRevertDraw() throws Exception {
+        revert(2, 2);
+    }
+
+    private void revert(int playerOneScore, int playerTwoScore) throws Exception {
         Player playerOne = playerService.save(new Player("PlayerOne", league, 1200));
         Player playerTwo = playerService.save(new Player("PlayerTwo", league, 800));
-        Match match = new Match(playerOne, playerTwo, 1, 2, league);
+        Match match = new Match(playerOne, playerTwo, playerOneScore, playerTwoScore, league);
         String matchJson = objectMapper.writeValueAsString(match);
         MvcResult result = mockMvc.perform(post("/api/leagues/" + league.getId() + "/matches")
                 .content(matchJson)
@@ -184,10 +221,12 @@ public class MatchControllerTest extends BaseControllerTest {
         playerTwo = playerService.getById(playerTwo.getId());
         Assert.assertEquals(0, playerOne.getStatistics().getWon());
         Assert.assertEquals(0, playerOne.getStatistics().getLost());
+        Assert.assertEquals(0, playerOne.getStatistics().getDraw());
         playerTwo = playerService.getById(playerTwo.getId());
         Assert.assertEquals(800, playerTwo.getRating());
         Assert.assertEquals(0, playerTwo.getStatistics().getWon());
         Assert.assertEquals(0, playerTwo.getStatistics().getLost());
+        Assert.assertEquals(0, playerTwo.getStatistics().getDraw());
     }
 
     @Test

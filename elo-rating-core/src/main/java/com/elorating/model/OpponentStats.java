@@ -81,7 +81,7 @@ public class OpponentStats {
         boolean stopStreak = false;
         for (Match match : matches) {
             if (match.isPlayerInMatch(this.player.getId())) {
-                if (match.winner().getId().equals(this.player.getId())) {
+                if (match.getWinnerId().equals(this.player.getId())) {
                     won++;
                     if (!stopStreak) {
                         if (streak >= 0) streak++;
