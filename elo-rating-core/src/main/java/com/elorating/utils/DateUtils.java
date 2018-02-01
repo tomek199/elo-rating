@@ -37,10 +37,11 @@ public class DateUtils {
     }
 
     public static String getDateTime(Date date, String timezone) {
-        SimpleDateFormat sdf = new SimpleDateFormat(HOURS_MINUTES_TIMEZONE);
-        if (timezone != null) {
-            sdf.setTimeZone(TimeZone.getTimeZone(timezone));
+        if (timezone == null) {
+            return getDateTime(date);
         }
+        SimpleDateFormat sdf = new SimpleDateFormat(HOURS_MINUTES_TIMEZONE);
+        sdf.setTimeZone(TimeZone.getTimeZone(timezone));
         return sdf.format(date);
     }
 }
