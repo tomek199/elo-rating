@@ -19,8 +19,8 @@ Core side properties is configurable in file `elo-rating/elo-rating-core/src/mai
 |logging.level.org.springframework.data.mongodb.core.MongoTemplate|Logging level for MongoDB queries|INFO|
 |spring.data.mongodb.uri|Connection URI for MongoDB instance||
 |google.client.id|Google client ID assigned to application. To get more details please visit https://developers.google.com/identity/sign-in/web/sign-in||
-|spring.mail.host|Email server host|smtp.gmail.com|
-|spring.mail.port|Email server port|587|
+|spring.mail.host|Email server host|smtp.gmail.com||
+|spring.mail.port|Email server port|587||
 |spring.mail.username|Email server username||
 |spring.mail.password|Email server password||
 |spring.mail.properties.mail.smtp.auth|Email server smtp auth|true|
