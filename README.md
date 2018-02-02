@@ -29,7 +29,7 @@ Core side properties is configurable in file `elo-rating/elo-rating-core/src/mai
 |spring.mail.feedback.address|Feedback email address||
 |spring.thymeleaf.prefix|Thymeleaf templates directory|classpath:/templates/email/|
 
-Front-end properties is configurable in file `/Users/tomek/Documents/Projects/elo-rating/elo-rating-frontend/src/environments/environment.ts`
+Front-end properties is configurable in file `elo-rating/elo-rating-frontend/src/environments/environment.ts`
 
 |Property|Description|Default value|
 |---|---|---|
