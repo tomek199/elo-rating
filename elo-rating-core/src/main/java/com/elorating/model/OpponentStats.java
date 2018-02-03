@@ -4,20 +4,17 @@ import io.swagger.annotations.ApiModel;
 
 import java.util.List;
 
-//TODO: extend PlayerStats?
 @ApiModel("Player's opponent statistics")
-public class OpponentStats {
+public class OpponentStats extends PlayerStats {
 
     private String id;
     private Player player;
     private Player opponent;
-    private int won;
-    private int lost;
-    private int draw;
     private int pointsGained;
     private int streak;
 
     public OpponentStats(Player player, Player opponent) {
+        super();
         this.player = player;
         this.opponent = opponent;
     }
@@ -60,30 +57,6 @@ public class OpponentStats {
 
     public Player getOpponent() {
         return opponent;
-    }
-
-    public int getWon() {
-        return won;
-    }
-
-    public void setWon(int won) {
-        this.won = won;
-    }
-
-    public int getLost() {
-        return lost;
-    }
-
-    public void setLost(int lost) {
-        this.lost = lost;
-    }
-
-    public int getDraw() {
-        return draw;
-    }
-
-    public void setDraw(int draw) {
-        this.draw = draw;
     }
 
     public int getStreak() {

@@ -2,10 +2,9 @@ package com.elorating.model;
 
 public class PlayerStats {
 
-    private int won;
-    private int lost;
-    private int draw;
-
+    protected int won;
+    protected int lost;
+    protected int draw;
 
     public PlayerStats() {
         this.won = 0;

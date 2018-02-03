@@ -19,10 +19,10 @@ import java.util.List;
 public class PlayerStatsServiceImpl implements PlayerStatsService {
 
     @Resource
-    PlayerRepository playerRepository;
+    private PlayerRepository playerRepository;
 
     @Resource
-    MatchRepository matchRepository;
+    private MatchRepository matchRepository;
 
     @Override
     public OpponentStats getOpponentStats(String playerId, String opponentId) {
