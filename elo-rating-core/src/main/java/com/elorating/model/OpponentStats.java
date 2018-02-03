@@ -23,6 +23,8 @@ public class OpponentStats {
 
     private int lost;
 
+    private int draw;
+
     private int pointsGained;
 
     private int streak;
@@ -64,6 +66,14 @@ public class OpponentStats {
         this.lost = lost;
     }
 
+    public int getDraw() {
+        return draw;
+    }
+
+    public void setDraw(int draw) {
+        this.draw = draw;
+    }
+
     public int getStreak() {
         return streak;
     }
@@ -81,7 +91,10 @@ public class OpponentStats {
         boolean stopStreak = false;
         for (Match match : matches) {
             if (match.isPlayerInMatch(this.player.getId())) {
-                if (match.getWinnerId().equals(this.player.getId())) {
+                if (match.isDraw()) {
+                    draw++;
+                    stopStreak = true;
+                } else if (this.player.getId().equals(match.getWinnerId())) {
                     won++;
                     if (!stopStreak) {
                         if (streak >= 0) streak++;
