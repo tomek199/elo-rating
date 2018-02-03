@@ -26,6 +26,7 @@ public class User {
     @JsonIgnoreProperties({"user"})
     private List<Player> players;
     private EmailsNotifications emailsNotifications;
+    private String timezone;
 
     public User() { }
 
@@ -151,5 +152,13 @@ public class User {
 
     public void setEmailNotifications(EmailsNotifications emailsNotifications) {
         this.emailsNotifications = emailsNotifications;
+    }
+
+    public String getTimezone() {
+        return timezone;
+    }
+
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
     }
 }

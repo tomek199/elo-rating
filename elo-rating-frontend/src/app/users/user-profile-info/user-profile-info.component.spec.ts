@@ -5,6 +5,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserProfileInfoComponent } from './user-profile-info.component';
 import { FormsModule } from '@angular/forms';
+import { CommonService } from 'app/core/shared/common.service';
+import { CommonServiceStub } from 'app/testing/common-stubs';
 
 describe('UserProfileInfoComponent', () => {
   let component: UserProfileInfoComponent;
@@ -14,8 +16,11 @@ describe('UserProfileInfoComponent', () => {
   beforeEach(async(() => {
     stubUser = USERS[0];
     TestBed.configureTestingModule({
-      declarations: [ UserProfileInfoComponent ], 
-      imports: [ FormsModule ]
+      declarations: [ UserProfileInfoComponent ],
+      imports: [ FormsModule ],
+      providers: [
+        { provide: CommonService, useClass: CommonServiceStub },
+      ]
     })
     .compileComponents();
   }));
@@ -40,5 +45,12 @@ describe('UserProfileInfoComponent', () => {
       expect(name.nativeElement.value).toEqual(stubUser.name);
       expect(email.nativeElement.value).toEqual(stubUser.email);
     });
+  });
+
+  it('shoudle have default timezone selected as user timezone', () => {
+    let option = fixture.debugElement.query(By.css('form div.form-group div select option[selected]'));
+    // TODO: How to test which element is selected
+    //expect(option).toBeTruthy();
+    //expect(option.nativeElement.value).toEqual(component.user.timezone);
   });
 });

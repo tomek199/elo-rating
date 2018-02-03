@@ -1,3 +1,4 @@
+import { CommonService } from './core/shared/common.service';
 import { FeedbackService } from './feedback/shared/feedback.service';
 import { AuthGuardService } from './auth/shared/auth-guard.service';
 import { UserService } from './users/shared/user.service';
@@ -118,7 +119,8 @@ import { UiSwitchModule } from 'angular2-ui-switch';
     {
       provide: HighchartsStatic,
       useFactory: highchartsFactory
-    }
+    },
+    CommonService
   ],
   bootstrap: [AppComponent],
   entryComponents: [ConfirmModalComponent],

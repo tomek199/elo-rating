@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.TimeZone;
-import java.util.TreeMap;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -25,12 +25,15 @@ public class UtilitiesController {
     @CrossOrigin
     @RequestMapping(value = "/common/timezones", method = RequestMethod.GET)
     @ApiOperation(value = "Get timezones", notes = "Returns all timezones")
-    public ResponseEntity<TreeMap<String, String>> getTimezones() {
-        TreeMap<String, String> map = new TreeMap();
-        for (String timezone : TimeZone.getAvailableIDs()) {
-            map.put(getTimezoneOffset(TimeZone.getTimeZone(timezone)), timezone);
+    public ResponseEntity<String[]> getTimezonesArray() {
+        String[] ids = TimeZone.getAvailableIDs();
+        String[] timezones = new String[ids.length];
+        for (int i = 0; i < ids.length; i++) {
+            timezones[i] = getTimezoneOffset(TimeZone.getTimeZone(ids[i]));
         }
-        return new ResponseEntity<>(map, HttpStatus.OK);
+        Arrays.sort(timezones);
+
+        return new ResponseEntity<>(timezones, HttpStatus.OK);
     }
 
     private String getTimezoneOffset(TimeZone timeZone) {
