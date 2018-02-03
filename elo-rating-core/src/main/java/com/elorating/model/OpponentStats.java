@@ -1,8 +1,6 @@
 package com.elorating.model;
 
 import io.swagger.annotations.ApiModel;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.util.List;
 
@@ -10,28 +8,42 @@ import java.util.List;
 @ApiModel("Player's opponent statistics")
 public class OpponentStats {
 
-    @Id
     private String id;
-
-    @DBRef
     private Player player;
-
-    @DBRef
     private Player opponent;
-
     private int won;
-
     private int lost;
-
     private int draw;
-
     private int pointsGained;
-
     private int streak;
 
     public OpponentStats(Player player, Player opponent) {
         this.player = player;
         this.opponent = opponent;
+    }
+
+    public void setStats(List<Match> matches) {
+        streak = 0;
+        boolean stopStreak = false;
+        for (Match match : matches) {
+            if (match.isDraw()) {
+                draw++;
+                stopStreak = true;
+            } else if (this.player.getId().equals(match.getWinnerId())) {
+                won++;
+                if (!stopStreak) {
+                    if (streak >= 0) streak++;
+                    else stopStreak = true;
+                }
+            } else {
+                lost++;
+                if (!stopStreak) {
+                    if (streak <= 0) streak--;
+                    else stopStreak = true;
+                }
+            }
+            pointsGained += match.getRatingDelta(player);
+        }
     }
 
     public int getPointsGained() {
@@ -84,31 +96,5 @@ public class OpponentStats {
 
     public int getTotal() {
         return this.won + this.lost;
-    }
-
-    public void setStats(List<Match> matches) {
-        streak = 0;
-        boolean stopStreak = false;
-        for (Match match : matches) {
-            if (match.isPlayerInMatch(this.player.getId())) {
-                if (match.isDraw()) {
-                    draw++;
-                    stopStreak = true;
-                } else if (this.player.getId().equals(match.getWinnerId())) {
-                    won++;
-                    if (!stopStreak) {
-                        if (streak >= 0) streak++;
-                        else stopStreak = true;
-                    }
-                } else {
-                    lost++;
-                    if (!stopStreak) {
-                        if (streak <= 0) streak--;
-                        else stopStreak = true;
-                    }
-                }
-                pointsGained += match.getRatingDelta(player);
-            }
-        }
     }
 }

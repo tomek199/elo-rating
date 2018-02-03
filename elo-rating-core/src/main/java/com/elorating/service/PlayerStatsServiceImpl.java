@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +32,17 @@ public class PlayerStatsServiceImpl implements PlayerStatsService {
         List<Match> matches = matchRepository.findCompletedByPlayerIds(playerId, opponentId, sortByDate);
         OpponentStats opponentStats = new OpponentStats(player, opponent);
         opponentStats.setStats(matches);
+        return opponentStats;
+    }
+
+    @Override
+    public List<OpponentStats> getOpponentsStats(String playerId) {
+        Player player = playerRepository.findOne(playerId);
+        List<Player> opponents = playerRepository.findByIdNotAndLeagueId(playerId, player.getLeague().getId());
+        ArrayList<OpponentStats> opponentStats = new ArrayList<>(opponents.size());
+        for (Player opponent : opponents) {
+            opponentStats.add(getOpponentStats(playerId, opponent.getId()));
+        }
         return opponentStats;
     }
 }
