@@ -22,9 +22,11 @@ public class EmailGeneratorTest extends BaseServiceTest {
     Match match = MatchTestUtils.generateMatch(league, players.get(0), players.get(1), false);
     String originUrl = "originUrl";
     User user = new User("testUser", "test@email.com");
+    String timezone = "GMT+1:00 Europe/Warsaw";
 
     @Before
     public void setup() {
+        user.setTimezone(timezone);
         league = new League("test");
         players = PlayerTestUtils.generatePlayerList(2, league);
         for (int i = 0; i < players.size(); i++) {

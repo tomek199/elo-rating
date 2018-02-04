@@ -43,12 +43,12 @@ public class UserController {
     @CrossOrigin
     @RequestMapping(value = "/users/sign-in", method = RequestMethod.POST)
     @ApiOperation(value = "Sign in", notes = "Verify Google's id token")
-    public ResponseEntity<User> signIn(@RequestBody String token) {
+    public ResponseEntity<User> signIn(@RequestBody String token, TimeZone timeZone) {
         User userFromGoogle = googleAuthService.getUserFromToken(token);
         if (userFromGoogle != null) {
             User user = userService.checkForPendingInvitation(userFromGoogle);
             if (user == null)
-                user = userService.saveOrUpdateUser(userFromGoogle);
+                user = userService.saveOrUpdateUser(userFromGoogle, timeZone);
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);
