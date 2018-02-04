@@ -78,7 +78,7 @@ export class UserService extends BaseApiService {
       .catch(this.handleError);
   }
 
-  update(userId: string, emailNotifications: EmailsNotifications): Promise<User> {
+  updateEmailNotifications(userId: string, emailNotifications: EmailsNotifications): Promise<User> {
     let url = `${this.url}/users/emails-notifications?user_id=${userId}`;
     return this.http.post(url, JSON.stringify(emailNotifications), { headers: this.generateHeaders() })
       .toPromise()

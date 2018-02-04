@@ -4,19 +4,19 @@
   <li class="list-group-item justify-content-between">
     Scheduled match notification
     <span class="float-right">
-      <ui-switch color="#007bff" [(ngModel)]="user.emailsNotifications.scheduledMatchNotification" (ngModelChange)="updateUser()"></ui-switch>
+      <ui-switch color="#007bff" [(ngModel)]="user.emailsNotifications.scheduledMatchNotification" (ngModelChange)="updateUserEmailNotifications()"></ui-switch>
     </span>
   </li>
   <li class="list-group-item justify-content-between">
     Edited match notification
     <span class="float-right">
-      <ui-switch color="#007bff" [(ngModel)]="user.emailsNotifications.editedMatchNotification" (ngModelChange)="updateUser()"></ui-switch>
+      <ui-switch color="#007bff" [(ngModel)]="user.emailsNotifications.editedMatchNotification" (ngModelChange)="updateUserEmailNotifications()"></ui-switch>
     </span>
   </li>
   <li class="list-group-item justify-content-between">
     Cancelled match notification
     <span class="float-right">
-      <ui-switch color="#007bff" [(ngModel)]="user.emailsNotifications.cancelledMatchNotification" (ngModelChange)="updateUser()"></ui-switch>
+      <ui-switch color="#007bff" [(ngModel)]="user.emailsNotifications.cancelledMatchNotification" (ngModelChange)="updateUserEmailNotifications()"></ui-switch>
     </span>
   </li>
 </ul>
