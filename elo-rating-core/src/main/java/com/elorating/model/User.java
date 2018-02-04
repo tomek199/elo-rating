@@ -1,5 +1,7 @@
 package com.elorating.model;
 
+import com.elorating.utils.DateUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -163,5 +165,10 @@ public class User {
 
     public void setTimezone(String timezone) {
         this.timezone = timezone;
+    }
+
+    @JsonIgnore
+    public String getTimezoneID() {
+        return DateUtils.parseTimezoneStringToTimezoneID(this.timezone);
     }
 }

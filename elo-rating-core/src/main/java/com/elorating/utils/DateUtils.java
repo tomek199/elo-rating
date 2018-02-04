@@ -52,10 +52,7 @@ public class DateUtils {
     }
 
     public static boolean validateTimezone(String timezoneString) {
-        int whitespaceIndex = timezoneString.indexOf(" ");
-        if (whitespaceIndex != -1) {
-            timezoneString = StringUtils.removeWhitespaces(timezoneString.substring(whitespaceIndex));
-        }
+        timezoneString = parseTimezoneStringToTimezoneID(timezoneString);
 
         String[] ids = TimeZone.getAvailableIDs();
         Arrays.sort(ids);
@@ -79,6 +76,15 @@ public class DateUtils {
         }
 
         return result;
+    }
+
+    public static String parseTimezoneStringToTimezoneID(String timezoneString) {
+        int whitespaceIndex = timezoneString.indexOf(" ");
+        if (whitespaceIndex != -1) {
+            timezoneString = timezoneString.substring(whitespaceIndex);
+        }
+
+        return StringUtils.removeWhitespaces(timezoneString);
     }
 
 }

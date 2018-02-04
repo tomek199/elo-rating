@@ -62,5 +62,12 @@ public class DateUtilsTest {
         String correctTimezone = "GMT0:00 Incorrect/Timezone";
         Assert.assertFalse(DateUtils.validateTimezone(correctTimezone));
     }
+
+    @Test
+    public void test_parseTimezoneStringToTimezoneID_success() {
+        String timezone = "GMT+1:00 " + GMT1_TIMEZONE;
+        Assert.assertTrue(DateUtils.parseTimezoneStringToTimezoneID(timezone).equals(GMT1_TIMEZONE));
+        Assert.assertTrue(DateUtils.parseTimezoneStringToTimezoneID(timezone).indexOf(" ") == -1);
+    }
 }
 
