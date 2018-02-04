@@ -1,3 +1,5 @@
+import { UserService } from 'app/users/shared/user.service';
+import { CommonService } from './../../core/shared/common.service';
 import { User } from './../shared/user.model';
 import { Component, OnInit, Input } from '@angular/core';
 
@@ -10,8 +12,21 @@ export class UserProfileInfoComponent implements OnInit {
 
   @Input() user: User;
 
-  constructor() { }
+  timezones: string[];
+  timezone: string;
+
+  constructor(private commonService: CommonService, private userService: UserService) { }
 
   ngOnInit() {
+    this.commonService.getTimezones().then(timezones => this.timezones = timezones);
+    this.timezone = this.user.timezone;
+  }
+
+  isUserTimezone(timezone: string): boolean {
+    return timezone.indexOf(this.user.timezone) > -1 ? true : false;
+  }
+
+  updateUserTimezone() {
+    this.userService.updateTimezone(this.user.id, this.timezone).then(user => this.user = user);
   }
 }

@@ -7,10 +7,12 @@ import com.elorating.repository.LeagueRepository;
 import com.elorating.repository.PlayerRepository;
 import com.elorating.repository.UserRepository;
 import com.elorating.service.email.*;
+import com.elorating.utils.DateUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.UUID;
 
 @Service
@@ -125,6 +127,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User saveOrUpdateUser(User userFromGoogle, TimeZone timeZone) {
+        User savedUser = userRepository.findByGoogleId(userFromGoogle.getGoogleId());
+        if (savedUser != null) {
+            savedUser.update(userFromGoogle);
+            savedUser = setUserTimezone(savedUser, timeZone);
+            savedUser = userRepository.save(savedUser);
+        } else {
+            userFromGoogle = setUserTimezone(userFromGoogle, timeZone);
+            savedUser = userRepository.save(userFromGoogle);
+        }
+        return savedUser;
+    }
+
+    @Override
     public User inviteNewUser(String currentUser, User userToInvite, String originUrl) {
         String token = UUID.randomUUID().toString();
         userToInvite.setInvitationToken(token);
@@ -183,5 +199,12 @@ public class UserServiceImpl implements UserService {
         emailDirector.setBuilder(emailBuilder);
         Email email = emailDirector.build();
         emailService.send(email);
+    }
+
+    private User setUserTimezone(User user, TimeZone timeZone) {
+        if (user.getTimezone() == null) {
+            user.setTimezone(DateUtils.getTimezoneOffset(timeZone));
+        }
+        return user;
     }
 }

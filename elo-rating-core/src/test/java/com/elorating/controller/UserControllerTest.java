@@ -246,13 +246,32 @@ public class UserControllerTest extends BaseControllerTest {
         boolean newCancelledNotification = true;
         EmailsNotifications emailsNotifications = new EmailsNotifications(newScheduledNotification, newEditedNotification, newCancelledNotification);
 
-        String updatedNotificationsUrl = "/api/users/emails-notifications?user_id=" + user.getId();
-        mockMvc.perform(post(updatedNotificationsUrl)
+        String updateNotificationsUrl = "/api/users/emails-notifications?user_id=" + user.getId();
+        mockMvc.perform(post(updateNotificationsUrl)
                 .contentType(contentType)
                 .content(objectMapper.writeValueAsString(emailsNotifications)))
                 .andExpect(jsonPath("$.emailsNotifications.scheduledMatchNotification", is(newScheduledNotification)))
                 .andExpect(jsonPath("$.emailsNotifications.editedMatchNotification", is(newEditedNotification)))
                 .andExpect(jsonPath("$.emailsNotifications.cancelledMatchNotification", is(newCancelledNotification)));
 
+    }
+
+    @Test
+    public void test_updateUserTimezone() throws Exception {
+        String userName = "user";
+        User user = userService.save(new User(userName));
+        String findUserUrl = "/api/users/find-by-name" + "?name=" + userName;
+        mockMvc.perform(get(findUserUrl)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].timezone", isEmptyOrNullString()));
+
+        String timezone = "GMT+1:00 Europe/Belgrade";
+        String updateTimezoneUrl = "/api/users/timezone?user_id=" + user.getId();
+
+        mockMvc.perform(post(updateTimezoneUrl)
+                .contentType(contentType)
+                .content(timezone))
+                .andExpect(jsonPath("$.timezone", is(timezone)));
     }
 }

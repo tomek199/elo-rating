@@ -1,5 +1,7 @@
 package com.elorating.model;
 
+import com.elorating.utils.DateUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -26,6 +28,7 @@ public class User {
     @JsonIgnoreProperties({"user"})
     private List<Player> players;
     private EmailsNotifications emailsNotifications;
+    private String timezone;
 
     public User() { }
 
@@ -47,6 +50,9 @@ public class User {
         this.lastSignIn = new Date();
         if (user.emailsNotifications != null) {
             this.emailsNotifications = user.emailsNotifications;
+        }
+        if (user.timezone != null) {
+            this.timezone = user.timezone;
         }
     }
 
@@ -151,5 +157,18 @@ public class User {
 
     public void setEmailNotifications(EmailsNotifications emailsNotifications) {
         this.emailsNotifications = emailsNotifications;
+    }
+
+    public String getTimezone() {
+        return timezone;
+    }
+
+    public void setTimezone(String timezone) {
+        this.timezone = timezone;
+    }
+
+    @JsonIgnore
+    public String getTimezoneID() {
+        return DateUtils.parseTimezoneStringToTimezoneID(this.timezone);
     }
 }

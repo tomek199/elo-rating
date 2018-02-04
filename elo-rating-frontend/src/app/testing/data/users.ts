@@ -21,7 +21,8 @@ export const USERS: User[] = [
       new Player(), 
       new Player() 
     ],
-    emailsNotifications: EMAILS_NOTIFICATIONS[0]
+    emailsNotifications: EMAILS_NOTIFICATIONS[0],
+    timezone: 'GMT0:00 GMT'
   }, 
   {
     id: '456',
@@ -34,6 +35,7 @@ export const USERS: User[] = [
     lastSignIn: new Date(),
     leagues: [ ],
     players: [ ],
-    emailsNotifications: EMAILS_NOTIFICATIONS[0]
+    emailsNotifications: EMAILS_NOTIFICATIONS[0],
+    timezone: 'GMT0:00 GMT'
   }
 ]
