@@ -47,5 +47,20 @@ public class DateUtilsTest {
         setExpectedDateString(HOURS + 1, MINUTES);
         Assert.assertTrue(dateString.contains(expectedDateString));
     }
+
+    @Test
+    public void test_validateTimezone_success() {
+        String correctTimezone = "GMT+1:00 " + GMT1_TIMEZONE;
+        Assert.assertTrue(DateUtils.validateTimezone(correctTimezone));
+
+        correctTimezone = GMT1_TIMEZONE;
+        Assert.assertTrue(DateUtils.validateTimezone(correctTimezone));
+    }
+
+    @Test
+    public void test_validateIncorrectTimezone_success() {
+        String correctTimezone = "GMT0:00 Incorrect/Timezone";
+        Assert.assertFalse(DateUtils.validateTimezone(correctTimezone));
+    }
 }
 

@@ -49,6 +49,9 @@ public class User {
         if (user.emailsNotifications != null) {
             this.emailsNotifications = user.emailsNotifications;
         }
+        if (user.timezone != null) {
+            this.timezone = user.timezone;
+        }
     }
 
     public String getId() {

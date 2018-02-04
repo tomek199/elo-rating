@@ -1,7 +1,9 @@
+import { UserServiceStub } from './../../testing/user-stubs';
+import { UserService } from './../shared/user.service';
 import { By } from '@angular/platform-browser';
 import { USERS } from './../../testing/data/users';
 import { User } from './../shared/user.model';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 
 import { UserProfileInfoComponent } from './user-profile-info.component';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +22,7 @@ describe('UserProfileInfoComponent', () => {
       imports: [ FormsModule ],
       providers: [
         { provide: CommonService, useClass: CommonServiceStub },
+        { provide: UserService, useClass: UserServiceStub },
       ]
     })
     .compileComponents();
@@ -53,4 +56,13 @@ describe('UserProfileInfoComponent', () => {
     //expect(option).toBeTruthy();
     //expect(option.nativeElement.value).toEqual(component.user.timezone);
   });
+
+  it('should change timezone when clicked on update', fakeAsync(() => {
+    let newTimezone = 'GMT+10:00 AET';
+    component.timezone = newTimezone;
+    let updateBtn = fixture.debugElement.query(By.css('form div.form-group div span button[name=timezoneUpdateBtn]'));
+    updateBtn.triggerEventHandler('click', null);
+    tick();
+    expect(component.user.timezone).toEqual(newTimezone);
+  }))
 });
