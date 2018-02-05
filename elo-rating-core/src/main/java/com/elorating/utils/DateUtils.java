@@ -1,13 +1,16 @@
 package com.elorating.utils;
 
-import java.text.SimpleDateFormat;
+import java.sql.Time;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 public class DateUtils {
 
     public final static long ONE_MINUTE_IN_MILLIS = 60000;
-    public final static String HOURS_MINUTES_TIMEZONE = "HH:mmZ";
 
     private static Date adjustTimeByMinutes(Date date, int minutes, boolean back) {
         long currentTime = date.getTime();
@@ -28,19 +31,60 @@ public class DateUtils {
         return adjustTimeByMinutes(date, minutes, true);
     }
 
-    public static String getDateString(Date date) {
-        return new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(date);
-    }
-
     public static String getDateTime(Date date) {
-        return new SimpleDateFormat(HOURS_MINUTES_TIMEZONE).format(date);
+        ZonedDateTime zonedDateTime = convertDateToZonedDateTime(date, null);
+        return zonedDateTime.getHour() + ":" + zonedDateTime.getMinute();
     }
 
     public static String getDateTime(Date date, String timezone) {
-        SimpleDateFormat sdf = new SimpleDateFormat(HOURS_MINUTES_TIMEZONE);
-        if (timezone != null) {
-            sdf.setTimeZone(TimeZone.getTimeZone(timezone));
+        if (timezone == null) {
+            return getDateTime(date);
         }
-        return sdf.format(date);
+        ZonedDateTime zonedDateTime = convertDateToZonedDateTime(date, timezone);
+        return zonedDateTime.getHour() + ":" + zonedDateTime.getMinute();
     }
+
+    private static ZonedDateTime convertDateToZonedDateTime(Date date, String timezone) {
+        if (timezone == null || timezone.equals("")) {
+            return date.toInstant().atZone(ZoneId.systemDefault());
+        }
+        return date.toInstant().atZone(ZoneId.of(timezone));
+    }
+
+    public static boolean validateTimezone(String timezoneString) {
+        timezoneString = parseTimezoneStringToTimezoneID(timezoneString);
+
+        String[] ids = TimeZone.getAvailableIDs();
+        Arrays.sort(ids);
+        int searchResult = Arrays.binarySearch(ids, timezoneString);
+
+        return searchResult > 0 ? true : false;
+    }
+
+    public static String getTimezoneOffset(TimeZone timeZone) {
+        long hours = TimeUnit.MILLISECONDS.toHours(timeZone.getRawOffset());
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(timeZone.getRawOffset()) - TimeUnit.HOURS.toMinutes(hours);
+
+        minutes = Math.abs(minutes);
+
+        String result = "";
+
+        if (hours > 0) {
+            result = String.format("GMT+%d:%02d %s", hours, minutes, timeZone.getID());
+        } else {
+            result = String.format("GMT%d:%02d %s", hours, minutes, timeZone.getID());
+        }
+
+        return result;
+    }
+
+    public static String parseTimezoneStringToTimezoneID(String timezoneString) {
+        int whitespaceIndex = timezoneString.indexOf(" ");
+        if (whitespaceIndex != -1) {
+            timezoneString = timezoneString.substring(whitespaceIndex);
+        }
+
+        return StringUtils.removeWhitespaces(timezoneString);
+    }
+
 }

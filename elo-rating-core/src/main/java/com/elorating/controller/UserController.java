@@ -6,6 +6,7 @@ import com.elorating.model.Player;
 import com.elorating.model.User;
 import com.elorating.service.GoogleAuthService;
 import com.elorating.service.UserService;
+import com.elorating.utils.DateUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.TimeZone;
 
 @RestController
 @RequestMapping("/api")
@@ -41,12 +43,12 @@ public class UserController {
     @CrossOrigin
     @RequestMapping(value = "/users/sign-in", method = RequestMethod.POST)
     @ApiOperation(value = "Sign in", notes = "Verify Google's id token")
-    public ResponseEntity<User> signIn(@RequestBody String token) {
+    public ResponseEntity<User> signIn(@RequestBody String token, TimeZone timeZone) {
         User userFromGoogle = googleAuthService.getUserFromToken(token);
         if (userFromGoogle != null) {
             User user = userService.checkForPendingInvitation(userFromGoogle);
             if (user == null)
-                user = userService.saveOrUpdateUser(userFromGoogle);
+                user = userService.saveOrUpdateUser(userFromGoogle, timeZone);
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);
@@ -131,5 +133,20 @@ public class UserController {
         else
             requestUser = userService.inviteExistingUser(currentUser.getName(), requestUser, originUrl);
         return new ResponseEntity<>(requestUser, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/users/timezone", method = RequestMethod.POST)
+    @ApiOperation(value = "Update user timezone", notes = "Update user timezone")
+    public ResponseEntity<User> updateUserTimezone(@RequestParam("user_id") String id, @RequestBody String timezone) {
+        User user = userService.getById(id);
+
+        if (!DateUtils.validateTimezone(timezone)) {
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
+        }
+
+        user.setTimezone(timezone);
+        user = userService.saveOrUpdateUser(user);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

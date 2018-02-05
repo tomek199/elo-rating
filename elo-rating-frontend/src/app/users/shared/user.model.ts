@@ -14,4 +14,5 @@ export class User {
   leagues: League[];
   players: Player[];
   emailsNotifications: EmailsNotifications;
+  timezone: string;
 }

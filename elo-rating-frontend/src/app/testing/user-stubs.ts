@@ -52,6 +52,12 @@ export class UserServiceStub {
     user.leagues.push(league);
     return user;
   }
+
+  updateTimezone(userId: string, timezone: string): User {
+    let user = USERS[0];
+    user.timezone = timezone;
+    return user;
+  }
 }
 
 @Component({

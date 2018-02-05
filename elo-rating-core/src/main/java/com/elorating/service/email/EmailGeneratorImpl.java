@@ -30,13 +30,13 @@ public class EmailGeneratorImpl implements EmailGenerator {
         if (match.getPlayerOne().getUser() != null && match.getPlayerOne().getUser().getEmailsNotifications().isScheduledMatchNotification()) {
             emailSet.add(new ScheduledMatchEmail(match.getPlayerTwo().getUsername(),
                     match.getPlayerOne().getUser().getEmail(),
-                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+                    DateUtils.getDateTime(match.getDate(), match.getPlayerOne().getUser().getTimezoneID()), originUrl, match.getLeague()));
         }
 
         if (match.getPlayerTwo().getUser() != null && match.getPlayerTwo().getUser().getEmailsNotifications().isScheduledMatchNotification()) {
             emailSet.add(new ScheduledMatchEmail(match.getPlayerOne().getUsername(),
                     match.getPlayerTwo().getUser().getEmail(),
-                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+                    DateUtils.getDateTime(match.getDate(), match.getPlayerTwo().getUser().getTimezoneID()), originUrl, match.getLeague()));
         }
 
         return emailSet;
@@ -63,13 +63,13 @@ public class EmailGeneratorImpl implements EmailGenerator {
         if (match.getPlayerOne().getUser() != null && match.getPlayerOne().getUser().getEmailsNotifications().isEditedMatchNotification()) {
             emailSet.add(new EditMatchEmail(match.getPlayerTwo().getUsername(),
                     match.getPlayerOne().getUser().getEmail(),
-                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+                    DateUtils.getDateTime(match.getDate(), match.getPlayerOne().getUser().getTimezoneID()), originUrl, match.getLeague()));
         }
 
         if (match.getPlayerTwo().getUser() != null && match.getPlayerTwo().getUser().getEmailsNotifications().isEditedMatchNotification()) {
             emailSet.add(new EditMatchEmail(match.getPlayerOne().getUsername(),
                     match.getPlayerTwo().getUser().getEmail(),
-                    DateUtils.getDateTime(match.getDate()), originUrl, match.getLeague()));
+                    DateUtils.getDateTime(match.getDate(), match.getPlayerTwo().getUser().getTimezoneID()), originUrl, match.getLeague()));
         }
 
         return emailSet;

@@ -18,4 +18,15 @@
       <input type="text" name="email" [(ngModel)]="user.email" class="form-control" readonly>
     </div>
   </div>
+  <div class="form-group row">
+    <label for="timezone" class="col-3 col-form-label">Timezone</label>
+    <div class="col-9">
+      <select class="custom-select" [(ngModel)]="timezone" ngControl="timezone" name="timezone">
+        <option *ngFor="let timezone of timezones"  [value]="timezone" class="form-control" [selected]="isUserTimezone(timezone)">{{ timezone }}</option>
+      </select>
+      <span>
+        <button type="button" name="timezoneUpdateBtn" class="btn btn-primary" (click)="updateUserTimezone()" [disabled]="timezone == user.timezone">Update</button>
+      </span>
+    </div>
+  </div>
 </form>

@@ -1,8 +1,6 @@
 package com.elorating.service.email;
 
 import com.elorating.model.League;
-import com.elorating.model.Match;
-import com.elorating.utils.DateUtils;
 import org.thymeleaf.context.Context;
 
 public class ScheduledMatchEmail extends EmailBuilder {
@@ -38,7 +36,7 @@ public class ScheduledMatchEmail extends EmailBuilder {
     @Override
     public void buildContext() {
         Context context = email.getContext();
-        String redirectUrl = originUrl + "/leagues/" + this.league.getId();
+        String redirectUrl = originUrl + "/leagues/" + this.league.getId() + "/matches";
         context.setVariable("redirectUrl", redirectUrl);
         context.setVariable("username", this.opponent);
         context.setVariable("matchtime", matchtime);
