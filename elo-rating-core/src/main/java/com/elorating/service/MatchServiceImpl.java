@@ -14,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -217,7 +216,6 @@ public class MatchServiceImpl implements MatchService {
         }
     }
 
-    @Async
     private boolean sendEmail(EmailBuilder emailBuilder) {
         EmailDirector emailDirector = new EmailDirector();
         emailDirector.setBuilder(emailBuilder);
