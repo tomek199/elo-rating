@@ -33,7 +33,7 @@ public class CancelledMatchEmail extends EmailBuilder {
     @Override
     public void buildContext() {
         Context context = email.getContext();
-        String redirectUrl = originUrl + "/leagues/" + this.league.getId();
+        String redirectUrl = originUrl + "/leagues/" + this.league.getId() + "/matches";
         context.setVariable("redirectUrl", redirectUrl);
         context.setVariable("opponent", opponent);
     }
