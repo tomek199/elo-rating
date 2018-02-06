@@ -1,7 +1,7 @@
 import { UserService } from 'app/users/shared/user.service';
 import { CommonService } from './../../core/shared/common.service';
 import { User } from './../shared/user.model';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-user-profile-info',
@@ -11,6 +11,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class UserProfileInfoComponent implements OnInit {
 
   @Input() user: User;
+  @Output() userChange: EventEmitter<User> = new EventEmitter();
 
   timezones: string[];
   timezone: string;
@@ -27,6 +28,9 @@ export class UserProfileInfoComponent implements OnInit {
   }
 
   updateUserTimezone() {
-    this.userService.updateTimezone(this.user.id, this.timezone).then(user => this.user = user);
+    this.userService.updateTimezone(this.user.id, this.timezone).then(user => {
+      this.user = user
+      this.userChange.emit(this.user);
+    });
   }
 }
