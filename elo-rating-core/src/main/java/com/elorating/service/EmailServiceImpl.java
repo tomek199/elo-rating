@@ -57,7 +57,11 @@ public class EmailServiceImpl implements EmailService {
         try {
             Iterator iterator = emails.iterator();
             while(iterator.hasNext()) {
-                sendEmail((EmailBuilder) iterator.next());
+                EmailBuilder emailBuilder = (EmailBuilder) iterator.next();
+                boolean emailSent = sendEmail(emailBuilder);
+                if (emailSent) {
+                    sendEmailLog(emailBuilder);
+                }
             }
         } catch (Exception e) {
             logger.error("Error while sending email");
@@ -69,5 +73,11 @@ public class EmailServiceImpl implements EmailService {
         EmailDirector emailDirector = new EmailDirector();
         emailDirector.setBuilder(emailBuilder);
         return this.send(emailDirector.build());
+    }
+
+    private void sendEmailLog(EmailBuilder emailBuilder) {
+        StringBuilder stringBuilder = new StringBuilder().append("Email: " + emailBuilder.getEmail().getSubject());
+        stringBuilder.append(", sent to: " + emailBuilder.getEmail().getRecipient());
+        logger.info(stringBuilder.toString());
     }
 }
