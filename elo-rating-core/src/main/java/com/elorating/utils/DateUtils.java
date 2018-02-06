@@ -3,6 +3,7 @@ package com.elorating.utils;
 import java.sql.Time;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.TimeZone;
@@ -11,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class DateUtils {
 
     public final static long ONE_MINUTE_IN_MILLIS = 60000;
+    public final static String HOURS_MINUTE_FORMAT = "HH:mm";
 
     private static Date adjustTimeByMinutes(Date date, int minutes, boolean back) {
         long currentTime = date.getTime();
@@ -33,7 +35,7 @@ public class DateUtils {
 
     public static String getDateTime(Date date) {
         ZonedDateTime zonedDateTime = convertDateToZonedDateTime(date, null);
-        return zonedDateTime.getHour() + ":" + zonedDateTime.getMinute();
+        return DateTimeFormatter.ofPattern(HOURS_MINUTE_FORMAT).format(zonedDateTime);
     }
 
     public static String getDateTime(Date date, String timezone) {
@@ -41,7 +43,7 @@ public class DateUtils {
             return getDateTime(date);
         }
         ZonedDateTime zonedDateTime = convertDateToZonedDateTime(date, timezone);
-        return zonedDateTime.getHour() + ":" + zonedDateTime.getMinute();
+        return DateTimeFormatter.ofPattern(HOURS_MINUTE_FORMAT).format(zonedDateTime);
     }
 
     private static ZonedDateTime convertDateToZonedDateTime(Date date, String timezone) {
