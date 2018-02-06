@@ -60,9 +60,9 @@ public class MatchServiceImpl implements MatchService {
         match = save(match);
         match = fulfillPlayersInfo(match);
         if (update) {
-            sendEmails(emailGenerator.generateEmails(matchRepository.findOne(match.getId()), emailGenerator.EDIT_MATCH, originUrl));
+            this.emailService.sendEmails(emailGenerator.generateEmails(matchRepository.findOne(match.getId()), emailGenerator.EDIT_MATCH, originUrl));
         } else {
-            sendEmails(emailGenerator.generateEmails(matchRepository.findOne(match.getId()), emailGenerator.SCHEDULE_MATCH, originUrl));
+            this.emailService.sendEmails(emailGenerator.generateEmails(matchRepository.findOne(match.getId()), emailGenerator.SCHEDULE_MATCH, originUrl));
         }
         return match;
     }
@@ -83,7 +83,7 @@ public class MatchServiceImpl implements MatchService {
         matchRepository.delete(id);
         matchToDelete = fulfillPlayersInfo(matchToDelete);
         if (matchRepository.findOne(id) == null) {
-            sendEmails(emailGenerator.generateEmails(matchToDelete, emailGenerator.CANCEL_MATCH, originUrl));
+            this.emailService.sendEmails(emailGenerator.generateEmails(matchToDelete, emailGenerator.CANCEL_MATCH, originUrl));
         }
     }
 
@@ -203,23 +203,6 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public void deleteAll() {
         matchRepository.deleteAll();
-    }
-
-    private void sendEmails(Set emails) {
-        try {
-            Iterator iterator = emails.iterator();
-            while(iterator.hasNext()) {
-                sendEmail((EmailBuilder) iterator.next());
-            }
-        } catch (Exception e) {
-            logger.error("Error while sending email");
-        }
-    }
-
-    private boolean sendEmail(EmailBuilder emailBuilder) {
-        EmailDirector emailDirector = new EmailDirector();
-        emailDirector.setBuilder(emailBuilder);
-        return emailService.send(emailDirector.build());
     }
 
     private boolean checkIfMatchToUpdate(Match match) {

@@ -1,6 +1,8 @@
 package com.elorating.service;
 
 import com.elorating.service.email.Email;
+import com.elorating.service.email.EmailBuilder;
+import com.elorating.service.email.EmailDirector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +15,8 @@ import org.thymeleaf.TemplateEngine;
 import javax.annotation.Resource;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.Iterator;
+import java.util.Set;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -47,5 +51,23 @@ public class EmailServiceImpl implements EmailService {
             logger.error(e.getMessage());
             return false;
         }
+    }
+
+    public void sendEmails(Set emails) {
+        try {
+            Iterator iterator = emails.iterator();
+            while(iterator.hasNext()) {
+                sendEmail((EmailBuilder) iterator.next());
+            }
+        } catch (Exception e) {
+            logger.error("Error while sending email");
+            e.printStackTrace();
+        }
+    }
+
+    public boolean sendEmail(EmailBuilder emailBuilder) {
+        EmailDirector emailDirector = new EmailDirector();
+        emailDirector.setBuilder(emailBuilder);
+        return this.send(emailDirector.build());
     }
 }
