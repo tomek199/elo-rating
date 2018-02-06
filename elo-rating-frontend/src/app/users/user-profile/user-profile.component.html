@@ -10,13 +10,13 @@
     </div>
     <div class="col-9" [ngSwitch]="component">
       <div *ngSwitchCase="'info'">
-        <app-user-profile-info [user]="user"></app-user-profile-info>
+        <app-user-profile-info [(user)]="user"></app-user-profile-info>
       </div>
       <div *ngSwitchCase="'emails'">
-        <app-user-profile-emails-notifications [user]="user"></app-user-profile-emails-notifications>
+        <app-user-profile-emails-notifications [(user)]="user"></app-user-profile-emails-notifications>
       </div>
       <div *ngSwitchCase="'leagues'">
-        <app-user-profile-leagues [user]="user"></app-user-profile-leagues>
+        <app-user-profile-leagues [(user)]="user"></app-user-profile-leagues>
       </div>
     </div>
   </div>
