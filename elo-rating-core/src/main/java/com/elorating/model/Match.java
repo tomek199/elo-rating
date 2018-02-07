@@ -1,5 +1,6 @@
 package com.elorating.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -175,6 +176,7 @@ public class Match {
         this.completed = isCompleted();
     }
 
+    @JsonIgnore
     public String getWinnerId() {
         if (isDraw())
             return null;
@@ -182,6 +184,7 @@ public class Match {
             return Collections.max(scores.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
     }
 
+    @JsonIgnore
     public String getLooserId() {
         if (isDraw())
             return null;
@@ -189,6 +192,7 @@ public class Match {
             return Collections.min(scores.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
     }
 
+    @JsonIgnore
     public boolean isDraw() {
         if (scores != null && scores.size() > 0)
             return Objects.equals(scores.get(playerOne.getId()), scores.get(playerTwo.getId()));
