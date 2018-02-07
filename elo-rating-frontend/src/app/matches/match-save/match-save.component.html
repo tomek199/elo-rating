@@ -4,7 +4,7 @@
   At least two players are needed to create the match!
   <a [routerLink]="['/leagues', leagueId, 'players']" class="alert-link">Manage players</a>
 </div>
-<form #matchSave="ngForm" class="col-10" *ngIf="hasMinTwoPlayers()">
+<form #matchSave="ngForm" class="col-12" *ngIf="hasMinTwoPlayers()">
   <div class="form-group row">
     <label for="player-one" class="col-2 col-form-label">Player one</label>
     <div class="col-4">
@@ -21,20 +21,19 @@
     </label>
   </div>
   <div class="form-group row" *ngIf="match.completed">
-    <label for="score" class="col-2 col-form-label">Score</label>
-    <div class="col-6">
-      <div [(ngModel)]="score" (ngModelChange)="setMatchScore()" ngbRadioGroup name="score" class="btn-group col-6">
-        <label ngbButtonLabel class="btn btn-light">
-          <input ngbButton type="radio" value="2-0">2 : 0
+    <label for="playerOneScore" class="col-2 col-form-label">Player one score</label>
+    <div class="col-4">
+      <div [(ngModel)]="playerOneScore" (ngModelChange)="setMatchScore()" ngbRadioGroup name="playerOneScore" class="btn-group">
+        <label ngbButtonLabel class="btn btn-light" [ngClass]="{'btn-sm': scores.length > 9}" *ngFor="let score of scores">
+          <input ngbButton type="radio" [value]="score">{{score}}
         </label>
-        <label ngbButtonLabel class="btn btn-light">
-          <input ngbButton type="radio" value="2-1">2 : 1
-        </label>
-        <label ngbButtonLabel class="btn btn-light">
-          <input ngbButton type="radio" value="1-2">1 : 2
-        </label>
-        <label ngbButtonLabel class="btn btn-light">
-          <input ngbButton type="radio" value="0-2">0 : 2
+      </div>
+    </div>
+    <label for="playerTwoScore" class="col-2 col-form-label">Player two score</label>
+    <div class="col-4">
+      <div [(ngModel)]="playerTwoScore" (ngModelChange)="setMatchScore()" ngbRadioGroup name="playerTwoScore" class="btn-group">
+        <label ngbButtonLabel class="btn btn-light" [ngClass]="{'btn-sm': scores.length > 9}" *ngFor="let score of scores">
+          <input ngbButton type="radio" [value]="score">{{score}}
         </label>
       </div>
     </div>
@@ -56,3 +55,7 @@
     {{ match.playerOne.username }} - {{ match.playerTwo.username }}
   </div>
 </ng-template>
+
+<pre>
+  {{match.scores | json}}
+</pre>
