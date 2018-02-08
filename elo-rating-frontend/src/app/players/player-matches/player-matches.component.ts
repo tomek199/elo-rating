@@ -124,18 +124,22 @@ export class PlayerMatchesComponent implements OnInit, OnChanges, OnDestroy {
     return player && player.id == this.playerId;
   }
 
-  isWinner(index: number, player: Player): boolean {
+  isWinner(match: Match, player: Player) {
     if (player && player.id == this.playerId) {
-      return this.page.content[index].scores[player.id] == 2;
+      let opponentId = Object.keys(match.scores).find(key => key != player.id);      
+      return match.scores[player.id] > match.scores[opponentId];
+    } else {
+      return false;
     }
-    return false;
   }
 
-  isLooser(index: number, player: Player): boolean {
+  isLooser(match: Match, player: Player) {
     if (player && player.id == this.playerId) {
-      return this.page.content[index].scores[player.id] != 2;
+      let opponentId = Object.keys(match.scores).find(key => key != player.id);      
+      return match.scores[player.id] < match.scores[opponentId];
+    } else {
+      return false;
     }
-    return false;
   }
 
   openDeleteModal(matchId: string): void {
