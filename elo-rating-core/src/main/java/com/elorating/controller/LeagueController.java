@@ -1,6 +1,7 @@
 package com.elorating.controller;
 
 import com.elorating.model.League;
+import com.elorating.model.LeagueSettings;
 import com.elorating.service.LeagueService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -30,6 +31,16 @@ public class LeagueController {
     public ResponseEntity<League> get(@PathVariable String id) {
         League league = leagueService.getById(id);
         return new ResponseEntity<>(league, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/leagues/{id}/settings", method = RequestMethod.GET)
+    @ApiOperation(value = "Get league's settings", notes = "Return league's settings by league id")
+    public ResponseEntity<LeagueSettings> getSettings(@PathVariable String id) {
+        LeagueSettings settings = leagueService.getLeagueSettings(id);
+        if (settings == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(settings, HttpStatus.OK);
     }
 
     @CrossOrigin

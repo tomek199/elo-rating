@@ -25,6 +25,7 @@ public class League {
     }
 
     public League(String id) {
+        this();
         this.id = id;
     }
 

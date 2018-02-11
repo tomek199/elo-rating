@@ -1,7 +1,6 @@
 package com.elorating.controller;
 
 import com.elorating.model.League;
-
 import com.elorating.service.LeagueService;
 import com.elorating.utils.LeagueTestUtils;
 import org.hamcrest.Matchers;
@@ -31,10 +30,10 @@ public class LeagueControllerTest extends BaseControllerTest {
     private static final Logger logger = LoggerFactory.getLogger(LeagueControllerTest.class);
 
     @Mock
-    LeagueService leagueService;
+    private LeagueService leagueService;
 
     @InjectMocks
-    LeagueController leagueController;
+    private LeagueController leagueController;
 
     @Before
     public void setUp() throws Exception {
@@ -56,6 +55,16 @@ public class LeagueControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(league.getId())))
                 .andExpect(jsonPath("$.name", is("League")));
+    }
+
+    @Test
+    public void testGetSettings() throws Exception {
+        when(leagueService.getLeagueSettings(league.getId())).thenReturn(league.getSettings());
+        mockMvc.perform(get("/api/leagues/" + league.getId() + "/settings")
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.maxScore", is(2)))
+                .andExpect(jsonPath("$.allowDraws", is(false)));
     }
 
     @Test
