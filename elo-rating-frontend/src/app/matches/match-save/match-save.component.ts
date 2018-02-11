@@ -61,10 +61,10 @@ export class MatchSaveComponent implements OnInit {
   }
 
   private getLeagueSettings() {
-    this.leagueService.getLeague(this.leagueId)
-      .then(league => {
-        this.scores = Array.from(Array(league.settings.maxScore + 1), (value, index) => index);
-        this.allowDraws = league.settings.allowDraws;
+    this.leagueService.getLeagueSettings(this.leagueId)
+      .then(settings => {
+        this.scores = Array.from(Array(settings.maxScore + 1), (value, index) => index);
+        this.allowDraws = settings.allowDraws;
       });
   }
 

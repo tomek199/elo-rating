@@ -1,3 +1,4 @@
+import { LeagueSettings } from './../leagues/shared/league-settings';
 import { LEAGUES } from './data/leagues';
 import { League } from './../leagues/shared/league.model';
 import { Observable } from 'rxjs/Observable';
@@ -14,6 +15,11 @@ export class LeagueServiceStub {
       return Promise.resolve(league);
     else
       return Promise.resolve(null);
+  }
+
+  getLeagueSettings(id: string): Promise<LeagueSettings> {
+    let league = LEAGUES.find(league => league.id === id);    
+    return Promise.resolve(league.settings);
   }
 
   getAllLeagues(): Promise<League[]> {

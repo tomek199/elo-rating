@@ -1,3 +1,4 @@
+import { LeagueSettings } from './league-settings';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { Http } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
@@ -18,6 +19,14 @@ export class LeagueService extends BaseApiService {
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as League)
+      .catch(this.handleError);
+  }
+
+  getLeagueSettings(id: string): Promise<LeagueSettings> {
+    let url = `${this.url}/leagues/${id}/settings`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as LeagueSettings)
       .catch(this.handleError);
   }
 
