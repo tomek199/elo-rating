@@ -12,4 +12,5 @@ public interface PlayerService extends GenericService<Player> {
     List<Player> getRanking(String id, Sort sort);
     List<Player> findByLeagueIdAndUsernameLikeIgnoreCase(String leagueId, String username);
     void restorePlayers(Match match);
+    List<Match> getMatchForecast(String playerId, String opponentId);
 }

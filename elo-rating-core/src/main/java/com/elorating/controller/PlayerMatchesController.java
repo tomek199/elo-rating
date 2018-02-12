@@ -1,8 +1,6 @@
 package com.elorating.controller;
 
-import com.elorating.algorithm.Elo;
 import com.elorating.model.Match;
-import com.elorating.model.Player;
 import com.elorating.service.MatchService;
 import com.elorating.service.PlayerService;
 import com.elorating.utils.SortUtils;
@@ -17,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -104,22 +101,7 @@ public class PlayerMatchesController {
             notes = "Return list of matches with all possible scores")
     public ResponseEntity<List<Match>> getMatchForecast(@PathVariable String playerId,
                                                         @PathVariable String opponentId) {
-        Player player = playerService.getById(playerId);
-        Player opponent = playerService.getById(opponentId);
-        List<Match> matches = generateForecast(player, opponent);
+        List<Match> matches = playerService.getMatchForecast(playerId, opponentId);
         return new ResponseEntity<>(matches, HttpStatus.OK);
-    }
-
-    private List<Match> generateForecast(Player player, Player opponent) {
-        List<Match> matches = new ArrayList<>();
-        Elo elo = new Elo(new Match(player, opponent, 2, 0));
-        matches.add(elo.getMatch());
-        elo = new Elo(new Match(player, opponent, 2, 1));
-        matches.add(elo.getMatch());
-        elo = new Elo(new Match(player, opponent, 1, 2));
-        matches.add(elo.getMatch());
-        elo = new Elo(new Match(player, opponent, 0, 2));
-        matches.add(elo.getMatch());
-        return matches;
     }
 }
