@@ -1,3 +1,5 @@
+import { LeagueServiceStub } from './../../testing/league-stubs';
+import { LeagueService } from './../../leagues/shared/league.service';
 import { RouterLinkStub } from './../../testing/routing-stubs';
 import { PlayerServiceStub } from './../../testing/player-stubs';
 import { PlayerService } from './../shared/player.service';
@@ -19,6 +21,7 @@ describe('PlayerOpponentsComponent', () => {
         RouterLinkStub, 
       ],
       providers: [
+        {provide: LeagueService, useClass: LeagueServiceStub},
         {provide: PlayerService, useClass: PlayerServiceStub}
       ],
       imports: [ OrderModule ]
