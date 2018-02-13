@@ -106,19 +106,20 @@ export class MatchListComponent implements OnInit, OnDestroy {
     return this.page.content[index].scores[key];
   }
 
-  isWinner(index: number, player: Player) {
+  isWinner(match: Match, player: Player) {
     if (player) {
-      return this.page.content[index].scores[player.id] == 2;
+      let opponentId = Object.keys(match.scores).find(key => key != player.id);      
+      return match.scores[player.id] > match.scores[opponentId];
     } else {
-      return this.checkIfDeletedIsWinner(index);
+      return this.checkIfDeletedIsWinner(match);
     }
   }
 
-  private checkIfDeletedIsWinner(index: number) {
-    let match = this.page.content[index];
-    let player = [match.playerOne, match.playerTwo].find(player => player != undefined);
-    if (player != undefined) {
-      return match.scores[player.id] != 2;
+  private checkIfDeletedIsWinner(match: Match) {
+    let opponent = [match.playerOne, match.playerTwo].find(player => player != undefined);
+    if (opponent != undefined) {
+      let playerId = Object.keys(match.scores).find(key => key != opponent.id);
+      return match.scores[playerId] > match.scores[opponent.id];
     } else {
       return false;
     }

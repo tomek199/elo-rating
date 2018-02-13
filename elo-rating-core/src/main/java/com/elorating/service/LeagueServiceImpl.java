@@ -1,6 +1,7 @@
 package com.elorating.service;
 
 import com.elorating.model.League;
+import com.elorating.model.LeagueSettings;
 import com.elorating.model.User;
 import com.elorating.repository.LeagueRepository;
 import com.elorating.repository.MatchRepository;
@@ -56,6 +57,15 @@ public class LeagueServiceImpl implements LeagueService {
     }
 
     @Override
+    public League update(League league) {
+        League dbLeague = leagueRepository.findOne(league.getId());
+        dbLeague.setName(league.getName());
+        dbLeague.setSettings(league.getSettings());
+        leagueRepository.save(dbLeague);
+        return dbLeague;
+    }
+
+    @Override
     public List<League> findUnassignedLeagues() {
         return leagueRepository.findByUsersNull();
     }
@@ -63,6 +73,15 @@ public class LeagueServiceImpl implements LeagueService {
     @Override
     public League findLeagueByIdAndUser(String leagueId, User user) {
         return leagueRepository.findByIdAndUsers(leagueId, user);
+    }
+
+    @Override
+    public LeagueSettings getLeagueSettings(String id) {
+        League league = leagueRepository.findOne(id);
+        if (league != null && league.getSettings() != null)
+            return league.getSettings();
+        else
+            return null;
     }
 
     @Override

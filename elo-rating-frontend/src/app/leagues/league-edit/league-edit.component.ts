@@ -1,3 +1,4 @@
+import { LeagueSettings } from './../shared/league-settings';
 import { LeagueService } from './../shared/league.service';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { League } from 'app/leagues/shared/league.model';
@@ -47,5 +48,9 @@ export class LeagueEditComponent implements OnInit {
 
   closeSuccessAlert() {
     this.showSuccessAlert = false;
+  }
+
+  getMaxScores(): number[] {
+    return Array.from(Array(10), (value, index) => index + 1);
   }
 }

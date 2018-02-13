@@ -1,3 +1,5 @@
+import { LeagueService } from './../../leagues/shared/league.service';
+import { LeagueSettings } from './../../leagues/shared/league-settings';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { environment } from './../../../environments/environment';
 import { MatchService } from './../shared/match.service';
@@ -17,9 +19,12 @@ import { NgbPopover } from "@ng-bootstrap/ng-bootstrap";
 })
 export class MatchSaveComponent implements OnInit {
   leagueId: string;
+  scores: number[];
+  allowDraws: boolean;
   players: Player[];
   match: Match;
-  score: string;
+  playerOneScore: number;
+  playerTwoScore: number;
   mode: string;
   time;
   scheduledMatches: Map<string, Match>;
@@ -31,6 +36,7 @@ export class MatchSaveComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private leagueService: LeagueService,
     private playerService: PlayerService,
     private matchService: MatchService,
     private googleAuthService: GoogleAuthService
@@ -48,7 +54,18 @@ export class MatchSaveComponent implements OnInit {
 
   private getLeagueId() {
     this.route.params.map(param => param['league_id'])
-      .forEach(league_id => this.leagueId = league_id);
+      .forEach(league_id => {
+        this.leagueId = league_id;
+        this.getLeagueSettings();
+      });
+  }
+
+  private getLeagueSettings() {
+    this.leagueService.getLeagueSettings(this.leagueId)
+      .then(settings => {
+        this.scores = Array.from(Array(settings.maxScore + 1), (value, index) => index);
+        this.allowDraws = settings.allowDraws;
+      });
   }
 
   private setMatch() {
@@ -174,17 +191,16 @@ export class MatchSaveComponent implements OnInit {
   }
 
   setMatchScore() {
-    if (this.score) {
-      let scores = this.score.split('-');
+    if (this.playerOneScore !== undefined && this.playerTwoScore !== undefined) {
       this.match.scores = {};
-      this.match.scores[this.match.playerOne.id] = +scores[0];
-      this.match.scores[this.match.playerTwo.id] = +scores[1];
+      this.match.scores[this.match.playerOne.id] = this.playerOneScore;
+      this.match.scores[this.match.playerTwo.id] = this.playerTwoScore;
     }
   }
 
   formValid(): boolean {
-    if (this.match.completed) 
-      return this.match.isValid();
+    if (this.match.completed)
+      return this.match.isValid(this.allowDraws);
     else 
       return this.isTimeValid() && this.match.isPlayersValid();
   }
@@ -233,7 +249,8 @@ export class MatchSaveComponent implements OnInit {
   checkboxCheckAction() {
     this.match.completed = !this.match.completed;
     if (!this.match.completed) {
-      this.score = "";
+      this.playerOneScore = undefined;
+      this.playerTwoScore = undefined;
       this.match.scores = {};
     }
   }

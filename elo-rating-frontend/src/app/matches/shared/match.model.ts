@@ -19,8 +19,8 @@ export class Match {
     this.completed = false;
   }
 
-  isValid(): boolean {
-    return this.isPlayersValid() && this.isScoreValid();
+  isValid(allowDraw?: boolean): boolean {
+    return this.isPlayersValid() && this.isScoreValid(allowDraw);
   }
 
   isPlayersValid(): boolean {
@@ -29,8 +29,13 @@ export class Match {
       && this.playerOne.id != this.playerTwo.id;
   }
 
-  isScoreValid(): boolean {
-    return this.scores[this.playerOne.id] != undefined
-      && this.scores[this.playerTwo.id] != undefined;
+  isScoreValid(allowDraw?: boolean): boolean {
+    let playerOneScore = this.scores[this.playerOne.id];
+    let playerTwoScore = this.scores[this.playerTwo.id];
+    let isScoreFilled = playerOneScore != undefined && playerTwoScore != undefined;
+    if (allowDraw)
+      return isScoreFilled;
+    else
+      return isScoreFilled && playerOneScore != playerTwoScore;
   }
 }

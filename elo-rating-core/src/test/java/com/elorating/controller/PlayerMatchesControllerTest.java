@@ -125,7 +125,7 @@ public class PlayerMatchesControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void testGetMatchForecast() throws Exception {
+    public void testGetMatchForecastWithoutDraws() throws Exception {
         String url = "/api/players/" + playerOne.getId() + "/match-forecast/" + playerTwo.getId();
         mockMvc.perform(get(url)
                 .contentType(contentType))
@@ -134,5 +134,20 @@ public class PlayerMatchesControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$[1].ratingDelta", is(16)))
                 .andExpect(jsonPath("$[2].ratingDelta", is(-16)))
                 .andExpect(jsonPath("$[3].ratingDelta", is(-24)));
+    }
+
+    @Test
+    public void testGetMatchForecastWithDraws() throws Exception {
+        league.getSettings().setAllowDraws(true);
+        leagueService.save(league);
+        String url = "/api/players/" + playerOne.getId() + "/match-forecast/" + playerTwo.getId();
+        mockMvc.perform(get(url)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].ratingDelta", is(24)))
+                .andExpect(jsonPath("$[1].ratingDelta", is(16)))
+                .andExpect(jsonPath("$[2].ratingDelta", is(0)))
+                .andExpect(jsonPath("$[3].ratingDelta", is(-16)))
+                .andExpect(jsonPath("$[4].ratingDelta", is(-24)));
     }
 }

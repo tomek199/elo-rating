@@ -9,7 +9,7 @@ let playerOne = {
   active: true, 
   user: null,
   league: null,
-  statistics: { won: 0, lost: 0 }
+  statistics: { won: 0, lost: 0, draw: 0 }
 };
 
 let playerTwo = {
@@ -19,7 +19,7 @@ let playerTwo = {
   active: true, 
   user: null,
   league: null,
-  statistics: { won: 0, lost: 0 }  
+  statistics: { won: 0, lost: 0, draw: 0 }  
 };
 
 let playerThree = {
@@ -29,7 +29,7 @@ let playerThree = {
   active: false, 
   user: null,
   league: null,
-  statistics: { won: 0, lost: 0 } 
+  statistics: { won: 0, lost: 0, draw: 0 } 
 };
 
 let futureDate = new Date();

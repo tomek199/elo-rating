@@ -59,7 +59,7 @@ export class PlayerForecastComponent implements OnInit {
   }
 
   hasForecast(): boolean {
-    return this.forecast != undefined && this.forecast.length == 4;
+    return this.forecast != undefined && this.forecast.length  > 0;
   }
 
   getWins(): Match[] {
@@ -67,7 +67,16 @@ export class PlayerForecastComponent implements OnInit {
   }
 
   getLoses(): Match[] {
-    return [this.forecast[2], this.forecast[3]];
+    let size = this.forecast.length;
+    return [this.forecast[size - 2], this.forecast[size - 1]];
+  }
+
+  getDraw(): Match {
+    if (this.forecast.length > 4) {
+      return this.forecast[2];
+    } else {
+      return null;
+    }
   }
 
   getMatchScore(match: Match): string {

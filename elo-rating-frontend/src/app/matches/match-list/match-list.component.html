@@ -57,14 +57,14 @@
           {{match.date | date:"yyyy-MM-dd"}}
         </span>
             </td>
-            <td [ngClass]="{'table-success': isWinner(i, match.playerOne)}">
+            <td [ngClass]="{'table-success': isWinner(match, match.playerOne)}">
                 <app-player-cell [match]="match" [player]="match.playerOne"></app-player-cell>
             </td>
             <td>
                 <span class="badge badge-dark">{{getScore(i, match.playerOne)}}</span> :
                 <span class="badge badge-dark">{{getScore(i, match.playerTwo)}}</span>
             </td>
-            <td [ngClass]="{'table-success': isWinner(i, match.playerTwo)}">
+            <td [ngClass]="{'table-success': isWinner(match, match.playerTwo)}">
                 <app-player-cell [match]="match" [player]="match.playerTwo"></app-player-cell>
             </td>
             <td class="text-right" *ngIf="isAuthorized()">

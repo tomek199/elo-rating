@@ -12,6 +12,8 @@ import java.util.List;
 public interface PlayerRepository extends MongoRepository<Player, String> {
     List<Player> findByLeagueId(String id);
 
+    List<Player> findByIdNotAndLeagueId(String id, String leagueId);
+
     @Query(value = "{'league.id': ?0, 'active': true}")
     List<Player> getRanking(String id, Sort sort);
 

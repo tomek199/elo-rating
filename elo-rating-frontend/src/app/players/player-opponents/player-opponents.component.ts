@@ -1,32 +1,40 @@
+import { LeagueService } from './../../leagues/shared/league.service';
 import { PlayerService } from './../shared/player.service';
 import { OpponentStats } from './../shared/opponent-stats.model';
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-player-opponents',
   templateUrl: './player-opponents.component.html',
   styleUrls: ['./player-opponents.component.css']
 })
-export class PlayerOpponentsComponent implements OnInit {
+export class PlayerOpponentsComponent implements OnChanges {
   @Input() playerId;
   @Input() leagueId;
   opponentsStats: OpponentStats[];
+  allowDraws: boolean;
   order: string = 'total';
   reverse: boolean = true;
   showDisabled: boolean = false;
 
-  constructor(private playerService: PlayerService) { }
 
-  ngOnInit() {
-    this.getPlayer();
-  }
+  constructor(
+    private leagueService: LeagueService,
+    private playerService: PlayerService
+  ) { }
 
   ngOnChanges(changes: SimpleChanges) {
     this.opponentsStats = undefined;
-    this.getPlayer();
+    this.getLeagueSettings();
+    this.getStats();
   }
 
-  private getPlayer() {
+  private getLeagueSettings() {
+    this.leagueService.getLeagueSettings(this.leagueId)
+      .then(response => this.allowDraws = response.allowDraws);
+  }
+
+  private getStats() {
     this.playerService.getOpponentsStats(this.playerId)
       .then(opponentsStats => this.opponentsStats = opponentsStats);
   }
