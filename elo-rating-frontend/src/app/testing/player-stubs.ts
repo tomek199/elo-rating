@@ -3,7 +3,7 @@ import { OpponentStats } from './../players/shared/opponent-stats.model';
 import { Match } from './../matches/shared/match.model';
 import { PLAYERS} from './data/players';
 import { Player } from './../players/shared/player.model';
-import { Injectable, OnInit, Component, Input } from '@angular/core';
+import { Injectable, OnInit, Component, Input, OnChanges } from '@angular/core';
 
 @Injectable()
 export class PlayerServiceStub {
@@ -96,10 +96,10 @@ export class PlayerStatisticsStubComponent implements OnInit {
   selector: 'app-player-ranking',
   template: ''
 })
-export class PlayerRankingStubComponent implements OnInit {
-  @Input() leagueId;
+export class PlayerRankingStubComponent implements OnChanges {
+  @Input() league;
   constructor() { }
-  ngOnInit() { }
+  ngOnChanges() { }
 }
 
 @Component({

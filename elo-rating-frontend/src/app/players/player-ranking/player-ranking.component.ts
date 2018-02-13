@@ -1,3 +1,4 @@
+import { League } from './../../leagues/shared/league.model';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerService } from './../shared/player.service';
 import { Player } from './../shared/player.model';
@@ -10,7 +11,7 @@ import { Component, OnChanges, Input } from '@angular/core';
 })
 export class PlayerRankingComponent implements OnChanges {
   
-  @Input() leagueId: string;
+  @Input() league: League;
   players: Player[];
   rankedPlayers: Player[];
 
@@ -22,17 +23,11 @@ export class PlayerRankingComponent implements OnChanges {
   ngOnChanges() {
     this.players = undefined;
     this.rankedPlayers = undefined;
-    this.getLeagueId();
     this.getRanking();
   }
 
-  private getLeagueId() {
-    this.route.params.map(param => param['league_id'])
-      .forEach(league_id => this.leagueId = league_id);
-  }
-
   private getRanking() {
-    this.playerService.getRanking(this.leagueId)
+    this.playerService.getRanking(this.league.id)
       .then(players => {
         this.players = players;
         this.rankedPlayers = this.players.filter(player => this.playerPlayedMatch(player));
@@ -64,5 +59,9 @@ export class PlayerRankingComponent implements OnChanges {
 
   private hasRankedPlayers(): boolean {
     return this.rankedPlayers != undefined && this.rankedPlayers.length > 0;
+  }
+
+  allowDraws(): boolean {
+    return this.league.settings.allowDraws;
   }
 }

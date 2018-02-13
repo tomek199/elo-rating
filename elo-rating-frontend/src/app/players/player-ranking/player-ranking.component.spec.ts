@@ -1,3 +1,5 @@
+import { League } from './../../leagues/shared/league.model';
+import { LEAGUES } from './../../testing/data/leagues';
 import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { By } from '@angular/platform-browser';
 import { PlayerService } from './../shared/player.service';
@@ -8,6 +10,7 @@ import { ActivatedRouteStub } from './../../testing/routing-stubs';
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
 
 import { PlayerRankingComponent } from './player-ranking.component';
+import { LeagueSettings } from '../../leagues/shared/league-settings';
 
 describe('PlayerRankingComponent', () => {
   let component: PlayerRankingComponent;
@@ -30,7 +33,7 @@ describe('PlayerRankingComponent', () => {
   function createComponent() {
     fixture = TestBed.createComponent(PlayerRankingComponent);
     component = fixture.componentInstance;
-    activatedRoute.testParams = { league_id: '123' }
+    component.league = LEAGUES[0];
     component.ngOnChanges();
     fixture.detectChanges();
     tick();
@@ -41,9 +44,10 @@ describe('PlayerRankingComponent', () => {
     expect(component).toBeTruthy();
   }));
 
-  it('should have league id', fakeAsync(() => {
+  it('should have league', fakeAsync(() => {
     createComponent();
-    expect(component.leagueId).toEqual('123');
+    expect(component.league.id).toEqual('123');
+    expect(component.league.settings).toBeTruthy();
   }));
 
   it('should display alert if players list is empty', fakeAsync(() => {
@@ -91,8 +95,21 @@ describe('PlayerRankingComponent', () => {
     fixture.detectChanges();
     let wonElement = fixture.debugElement.queryAll(By.css('table tbody tr td span.won'))[0];
     let lostElement = fixture.debugElement.queryAll(By.css('table tbody tr td span.lost'))[0];
+    let drawElement = fixture.debugElement.queryAll(By.css('table tbody tr td span.draw'))[0];
     expect(wonElement.nativeElement.innerText).toBeTruthy();
     expect(lostElement.nativeElement.innerText).toBeTruthy();
+    expect(drawElement).toBeFalsy();
+  }));
+
+  it('should have draw column in ranking table when \'allowDraws\' parameter is true', fakeAsync(() => {
+    createComponent();
+    let league = new League('123', 'League with draws');
+    league.settings = new LeagueSettings();
+    league.settings.allowDraws = true;
+    component.league = league;
+    fixture.detectChanges();
+    let drawElement = fixture.debugElement.queryAll(By.css('table tbody tr td span.draw'))[0];
+    expect(drawElement.nativeElement.innerText).toBeTruthy();    
   }));
 
   it('should have players that played at least one match', fakeAsync(() => {
