@@ -1,8 +1,7 @@
 package com.elorating.controller;
 
 import com.elorating.model.Match;
-import com.elorating.service.MatchService;
-import com.elorating.service.PlayerService;
+import com.elorating.service.PlayerMatchesService;
 import com.elorating.utils.SortUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,10 +23,7 @@ import java.util.List;
 public class PlayerMatchesController {
 
     @Autowired
-    private PlayerService playerService;
-
-    @Autowired
-    private MatchService matchService;
+    private PlayerMatchesService playerMatchesService;
 
     @CrossOrigin
     @RequestMapping(value = "/players/{playerId}/matches", method = RequestMethod.GET)
@@ -35,7 +31,7 @@ public class PlayerMatchesController {
     public ResponseEntity<List<Match>> getPlayerMatches(@PathVariable String playerId,
                                                         @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
-        List<Match> matches = matchService.findByPlayerId(playerId, sortByDate);
+        List<Match> matches = playerMatchesService.findByPlayerId(playerId, sortByDate);
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 
@@ -49,7 +45,7 @@ public class PlayerMatchesController {
                                                                  @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
         PageRequest pageRequest = new PageRequest(page, pageSize, sortByDate);
-        Page<Match> matches = matchService.findCompletedByPlayerId(playerId, pageRequest);
+        Page<Match> matches = playerMatchesService.findCompletedByPlayerId(playerId, pageRequest);
         return new ResponseEntity<>(matches, HttpStatus.OK);
 
     }
@@ -65,11 +61,11 @@ public class PlayerMatchesController {
         List<Match> matches;
         Sort sort = SortUtils.getSortAscending();
         if (from != null && to != null)
-            matches = matchService.findCompletedByPlayerIdAndDate(playerId, from, to, sort);
+            matches = playerMatchesService.findCompletedByPlayerIdAndDate(playerId, from, to, sort);
         else if (from != null)
-            matches = matchService.findCompletedByPlayerIdAndDate(playerId, from, sort);
+            matches = playerMatchesService.findCompletedByPlayerIdAndDate(playerId, from, sort);
         else
-            matches = matchService.findCompletedByPlayerId(playerId, sort);
+            matches = playerMatchesService.findCompletedByPlayerId(playerId, sort);
 
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }
@@ -81,7 +77,7 @@ public class PlayerMatchesController {
     public ResponseEntity<List<Match>> getPlayerScheduledMatches(@PathVariable String playerId,
                                                                  @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
-        List<Match> matches = matchService.findScheduledByPlayerId(playerId, sortByDate);
+        List<Match> matches = playerMatchesService.findScheduledByPlayerId(playerId, sortByDate);
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 
@@ -91,7 +87,7 @@ public class PlayerMatchesController {
     public ResponseEntity<List<Match>> getPlayerMatchesAgainstOpponent(@PathVariable String playerId, @PathVariable String opponentId,
                                                                        @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
-        List<Match> matches = matchService.findCompletedByPlayerIds(playerId, opponentId, sortByDate);
+        List<Match> matches = playerMatchesService.findCompletedByPlayerIds(playerId, opponentId, sortByDate);
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 
@@ -101,7 +97,7 @@ public class PlayerMatchesController {
             notes = "Return list of matches with all possible scores")
     public ResponseEntity<List<Match>> getMatchForecast(@PathVariable String playerId,
                                                         @PathVariable String opponentId) {
-        List<Match> matches = playerService.getMatchForecast(playerId, opponentId);
+        List<Match> matches = playerMatchesService.getMatchForecast(playerId, opponentId);
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 }

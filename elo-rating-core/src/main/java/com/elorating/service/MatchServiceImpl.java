@@ -5,20 +5,24 @@ import com.elorating.model.Match;
 import com.elorating.model.Player;
 import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
-import com.elorating.service.email.*;
+import com.elorating.service.email.EmailBuilder;
+import com.elorating.service.email.EmailDirector;
+import com.elorating.service.email.EmailGenerator;
 import com.elorating.utils.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 @Service("matchService")
 public class MatchServiceImpl implements MatchService {
@@ -33,9 +37,6 @@ public class MatchServiceImpl implements MatchService {
 
     @Autowired
     private EmailService emailService;
-
-    @Autowired
-    private PlayerService playerService;
 
     @Autowired
     private EmailGenerator emailGenerator;
@@ -129,43 +130,8 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public List<Match> findByPlayerId(String playerId, Sort sort) {
-        return matchRepository.findByPlayerId(playerId, sort);
-    }
-
-    @Override
     public List<Match> findByCompletedIsFalse() {
         return matchRepository.findByCompletedIsFalse();
-    }
-
-    @Override
-    public List<Match> findScheduledByPlayerId(String playerId, Sort sort) {
-        return matchRepository.findScheduledByPlayerId(playerId, sort);
-    }
-
-    @Override
-    public Page<Match> findCompletedByPlayerId(String playerId, PageRequest pageRequest) {
-        return matchRepository.findCompletedByPlayerId(playerId, pageRequest);
-    }
-
-    @Override
-    public List<Match> findCompletedByPlayerId(String playerId, Sort sort) {
-        return matchRepository.findCompletedByPlayerId(playerId, sort);
-    }
-
-    @Override
-    public List<Match> findCompletedByPlayerIds(String playerId, String opponentId, Sort sort) {
-        return matchRepository.findCompletedByPlayerIds(playerId, opponentId, sort);
-    }
-
-    @Override
-    public List<Match> findCompletedByPlayerIdAndDate(String playerId, Date from, Sort sort) {
-        return matchRepository.findCompletedByPlayerIdAndDate(playerId, from, sort);
-    }
-
-    @Override
-    public List<Match> findCompletedByPlayerIdAndDate(String playerId, Date from, Date to, Sort sort) {
-        return matchRepository.findCompletedByPlayerIdAndDate(playerId, from, to, sort);
     }
 
     @Override
@@ -229,8 +195,8 @@ public class MatchServiceImpl implements MatchService {
     }
 
     private Match fulfillPlayersInfo(Match match) {
-        match.setPlayerOne(playerService.getById(match.getPlayerOne().getId()));
-        match.setPlayerTwo(playerService.getById(match.getPlayerTwo().getId()));
+        match.setPlayerOne(playerRepository.findOne(match.getPlayerOne().getId()));
+        match.setPlayerTwo(playerRepository.findOne(match.getPlayerTwo().getId()));
         return match;
     }
 }

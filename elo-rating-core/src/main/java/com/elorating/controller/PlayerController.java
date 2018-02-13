@@ -4,6 +4,7 @@ import com.elorating.model.League;
 import com.elorating.model.Match;
 import com.elorating.model.Player;
 import com.elorating.service.MatchService;
+import com.elorating.service.PlayerMatchesService;
 import com.elorating.service.PlayerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
