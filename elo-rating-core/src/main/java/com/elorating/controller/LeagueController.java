@@ -51,10 +51,10 @@ public class LeagueController {
 
         if (leaguesList.isEmpty()) {
             logger.error("No leagues found");
-            return new ResponseEntity<ArrayList<League>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<ArrayList<League>>(leaguesList, HttpStatus.OK);
+        return new ResponseEntity<>(leaguesList, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -64,10 +64,10 @@ public class LeagueController {
     public ResponseEntity<List<League>> findByName(@RequestParam String name) {
         List<League> leagues = leagueService.findByName(name);
         if (leagues.isEmpty()) {
-            return new ResponseEntity<List<League>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<List<League>>(leagues, HttpStatus.OK);
+        return new ResponseEntity<>(leagues, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -77,18 +77,18 @@ public class LeagueController {
         League createdLeague = leagueService.save(league);
         if (createdLeague == null) {
             logger.error("League '" + createdLeague.getName() + "' not created");
-            return new ResponseEntity<League>(HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
-        return new ResponseEntity<League>(createdLeague, HttpStatus.OK);
+        return new ResponseEntity<>(createdLeague, HttpStatus.OK);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/leagues/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "Update league", notes = "Update existing league details")
     public ResponseEntity<League> update(@RequestBody League league) {
-        leagueService.save(league);
-        return new ResponseEntity<League>(league, HttpStatus.OK);
+        leagueService.update(league);
+        return new ResponseEntity<>(league, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -96,6 +96,6 @@ public class LeagueController {
     @ApiOperation(value = "Delete league", notes = "Delete league by league id")
     public ResponseEntity<League> deleteLeague(@PathVariable("id") String id) {
         leagueService.deleteById(id);
-        return new ResponseEntity<League>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -101,13 +101,17 @@ public class LeagueControllerTest extends BaseControllerTest {
     @Test
     public void testUpdate() throws Exception {
         League leagueToUpdate = new League("123", "League to update");
+        leagueToUpdate.getSettings().setMaxScore(5);
+        leagueToUpdate.getSettings().setAllowDraws(true);
         String leagueJson = objectMapper.writeValueAsString(leagueToUpdate);
-        when(leagueService.save(any(League.class))).thenReturn(leagueToUpdate);
+        when(leagueService.update(any(League.class))).thenReturn(leagueToUpdate);
         String url = "/api/leagues/" + leagueToUpdate.getId();
         mockMvc.perform(put(url)
                 .content(leagueJson)
                 .contentType(contentType))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name", is(leagueToUpdate.getName())));
+                .andExpect(jsonPath("$.name", is(leagueToUpdate.getName())))
+                .andExpect(jsonPath("$.settings.maxScore", is(5)))
+                .andExpect(jsonPath("$.settings.allowDraws", is(true)));
     }
 }

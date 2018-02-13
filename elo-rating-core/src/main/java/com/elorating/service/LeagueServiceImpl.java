@@ -57,6 +57,15 @@ public class LeagueServiceImpl implements LeagueService {
     }
 
     @Override
+    public League update(League league) {
+        League dbLeague = leagueRepository.findOne(league.getId());
+        dbLeague.setName(league.getName());
+        dbLeague.setSettings(league.getSettings());
+        leagueRepository.save(dbLeague);
+        return dbLeague;
+    }
+
+    @Override
     public List<League> findUnassignedLeagues() {
         return leagueRepository.findByUsersNull();
     }
