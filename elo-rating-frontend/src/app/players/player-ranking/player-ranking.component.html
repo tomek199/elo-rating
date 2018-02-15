@@ -17,6 +17,7 @@
           <th>Position</th>
           <th>Username</th>
           <th>Won</th>
+          <th *ngIf="allowDraws()">Draw</th>
           <th>Lost</th>
           <th>Rating</th>
         </tr>
@@ -34,6 +35,9 @@
           </td>
           <td>
             <span class="won text-success">{{player.statistics.won}}</span>
+          </td>
+          <td *ngIf="allowDraws()">
+            <span class="draw">{{player.statistics.draw}}</span>
           </td>
           <td>
             <span class="lost text-danger">{{player.statistics.lost}}</span>

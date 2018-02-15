@@ -1,3 +1,6 @@
+import { LeagueServiceStub } from './../../testing/league-stubs';
+import { LeagueService } from './../../leagues/shared/league.service';
+import { LEAGUES } from './../../testing/data/leagues';
 import { BtnSpinnerDirective } from './../../core/directives/btn-spinner/btn-spinner.directive';
 import { GoogleAuthServiceStub } from './../../testing/google-stubs';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
@@ -37,6 +40,7 @@ describe('MatchSaveComponent', () => {
         RouterTestingModule
       ],
       providers: [
+        { provide: LeagueService, useClass: LeagueServiceStub },
         { provide: PlayerService, useClass: PlayerServiceStub },
         { provide: MatchService, useClass: MatchServiceStub },
         { provide: ActivatedRoute, useValue: activatedRoute },
@@ -52,7 +56,7 @@ describe('MatchSaveComponent', () => {
     component = fixture.componentInstance;
     activatedRoute.testParams = { league_id: '123' };
     if (matchId != null && mode != null) {
-      activatedRoute.testParams = { match_id: matchId, mode: mode };
+      activatedRoute.testParams = {league_id: '123', match_id: matchId, mode: mode };
     }
     fixture.detectChanges();
     tick();
@@ -66,6 +70,13 @@ describe('MatchSaveComponent', () => {
   it('should have league id', fakeAsync(() => {
     createComponent();
     expect(component.leagueId).toEqual('123');
+  }));
+
+  it('should have league settings saved in properties', fakeAsync(() => {
+    createComponent();
+    let stubLeague = LEAGUES[0];
+    expect(component.scores.length).toEqual(stubLeague.settings.maxScore + 1);
+    expect(component.allowDraws).toEqual(stubLeague.settings.allowDraws);
   }));
 
   it('should have match when match id provided', fakeAsync(() => {
@@ -124,7 +135,8 @@ describe('MatchSaveComponent', () => {
     component.match.playerOne = component.players[0];
     component.match.playerTwo = component.players[0];
     component.match.completed = true;
-    component.score = '2-1';
+    component.playerOneScore = 2;
+    component.playerTwoScore = 1;
     fixture.detectChanges();
     expect(component.formValid()).toBeFalsy();
     component.match.playerTwo = component.players[1];
@@ -152,7 +164,8 @@ describe('MatchSaveComponent', () => {
     const spy = spyOn(router, 'navigate');
     component.match.playerOne = component.players[0];
     component.match.playerTwo = component.players[1];
-    component.score = '2-1';
+    component.playerOneScore = 2;
+    component.playerTwoScore = 1;
     component.setMatchScore();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.query(By.css('form button[type=submit]'));

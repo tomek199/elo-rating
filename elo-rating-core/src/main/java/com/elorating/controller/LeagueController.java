@@ -1,6 +1,7 @@
 package com.elorating.controller;
 
 import com.elorating.model.League;
+import com.elorating.model.LeagueSettings;
 import com.elorating.service.LeagueService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,6 +34,16 @@ public class LeagueController {
     }
 
     @CrossOrigin
+    @RequestMapping(value = "/leagues/{id}/settings", method = RequestMethod.GET)
+    @ApiOperation(value = "Get league's settings", notes = "Return league's settings by league id")
+    public ResponseEntity<LeagueSettings> getSettings(@PathVariable String id) {
+        LeagueSettings settings = leagueService.getLeagueSettings(id);
+        if (settings == null)
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(settings, HttpStatus.OK);
+    }
+
+    @CrossOrigin
     @RequestMapping(value = "/leagues", method = RequestMethod.GET)
     @ApiOperation(value = "Get leagues list", notes = "Get all leagues list")
     public ResponseEntity<ArrayList<League>> getAllLeagues() {
@@ -40,10 +51,10 @@ public class LeagueController {
 
         if (leaguesList.isEmpty()) {
             logger.error("No leagues found");
-            return new ResponseEntity<ArrayList<League>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<ArrayList<League>>(leaguesList, HttpStatus.OK);
+        return new ResponseEntity<>(leaguesList, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -53,10 +64,10 @@ public class LeagueController {
     public ResponseEntity<List<League>> findByName(@RequestParam String name) {
         List<League> leagues = leagueService.findByName(name);
         if (leagues.isEmpty()) {
-            return new ResponseEntity<List<League>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<List<League>>(leagues, HttpStatus.OK);
+        return new ResponseEntity<>(leagues, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -66,18 +77,18 @@ public class LeagueController {
         League createdLeague = leagueService.save(league);
         if (createdLeague == null) {
             logger.error("League '" + createdLeague.getName() + "' not created");
-            return new ResponseEntity<League>(HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
 
-        return new ResponseEntity<League>(createdLeague, HttpStatus.OK);
+        return new ResponseEntity<>(createdLeague, HttpStatus.OK);
     }
 
     @CrossOrigin
     @RequestMapping(value = "/leagues/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "Update league", notes = "Update existing league details")
     public ResponseEntity<League> update(@RequestBody League league) {
-        leagueService.save(league);
-        return new ResponseEntity<League>(league, HttpStatus.OK);
+        leagueService.update(league);
+        return new ResponseEntity<>(league, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -85,6 +96,6 @@ public class LeagueController {
     @ApiOperation(value = "Delete league", notes = "Delete league by league id")
     public ResponseEntity<League> deleteLeague(@PathVariable("id") String id) {
         leagueService.deleteById(id);
-        return new ResponseEntity<League>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -18,9 +18,14 @@ public class League {
     @JsonIgnoreProperties({"leagues", "player"})
     private List<User> users;
 
-    public League() { }
+    private LeagueSettings settings;
+
+    public League() {
+        this.settings = new LeagueSettings();
+    }
 
     public League(String id) {
+        this();
         this.id = id;
     }
 
@@ -57,5 +62,13 @@ public class League {
 
     public boolean isAssigned() {
         return users != null && users.size() > 0;
+    }
+
+    public LeagueSettings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(LeagueSettings settings) {
+        this.settings = settings;
     }
 }

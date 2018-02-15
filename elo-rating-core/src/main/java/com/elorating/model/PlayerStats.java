@@ -2,8 +2,15 @@ package com.elorating.model;
 
 public class PlayerStats {
 
-    private int won;
-    private int lost;
+    protected int won;
+    protected int lost;
+    protected int draw;
+
+    public PlayerStats() {
+        this.won = 0;
+        this.lost = 0;
+        this.draw = 0;
+    }
 
     public int getWon() {
         return won;
@@ -13,9 +20,8 @@ public class PlayerStats {
         return lost;
     }
 
-    public PlayerStats() {
-        this.won = 0;
-        this.lost = 0;
+    public int getDraw() {
+        return draw;
     }
 
     public void addWon() {
@@ -32,5 +38,13 @@ public class PlayerStats {
 
     public void setLost(int lost) {
         this.lost = lost;
+    }
+
+    public void addDraw() {
+        draw++;
+    }
+
+    public void setDraw(int draw) {
+        this.draw = draw;
     }
 }

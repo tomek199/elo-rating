@@ -41,26 +41,11 @@ public class MatchTest {
     @Test
     public void testIsCompleteInvalidScore() throws Exception {
         match.setScore(playerOne, 3);
-        match.setScore(playerTwo, 0);
         Assert.assertFalse(match.isCompleted());
     }
 
     @Test
-    public void test_getWinner_playerOne() throws Exception {
-        match.setScore(playerOne, 2);
-        match.setScore(playerTwo, 0);
-        Assert.assertTrue(match.winner().getId().equals(playerOne.getId()));
-    }
-
-    @Test
-    public void test_getWinner_playerTwo() throws Exception {
-        match.setScore(playerOne, 0);
-        match.setScore(playerTwo, 2);
-        Assert.assertTrue(match.winner().getId().equals(playerTwo.getId()));
-    }
-
-    @Test
-    public void testGetWinnnerIdPlayerOne() {
+    public void testGetWinnerIdPlayerOne() {
         match.setScore(playerOne, 2);
         match.setScore(playerTwo, 1);
         Assert.assertEquals(playerOne.getId(), match.getWinnerId());
@@ -90,6 +75,20 @@ public class MatchTest {
         match.setScore(playerOne, 2);
         match.setScore(playerTwo, 0);
         Assert.assertEquals(playerTwo.getId(), match.getLooserId());
+    }
+
+    @Test
+    public void testIsDrawIsTrue() {
+        match.setScore(playerOne, 3);
+        match.setScore(playerTwo, 3);
+        Assert.assertTrue(match.isDraw());
+    }
+
+    @Test
+    public void testIsDrawIsFalse() {
+        match.setScore(playerOne, 2);
+        match.setScore(playerTwo, 4);
+        Assert.assertFalse(match.isDraw());
     }
 
     @Test

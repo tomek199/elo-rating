@@ -33,6 +33,21 @@
           </span>
         </p>
       </div>
+      <div class="alert alert-warning" *ngIf="getDraw()">
+        <h4 class="alert-heading">
+          Draw {{getMatchScore(getDraw())}}
+        </h4>
+        <p>
+          Points:
+          <strong>{{getDraw().ratingDelta}}</strong>
+        </p>        
+        <p>
+          Rating after match: 
+          <span class="badge badge-warning">
+            {{getRating(getDraw())}}
+          </span>
+        </p>
+      </div>
       <div class="alert alert-danger" *ngFor="let match of getLoses()">
         <h4 class="alert-heading">
           Lost {{getMatchScore(match)}}

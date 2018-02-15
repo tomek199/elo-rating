@@ -10,6 +10,7 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { LeagueEditComponent } from './league-edit.component';
 import { ActivatedRoute } from '@angular/router';
 import { ActivatedRouteStub } from 'app/testing/routing-stubs';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 describe('LeagueEditComponent', () => {
   let component: LeagueEditComponent;
@@ -20,7 +21,7 @@ describe('LeagueEditComponent', () => {
     activatedRoute = new ActivatedRouteStub();    
     TestBed.configureTestingModule({
       declarations: [ LeagueEditComponent, SpinnerComponent ],
-      imports: [ FormsModule ],
+      imports: [ FormsModule, NgbModule.forRoot() ],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRoute },        
         { provide: LeagueService, useClass: LeagueServiceStub }
@@ -61,7 +62,11 @@ describe('LeagueEditComponent', () => {
     fixture.whenStable().then(() => {
       let form = fixture.debugElement.query(By.css('form[name=leagueEdit]'));
       let name = form.query(By.css('input[name=name]'));
+      let maxScore = form.query(By.css('div.btn-group'));
+      let allowDraws = form.query(By.css('label.form-check-label input[name=allowDraws]'));
       expect(name.nativeElement.value).toEqual(component.league.name);
+      expect(+maxScore.attributes['ng-reflect-model']).toEqual(component.league.settings.maxScore);
+      expect(allowDraws.attributes['ng-reflect-model']).toEqual('false');
     });
   }));
 

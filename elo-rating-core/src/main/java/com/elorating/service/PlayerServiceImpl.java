@@ -63,10 +63,10 @@ public class PlayerServiceImpl implements PlayerService {
     @Override
     public void restorePlayers(Match match) {
         Player playerOne = playerRepository.findOne(match.getPlayerOne().getId());
-        playerOne.restore(match.getRatingDelta());
+        playerOne.restore(match.getRatingDelta(), match.isDraw());
         playerRepository.save(playerOne);
         Player playerTwo = playerRepository.findOne(match.getPlayerTwo().getId());
-        playerTwo.restore(-match.getRatingDelta());
+        playerTwo.restore(-match.getRatingDelta(), match.isDraw());
         playerRepository.save(playerTwo);
     }
 }

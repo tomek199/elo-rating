@@ -31,6 +31,13 @@
                 <span *ngIf="reverse" class="octicon-triangle-down"></span>
               </span>
             </th>
+            <th (click)="setOrder('draw')" *ngIf="allowDraws">
+              Draw
+              <span *ngIf="order == 'draw'" class="octicon">
+                <span *ngIf="!reverse" class="octicon-triangle-up"></span>
+                <span *ngIf="reverse" class="octicon-triangle-down"></span>
+              </span>
+            </th>
             <th (click)="setOrder('lost')">
               Lost
               <span *ngIf="order == 'lost'" class="octicon">
@@ -68,6 +75,9 @@
           </td>
           <td [ngClass]="'text-success'">
             {{opponentStats.won}}
+          </td>
+          <td *ngIf="allowDraws">
+            {{opponentStats.draw}}
           </td>
           <td [ngClass]="'text-danger'">
             {{opponentStats.lost}}

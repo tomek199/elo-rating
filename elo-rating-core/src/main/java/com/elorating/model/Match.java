@@ -1,5 +1,6 @@
 package com.elorating.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -68,11 +69,7 @@ public class Match {
     }
 
     public boolean isCompleted() {
-        if (scores.size() != 2)
-            return false;
-        List<Integer> values = new ArrayList<Integer>(scores.values());
-        return (values.get(0) == 2 || values.get(1) == 2)
-                && values.get(0) + values.get(1) <= 3;
+        return scores.size() == 2;
     }
 
     public Player getPlayerOne() {
@@ -179,49 +176,28 @@ public class Match {
         this.completed = isCompleted();
     }
 
-    public Player winner() {
-        int playerOneScore = 0;
-        int playerTwoScore = 0;
-        Player emptyPlayer = new Player();
-        emptyPlayer.setId("");
-        if (playerOne == null && playerTwo == null) {
-            return emptyPlayer;
-        }
-        if (playerOne == null && playerTwo != null) {
-            //playerOneScore = scores.get("");
-            playerTwoScore = scores.get(playerTwo.getId());
-            //return playerOneScore > playerTwoScore ? emptyPlayer : playerTwo;
-            return playerTwoScore == 2 ? playerTwo : emptyPlayer;
-        }
-        if (playerOne != null && playerTwo == null) {
-            playerOneScore = scores.get(playerOne.getId());
-            //playerTwoScore = scores.get("");
-            //return playerOneScore > playerTwoScore ? playerOne : emptyPlayer;
-            return playerOneScore == 2 ? playerOne : emptyPlayer;
-        }
-        if(scores.get(playerOne.getId()) > scores.get(playerTwo.getId())) {
-            return playerOne;
-        }
-
-        return playerTwo;
-    }
-
+    @JsonIgnore
     public String getWinnerId() {
-        for (Map.Entry<String, Integer> entry : scores.entrySet()) {
-            if (entry.getValue() == 2) {
-                return entry.getKey();
-            }
-        }
-        return null;
+        if (isDraw())
+            return null;
+        else
+            return Collections.max(scores.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
     }
 
+    @JsonIgnore
     public String getLooserId() {
-        for (Map.Entry<String, Integer> entry : scores.entrySet()) {
-            if (entry.getValue() != 2) {
-                return entry.getKey();
-            }
-        }
-        return null;
+        if (isDraw())
+            return null;
+        else
+            return Collections.min(scores.entrySet(), Comparator.comparingInt(Map.Entry::getValue)).getKey();
+    }
+
+    @JsonIgnore
+    public boolean isDraw() {
+        if (scores != null && scores.size() > 0)
+            return Objects.equals(scores.get(playerOne.getId()), scores.get(playerTwo.getId()));
+        else
+            return true;
     }
 
     public boolean isPlayerInMatch(String pid) {
