@@ -3,11 +3,11 @@
 <ng-container [ngSwitch]="getContentType()">
   <div *ngSwitchCase="'noPlayersAlert'" class="alert alert-info">
     Active players not found!
-    <a [routerLink]="['/leagues', leagueId, 'players']" class="alert-link">Manage players</a>
+    <a [routerLink]="['/leagues', league.id, 'players']" class="alert-link">Manage players</a>
   </div>
   <div *ngSwitchCase="'noRankedPlayersAlert'" class="alert alert-info">
     No one played the match!
-    <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="alert-link">Add match</a>
+    <a [routerLink]="['/leagues', league.id, 'matches', 'add']" class="alert-link">Add match</a>
     to see player's ranking. 
   </div>
   <ng-container *ngSwitchCase="'rankingTable'">
@@ -23,7 +23,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let player of rankedPlayers; let i=index" [routerLink]="['/leagues', leagueId, 'players', player.id]">
+        <tr *ngFor="let player of rankedPlayers; let i=index" [routerLink]="['/leagues', league.id, 'players', player.id]">
           <td>
             {{i + 1}}
             <img *ngIf="i == 0" src="assets/img/medals/medal_gold.png" />
@@ -31,7 +31,7 @@
             <img *ngIf="i == 2" src="assets/img/medals/medal_bronze.png" />
           </td>
           <td>
-            <a [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.username}}</a>
+            <a [routerLink]="['/leagues', league.id, 'players', player.id]">{{player.username}}</a>
           </td>
           <td>
             <span class="won text-success">{{player.statistics.won}}</span>
