@@ -6,6 +6,7 @@
   "scripts": {
     "ng": "ng",
     "build": "ng build",
+    "build-prod": "ng build --env=prod",
     "start": "ng serve",
     "lint": "tslint \"src/**/*.ts\"",
     "test": "ng test",
@@ -43,7 +44,7 @@
   "devDependencies": {
     "@angular/cli": "^1.6.3",
     "@angular/compiler-cli": "^5.1.2",
-    "@angular-devkit/core": "0.0.26",    
+    "@angular-devkit/core": "0.0.26",
     "@types/jasmine": "2.8.3",
     "@types/node": "^8.5.2",
     "codelyzer": "~4.0.2",
