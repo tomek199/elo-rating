@@ -16,20 +16,20 @@ export class GoogleAuthComponent implements OnInit {
   @Input() leagueId;
   private token: string;
   public user: User;
-  
+
   constructor(
     private userService: UserService,
     private googleAuthService: GoogleAuthService
   ) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.token = this.googleAuthService.getIdToken();
     this.user = this.googleAuthService.getCurrentUser();
   }
 
   onSignIn = (googleUser: any) => {
     this.saveIdToken(googleUser.getAuthResponse());
-    this.saveUser(googleUser.getBasicProfile()); 
+    this.saveUser(googleUser.getBasicProfile());
   }
 
   private saveIdToken(authResponse) {
@@ -40,9 +40,17 @@ export class GoogleAuthComponent implements OnInit {
   private saveUser(googleProfile: any) {
     this.userService.signIn(this.token)
       .then(user => {
+        this.validateSignedInUser(user);
         this.user = user;
         sessionStorage.setItem(this.googleAuthService.USER, JSON.stringify(this.user));
       });
+  }
+
+  private validateSignedInUser(user: any) {
+    if (user === null) {
+      this.signOut();
+    }
+    return;
   }
 
   signOut() {
