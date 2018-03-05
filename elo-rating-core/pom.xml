@@ -21,6 +21,15 @@
 		<maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
 	</properties>
 
+	<profiles>
+		<profile>
+			<id>DEV</id>
+		</profile>
+		<profile>
+			<id>PROD</id>
+		</profile>
+	</profiles>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

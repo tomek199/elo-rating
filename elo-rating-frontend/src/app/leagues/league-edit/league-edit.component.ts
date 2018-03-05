@@ -38,6 +38,7 @@ export class LeagueEditComponent implements OnInit {
 
   save() {
     let leagueToUpdate = this.league;
+    leagueToUpdate.users = null;
     this.league = undefined;
     this.leagueService.update(leagueToUpdate)
       .then(response => {
