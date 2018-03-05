@@ -1,6 +1,7 @@
 <div>
   <form class="form-inline" [hidden]="token">
     <app-google-button [buttonId]="'googleNavButton'" (onSignIn)="onSignIn($event)"></app-google-button>
+    <div [ngbPopover]="signinPopContent" popoverTitle="Login Error" #signInPopover="ngbPopover" triggers="manual" placement="bottom"></div>
   </form>
   <ul class="navbar-nav" *ngIf="token && user">
     <li class="nav-item dropdown" ngbDropdown [autoClose]="true">
@@ -23,3 +24,6 @@
     </li>
   </ul>
 </div>
+<ng-template #signinPopContent>
+  <span>Error while signing in! Please try again</span>
+</ng-template>
