@@ -43,18 +43,21 @@ export class GoogleAuthComponent implements OnInit {
   private saveUser(googleProfile: any) {
     this.userService.signIn(this.token)
       .then(user => {
-        this.validateSignedInUser(user);
-        this.user = user;
-        sessionStorage.setItem(this.googleAuthService.USER, JSON.stringify(this.user));
+        if (!this.validateSignedInUser(user)) {
+          this.signOut();
+          this.showLoginErrorPopover();
+        } else {
+          this.user = user;
+          sessionStorage.setItem(this.googleAuthService.USER, JSON.stringify(this.user));
+        }
       });
   }
 
-  private validateSignedInUser(user: any) {
+  private validateSignedInUser(user: any): Boolean {
     if (user === null) {
-      this.signOut();
-      this.showLoginErrorPopover();
+      return false;
     }
-    return;
+    return true;
   }
 
   private showLoginErrorPopover(): void {
