@@ -2,7 +2,8 @@ import { UserService } from './../../users/shared/user.service';
 import { User } from './../../users/shared/user.model';
 import { GoogleAuthService } from './../shared/google-auth.service';
 import { environment } from './../../../environments/environment';
-import { Component, NgZone, AfterViewInit, Input, OnInit } from '@angular/core';
+import { Component, NgZone, AfterViewInit, Input, OnInit, ViewChild } from '@angular/core';
+import { NgbPopover } from "@ng-bootstrap/ng-bootstrap";
 
 declare var gapi: any;
 
@@ -16,20 +17,22 @@ export class GoogleAuthComponent implements OnInit {
   @Input() leagueId;
   private token: string;
   public user: User;
-  
+
+  @ViewChild('signInPopover') signInPopover: NgbPopover;
+
   constructor(
     private userService: UserService,
     private googleAuthService: GoogleAuthService
   ) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.token = this.googleAuthService.getIdToken();
     this.user = this.googleAuthService.getCurrentUser();
   }
 
   onSignIn = (googleUser: any) => {
     this.saveIdToken(googleUser.getAuthResponse());
-    this.saveUser(googleUser.getBasicProfile()); 
+    this.saveUser(googleUser.getBasicProfile());
   }
 
   private saveIdToken(authResponse) {
@@ -40,9 +43,34 @@ export class GoogleAuthComponent implements OnInit {
   private saveUser(googleProfile: any) {
     this.userService.signIn(this.token)
       .then(user => {
-        this.user = user;
-        sessionStorage.setItem(this.googleAuthService.USER, JSON.stringify(this.user));
+        if (!this.validateSignedInUser(user)) {
+          this.signOut();
+          this.showLoginErrorPopover();
+        } else {
+          this.user = user;
+          sessionStorage.setItem(this.googleAuthService.USER, JSON.stringify(this.user));
+        }
       });
+  }
+
+  private validateSignedInUser(user: any): Boolean {
+    if (user === null) {
+      return false;
+    }
+    return true;
+  }
+
+  private showLoginErrorPopover(): void {
+    this.signInPopover.open();
+    this.hideSignInErrorPopup();
+  }
+
+  private hideSignInErrorPopup(): Promise<any> {
+    return new Promise<number>(resolve => {
+      setTimeout(() => {
+        this.signInPopover.close();
+      }, 3000);
+  });
   }
 
   signOut() {
