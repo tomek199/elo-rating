@@ -70,7 +70,7 @@ public class MatchServiceTest extends BaseServiceTest {
         saveMatches();
         setMatchesDateForRescheduling(MATCHES_TO_DELAY);
         List<Match> matchesBeforeRescheduling = this.matchRepository.findByLeagueIdAndCompletedIsFalse(this.league.getId(), SORT_BY_DATE);
-        this.matchList = this.matchService.rescheduleMatchesInLeague(this.league.getId(), MINUTES, SORT_BY_DATE);
+        this.matchList = this.matchService.rescheduleMatchesInLeague(this.league.getId(), MINUTES, SORT_BY_DATE, "https://elo.com");
         for (int i = 0; i < this.matchList.size(); i++) {
             Match oldMatch = matchesBeforeRescheduling.get(i);
             Match newMatch = this.matchList.get(i);
@@ -88,7 +88,7 @@ public class MatchServiceTest extends BaseServiceTest {
     public void test_rescheduleMatchesWithMatchAtCurrentTime() {
         setupCustomMatches();
         List<Match> matchesBeforeRescheduling = this.matchRepository.findByLeagueIdAndCompletedIsFalse(this.league.getId(), SORT_BY_DATE);
-        this.matchList = this.matchService.rescheduleMatchesInLeague(this.league.getId(), MINUTES, SORT_BY_DATE);
+        this.matchList = this.matchService.rescheduleMatchesInLeague(this.league.getId(), MINUTES, SORT_BY_DATE, "https://elo.com");
         Date now = new Date();
         logger.info("Current Time: " + DateUtils.getDateTime(now));
         for (int i = 0; i < this.matchList.size(); i++) {
@@ -129,7 +129,7 @@ public class MatchServiceTest extends BaseServiceTest {
         saveMatches();
 
         List<Match> matchesBeforeRescheduling = this.matchRepository.findByLeagueIdAndCompletedIsFalse(this.league.getId(), SORT_BY_DATE);
-        this.matchList = this.matchService.rescheduleMatchesInLeague(this.league.getId(), MINUTES, SORT_BY_DATE);
+        this.matchList = this.matchService.rescheduleMatchesInLeague(this.league.getId(), MINUTES, SORT_BY_DATE, "https://elo.com");
         Date now = new Date();
         logger.info("Current Time: " + DateUtils.getDateTime(now));
         for (int i = 0; i < this.matchList.size(); i++) {
