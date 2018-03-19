@@ -5,8 +5,6 @@ import com.elorating.model.Match;
 import com.elorating.model.Player;
 import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
-import com.elorating.service.email.EmailBuilder;
-import com.elorating.service.email.EmailDirector;
 import com.elorating.service.email.EmailGenerator;
 import com.elorating.utils.DateUtils;
 import org.slf4j.Logger;
@@ -18,10 +16,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 @Service("matchService")
 public class MatchServiceImpl implements MatchService {
@@ -53,6 +50,13 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public Match save(Match match) {
         return matchRepository.save(match);
+    }
+
+    public List<Match> saveAndNotify(List<Match> matches, String originUrl) {
+        for (Match match : matches) {
+            saveAndNotify(match, originUrl);
+        }
+        return matches;
     }
 
     @Override
@@ -134,26 +138,27 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
-    public List<Match> rescheduleMatchesInLeague(String leagueId, int minutes, Sort sort) {
-        List<Match> matchesToReschedule = matchRepository.findByLeagueIdAndCompletedIsFalse(leagueId, sort);
+    public List<Match> rescheduleMatchesInLeague(String leagueId, int minutes,
+                                                 Sort sort, String originUrl) {
+        List<Match> matchesInQueue = matchRepository.findByLeagueIdAndCompletedIsFalse(leagueId, sort);
+        List<Match> matchesToReschedule = new ArrayList<>(matchesInQueue.size());
 
         Date rescheduleTime = new Date();
-        for (int i = 0; i < matchesToReschedule.size(); i++) {
-            Match match = matchesToReschedule.get(i);
+        for (int i = 0; i < matchesInQueue.size(); i++) {
+            Match match = matchesInQueue.get(i);
             if (i == 0 && match.getDate().getTime() <= rescheduleTime.getTime()) {
                 match.setDate(DateUtils.adjustTimeByMinutesIntoFuture(match.getDate(), minutes));
+                matchesToReschedule.add(match);
             } else {
-                rescheduleTime = DateUtils.adjustTimeByMinutesIntoFuture(matchesToReschedule.get(i - 1).getDate(), minutes);
+                rescheduleTime = DateUtils.adjustTimeByMinutesIntoFuture(matchesInQueue.get(i - 1).getDate(), minutes);
                 if (match.getDate().getTime() < rescheduleTime.getTime()) {
                     match.setDate(rescheduleTime);
+                    matchesToReschedule.add(match);
                 }
             }
-
-            matchesToReschedule.set(i, match);
         }
 
-        matchRepository.save(matchesToReschedule);
-
+        saveAndNotify(matchesToReschedule, originUrl);
         return matchRepository.findByLeagueIdAndCompletedIsFalse(leagueId, sort);
     }
 

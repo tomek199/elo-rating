@@ -75,12 +75,14 @@ public class MatchController {
     @RequestMapping(value = "/league/{leagueId}/reschedule-matches/{minutes}", method = RequestMethod.POST)
     @ApiOperation(value = "Reschedule scheduled matches by {minutes} defined in request",
         notes = "Return page with rescheduled matches")
-    public ResponseEntity<List<Match>> rescheduleMatches(@PathVariable String leagueId,
+    public ResponseEntity<List<Match>> rescheduleMatches(HttpServletRequest request,
+                                                         @PathVariable String leagueId,
                                                          @PathVariable int minutes,
                                                          @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
-        List<Match> matches = ((MatchService)matchService).rescheduleMatchesInLeague(leagueId, minutes, sortByDate);
-        return new ResponseEntity<List<Match>>(matches, HttpStatus.OK);
+        String originUrl = getOriginUrl(request);
+        List<Match> matches = matchService.rescheduleMatchesInLeague(leagueId, minutes, sortByDate, originUrl);
+        return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 
 
