@@ -18,11 +18,11 @@ export class BtnSpinnerDirective implements AfterContentInit {
   @Input()
   set btnSpinner(promise: any) {
     this.promise = promise;
-
     this.initPromiseHandler();
   }
 
   ngAfterContentInit() {
+    this.originalText = this.buttonElem.innerText;    
     this.initPromiseHandler();
   }
 
@@ -54,10 +54,9 @@ export class BtnSpinnerDirective implements AfterContentInit {
 
   initPromiseHandler() {
     if (this.promise) {
-      this.originalText = this.buttonElem.innerText;
       const promise = this.promise;
       this.isPromiseFinished = false;
-
+      
       const resolveLoadingState = () => {
         this.isPromiseFinished = true;
         this.restoreBtnStateAfterPromise();
@@ -74,10 +73,6 @@ export class BtnSpinnerDirective implements AfterContentInit {
     if (!this.promise) {
       return;
     }
-
-    setTimeout(() => {
-      this.changeBtnToWaitState();
-    }, 0);
+    this.changeBtnToWaitState();
   }
-
 }
