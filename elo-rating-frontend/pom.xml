@@ -7,7 +7,7 @@
 	<artifactId>elo-rating-frontend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<name>elo-rating-frontend</name>
+	<name>EloRating frontend</name>
 	<description>elo-rating frontend</description>
 
 	<properties>
