@@ -5,7 +5,7 @@
 <app-spinner [resource]="scheduledMatches"></app-spinner>
 <h2 *ngIf="hasScheduledMatches()">
     Scheduled matches list
-    <button type="button" class="btn btn-secondary float-right" ngbTooltip="Refresh both matches list" placement="left" (click)="getMatches()">Refresh</button>
+    <button [btnSpinner]="matchesListPromise" type="button" class="btn btn-secondary float-right" ngbTooltip="Refresh both matches list" placement="left" (click)="getMatches()">Refresh</button>
 </h2>
 <p>
 

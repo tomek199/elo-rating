@@ -25,6 +25,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
   scheduledMatches: Match[];
   private popoverText: string;
   private matchesSubscription: Subscription;
+  private matchesListPromise: Promise<any>;
   private reschedulePromise: Promise<any>;
 
   constructor(
@@ -35,6 +36,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
     private googleAuthService: GoogleAuthService
   ) {
     this.popoverText = this.getPopoverText();
+    this.matchesListPromise = new Promise((resolve, reject) => {});
     this.reschedulePromise = new Promise((resolve, reject) => {});
   }
 
@@ -78,7 +80,7 @@ export class MatchListComponent implements OnInit, OnDestroy {
   }
 
   private getCompletedMatches() {
-    this.matchService.getCompletedMatches(this.leagueId, this.pageNumber, this.pageSize)
+    this.matchesListPromise = this.matchService.getCompletedMatches(this.leagueId, this.pageNumber, this.pageSize)
       .then(page => this.page = page);
   }
 
