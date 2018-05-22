@@ -29,4 +29,21 @@
       </span>
     </div>
   </div>
+  <div class="form-group row">
+    <label for="privacy_policy" class="col-3 col-form-label">Privacy Policy</label>
+    <div class="col-9">
+      <p>
+        <!-- <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#rodo-collapse" aria-expanded="false" aria-controls="rodo-collapse">
+          Show
+        </button> -->
+        <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+          [attr.aria-expanded]="!isCollapsed" aria-controls="rodo-collapse">
+          Show
+        </button>
+      </p>
+      <div class="collapse" id="rodo-collapse" [ngbCollapse]="isCollapsed">
+        <app-rodo></app-rodo>
+      </div>
+    </div>
+  </div>
 </form>
