@@ -50,6 +50,11 @@ public class PlayerMatchesServiceImpl implements PlayerMatchesService {
     }
 
     @Override
+    public Page<Match> findCompletedByPlayerIds(String playerId, String opponentId, PageRequest pageRequest) {
+        return matchRepository.findCompletedByPlayerIds(playerId, opponentId, pageRequest);
+    }
+
+    @Override
     public List<Match> findCompletedByPlayerIdAndDate(String playerId, Date from, Sort sort) {
         return matchRepository.findCompletedByPlayerIdAndDate(playerId, from, sort);
     }

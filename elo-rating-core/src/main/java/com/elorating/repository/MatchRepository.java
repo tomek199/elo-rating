@@ -93,5 +93,15 @@ public interface MatchRepository extends MongoRepository<Match, String> {
             "]}")
     List<Match> findCompletedByPlayerIds(String playerOneId, String playerTwoId, Sort sort);
 
+    @Query(value =
+            "{'$and' : [" +
+                "{'completed': true}," +
+                "{'$or' : [" +
+                    "{'$and': [{'playerOne.id': ?0}, {'playerTwo.id': ?1}]}," +
+                    "{'$and': [{'playerOne.id': ?1}, {'playerTwo.id': ?0}]}" +
+                "]}" +
+            "]}")
+    Page<Match> findCompletedByPlayerIds(String playerOneId, String playerTwoId, Pageable pageable);
+
     void deleteByLeagueId(String leagueId);
 }
