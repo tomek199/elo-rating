@@ -1,14 +1,15 @@
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserServiceStub } from './../../testing/user-stubs';
 import { UserService } from './../shared/user.service';
 import { By } from '@angular/platform-browser';
 import { USERS } from './../../testing/data/users';
 import { User } from './../shared/user.model';
 import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
-
 import { UserProfileInfoComponent } from './user-profile-info.component';
 import { FormsModule } from '@angular/forms';
 import { CommonService } from 'app/core/shared/common.service';
 import { CommonServiceStub } from 'app/testing/common-stubs';
+import { RodoStubComponent } from '../../testing/rodo-stubs';
 
 describe('UserProfileInfoComponent', () => {
   let component: UserProfileInfoComponent;
@@ -18,8 +19,14 @@ describe('UserProfileInfoComponent', () => {
   beforeEach(async(() => {
     stubUser = USERS[0];
     TestBed.configureTestingModule({
-      declarations: [ UserProfileInfoComponent ],
-      imports: [ FormsModule ],
+      declarations: [ 
+        UserProfileInfoComponent, 
+        RodoStubComponent 
+      ],
+      imports: [ 
+        FormsModule, 
+        NgbModule.forRoot() 
+      ],
       providers: [
         { provide: CommonService, useClass: CommonServiceStub },
         { provide: UserService, useClass: UserServiceStub },
