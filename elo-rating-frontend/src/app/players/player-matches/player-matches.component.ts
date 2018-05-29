@@ -10,6 +10,8 @@ import { MatchService } from './../../matches/shared/match.service';
 import { Match } from './../../matches/shared/match.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, Input, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { PlayerService } from '../shared/player.service';
 
 @Component({
   selector: 'app-player-matches',
@@ -22,11 +24,13 @@ export class PlayerMatchesComponent implements OnInit, OnChanges, OnDestroy {
   pageNumber: number;
   pageSize: number;
   page: Page<Match>;
+  opponent: Player;
   scheduledMatches: Match[];
   private matchesSubscription: Subscription;  
 
   constructor(
     private matchService: MatchService,
+    private playerService: PlayerService,
     private route: ActivatedRoute, 
     private router: Router, 
     private modalService: NgbModal,
@@ -61,10 +65,9 @@ export class PlayerMatchesComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.pageNumber = 1;    
-    this.page = undefined;
     this.scheduledMatches = undefined;
-    this.getMatches();
+    this.getScheduledMatches();
+    this.clearFilter();
   }
 
   getMatches() {
@@ -92,7 +95,8 @@ export class PlayerMatchesComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private getCompletedMatches() {
-    this.matchService.getPlayerCompletedMatches(this.playerId, this.pageNumber, this.pageSize)
+    let opponentId = this.opponent ? this.opponent.id : undefined;
+    this.matchService.getPlayerCompletedMatches(this.playerId, this.pageNumber, this.pageSize, opponentId)
       .then(page => this.page = page);
   }
 
@@ -159,6 +163,33 @@ export class PlayerMatchesComponent implements OnInit, OnChanges, OnDestroy {
           this.getMatches();
         }
       });
+  }
+
+  searchPlayers = (text$: Observable<string>) =>
+    text$
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .switchMap(term => term.length < 2 
+        ? Observable.of([]) 
+        : this.playerService.findByUsername(this.leagueId, term));
+
+  playerFormatter(player: Player): string {
+    return player.username ? player.username : '';
+  }
+
+  filterByOpponent() {
+    if (this.opponent && this.opponent.id !== this.playerId) {
+      this.page = undefined;
+      this.pageNumber = 1;
+      this.getCompletedMatches();
+    }
+  }
+
+  clearFilter() {
+    this.opponent = undefined;
+    this.page = undefined;
+    this.pageNumber = 1;
+    this.getCompletedMatches();
   }
 
   completeMatch(matchId: string) {

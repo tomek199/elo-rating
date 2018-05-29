@@ -42,6 +42,14 @@
     Completed matches
   </div>
   <div class="card-body">
+    <div class="row">
+      <div class="form-group col-5">
+        <input type="player" name="player" class="form-control" [(ngModel)]="opponent" [ngbTypeahead]="searchPlayers" [inputFormatter]="playerFormatter" [resultFormatter]="playerFormatter" (ngModelChange)="filterByOpponent()" [editable]="false" placeholder="Type player name to filter by opponent">
+      </div>
+      <div class="col-4">
+        <button type="button" class="btn btn-light" (click)="clearFilter()" *ngIf="opponent">Clear filter</button>
+      </div>
+    </div>
     <table id="completedMatches" class="shadedtable table table-bordered">
       <thead class="thead-light">
         <tr>
