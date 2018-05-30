@@ -85,6 +85,15 @@ public class PlayerMatchesControllerTest extends BaseControllerTest {
     }
 
     @Test
+    public void testGetPlayerCompletedMatchesAgainstOpponent() throws Exception {
+        String url = "/api/players/" + playerOne.getId() + "/completed-matches/" + playerTwo.getId() + "?page=0&pageSize=2";
+        mockMvc.perform(get(url)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", Matchers.hasSize(2)));
+    }
+
+    @Test
     public void testGetPlayerCompletedMatchesByDate() throws Exception {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

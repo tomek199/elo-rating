@@ -55,6 +55,7 @@ import { UserProfileLeaguesComponent } from './users/user-profile-leagues/user-p
 import { LeagueWelcomeComponent } from './leagues/league-welcome/league-welcome.component';
 import { UserProfileEmailsNotificationsComponent } from './users/user-profile-emails-notifications/user-profile-emails-notifications.component';
 import { UiSwitchModule } from 'angular2-ui-switch';
+import { RodoComponent } from './core/rodo/rodo.component';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { UiSwitchModule } from 'angular2-ui-switch';
     UserProfileLeaguesComponent,
     LeagueWelcomeComponent,
     UserProfileLeaguesComponent,
-    UserProfileEmailsNotificationsComponent
+    UserProfileEmailsNotificationsComponent,
+    RodoComponent
   ],
   imports: [
     BrowserModule,

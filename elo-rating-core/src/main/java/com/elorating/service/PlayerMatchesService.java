@@ -15,6 +15,7 @@ public interface PlayerMatchesService {
     Page<Match> findCompletedByPlayerId(String playerId, PageRequest pageRequest);
     List<Match> findCompletedByPlayerId(String playerId, Sort sort);
     List<Match> findCompletedByPlayerIds(String playerId, String opponentId, Sort sort);
+    Page<Match> findCompletedByPlayerIds(String playerId, String opponentId, PageRequest pageRequest);
     List<Match> findCompletedByPlayerIdAndDate(String playerId, Date from, Sort sort);
     List<Match> findCompletedByPlayerIdAndDate(String playerId, Date from, Date to, Sort sort);
     List<Match> getMatchForecast(String playerId, String opponentId);

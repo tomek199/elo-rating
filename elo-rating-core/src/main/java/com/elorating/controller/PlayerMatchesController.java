@@ -51,6 +51,32 @@ public class PlayerMatchesController {
     }
 
     @CrossOrigin
+    @RequestMapping(value = "/players/{playerId}/completed-matches/{opponentId}", method = RequestMethod.GET)
+    @ApiOperation(value = "Get player completed matches page filtered by opponent",
+            notes = "Return page with player's completed matches by player id against opponent")
+    public ResponseEntity<Page<Match>> getPlayerCompletedMatchesAgainstOpponent(
+                                            @PathVariable String playerId,
+                                            @PathVariable String opponentId,
+                                            @RequestParam int page,
+                                            @RequestParam(defaultValue = "10") int pageSize,
+                                            @RequestParam(required = false) String sort) {
+        Sort sortByDate = SortUtils.getSort(sort);
+        PageRequest pageRequest = new PageRequest(page, pageSize, sortByDate);
+        Page<Match> matches = playerMatchesService.findCompletedByPlayerIds(playerId, opponentId, pageRequest);
+        return new ResponseEntity<>(matches, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/players/{playerId}/match-forecast/{opponentId}", method = RequestMethod.GET)
+    @ApiOperation(value = "Get match forecast against a specific opponent",
+            notes = "Return list of matches with all possible scores")
+    public ResponseEntity<List<Match>> getMatchForecast(@PathVariable String playerId,
+                                                        @PathVariable String opponentId) {
+        List<Match> matches = playerMatchesService.getMatchForecast(playerId, opponentId);
+        return new ResponseEntity<>(matches, HttpStatus.OK);
+    }
+
+    @CrossOrigin
     @RequestMapping(value = "/players/{playerId}/completed-matches-by-date", method = RequestMethod.GET)
     @ApiOperation(value = "Get player completed matches filtered by date",
             notes = "Return list with player's completed matches by player id and date")
@@ -88,16 +114,6 @@ public class PlayerMatchesController {
                                                                        @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
         List<Match> matches = playerMatchesService.findCompletedByPlayerIds(playerId, opponentId, sortByDate);
-        return new ResponseEntity<>(matches, HttpStatus.OK);
-    }
-
-    @CrossOrigin
-    @RequestMapping(value = "/players/{playerId}/match-forecast/{opponentId}", method = RequestMethod.GET)
-    @ApiOperation(value = "Get match forecast against a specific opponent",
-            notes = "Return list of matches with all possible scores")
-    public ResponseEntity<List<Match>> getMatchForecast(@PathVariable String playerId,
-                                                        @PathVariable String opponentId) {
-        List<Match> matches = playerMatchesService.getMatchForecast(playerId, opponentId);
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 }

@@ -1,4 +1,4 @@
-import { PlayerCellStubComponent } from './../../testing/player-stubs';
+import { PlayerCellStubComponent, PlayerServiceStub } from './../../testing/player-stubs';
 import { GoogleAuthServiceStub } from './../../testing/google-stubs';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
@@ -16,6 +16,8 @@ import { ActivatedRoute } from '@angular/router';
 import { async, ComponentFixture, TestBed, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
 
 import { PlayerMatchesComponent } from './player-matches.component';
+import { PlayerService } from '../shared/player.service';
+import { Player } from '../shared/player.model';
 
 describe('PlayerMatchesComponent', () => {
   let component: PlayerMatchesComponent;
@@ -34,6 +36,7 @@ describe('PlayerMatchesComponent', () => {
       imports: [ RouterTestingModule, FormsModule, NgbModule.forRoot() ],
       providers: [
         {provide: MatchService, useClass: MatchServiceStub},
+        {provide: PlayerService, useClass: PlayerServiceStub},
         {provide: ActivatedRoute, useValue: activatedRoute},
         {provide: GoogleAuthService, useClass: GoogleAuthServiceStub},
         CookieService
@@ -71,6 +74,15 @@ describe('PlayerMatchesComponent', () => {
     expect(component.page.content.length).toBeGreaterThan(0);
     expect(component.hasCompletedMatches()).toBeTruthy();
   }));
+
+  it('should have completed matches against opponent list', fakeAsync(() => {
+    createComponent();
+    component.opponent = new Player('222');
+    fixture.detectChanges();
+    tick();
+    expect(component.page.content.length).toBe(2);
+    expect(component.hasCompletedMatches()).toBeTruthy();
+  }))
 
   it('should have scheduled matches list', fakeAsync(() => {
     createComponent();

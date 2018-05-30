@@ -38,8 +38,11 @@ export class MatchServiceStub {
     return Promise.resolve(matches);
   }
 
-  getPlayerCompletedMatches(playerId: string, page: number, pageSize: number = 5): Promise<Page<Match>> {
+  getPlayerCompletedMatches(playerId: string, page: number, pageSize: number = 5, opponentId?: string): Promise<Page<Match>> {
     let matches = MATCHES.filter(match => this.hasPlayer(match, playerId) && match.completed == true);
+    if (opponentId) {
+      matches = matches.filter(match => this.hasPlayer(match, opponentId));
+    }
     let resultPage = new Page<Match>();
     resultPage.content = matches;
     resultPage.totalElements = matches.length;

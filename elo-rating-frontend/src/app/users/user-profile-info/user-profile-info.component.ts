@@ -10,6 +10,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class UserProfileInfoComponent implements OnInit {
 
+  public isCollapsed = true;
+
   @Input() user: User;
   @Output() userChange: EventEmitter<User> = new EventEmitter();
 
