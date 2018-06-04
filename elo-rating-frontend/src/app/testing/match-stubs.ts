@@ -99,4 +99,8 @@ export class MatchServiceStub {
 
     return output;
   }
+
+  hasRelatedMatchIncomplete(queue: Match[], index: number): boolean { 
+    return false;
+  }
 }

@@ -20,7 +20,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let match of scheduledMatches">
+        <tr *ngFor="let match of scheduledMatches; let i=index">
             <td [ngClass]="{'table-danger': isTimeAfter(match.date)}">{{match.date | date: "HH:mm"}}</td>
             <td>
                 <app-player-cell [match]="match" [player]="match.playerOne"></app-player-cell>
@@ -30,7 +30,7 @@
             </td>
             <td class="text-right" *ngIf="isAuthorized()">
                 <button type="button" class="btn btn-outline-secondary btn-sm" (click)="editMatch(match.id)">Edit</button>
-                <button type="button" class="btn btn-outline-primary btn-sm" (click)="completeMatch(match.id)">Complete</button>
+                <button type="button" class="btn btn-outline-primary btn-sm" (click)="completeMatch(match.id)" [disabled]="hasRelatedMatchIncomplete(i)">Complete</button>
                 <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(match.id)">Delete</button>
             </td>
         </tr>
