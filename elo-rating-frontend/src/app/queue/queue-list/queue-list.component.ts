@@ -48,12 +48,16 @@ export class QueueListComponent implements OnInit, OnChanges {
     this.getScheduledMatches(this.leagueId);
   }
 
-  completeMatch(matchId: string) {
-    if (this.isAuthorized())
-      this.router.navigate(['/leagues', this.leagueId, 'matches', 'save', matchId, 'complete']);
+  completeMatch(index: number) {
+    if (this.isAuthorized() && !this.hasRelatedMatchIncomplete(index))
+      this.router.navigate(['/leagues', this.leagueId, 'matches', 'save', this.scheduledMatches[index].id, 'complete']);
   }
 
   isAuthorized(): boolean {
     return (!this.googleAuthService.isLeagueAssigned() || this.googleAuthService.isAuthorized());
+  }
+
+  hasRelatedMatchIncomplete(index: number): boolean {
+    return this.matchService.hasRelatedMatchIncomplete(this.scheduledMatches, index);
   }
 }
