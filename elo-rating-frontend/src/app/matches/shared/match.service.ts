@@ -125,4 +125,11 @@ export class MatchService extends BaseApiService {
       .then(response => response.json() as Match[])
       .catch(this.handleError);
   }
+
+  hasRelatedMatchIncomplete(queue: Match[], index: number): boolean {
+    let match = queue[index];
+    return queue.slice(0, index)
+                .filter(m => m.playerOne.id == match.playerOne.id 
+                          || m.playerTwo.id == match.playerTwo.id).length > 0
+  }
 }

@@ -32,6 +32,16 @@ let playerThree = {
   statistics: { won: 0, lost: 0, draw: 0 } 
 };
 
+let playerFour = {
+  id: '444',
+  username: 'Player 4',
+  rating: 1000,
+  active: true, 
+  user: null,
+  league: null,
+  statistics: { won: 0, lost: 0, draw: 0 } 
+};
+
 let futureDate = new Date();
 futureDate.setMinutes(futureDate.getMinutes() + 30);
 
@@ -104,10 +114,18 @@ match7.scores = { '': 2 };
 match7.date = new Date();
 match7.completed = true;
 
+let match8 = new Match();
+match8.id = '888';
+match8.league = LEAGUES[0];
+match8.playerOne = playerThree;
+match8.playerTwo = playerFour;
+match8.date = futureDate;
+match8.completed = false;
+
 export const SCHEDULED_MATCHES: Match[] = [
   match5
 ]
 
 export const MATCHES: Match[] = [
-  match1, match2, match3, match4, match5, match6, match7
+  match1, match2, match3, match4, match5, match6, match7, match8
 ];

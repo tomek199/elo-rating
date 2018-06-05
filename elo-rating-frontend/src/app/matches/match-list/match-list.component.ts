@@ -211,6 +211,10 @@ export class MatchListComponent implements OnInit, OnDestroy {
       .then(matches => this.scheduledMatches = matches);
   }
 
+  hasRelatedMatchIncomplete(index: number): boolean {
+    return this.matchService.hasRelatedMatchIncomplete(this.scheduledMatches, index);
+  }
+
   private getPopoverText(): string {
     return 'Reschedule matches that are late for ' + environment.matchDuration + ' minutes';
   }
