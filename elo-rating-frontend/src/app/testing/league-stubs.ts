@@ -3,7 +3,6 @@ import { LEAGUES } from './data/leagues';
 import { League } from './../leagues/shared/league.model';
 import { Observable } from 'rxjs/Observable';
 import { Injectable, Component, OnInit, Input, OnChanges } from '@angular/core';
-import { Response } from '@angular/http'
 import 'rxjs/add/observable/of';
 
 @Injectable()
@@ -38,7 +37,12 @@ export class LeagueServiceStub {
   }
 
   update(league: League): Promise<League> {
-    return Promise.resolve(league);
+    let updatedLeague = new League();
+    updatedLeague.id = league.id;
+    updatedLeague.name = league.name;
+    updatedLeague.settings = league.settings;
+    updatedLeague.users = league.users
+    return Promise.resolve(updatedLeague);
   }
 }
 

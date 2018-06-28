@@ -3,7 +3,6 @@ import { User } from './../shared/user.model';
 import { UserService } from './../shared/user.service';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
 import { Component, OnInit } from '@angular/core';
-import { currentId } from 'async_hooks';
 
 @Component({
   selector: 'app-user-create-player',

@@ -35,9 +35,10 @@ export class PlayerServiceStub {
   }
 
   update(leagueId: string, player: Player): Promise<Player> {
-    let playerToUpdate = PLAYERS.find(p => p.id == player.id)
+    let playerToUpdate = new Player();
     playerToUpdate.username = player.username;
     playerToUpdate.rating = player.rating;
+    playerToUpdate.active = player.active;
     return Promise.resolve(playerToUpdate);
   }
 

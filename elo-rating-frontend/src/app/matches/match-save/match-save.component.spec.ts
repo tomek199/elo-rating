@@ -4,7 +4,6 @@ import { LEAGUES } from './../../testing/data/leagues';
 import { BtnSpinnerDirective } from './../../core/directives/btn-spinner/btn-spinner.directive';
 import { GoogleAuthServiceStub } from './../../testing/google-stubs';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { HttpModule } from '@angular/http';
 import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
 import { MatchServiceStub } from './../../testing/match-stubs';
 import { MatchService } from './../shared/match.service';
