@@ -11,7 +11,7 @@
 	<description>elo-rating frontend</description>
 
 	<properties>
-    <node.version>v6.10.1</node.version>
+    <node.version>v8.11.3</node.version>
     <npm.version>4.4.1</npm.version>
     <build.string>run build</build.string>
 	</properties>
