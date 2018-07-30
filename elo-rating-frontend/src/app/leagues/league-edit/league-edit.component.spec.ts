@@ -33,7 +33,7 @@ describe('LeagueEditComponent', () => {
   function createComponent () {
     fixture = TestBed.createComponent(LeagueEditComponent);
     component = fixture.componentInstance;
-    activatedRoute.testParams = { league_id: '123' }
+    activatedRoute.testParams = { league_id: '789' }
     fixture.detectChanges();
     tick();
   }

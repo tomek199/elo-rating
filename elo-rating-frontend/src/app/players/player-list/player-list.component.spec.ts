@@ -79,7 +79,7 @@ describe('PlayerListComponent', () => {
     fixture.detectChanges();
     let activePlayersCount = component.activePlayers.length;
     let inactivePlayersCount = component.inactivePlayers.length;
-    component.disable(0);
+    component.disable(1);
     tick();
     expect(component.activePlayers.length).toEqual(activePlayersCount - 1);
     expect(component.inactivePlayers.length).toEqual(inactivePlayersCount + 1);

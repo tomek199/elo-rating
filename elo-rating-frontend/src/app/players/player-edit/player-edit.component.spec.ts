@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { async, ComponentFixture, TestBed, tick, fakeAsync, inject } from '@angular/core/testing';
 
 import { PlayerEditComponent } from './player-edit.component';
+import { Player } from '../shared/player.model';
 
 describe('PlayerEditComponent', () => {
   let component: PlayerEditComponent;
@@ -53,12 +54,17 @@ describe('PlayerEditComponent', () => {
 
   it('should update player details',fakeAsync(() => {
     createComponent();
-    component.player.username = 'Player 2 updated';
+    let player = new Player();
+    player.id = '999';
+    player.active = true;
+    player.username = 'Player to edit';
+    component.player = player;
+    component.player.username = 'Player updated';
     component.player.active = false;
     let debugElement = fixture.debugElement.query(By.css('form button[type=submit]'));
     debugElement.triggerEventHandler('click', null);
     tick();
-    expect(component.player.username).toEqual('Player 2 updated');
+    expect(component.player.username).toEqual('Player updated');
     expect(component.player.active).toEqual(false);
     component.player.active = true;
   }));

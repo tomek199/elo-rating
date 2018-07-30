@@ -20,7 +20,7 @@ describe('PlayerUserInfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(PlayerUserInfoComponent);
     component = fixture.componentInstance;
-    component.player = PLAYERS[4];
+    component.player = PLAYERS.find(player => player.id == '888');
     fixture.detectChanges();
   });
 

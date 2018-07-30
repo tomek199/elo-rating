@@ -38,7 +38,7 @@ export class PlayerStatisticsComponent implements OnInit {
 
   ngOnInit() {
     this.getLeagueId();
-    this.getPlayerId();
+    this.getPlayerId(); // TODO remove this
     this.getPlayer();
     this.period = 7;
     this.generateStatistics();

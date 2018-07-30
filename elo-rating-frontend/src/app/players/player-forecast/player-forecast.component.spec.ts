@@ -23,7 +23,7 @@ describe('PlayerForecastComponent', () => {
   function createComponent() {
     fixture = TestBed.createComponent(PlayerForecastComponent);
     component = fixture.componentInstance;
-    component.playerId = '123';
+    component.playerId = '999';
     component.leagueId = '123';
     fixture.detectChanges();
     tick();
@@ -36,27 +36,27 @@ describe('PlayerForecastComponent', () => {
 
   it('should have player', fakeAsync(() => {
     createComponent();
-    expect(component.player.id).toEqual('123');
-    expect(component.player.username).toEqual('Player 1');
+    expect(component.player.id).toEqual('999');
+    expect(component.player.username).toEqual('Forecast player');
   }));
 
   it('should have opponents', fakeAsync(() => {
     createComponent();
-    expect(component.opponents.length).toEqual(3);
+    expect(component.opponents.length).toBeGreaterThan(0);
   }));
 
   it('should display opponents on the list', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('ul.list-group li.list-group-item'));
-    expect(debugElement.length).toEqual(3);
+    expect(debugElement.length).toBeGreaterThan(0);
   }));
 
   it('should display current player disabled on the list', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.query(By.css('ul.list-group li.list-group-item.disabled'));
-    expect(debugElement.nativeElement.textContent).toContain('Player 1');
+    expect(debugElement.nativeElement.textContent).toContain('Forecast player');
   }));
 
   it('should display alert if opponent is not selected', fakeAsync(() => {
@@ -70,7 +70,7 @@ describe('PlayerForecastComponent', () => {
     createComponent();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('ul.list-group li.list-group-item'));
-    debugElement[2].triggerEventHandler('click', null);
+    debugElement[0].triggerEventHandler('click', null);
     tick(); 
     expect(component.forecast.length).toEqual(4);
   }));
@@ -79,7 +79,7 @@ describe('PlayerForecastComponent', () => {
     createComponent();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('ul.list-group li.list-group-item'));
-    debugElement[2].triggerEventHandler('click', null);
+    debugElement[0].triggerEventHandler('click', null);
     tick(); 
     fixture.detectChanges();
     let wins = fixture.debugElement.queryAll(By.css('div div.alert.alert-success'));

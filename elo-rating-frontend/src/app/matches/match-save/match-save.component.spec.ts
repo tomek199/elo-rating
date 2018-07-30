@@ -144,20 +144,6 @@ describe('MatchSaveComponent', () => {
     expect(component.formValid()).toBeTruthy();
   }));
 
-  it('should validate match time', fakeAsync(() => {
-    createComponent();
-    component.match.completed = false;
-    fixture.detectChanges();
-    expect(component.isTimeValid()).toBeTruthy();
-    let date = new Date();
-    component.time = {hour: date.getHours(), minute: date.getMinutes() - 10}
-    fixture.detectChanges();
-    expect(component.isTimeValid()).toBeFalsy();    
-    component.time = {hour: date.getHours(), minute: date.getMinutes() + 10}
-    fixture.detectChanges();   
-    expect(component.isTimeValid()).toBeTruthy();    
-  }));
-
   it('should create match and go to matches list', inject([Router], fakeAsync((router: Router) => {
     createComponent();
     const spy = spyOn(router, 'navigate');

@@ -1,6 +1,3 @@
-import { environment } from './../../../environments/environment';
-import { MATCHES } from './../../testing/data/matches';
-import { Match } from './../shared/match.model';
 import { PlayerCellStubComponent } from './../../testing/player-stubs';
 import { GoogleAuthServiceStub } from './../../testing/google-stubs';
 import { GoogleAuthService } from './../../auth/shared/google-auth.service';
@@ -107,7 +104,7 @@ describe('MatchListComponent', () => {
     createComponent();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('table#completedMatches tbody tr td.text-right button.btn-outline-danger'));
-    expect(debugElement.length).toEqual(1);
+    expect(debugElement.length).toBeGreaterThan(0);
   }));
 
   it('should display revert button only for first match', fakeAsync(() => {

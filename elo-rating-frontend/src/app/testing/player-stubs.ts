@@ -23,14 +23,16 @@ export class PlayerServiceStub {
   }
 
   addPlayer(leagueId: string, player: Player): Promise<Player> {
-    player.id = '111';
+    let lastId = PLAYERS[PLAYERS.length - 1].id;
+    player.id = lastId;
     player.rating = 1000;
     PLAYERS.push(player);
     return Promise.resolve(player);
   }
 
   delete(leagueId: string, playerId: string): Promise<boolean> {
-    PLAYERS.splice(0, 1);
+    let index = PLAYERS.findIndex(player => player.id == playerId);
+    PLAYERS.splice(index, 1);
     return Promise.resolve(true);
   }
 
