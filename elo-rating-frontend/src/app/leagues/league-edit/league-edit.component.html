@@ -28,7 +28,7 @@
         <div class="form-group row">
           <label for="maxScore" class="col-3 col-form-label">Max match score</label>
           <div class="col-5">
-            <div class="btn-group" [(ngModel)]="league.settings.maxScore" ngbRadioGroup name="maxScore">
+            <div class="btn-group btn-group-toggle" [(ngModel)]="league.settings.maxScore" ngbRadioGroup name="maxScore">
               <label *ngFor="let score of getMaxScores()" ngbButtonLabel class="btn btn-light">
                 <input ngbButton type="radio" [value]="score">{{score}}
               </label>

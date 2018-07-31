@@ -33,7 +33,7 @@
       <td width="65%" class="text-center" [routerLink]="['/leagues', leagueId, 'players', player.id]">{{player.rating}}</td>
       <td width="15%" class="text-right" *ngIf="isAuthorized()">
         <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/leagues', leagueId, 'players', player.id, 'edit']">Edit</a>
-        <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDisableModal(i)">Disable</button>
+        <button type="button" class="btn btn-outline-danger btn-sm ml-1" (click)="openDisableModal(i)">Disable</button>
       </td>
     </tr>
     <tr *ngFor="let player of inactivePlayers; let i=index" class="table-warning">
@@ -51,7 +51,7 @@
       </td>
       <td class="text-right" *ngIf="isAuthorized()">
         <a class="btn btn-outline-secondary btn-sm" [routerLink]="['/leagues', leagueId, 'players', player.id, 'edit']">Edit</a>
-        <button type="button" class="btn btn-danger btn-sm" (click)="openDeleteModal(i)">Delete</button>
+        <button type="button" class="btn btn-danger btn-sm ml-1" (click)="openDeleteModal(i)">Delete</button>
       </td>
     </tr>
   </tbody>

@@ -23,7 +23,7 @@
   <div class="form-group row" *ngIf="match.completed">
     <label for="playerOneScore" class="col-2 col-form-label">Player one score</label>
     <div class="col-4">
-      <div [(ngModel)]="playerOneScore" (ngModelChange)="setMatchScore()" ngbRadioGroup name="playerOneScore" class="btn-group">
+      <div [(ngModel)]="playerOneScore" (ngModelChange)="setMatchScore()" ngbRadioGroup name="playerOneScore" class="btn-group btn-group-toggle">
         <label ngbButtonLabel class="btn btn-light" [ngClass]="{'btn-sm': scores.length > 9}" *ngFor="let score of scores">
           <input ngbButton type="radio" [value]="score">{{score}}
         </label>
@@ -31,7 +31,7 @@
     </div>
     <label for="playerTwoScore" class="col-2 col-form-label">Player two score</label>
     <div class="col-4">
-      <div [(ngModel)]="playerTwoScore" (ngModelChange)="setMatchScore()" ngbRadioGroup name="playerTwoScore" class="btn-group">
+      <div [(ngModel)]="playerTwoScore" (ngModelChange)="setMatchScore()" ngbRadioGroup name="playerTwoScore" class="btn-group btn-group-toggle">
         <label ngbButtonLabel class="btn btn-light" [ngClass]="{'btn-sm': scores.length > 9}" *ngFor="let score of scores">
           <input ngbButton type="radio" [value]="score">{{score}}
         </label>

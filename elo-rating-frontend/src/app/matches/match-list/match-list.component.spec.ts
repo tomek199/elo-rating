@@ -153,7 +153,7 @@ describe('MatchListComponent', () => {
     pastDate.setMinutes(pastDate.getMinutes() - 15);
     component.scheduledMatches[0].date = pastDate;
     fixture.detectChanges();
-    let rescheduleBtn = fixture.debugElement.query(By.css('table#scheduledMatches tbody tr td button#rescheduleBtn'));
+    let rescheduleBtn = fixture.debugElement.query(By.css('h2 button#rescheduleBtn'));
     expect(rescheduleBtn).toBeTruthy();
   }));
 });

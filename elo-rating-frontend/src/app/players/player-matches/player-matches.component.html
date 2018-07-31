@@ -28,8 +28,8 @@
           </td>
           <td class="text-right" *ngIf="isAuthorized()">
             <button type="button" class="btn btn-outline-secondary btn-sm" (click)="editMatch(match.id)">Edit</button>
-            <button type="button" class="btn btn-outline-primary btn-sm" (click)="completeMatch(match.id)">Complete</button>
-            <button type="button" class="btn btn-outline-danger btn-sm" (click)="openDeleteModal(match.id)">Delete</button>
+            <button type="button" class="btn btn-outline-primary btn-sm ml-1" (click)="completeMatch(match.id)">Complete</button>
+            <button type="button" class="btn btn-outline-danger btn-sm ml-1" (click)="openDeleteModal(match.id)">Delete</button>
           </td>
         </tr>
       </tbody>
