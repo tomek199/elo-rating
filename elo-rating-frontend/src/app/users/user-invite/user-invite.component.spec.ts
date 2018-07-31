@@ -1,19 +1,19 @@
-import { RouterTestingModule } from '@angular/router/testing';
-import { PlayerServiceStub } from './../../testing/player-stubs';
-import { PlayerService } from './../../players/shared/player.service';
-import { By } from '@angular/platform-browser';
-import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { UserServiceStub } from './../../testing/user-stubs';
-import { UserService } from './../shared/user.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {PlayerServiceStub} from './../../testing/player-stubs';
+import {PlayerService} from './../../players/shared/player.service';
+import {By} from '@angular/platform-browser';
+import {GoogleAuthServiceStub} from './../../testing/google-stubs';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {UserServiceStub} from './../../testing/user-stubs';
+import {UserService} from './../shared/user.service';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {FormsModule} from '@angular/forms';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { UserInviteComponent } from './user-invite.component';
-import { ActivatedRouteStub } from 'app/testing/routing-stubs';
-import { ActivatedRoute } from '@angular/router';
+import {UserInviteComponent} from './user-invite.component';
+import {ActivatedRouteStub} from 'app/testing/routing-stubs';
+import {ActivatedRoute} from '@angular/router';
 
 describe('UserInviteComponent', () => {
   let component: UserInviteComponent;

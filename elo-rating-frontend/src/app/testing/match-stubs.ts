@@ -1,10 +1,8 @@
-import { LEAGUES } from './data/leagues';
-import { MATCHES } from './data/matches';
-import { Page } from './../core/utils/pagination/page.model';
-import { Player } from './../players/shared/player.model';
-import { PLAYERS } from './data/players';
-import { Match } from './../matches/shared/match.model';
-import { Injectable } from '@angular/core';
+import {LEAGUES} from './data/leagues';
+import {MATCHES} from './data/matches';
+import {Page} from './../core/utils/pagination/page.model';
+import {Match} from './../matches/shared/match.model';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class MatchServiceStub {

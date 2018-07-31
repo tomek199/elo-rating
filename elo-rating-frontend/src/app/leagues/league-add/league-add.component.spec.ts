@@ -1,14 +1,13 @@
 /* tslint:disable:no-unused-variable */
-import { async, fakeAsync, tick, inject, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-import { FormsModule} from '@angular/forms';
-import { Router } from '@angular/router';
-import { RouterStub } from '../../testing/routing-stubs';
+import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
+import {Router} from '@angular/router';
+import {RouterStub} from '../../testing/routing-stubs';
 
-import { LeagueAddComponent } from './league-add.component';
-import { LeagueService } from '../shared/league.service';
-import { LeagueServiceStub } from '../../testing/league-stubs';
+import {LeagueAddComponent} from './league-add.component';
+import {LeagueService} from '../shared/league.service';
+import {LeagueServiceStub} from '../../testing/league-stubs';
 
 describe('LeagueAddComponent', () => {
   let component: LeagueAddComponent;

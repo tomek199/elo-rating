@@ -1,23 +1,22 @@
-import { PlayerCellStubComponent, PlayerServiceStub } from './../../testing/player-stubs';
-import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { CookieService } from 'ng2-cookies';
-import { PageSizeComponent } from './../../core/directives/page-size/page-size.component';
-import { FormsModule } from '@angular/forms';
-import { League } from './../../leagues/shared/league.model';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { By } from '@angular/platform-browser';
-import { MatchServiceStub } from './../../testing/match-stubs';
-import { MatchService } from './../../matches/shared/match.service';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRouteStub } from './../../testing/routing-stubs';
-import { ActivatedRoute } from '@angular/router';
-import { async, ComponentFixture, TestBed, fakeAsync, tick, discardPeriodicTasks } from '@angular/core/testing';
+import {PlayerCellStubComponent, PlayerServiceStub} from './../../testing/player-stubs';
+import {GoogleAuthServiceStub} from './../../testing/google-stubs';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {CookieService} from 'ng2-cookies';
+import {PageSizeComponent} from './../../core/directives/page-size/page-size.component';
+import {FormsModule} from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {By} from '@angular/platform-browser';
+import {MatchServiceStub} from './../../testing/match-stubs';
+import {MatchService} from './../../matches/shared/match.service';
+import {RouterTestingModule} from '@angular/router/testing';
+import {ActivatedRouteStub} from './../../testing/routing-stubs';
+import {ActivatedRoute} from '@angular/router';
+import {async, ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { PlayerMatchesComponent } from './player-matches.component';
-import { PlayerService } from '../shared/player.service';
-import { Player } from '../shared/player.model';
+import {PlayerMatchesComponent} from './player-matches.component';
+import {PlayerService} from '../shared/player.service';
+import {Player} from '../shared/player.model';
 
 describe('PlayerMatchesComponent', () => {
   let component: PlayerMatchesComponent;

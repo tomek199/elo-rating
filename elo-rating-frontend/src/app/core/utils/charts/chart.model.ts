@@ -1,4 +1,5 @@
-import { Series } from './series.model';
+import {Series} from './series.model';
+
 export class Chart {
   title: any;
   series: Array<Series>;

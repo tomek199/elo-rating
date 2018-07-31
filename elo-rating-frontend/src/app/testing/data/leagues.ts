@@ -1,4 +1,4 @@
-import { League } from './../../leagues/shared/league.model';
+import {League} from './../../leagues/shared/league.model';
 
 export const LEAGUES: League[] = [
   {

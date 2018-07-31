@@ -1,5 +1,4 @@
-import { CommonService } from './../core/shared/common.service';
-import { Injectable } from "@angular/core";
+import {Injectable} from "@angular/core";
 
 
 @Injectable()

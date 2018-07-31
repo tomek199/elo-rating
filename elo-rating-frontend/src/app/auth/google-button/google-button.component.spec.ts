@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { GoogleButtonComponent } from './google-button.component';
+import {GoogleButtonComponent} from './google-button.component';
 
 describe('GoogleButtonComponent', () => {
   let component: GoogleButtonComponent;

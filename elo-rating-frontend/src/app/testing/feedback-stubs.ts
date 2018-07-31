@@ -1,5 +1,5 @@
-import { Feedback } from './../feedback/shared/feedback.model';
-import { Injectable } from '@angular/core';
+import {Feedback} from './../feedback/shared/feedback.model';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class FeedbackServiceStub {

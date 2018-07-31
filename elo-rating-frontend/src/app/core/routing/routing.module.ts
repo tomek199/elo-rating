@@ -1,21 +1,21 @@
-import { LeagueWelcomeComponent } from './../../leagues/league-welcome/league-welcome.component';
-import { UserProfileComponent } from './../../users/user-profile/user-profile.component';
-import { LeagueEditComponent } from './../../leagues/league-edit/league-edit.component';
-import { FeedbackSendComponent } from './../../feedback/feedback-send/feedback-send.component';
-import { AuthGuardService } from './../../auth/shared/auth-guard.service';
-import { UserConfirmInvitationComponent } from './../../users/user-confirm-invitation/user-confirm-invitation.component';
-import { UserInviteComponent } from './../../users/user-invite/user-invite.component';
-import { PlayerRankingComponent } from './../../players/player-ranking/player-ranking.component';
-import { MatchListComponent } from './../../matches/match-list/match-list.component';
-import { MatchSaveComponent } from './../../matches/match-save/match-save.component';
-import { PlayerEditComponent } from './../../players/player-edit/player-edit.component';
-import { PlayerDetailComponent } from './../../players/player-detail/player-detail.component';
-import { PlayerAddComponent } from './../../players/player-add/player-add.component';
-import { PlayerListComponent } from './../../players/player-list/player-list.component';
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import {LeagueWelcomeComponent} from './../../leagues/league-welcome/league-welcome.component';
+import {UserProfileComponent} from './../../users/user-profile/user-profile.component';
+import {LeagueEditComponent} from './../../leagues/league-edit/league-edit.component';
+import {FeedbackSendComponent} from './../../feedback/feedback-send/feedback-send.component';
+import {AuthGuardService} from './../../auth/shared/auth-guard.service';
+import {UserConfirmInvitationComponent} from './../../users/user-confirm-invitation/user-confirm-invitation.component';
+import {UserInviteComponent} from './../../users/user-invite/user-invite.component';
+import {PlayerRankingComponent} from './../../players/player-ranking/player-ranking.component';
+import {MatchListComponent} from './../../matches/match-list/match-list.component';
+import {MatchSaveComponent} from './../../matches/match-save/match-save.component';
+import {PlayerEditComponent} from './../../players/player-edit/player-edit.component';
+import {PlayerDetailComponent} from './../../players/player-detail/player-detail.component';
+import {PlayerAddComponent} from './../../players/player-add/player-add.component';
+import {PlayerListComponent} from './../../players/player-list/player-list.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
 
-import { LeagueDetailComponent } from '../../leagues/league-detail/league-detail.component';
+import {LeagueDetailComponent} from '../../leagues/league-detail/league-detail.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/leagues', pathMatch: 'full' },

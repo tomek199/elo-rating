@@ -1,6 +1,6 @@
-import { Series } from './series.model';
-import { Match } from './../../../matches/shared/match.model';
-import { ChartBuilder } from "app/core/utils/charts/chart-builder";
+import {Series} from './series.model';
+import {Match} from './../../../matches/shared/match.model';
+import {ChartBuilder} from "app/core/utils/charts/chart-builder";
 
 export class RatingHistoryChart extends ChartBuilder {
   constructor(private matches: Match[], private playerId: string) {

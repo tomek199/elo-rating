@@ -1,8 +1,7 @@
-import { Router, ActivatedRoute } from '@angular/router';
-import { User } from './../shared/user.model';
-import { UserService } from './../shared/user.service';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {UserService} from './../shared/user.service';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-user-create-player',

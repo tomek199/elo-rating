@@ -1,6 +1,5 @@
-import { League } from './../../leagues/shared/league.model';
-import { Match } from "app/matches/shared/match.model";
-import { LEAGUES } from "./leagues";
+import {Match} from "app/matches/shared/match.model";
+import {LEAGUES} from "./leagues";
 
 let playerOne = {
   id: '111',

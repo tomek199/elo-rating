@@ -1,5 +1,5 @@
-import { environment } from './../../../environments/environment.prod';
-import { Component, AfterViewInit, NgZone, Output, EventEmitter, Input } from '@angular/core';
+import {environment} from './../../../environments/environment.prod';
+import {AfterViewInit, Component, EventEmitter, Input, NgZone, Output} from '@angular/core';
 
 declare var gapi: any;
 

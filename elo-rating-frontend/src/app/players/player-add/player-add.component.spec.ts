@@ -1,15 +1,13 @@
-import { RouterStub, ActivatedRouteStub } from './../../testing/routing-stubs';
-import { PlayerServiceStub } from './../../testing/player-stubs';
-import { PlayerService } from './../shared/player.service';
-import { FormsModule } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { inject, fakeAsync, tick } from '@angular/core/testing';
+import {ActivatedRouteStub, RouterStub} from './../../testing/routing-stubs';
+import {PlayerServiceStub} from './../../testing/player-stubs';
+import {PlayerService} from './../shared/player.service';
+import {FormsModule} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 /* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
 
-import { PlayerAddComponent } from './player-add.component';
+import {PlayerAddComponent} from './player-add.component';
 
 describe('PlayerAddComponent', () => {
   let component: PlayerAddComponent;

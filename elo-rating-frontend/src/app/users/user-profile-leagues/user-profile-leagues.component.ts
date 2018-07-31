@@ -1,5 +1,5 @@
-import { User } from './../shared/user.model';
-import { Component, OnInit, Input } from '@angular/core';
+import {User} from './../shared/user.model';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-user-profile-leagues',

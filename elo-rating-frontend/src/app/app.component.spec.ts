@@ -1,18 +1,17 @@
-import { LeagueService } from './leagues/shared/league.service';
-import { GoogleAuthServiceStub } from './testing/google-stubs';
-import { GoogleAuthService } from './auth/shared/google-auth.service';
-import { CookieService } from 'ng2-cookies';
-import { NavComponentStub } from './testing/nav-stubs';
-import { RouterStub, ActivatedRouteStub, RouterLinkStub, RouterOutletStub } from './testing/routing-stubs';
-import { LeagueServiceStub } from './testing/league-stubs';
-import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpModule } from '@angular/http';
-import { TestBed, async, fakeAsync, tick } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { RouterTestingModule } from '@angular/router/testing';
-import { Router, RouterOutlet } from '@angular/router';
-import { AppComponent } from './app.component';
+import {LeagueService} from './leagues/shared/league.service';
+import {GoogleAuthServiceStub} from './testing/google-stubs';
+import {GoogleAuthService} from './auth/shared/google-auth.service';
+import {CookieService} from 'ng2-cookies';
+import {NavComponentStub} from './testing/nav-stubs';
+import {ActivatedRouteStub, RouterLinkStub, RouterOutletStub, RouterStub} from './testing/routing-stubs';
+import {LeagueServiceStub} from './testing/league-stubs';
+import {FormsModule} from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {HttpModule} from '@angular/http';
+import {async, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {Router} from '@angular/router';
+import {AppComponent} from './app.component';
 
 describe('AppComponent', () => {
   let routerStub: RouterStub;

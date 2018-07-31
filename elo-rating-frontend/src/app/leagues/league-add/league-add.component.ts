@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { LeagueService } from '../shared/league.service';
-import { League } from '../shared/league.model';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {LeagueService} from '../shared/league.service';
+import {League} from '../shared/league.model';
 
 @Component({
   selector: 'app-league-add',

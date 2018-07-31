@@ -1,12 +1,12 @@
-import { UserServiceStub } from './../../testing/user-stubs';
-import { UserService } from './../../users/shared/user.service';
-import { By } from '@angular/platform-browser';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { User } from './../../users/shared/user.model';
-import { async, ComponentFixture, TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
+import {UserServiceStub} from './../../testing/user-stubs';
+import {UserService} from './../../users/shared/user.service';
+import {By} from '@angular/platform-browser';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {User} from './../../users/shared/user.model';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { LeagueAssignComponent } from './league-assign.component';
-import { League } from "app/leagues/shared/league.model";
+import {LeagueAssignComponent} from './league-assign.component';
+import {League} from "app/leagues/shared/league.model";
 
 describe('LeagueAssignComponent', () => {
   let component: LeagueAssignComponent;

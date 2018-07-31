@@ -1,11 +1,10 @@
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { Observable } from 'rxjs/Observable';
-import { User } from './user.model';
-import { Http } from '@angular/http';
-import { environment } from './../../../environments/environment';
-import { Injectable } from '@angular/core';
-import { BaseApiService } from "../../core/shared/base-api.service";
-import { EmailsNotifications } from 'app/users/shared/emailsNotifications.model';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {Observable} from 'rxjs/Observable';
+import {User} from './user.model';
+import {Http} from '@angular/http';
+import {Injectable} from '@angular/core';
+import {BaseApiService} from "../../core/shared/base-api.service";
+import {EmailsNotifications} from 'app/users/shared/emailsNotifications.model';
 
 
 @Injectable()

@@ -1,8 +1,8 @@
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { ActivatedRoute } from '@angular/router';
-import { PlayerService } from './../shared/player.service';
-import { Player } from './../shared/player.model';
-import { Component, OnInit } from '@angular/core';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {ActivatedRoute} from '@angular/router';
+import {PlayerService} from './../shared/player.service';
+import {Player} from './../shared/player.model';
+import {Component, OnInit} from '@angular/core';
 import 'rxjs/add/operator/map';
 
 @Component({

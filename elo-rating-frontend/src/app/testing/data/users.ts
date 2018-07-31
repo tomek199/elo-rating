@@ -1,7 +1,7 @@
-import { Player } from 'app/players/shared/player.model';
-import { User } from './../../users/shared/user.model';
-import { League } from 'app/leagues/shared/league.model';
-import { EMAILS_NOTIFICATIONS } from 'app/testing/data/emailsNotifications';
+import {Player} from 'app/players/shared/player.model';
+import {User} from './../../users/shared/user.model';
+import {League} from 'app/leagues/shared/league.model';
+import {EMAILS_NOTIFICATIONS} from 'app/testing/data/emailsNotifications';
 
 export const USERS: User[] = [
   {

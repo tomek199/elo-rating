@@ -1,5 +1,6 @@
-import { LeagueSettings } from './league-settings';
-import { User } from './../../users/shared/user.model';
+import {LeagueSettings} from './league-settings';
+import {User} from './../../users/shared/user.model';
+
 export class League {
   id: string;
   name: string;

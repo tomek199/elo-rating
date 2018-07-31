@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
+import {Injectable} from '@angular/core';
 
 class ModalRef {
   text: string;

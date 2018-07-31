@@ -1,10 +1,10 @@
-import { LeagueSettings } from './league-settings';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
-import { Injectable } from '@angular/core';
-import { League } from './league.model';
-import { BaseApiService } from "../../core/shared/base-api.service";
+import {LeagueSettings} from './league-settings';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {Http} from '@angular/http';
+import {Observable} from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
+import {League} from './league.model';
+import {BaseApiService} from "../../core/shared/base-api.service";
 
 
 @Injectable()

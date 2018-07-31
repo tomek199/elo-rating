@@ -1,7 +1,7 @@
-import { Injectable, Directive, Input, Component } from '@angular/core';
-import { NavigationEnd } from '@angular/router';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import {Component, Directive, Injectable, Input} from '@angular/core';
+import {NavigationEnd} from '@angular/router';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class ActivatedRouteStub {

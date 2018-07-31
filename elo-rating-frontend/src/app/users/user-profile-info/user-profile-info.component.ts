@@ -1,7 +1,7 @@
-import { UserService } from 'app/users/shared/user.service';
-import { CommonService } from './../../core/shared/common.service';
-import { User } from './../shared/user.model';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {UserService} from 'app/users/shared/user.service';
+import {CommonService} from './../../core/shared/common.service';
+import {User} from './../shared/user.model';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-user-profile-info',

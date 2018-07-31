@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RodoComponent } from './rodo.component';
+import {RodoComponent} from './rodo.component';
 
 describe('RodoComponent', () => {
   let component: RodoComponent;

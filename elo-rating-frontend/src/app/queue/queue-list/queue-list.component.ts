@@ -1,11 +1,9 @@
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { MatchService } from './../../matches/shared/match.service';
-import { Observable } from 'rxjs/Observable';
-import { PlayerService } from './../../players/shared/player.service';
-import { Match } from './../../matches/shared/match.model';
-import { Player } from './../../players/shared/player.model';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, Input, SimpleChange, OnChanges } from '@angular/core';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {MatchService} from './../../matches/shared/match.service';
+import {PlayerService} from './../../players/shared/player.service';
+import {Match} from './../../matches/shared/match.model';
+import {Router} from '@angular/router';
+import {Component, Input, OnChanges, OnInit, SimpleChange} from '@angular/core';
 
 @Component({
   selector: 'app-queue-list',

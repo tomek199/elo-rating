@@ -1,12 +1,11 @@
-import { Match } from 'app/matches/shared/match.model';
-import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { HttpModule } from '@angular/http';
-import { TestBed, inject } from '@angular/core/testing';
+import {Match} from 'app/matches/shared/match.model';
+import {GoogleAuthServiceStub} from './../../testing/google-stubs';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {HttpModule} from '@angular/http';
+import {inject, TestBed} from '@angular/core/testing';
 
-import { MatchService } from './match.service';
-import { MATCHES } from '../../testing/data/matches';
-import { Player } from '../../players/shared/player.model';
+import {MatchService} from './match.service';
+import {Player} from '../../players/shared/player.model';
 
 describe('MatchService', () => {
   beforeEach(() => {

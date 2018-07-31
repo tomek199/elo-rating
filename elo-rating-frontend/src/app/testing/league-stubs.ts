@@ -1,8 +1,8 @@
-import { LeagueSettings } from './../leagues/shared/league-settings';
-import { LEAGUES } from './data/leagues';
-import { League } from './../leagues/shared/league.model';
-import { Observable } from 'rxjs/Observable';
-import { Injectable, Component, OnInit, Input, OnChanges } from '@angular/core';
+import {LeagueSettings} from './../leagues/shared/league-settings';
+import {LEAGUES} from './data/leagues';
+import {League} from './../leagues/shared/league.model';
+import {Observable} from 'rxjs/Observable';
+import {Component, Injectable, Input, OnChanges, OnInit} from '@angular/core';
 import 'rxjs/add/observable/of';
 
 @Injectable()

@@ -1,9 +1,9 @@
-import { Observable } from 'rxjs/Observable';
-import { OpponentStats } from './../players/shared/opponent-stats.model';
-import { Match } from './../matches/shared/match.model';
-import { PLAYERS} from './data/players';
-import { Player } from './../players/shared/player.model';
-import { Injectable, OnInit, Component, Input, OnChanges } from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {OpponentStats} from './../players/shared/opponent-stats.model';
+import {Match} from './../matches/shared/match.model';
+import {PLAYERS} from './data/players';
+import {Player} from './../players/shared/player.model';
+import {Component, Injectable, Input, OnChanges, OnInit} from '@angular/core';
 
 @Injectable()
 export class PlayerServiceStub {

@@ -1,13 +1,13 @@
-import { By } from '@angular/platform-browser';
-import { PlayerServiceStub } from './../../testing/player-stubs';
-import { PlayerService } from './../shared/player.service';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRouteStub, RouterStub } from './../../testing/routing-stubs';
-import { ActivatedRoute, Router } from '@angular/router';
-import { async, ComponentFixture, TestBed, tick, fakeAsync, inject } from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {PlayerServiceStub} from './../../testing/player-stubs';
+import {PlayerService} from './../shared/player.service';
+import {FormsModule} from '@angular/forms';
+import {ActivatedRouteStub, RouterStub} from './../../testing/routing-stubs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
 
-import { PlayerEditComponent } from './player-edit.component';
-import { Player } from '../shared/player.model';
+import {PlayerEditComponent} from './player-edit.component';
+import {Player} from '../shared/player.model';
 
 describe('PlayerEditComponent', () => {
   let component: PlayerEditComponent;

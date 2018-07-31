@@ -1,16 +1,15 @@
-import { LeagueService } from './../../leagues/shared/league.service';
-import { LeagueSettings } from './../../leagues/shared/league-settings';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { environment } from './../../../environments/environment';
-import { MatchService } from './../shared/match.service';
-import { Observable } from 'rxjs/Observable';
-import { Match } from './../shared/match.model';
-import { PlayerService } from './../../players/shared/player.service';
-import { Player } from './../../players/shared/player.model';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {LeagueService} from './../../leagues/shared/league.service';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {environment} from './../../../environments/environment';
+import {MatchService} from './../shared/match.service';
+import {Observable} from 'rxjs/Observable';
+import {Match} from './../shared/match.model';
+import {PlayerService} from './../../players/shared/player.service';
+import {Player} from './../../players/shared/player.model';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import 'rxjs/add/operator/debounceTime';
-import { NgbPopover } from "@ng-bootstrap/ng-bootstrap";
+import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-match-save',

@@ -1,7 +1,7 @@
-import { Player } from 'app/players/shared/player.model';
-import { League } from './../../leagues/shared/league.model';
-import { User } from './../../users/shared/user.model';
-import { Injectable } from '@angular/core';
+import {Player} from 'app/players/shared/player.model';
+import {League} from './../../leagues/shared/league.model';
+import {User} from './../../users/shared/user.model';
+import {Injectable} from '@angular/core';
 
 @Injectable()
 export class GoogleAuthService {

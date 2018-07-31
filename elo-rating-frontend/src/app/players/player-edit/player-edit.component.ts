@@ -1,7 +1,7 @@
-import { Player } from './../shared/player.model';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PlayerService } from './../shared/player.service';
-import { Component, OnInit } from '@angular/core';
+import {Player} from './../shared/player.model';
+import {ActivatedRoute, Router} from '@angular/router';
+import {PlayerService} from './../shared/player.service';
+import {Component, OnInit} from '@angular/core';
 import 'rxjs/add/operator/map';
 
 @Component({

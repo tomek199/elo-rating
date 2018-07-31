@@ -1,16 +1,14 @@
-import { FormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { LeagueServiceStub } from './../../testing/league-stubs';
-import { LeagueService } from './../shared/league.service';
-import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {FormsModule} from '@angular/forms';
+import {By} from '@angular/platform-browser';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {LeagueServiceStub} from './../../testing/league-stubs';
+import {LeagueService} from './../shared/league.service';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { LeagueEditComponent } from './league-edit.component';
-import { ActivatedRoute } from '@angular/router';
-import { ActivatedRouteStub } from 'app/testing/routing-stubs';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {LeagueEditComponent} from './league-edit.component';
+import {ActivatedRoute} from '@angular/router';
+import {ActivatedRouteStub} from 'app/testing/routing-stubs';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 describe('LeagueEditComponent', () => {
   let component: LeagueEditComponent;

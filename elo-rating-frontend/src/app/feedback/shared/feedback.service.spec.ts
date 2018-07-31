@@ -1,9 +1,9 @@
-import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { HttpModule } from '@angular/http';
-import { TestBed, inject } from '@angular/core/testing';
+import {GoogleAuthServiceStub} from './../../testing/google-stubs';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {HttpModule} from '@angular/http';
+import {inject, TestBed} from '@angular/core/testing';
 
-import { FeedbackService } from './feedback.service';
+import {FeedbackService} from './feedback.service';
 
 describe('FeedbackService', () => {
   beforeEach(() => {

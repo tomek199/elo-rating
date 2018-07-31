@@ -1,5 +1,6 @@
-import { League } from './../../leagues/shared/league.model';
-import { Player } from './../../players/shared/player.model';
+import {League} from './../../leagues/shared/league.model';
+import {Player} from './../../players/shared/player.model';
+
 export class Match {
   id: string;
   playerOne: Player;

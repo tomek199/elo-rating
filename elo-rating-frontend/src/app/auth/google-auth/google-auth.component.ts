@@ -1,9 +1,8 @@
-import { UserService } from './../../users/shared/user.service';
-import { User } from './../../users/shared/user.model';
-import { GoogleAuthService } from './../shared/google-auth.service';
-import { environment } from './../../../environments/environment';
-import { Component, NgZone, AfterViewInit, Input, OnInit, ViewChild } from '@angular/core';
-import { NgbPopover } from "@ng-bootstrap/ng-bootstrap";
+import {UserService} from './../../users/shared/user.service';
+import {User} from './../../users/shared/user.model';
+import {GoogleAuthService} from './../shared/google-auth.service';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
 
 declare var gapi: any;
 

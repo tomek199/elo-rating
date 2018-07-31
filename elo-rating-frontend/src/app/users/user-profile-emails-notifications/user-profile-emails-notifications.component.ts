@@ -1,6 +1,6 @@
-import { UserService } from './../shared/user.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { User } from 'app/users/shared/user.model';
+import {UserService} from './../shared/user.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {User} from 'app/users/shared/user.model';
 
 @Component({
   selector: 'app-user-profile-emails-notifications',

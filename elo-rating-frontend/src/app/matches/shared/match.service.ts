@@ -1,9 +1,9 @@
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { Page } from './../../core/utils/pagination/page.model';
-import { Http } from '@angular/http';
-import { Match } from './match.model';
-import { Injectable } from '@angular/core';
-import { BaseApiService } from "../../core/shared/base-api.service";
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {Page} from './../../core/utils/pagination/page.model';
+import {Http} from '@angular/http';
+import {Match} from './match.model';
+import {Injectable} from '@angular/core';
+import {BaseApiService} from "../../core/shared/base-api.service";
 
 
 @Injectable()

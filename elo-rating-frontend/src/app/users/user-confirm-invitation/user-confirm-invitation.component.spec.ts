@@ -1,15 +1,15 @@
-import { By } from '@angular/platform-browser';
-import { UserServiceStub } from './../../testing/user-stubs';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { ActivatedRouteStub } from './../../testing/routing-stubs';
-import { ActivatedRoute } from '@angular/router'; 
-import { UserService } from './../shared/user.service';
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { GoogleButtonComponentStub, GoogleAuthServiceStub, GoogleUserStub } from './../../testing/google-stubs';
-import { RouterTestingModule } from '@angular/router/testing';
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {UserServiceStub} from './../../testing/user-stubs';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {ActivatedRouteStub} from './../../testing/routing-stubs';
+import {ActivatedRoute} from '@angular/router';
+import {UserService} from './../shared/user.service';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {GoogleAuthServiceStub, GoogleButtonComponentStub, GoogleUserStub} from './../../testing/google-stubs';
+import {RouterTestingModule} from '@angular/router/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { UserConfirmInvitationComponent } from './user-confirm-invitation.component';
+import {UserConfirmInvitationComponent} from './user-confirm-invitation.component';
 
 describe('UserConfirmInvitationComponent', () => {
   let component: UserConfirmInvitationComponent;

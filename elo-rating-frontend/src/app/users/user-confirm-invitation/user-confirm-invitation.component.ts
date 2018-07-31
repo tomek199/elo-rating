@@ -1,8 +1,8 @@
-import { League } from './../../leagues/shared/league.model';
-import { UserService } from './../shared/user.service';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import {League} from './../../leagues/shared/league.model';
+import {UserService} from './../shared/user.service';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {ActivatedRoute} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-user-confirm-invitation',

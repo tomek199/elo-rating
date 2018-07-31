@@ -1,11 +1,9 @@
-import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
+import {GoogleAuthServiceStub} from './../../testing/google-stubs';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {inject, TestBed} from '@angular/core/testing';
+import {HttpModule} from '@angular/http';
+import {LeagueService} from './league.service';
 /* tslint:disable:no-unused-variable */
-
-import { TestBed, async, inject } from '@angular/core/testing';
-import { Http } from '@angular/http';
-import { HttpModule } from '@angular/http';
-import { LeagueService } from './league.service';
 
 describe('LeagueService', () => {
   beforeEach(() => {

@@ -1,5 +1,5 @@
-import { USERS } from './users';
-import { Player } from './../../players/shared/player.model';
+import {USERS} from './users';
+import {Player} from './../../players/shared/player.model';
 
 export const PLAYERS: Player[] = [
   { 

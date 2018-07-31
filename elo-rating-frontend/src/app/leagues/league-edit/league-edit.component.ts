@@ -1,9 +1,7 @@
-import { LeagueSettings } from './../shared/league-settings';
-import { LeagueService } from './../shared/league.service';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { League } from 'app/leagues/shared/league.model';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {LeagueService} from './../shared/league.service';
+import {League} from 'app/leagues/shared/league.model';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-league-edit',

@@ -1,5 +1,4 @@
-import { Input, ElementRef, Directive, AfterContentInit, HostListener } from '@angular/core';
-import { setTimeout } from 'timers';
+import {AfterContentInit, Directive, ElementRef, HostListener, Input} from '@angular/core';
 
 @Directive({
   selector: '[btnSpinner]'

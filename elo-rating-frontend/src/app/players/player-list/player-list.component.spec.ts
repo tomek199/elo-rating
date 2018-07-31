@@ -1,20 +1,18 @@
-import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { UserCreatePlayerStubComponent } from './../../testing/user-stubs';
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { NgbModalStub } from './../../testing/bootstrap-stubs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RouterTestingModule } from '@angular/router/testing';
-import { PlayerServiceStub } from './../../testing/player-stubs';
-import { PlayerService } from './../shared/player.service';
-import { ActivatedRoute } from '@angular/router';
-import { ActivatedRouteStub } from './../../testing/routing-stubs';
-import { fakeAsync, tick, inject } from '@angular/core/testing';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import {GoogleAuthServiceStub} from './../../testing/google-stubs';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {UserCreatePlayerStubComponent} from './../../testing/user-stubs';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {NgbModalStub} from './../../testing/bootstrap-stubs';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {RouterTestingModule} from '@angular/router/testing';
+import {PlayerServiceStub} from './../../testing/player-stubs';
+import {PlayerService} from './../shared/player.service';
+import {ActivatedRoute} from '@angular/router';
+import {ActivatedRouteStub} from './../../testing/routing-stubs';
+import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
 
-import { PlayerListComponent } from './player-list.component';
+import {PlayerListComponent} from './player-list.component';
 
 describe('PlayerListComponent', () => {
   let component: PlayerListComponent;

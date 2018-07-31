@@ -1,9 +1,9 @@
-import { USERS } from './../../testing/data/users';
-import { PLAYERS } from './../../testing/data/players';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {USERS} from './../../testing/data/users';
+import {PLAYERS} from './../../testing/data/players';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PlayerUserInfoComponent } from './player-user-info.component';
-import { By } from '@angular/platform-browser';
+import {PlayerUserInfoComponent} from './player-user-info.component';
+import {By} from '@angular/platform-browser';
 
 
 describe('PlayerUserInfoComponent', () => {

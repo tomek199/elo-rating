@@ -1,12 +1,12 @@
-import { ActivatedRoute } from '@angular/router';
-import { Player } from './../../players/shared/player.model';
-import { PlayerService } from './../../players/shared/player.service';
-import { League } from 'app/leagues/shared/league.model';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { User } from './../shared/user.model';
-import { UserService } from './../shared/user.service';
-import { Observable } from 'rxjs/Observable';
-import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Player} from './../../players/shared/player.model';
+import {PlayerService} from './../../players/shared/player.service';
+import {League} from 'app/leagues/shared/league.model';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {User} from './../shared/user.model';
+import {UserService} from './../shared/user.service';
+import {Observable} from 'rxjs/Observable';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-user-invite',

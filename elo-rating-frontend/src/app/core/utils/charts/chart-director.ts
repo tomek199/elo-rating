@@ -1,5 +1,5 @@
-import { Chart } from './chart.model';
-import { ChartBuilder } from 'app/core/utils/charts/chart-builder';
+import {Chart} from './chart.model';
+import {ChartBuilder} from 'app/core/utils/charts/chart-builder';
 
 export class ChartDirector {
   private builder: ChartBuilder;

@@ -1,21 +1,21 @@
-import { PlayerCellStubComponent } from './../../testing/player-stubs';
-import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { CookieService } from 'ng2-cookies';
-import { PageSizeComponent } from './../../core/directives/page-size/page-size.component';
-import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { By } from '@angular/platform-browser';
-import { MatchServiceStub } from './../../testing/match-stubs';
-import { MatchService } from './../shared/match.service';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRouteStub } from './../../testing/routing-stubs';
-import { ActivatedRoute } from '@angular/router';
-import { async, ComponentFixture, TestBed, tick, fakeAsync, discardPeriodicTasks } from '@angular/core/testing';
+import {PlayerCellStubComponent} from './../../testing/player-stubs';
+import {GoogleAuthServiceStub} from './../../testing/google-stubs';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {CookieService} from 'ng2-cookies';
+import {PageSizeComponent} from './../../core/directives/page-size/page-size.component';
+import {FormsModule} from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {By} from '@angular/platform-browser';
+import {MatchServiceStub} from './../../testing/match-stubs';
+import {MatchService} from './../shared/match.service';
+import {RouterTestingModule} from '@angular/router/testing';
+import {ActivatedRouteStub} from './../../testing/routing-stubs';
+import {ActivatedRoute} from '@angular/router';
+import {async, ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { MatchListComponent } from './match-list.component';
-import { BtnSpinnerDirective } from 'app/core/directives/btn-spinner/btn-spinner.directive';
+import {MatchListComponent} from './match-list.component';
+import {BtnSpinnerDirective} from 'app/core/directives/btn-spinner/btn-spinner.directive';
 
 describe('MatchListComponent', () => {
   let component: MatchListComponent;

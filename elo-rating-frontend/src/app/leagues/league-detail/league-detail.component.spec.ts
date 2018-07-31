@@ -1,18 +1,17 @@
-import { LeagueAssignComponentStub } from './../../testing/league-stubs';
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { PlayerServiceStub, PlayerRankingStubComponent } from './../../testing/player-stubs';
-import { PlayerService } from './../../players/shared/player.service';
+import {LeagueAssignComponentStub} from './../../testing/league-stubs';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {PlayerRankingStubComponent, PlayerServiceStub} from './../../testing/player-stubs';
+import {PlayerService} from './../../players/shared/player.service';
 /* tslint:disable:no-unused-variable */
-import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {ActivatedRoute} from '@angular/router';
+import {RouterTestingModule} from '@angular/router/testing';
 
-import { LeagueDetailComponent } from './league-detail.component';
-import { LeagueService } from '../shared/league.service';
-import { LeagueServiceStub } from '../../testing/league-stubs';
-import { ActivatedRouteStub } from '../../testing/routing-stubs';
+import {LeagueDetailComponent} from './league-detail.component';
+import {LeagueService} from '../shared/league.service';
+import {LeagueServiceStub} from '../../testing/league-stubs';
+import {ActivatedRouteStub} from '../../testing/routing-stubs';
 
 describe('LeagueDetailComponent', () => {
   let component: LeagueDetailComponent;

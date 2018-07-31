@@ -1,17 +1,17 @@
-import { PlayerServiceStub } from './../../testing/player-stubs';
-import { PlayerService } from './../shared/player.service';
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { FormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ChartComponentStub } from './../../testing/chart-stubs';
-import { MatchServiceStub } from './../../testing/match-stubs';
-import { MatchService } from './../../matches/shared/match.service';
-import { ActivatedRouteStub } from './../../testing/routing-stubs';
-import { ActivatedRoute } from '@angular/router';
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import {PlayerServiceStub} from './../../testing/player-stubs';
+import {PlayerService} from './../shared/player.service';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {FormsModule} from '@angular/forms';
+import {By} from '@angular/platform-browser';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {ChartComponentStub} from './../../testing/chart-stubs';
+import {MatchServiceStub} from './../../testing/match-stubs';
+import {MatchService} from './../../matches/shared/match.service';
+import {ActivatedRouteStub} from './../../testing/routing-stubs';
+import {ActivatedRoute} from '@angular/router';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { PlayerStatisticsComponent } from './player-statistics.component';
+import {PlayerStatisticsComponent} from './player-statistics.component';
 
 describe('PlayerStatisticsComponent', () => {
   let component: PlayerStatisticsComponent;

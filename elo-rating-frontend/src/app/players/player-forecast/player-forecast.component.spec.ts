@@ -1,10 +1,10 @@
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { PlayerServiceStub } from './../../testing/player-stubs';
-import { PlayerService } from './../shared/player.service';
-import { By } from '@angular/platform-browser';
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {PlayerServiceStub} from './../../testing/player-stubs';
+import {PlayerService} from './../shared/player.service';
+import {By} from '@angular/platform-browser';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { PlayerForecastComponent } from './player-forecast.component';
+import {PlayerForecastComponent} from './player-forecast.component';
 
 describe('PlayerForecastComponent', () => {
   let component: PlayerForecastComponent;

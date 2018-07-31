@@ -1,10 +1,9 @@
-import { RouterTestingModule } from '@angular/router/testing';
-import { By } from '@angular/platform-browser';
-import { USERS } from './../../testing/data/users';
-import { User } from './../shared/user.model';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {By} from '@angular/platform-browser';
+import {USERS} from './../../testing/data/users';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { UserProfileLeaguesComponent } from './user-profile-leagues.component';
+import {UserProfileLeaguesComponent} from './user-profile-leagues.component';
 
 describe('UserProfileLeaguesComponent', () => {
   let component: UserProfileLeaguesComponent;
