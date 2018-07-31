@@ -2,12 +2,16 @@
 Application to manage users ranking based on Elo rating algorithm
 
 ## Environments
-Environment built from **master** branch is enabled on Heroku 
+Environment built from **master** branch is available on Heroku 
 https://elo-rating.herokuapp.com
+
+Environment built from **develop** branch is available on Heroku
+https://elo-rating-develop.herokuapp.com
+ 
 
 ## API reference
 To see API reference please visit
-http://elo-rating.herokuapp.com/swagger-ui.html
+http://elo-rating.herokuapp.com/swagger-ui.ghtml
 
 ## Installation
 ### Properties
@@ -29,7 +33,7 @@ Core side properties is configurable in file `elo-rating/elo-rating-core/src/mai
 |spring.mail.feedback.address|Feedback email address||
 |spring.thymeleaf.prefix|Thymeleaf templates directory|classpath:/templates/email/|
 
-Front-end properties is configurable in file `elo-rating/elo-rating-frontend/src/environments/environment.ts`
+Front-end properties is configurable in directory `elo-rating/elo-rating-frontend/src/environments/`
 
 |Property|Description|Default value|
 |---|---|---|
