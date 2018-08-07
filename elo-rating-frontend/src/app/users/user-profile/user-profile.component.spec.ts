@@ -1,14 +1,19 @@
-import { By } from '@angular/platform-browser';
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { User } from './../shared/user.model';
-import { USERS } from './../../testing/data/users';
-import { UserServiceStub, UserProfileInfoStubComponent, UserProfileLeaguesStubComponent, UserProfileEmailsNotificationsStubComponent } from './../../testing/user-stubs';
-import { UserService } from './../shared/user.service';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {User} from './../shared/user.model';
+import {USERS} from './../../testing/data/users';
+import {
+  UserProfileEmailsNotificationsStubComponent,
+  UserProfileInfoStubComponent,
+  UserProfileLeaguesStubComponent,
+  UserServiceStub
+} from './../../testing/user-stubs';
+import {UserService} from './../shared/user.service';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {GoogleAuthServiceStub} from './../../testing/google-stubs';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { UserProfileComponent } from './user-profile.component';
+import {UserProfileComponent} from './user-profile.component';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;

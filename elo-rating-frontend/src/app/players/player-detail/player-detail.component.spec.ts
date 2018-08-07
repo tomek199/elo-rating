@@ -1,18 +1,24 @@
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PlayerMatchesStubComponent, PlayerStatisticsStubComponent, PlayerForecastStubComponent, PlayerOpponentsStubComponent, PlayerUserInfoStubComponent } from './../../testing/player-stubs';
-import { By } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRouteStub } from './../../testing/routing-stubs';
-import { ActivatedRoute } from '@angular/router';
-import { PlayerServiceStub } from './../../testing/player-stubs';
-import { PlayerService } from './../shared/player.service';
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {GoogleAuthServiceStub} from './../../testing/google-stubs';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {
+  PlayerForecastStubComponent,
+  PlayerMatchesStubComponent,
+  PlayerOpponentsStubComponent,
+  PlayerServiceStub,
+  PlayerStatisticsStubComponent,
+  PlayerUserInfoStubComponent
+} from './../../testing/player-stubs';
+import {By} from '@angular/platform-browser';
+import {FormsModule} from '@angular/forms';
+import {RouterTestingModule} from '@angular/router/testing';
+import {ActivatedRouteStub} from './../../testing/routing-stubs';
+import {ActivatedRoute} from '@angular/router';
+import {PlayerService} from './../shared/player.service';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { PlayerDetailComponent } from './player-detail.component';
+import {PlayerDetailComponent} from './player-detail.component';
 
 describe('PlayerDetailComponent', () => {
   let component: PlayerDetailComponent;

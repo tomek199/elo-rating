@@ -1,10 +1,9 @@
-import { LeagueService } from './leagues/shared/league.service';
-import { GoogleAuthService } from './auth/shared/google-auth.service';
-import { CookieService } from 'ng2-cookies';
-import { Router, NavigationEnd } from '@angular/router';
-import { Component } from '@angular/core';
+import {LeagueService} from './leagues/shared/league.service';
+import {GoogleAuthService} from './auth/shared/google-auth.service';
+import {CookieService} from 'ng2-cookies';
+import {NavigationEnd, Router} from '@angular/router';
+import {Component} from '@angular/core';
 import 'rxjs/add/operator/filter';
-import { League } from "./leagues/shared/league.model";
 
 @Component({
   selector: 'app-root',

@@ -1,5 +1,5 @@
-import { GoogleAuthService } from './../../../auth/shared/google-auth.service';
-import { Component, Input, ViewChild, OnChanges } from '@angular/core';
+import {GoogleAuthService} from './../../../auth/shared/google-auth.service';
+import {Component, Input, OnChanges} from '@angular/core';
 
 @Component({
   selector: 'app-nav',

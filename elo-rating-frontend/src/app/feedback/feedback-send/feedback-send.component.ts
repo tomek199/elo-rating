@@ -1,7 +1,7 @@
-import { FeedbackService } from './../shared/feedback.service';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { Feedback } from './../shared/feedback.model';
-import { Component, OnInit } from '@angular/core';
+import {FeedbackService} from './../shared/feedback.service';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {Feedback} from './../shared/feedback.model';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-feedback-send',

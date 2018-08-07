@@ -1,9 +1,8 @@
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { By } from '@angular/platform-browser';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {NgbActiveModal, NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {By} from '@angular/platform-browser';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ConfirmModalComponent } from './confirm-modal.component';
+import {ConfirmModalComponent} from './confirm-modal.component';
 
 describe('ConfirmModalComponent', () => {
   let component: ConfirmModalComponent;

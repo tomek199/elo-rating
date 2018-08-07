@@ -1,12 +1,11 @@
-import { UserServiceStub } from './../../testing/user-stubs';
-import { UserService } from 'app/users/shared/user.service';
-import { By } from '@angular/platform-browser';
-import { UiSwitchModule } from 'angular2-ui-switch';
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import {UserServiceStub} from './../../testing/user-stubs';
+import {UserService} from 'app/users/shared/user.service';
+import {By} from '@angular/platform-browser';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { UserProfileEmailsNotificationsComponent } from './user-profile-emails-notifications.component';
-import { USERS } from 'app/testing/data/users';
-import { UiSwitcherStub } from 'app/testing/switcher-stubs';
+import {UserProfileEmailsNotificationsComponent} from './user-profile-emails-notifications.component';
+import {USERS} from 'app/testing/data/users';
+import {UiSwitcherStub} from 'app/testing/switcher-stubs';
 
 describe('UserProfileEmailsNotificationsComponent', () => {
   let component: UserProfileEmailsNotificationsComponent;

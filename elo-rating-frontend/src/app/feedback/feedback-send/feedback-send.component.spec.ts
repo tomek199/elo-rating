@@ -1,14 +1,13 @@
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { User } from './../../users/shared/user.model';
-import { By } from '@angular/platform-browser';
-import { FeedbackServiceStub } from './../../testing/feedback-stubs';
-import { FeedbackService } from './../shared/feedback.service';
-import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { FormsModule } from '@angular/forms';
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {By} from '@angular/platform-browser';
+import {FeedbackServiceStub} from './../../testing/feedback-stubs';
+import {FeedbackService} from './../shared/feedback.service';
+import {GoogleAuthServiceStub} from './../../testing/google-stubs';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {FormsModule} from '@angular/forms';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { FeedbackSendComponent } from './feedback-send.component';
+import {FeedbackSendComponent} from './feedback-send.component';
 
 describe('FeedbackSendComponent', () => {
   let component: FeedbackSendComponent;

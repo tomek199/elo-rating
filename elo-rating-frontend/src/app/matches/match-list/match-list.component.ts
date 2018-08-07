@@ -1,16 +1,15 @@
-import { environment } from './../../../environments/environment';
-import { Observable } from 'rxjs/Observable';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { Page } from './../../core/utils/pagination/page.model';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ConfirmModalComponent } from './../../core/directives/confirm-modal/confirm-modal.component';
-import { Player } from './../../players/shared/player.model';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatchService } from './../shared/match.service';
-import { Match } from './../shared/match.model';
-import { Component, OnInit, SimpleChanges, Input, OnDestroy } from '@angular/core';
-import { IntervalObservable } from "rxjs/observable/IntervalObservable";
-import { Subscription } from 'rxjs/Subscription';
+import {environment} from './../../../environments/environment';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {Page} from './../../core/utils/pagination/page.model';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {ConfirmModalComponent} from './../../core/directives/confirm-modal/confirm-modal.component';
+import {Player} from './../../players/shared/player.model';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MatchService} from './../shared/match.service';
+import {Match} from './../shared/match.model';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {IntervalObservable} from "rxjs/observable/IntervalObservable";
+import {Subscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-match-list',

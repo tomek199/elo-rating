@@ -1,4 +1,4 @@
-import { EmailsNotifications } from 'app/users/shared/emailsNotifications.model';
+import {EmailsNotifications} from 'app/users/shared/emailsNotifications.model';
 
 export const EMAILS_NOTIFICATIONS: EmailsNotifications[] = [
     {

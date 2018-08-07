@@ -1,5 +1,5 @@
-import { CookieService } from 'ng2-cookies';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {CookieService} from 'ng2-cookies';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-page-size',

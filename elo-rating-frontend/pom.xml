@@ -5,13 +5,13 @@
 
 	<groupId>com.elorating</groupId>
 	<artifactId>elo-rating-frontend</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-SNAPSHOT</version>
 
 	<name>EloRating frontend</name>
 	<description>elo-rating frontend</description>
 
 	<properties>
-    <node.version>v6.10.1</node.version>
+    <node.version>v8.11.3</node.version>
     <npm.version>4.4.1</npm.version>
     <build.string>run build</build.string>
 	</properties>

@@ -1,5 +1,4 @@
-import { Match } from './../matches/shared/match.model';
-import { Injectable, Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
     selector: 'app-queue-list',

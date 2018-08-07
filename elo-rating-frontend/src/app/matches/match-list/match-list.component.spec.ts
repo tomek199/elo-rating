@@ -1,24 +1,21 @@
-import { environment } from './../../../environments/environment';
-import { MATCHES } from './../../testing/data/matches';
-import { Match } from './../shared/match.model';
-import { PlayerCellStubComponent } from './../../testing/player-stubs';
-import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { CookieService } from 'ng2-cookies';
-import { PageSizeComponent } from './../../core/directives/page-size/page-size.component';
-import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { By } from '@angular/platform-browser';
-import { MatchServiceStub } from './../../testing/match-stubs';
-import { MatchService } from './../shared/match.service';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRouteStub } from './../../testing/routing-stubs';
-import { ActivatedRoute } from '@angular/router';
-import { async, ComponentFixture, TestBed, tick, fakeAsync, discardPeriodicTasks } from '@angular/core/testing';
+import {PlayerCellStubComponent} from './../../testing/player-stubs';
+import {GoogleAuthServiceStub} from './../../testing/google-stubs';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {CookieService} from 'ng2-cookies';
+import {PageSizeComponent} from './../../core/directives/page-size/page-size.component';
+import {FormsModule} from '@angular/forms';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {By} from '@angular/platform-browser';
+import {MatchServiceStub} from './../../testing/match-stubs';
+import {MatchService} from './../shared/match.service';
+import {RouterTestingModule} from '@angular/router/testing';
+import {ActivatedRouteStub} from './../../testing/routing-stubs';
+import {ActivatedRoute} from '@angular/router';
+import {async, ComponentFixture, discardPeriodicTasks, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { MatchListComponent } from './match-list.component';
-import { BtnSpinnerDirective } from 'app/core/directives/btn-spinner/btn-spinner.directive';
+import {MatchListComponent} from './match-list.component';
+import {BtnSpinnerDirective} from 'app/core/directives/btn-spinner/btn-spinner.directive';
 
 describe('MatchListComponent', () => {
   let component: MatchListComponent;
@@ -107,7 +104,7 @@ describe('MatchListComponent', () => {
     createComponent();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.queryAll(By.css('table#completedMatches tbody tr td.text-right button.btn-outline-danger'));
-    expect(debugElement.length).toEqual(1);
+    expect(debugElement.length).toBeGreaterThan(0);
   }));
 
   it('should display revert button only for first match', fakeAsync(() => {
@@ -156,7 +153,7 @@ describe('MatchListComponent', () => {
     pastDate.setMinutes(pastDate.getMinutes() - 15);
     component.scheduledMatches[0].date = pastDate;
     fixture.detectChanges();
-    let rescheduleBtn = fixture.debugElement.query(By.css('table#scheduledMatches tbody tr td button#rescheduleBtn'));
+    let rescheduleBtn = fixture.debugElement.query(By.css('h2 button#rescheduleBtn'));
     expect(rescheduleBtn).toBeTruthy();
   }));
 });

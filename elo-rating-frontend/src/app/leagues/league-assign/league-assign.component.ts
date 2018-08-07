@@ -1,8 +1,7 @@
-import { UserService } from './../../users/shared/user.service';
-import { User } from './../../users/shared/user.model';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { League } from './../shared/league.model';
-import { Component, OnChanges, Input } from '@angular/core';
+import {UserService} from './../../users/shared/user.service';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {League} from './../shared/league.model';
+import {Component, Input, OnChanges} from '@angular/core';
 
 @Component({
   selector: 'app-league-assign',

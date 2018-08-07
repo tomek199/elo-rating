@@ -1,8 +1,8 @@
-import { By } from '@angular/platform-browser';
-import { LeagueAddComponentStub, LeagueSearchComponentStub } from './../../testing/league-stubs';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {LeagueAddComponentStub, LeagueSearchComponentStub} from './../../testing/league-stubs';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LeagueWelcomeComponent } from './league-welcome.component';
+import {LeagueWelcomeComponent} from './league-welcome.component';
 
 describe('LeagueWelcomeComponent', () => {
   let component: LeagueWelcomeComponent;

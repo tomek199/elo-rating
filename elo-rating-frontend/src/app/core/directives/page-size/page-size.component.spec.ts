@@ -1,9 +1,9 @@
-import { CookieService } from 'ng2-cookies';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {CookieService} from 'ng2-cookies';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {FormsModule} from '@angular/forms';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PageSizeComponent } from './page-size.component';
+import {PageSizeComponent} from './page-size.component';
 
 describe('PageSizeComponent', () => {
   let component: PageSizeComponent;

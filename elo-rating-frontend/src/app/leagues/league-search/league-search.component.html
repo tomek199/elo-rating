@@ -2,7 +2,7 @@
   <form class="form-inline">
     <div class="input-group input-group-{{size}} mr-sm-2 mb-sm-0">
       <input type="text" name="league" class="form-control" id="leagueToSearchForm" [(ngModel)]="league" [ngbTypeahead]="searchLeague" [inputFormatter]="leagueFormatter" [resultFormatter]="leagueFormatter" placeholder="Type league">
-      <span class="input-group-btn">
+      <span class="input-group-append">
         <button type="submit" class="btn btn-success" (click)="goToLeague()" [disabled]="!leagueFound()">Go to</button>
       </span>
     </div>

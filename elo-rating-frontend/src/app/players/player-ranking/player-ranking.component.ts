@@ -1,8 +1,8 @@
-import { League } from './../../leagues/shared/league.model';
-import { ActivatedRoute } from '@angular/router';
-import { PlayerService } from './../shared/player.service';
-import { Player } from './../shared/player.model';
-import { Component, OnChanges, Input } from '@angular/core';
+import {League} from './../../leagues/shared/league.model';
+import {ActivatedRoute} from '@angular/router';
+import {PlayerService} from './../shared/player.service';
+import {Player} from './../shared/player.model';
+import {Component, Input, OnChanges} from '@angular/core';
 
 @Component({
   selector: 'app-player-ranking',

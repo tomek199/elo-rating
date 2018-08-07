@@ -1,9 +1,8 @@
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Observable';
-import { League } from './../shared/league.model';
-import { LeagueService } from './../shared/league.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { environment } from '../../../environments/environment';
+import {Router} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
+import {League} from './../shared/league.model';
+import {LeagueService} from './../shared/league.service';
+import {Component, Input, OnInit} from '@angular/core';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';

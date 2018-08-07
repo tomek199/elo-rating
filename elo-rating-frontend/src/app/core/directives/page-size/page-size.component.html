@@ -1,5 +1,5 @@
 Page size &nbsp;
-<div class="btn-group" [(ngModel)]="pageSize" (ngModelChange)="setPageSize()" ngbRadioGroup name="pageSize">
+<div class="btn-group btn-group-toggle" [(ngModel)]="pageSize" (ngModelChange)="setPageSize()" ngbRadioGroup name="pageSize">
   <label ngbButtonLabel class="btn btn-sm btn-light">
     <input ngbButton type="radio" [value]="5">5
   </label>

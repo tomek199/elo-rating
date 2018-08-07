@@ -1,7 +1,7 @@
-import { LeagueService } from './../../leagues/shared/league.service';
-import { PlayerService } from './../shared/player.service';
-import { OpponentStats } from './../shared/opponent-stats.model';
-import { Component, OnInit, Input, SimpleChanges, OnChanges } from '@angular/core';
+import {LeagueService} from './../../leagues/shared/league.service';
+import {PlayerService} from './../shared/player.service';
+import {OpponentStats} from './../shared/opponent-stats.model';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'app-player-opponents',

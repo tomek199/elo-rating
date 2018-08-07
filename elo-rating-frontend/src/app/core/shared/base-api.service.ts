@@ -1,7 +1,6 @@
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { environment } from './../../../environments/environment';
-import { Headers } from '@angular/http';
-import { Injectable } from '@angular/core';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {environment} from './../../../environments/environment';
+import {Headers} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 export abstract class BaseApiService {

@@ -1,12 +1,12 @@
-import { PlayerServiceStub } from './../../testing/player-stubs';
-import { PlayerService } from './../shared/player.service';
-import { SmallSpinnerComponent } from './../../core/directives/small-spinner/small-spinner.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { MATCHES } from './../../testing/data/matches';
-import { PlayerCellComponent } from './player-cell.component';
-import { RouterTestingModule } from '@angular/router/testing';
-import { By } from '@angular/platform-browser';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {PlayerServiceStub} from './../../testing/player-stubs';
+import {PlayerService} from './../shared/player.service';
+import {SmallSpinnerComponent} from './../../core/directives/small-spinner/small-spinner.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {MATCHES} from './../../testing/data/matches';
+import {PlayerCellComponent} from './player-cell.component';
+import {RouterTestingModule} from '@angular/router/testing';
+import {By} from '@angular/platform-browser';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
 
 describe('PlayerCellComponent', () => {

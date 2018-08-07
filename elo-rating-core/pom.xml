@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>com.elorating</groupId>
 		<artifactId>elo-rating</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<properties>
@@ -84,7 +84,7 @@
 		<dependency>
 			<groupId>com.elorating</groupId>
 			<artifactId>elo-rating-frontend</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 			<scope>runtime</scope>
 		</dependency>
 	</dependencies>

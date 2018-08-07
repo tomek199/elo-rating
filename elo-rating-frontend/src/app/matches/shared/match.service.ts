@@ -1,9 +1,9 @@
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { Page } from './../../core/utils/pagination/page.model';
-import { Http } from '@angular/http';
-import { Match } from './match.model';
-import { Injectable } from '@angular/core';
-import { BaseApiService } from "../../core/shared/base-api.service";
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {Page} from './../../core/utils/pagination/page.model';
+import {Http} from '@angular/http';
+import {Match} from './match.model';
+import {Injectable} from '@angular/core';
+import {BaseApiService} from "../../core/shared/base-api.service";
 
 
 @Injectable()
@@ -130,6 +130,8 @@ export class MatchService extends BaseApiService {
     let match = queue[index];
     return queue.slice(0, index)
                 .filter(m => m.playerOne.id == match.playerOne.id 
-                          || m.playerTwo.id == match.playerTwo.id).length > 0
+                          || m.playerTwo.id == match.playerTwo.id
+                          || m.playerOne.id == match.playerTwo.id
+                          || m.playerTwo.id == match.playerOne.id).length > 0
   }
 }

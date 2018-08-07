@@ -1,15 +1,14 @@
-import { GoogleAuthService } from './../../../auth/shared/google-auth.service';
-import { GoogleAuthComponentStub, GoogleAuthServiceStub } from './../../../testing/google-stubs';
-import { RouterLinkStub } from './../../../testing/routing-stubs';
-import { FormsModule } from '@angular/forms';
-import { LeagueSearchComponentStub } from './../../../testing/league-stubs';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { async, fakeAsync, tick, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
-import { HttpModule } from '@angular/http';
-import { NavComponent } from './nav.component';
-import { QueueListComponentStub } from './../../../testing/queue-stubs';
+import {GoogleAuthService} from './../../../auth/shared/google-auth.service';
+import {GoogleAuthComponentStub, GoogleAuthServiceStub} from './../../../testing/google-stubs';
+import {RouterLinkStub} from './../../../testing/routing-stubs';
+import {FormsModule} from '@angular/forms';
+import {LeagueSearchComponentStub} from './../../../testing/league-stubs';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {async, ComponentFixture, fakeAsync, TestBed} from '@angular/core/testing';
+import {By} from '@angular/platform-browser';
+import {HttpModule} from '@angular/http';
+import {NavComponent} from './nav.component';
+import {QueueListComponentStub} from './../../../testing/queue-stubs';
 
 describe('NavComponent', () => {
   let component: NavComponent;

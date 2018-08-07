@@ -1,8 +1,8 @@
-import { Component, OnInit} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import 'rxjs/add/operator/map';
-import { LeagueService } from '../shared/league.service';
-import { League } from '../shared/league.model';
+import {LeagueService} from '../shared/league.service';
+import {League} from '../shared/league.model';
 
 @Component({
   selector: 'app-league-detail',

@@ -1,11 +1,10 @@
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { LeagueAddComponent } from './../../leagues/league-add/league-add.component';
-import { ConfirmModalComponent } from './../../core/directives/confirm-modal/confirm-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { PlayerService } from './../shared/player.service';
-import { ActivatedRoute } from '@angular/router';
-import { Player } from './../shared/player.model';
-import { Component, OnInit } from '@angular/core';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {ConfirmModalComponent} from './../../core/directives/confirm-modal/confirm-modal.component';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {PlayerService} from './../shared/player.service';
+import {ActivatedRoute} from '@angular/router';
+import {Player} from './../shared/player.model';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-player-list',

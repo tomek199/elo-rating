@@ -1,8 +1,8 @@
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { Http } from '@angular/http';
-import { Feedback } from './feedback.model';
-import { Injectable } from '@angular/core';
-import { BaseApiService } from "../../core/shared/base-api.service";
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {Http} from '@angular/http';
+import {Feedback} from './feedback.model';
+import {Injectable} from '@angular/core';
+import {BaseApiService} from "../../core/shared/base-api.service";
 
 
 @Injectable()

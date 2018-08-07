@@ -1,4 +1,5 @@
-import { Chart } from './chart.model';
+import {Chart} from './chart.model';
+
 export abstract class ChartBuilder {
   protected chart: Chart;
 

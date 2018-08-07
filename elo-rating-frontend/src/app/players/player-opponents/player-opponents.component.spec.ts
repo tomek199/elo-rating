@@ -1,13 +1,13 @@
-import { LeagueServiceStub } from './../../testing/league-stubs';
-import { LeagueService } from './../../leagues/shared/league.service';
-import { RouterLinkStub } from './../../testing/routing-stubs';
-import { PlayerServiceStub } from './../../testing/player-stubs';
-import { PlayerService } from './../shared/player.service';
-import { OrderModule } from 'ngx-order-pipe';
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {LeagueServiceStub} from './../../testing/league-stubs';
+import {LeagueService} from './../../leagues/shared/league.service';
+import {RouterLinkStub} from './../../testing/routing-stubs';
+import {PlayerServiceStub} from './../../testing/player-stubs';
+import {PlayerService} from './../shared/player.service';
+import {OrderModule} from 'ngx-order-pipe';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PlayerOpponentsComponent } from './player-opponents.component';
+import {PlayerOpponentsComponent} from './player-opponents.component';
 
 describe('PlayerOpponentsComponent', () => {
   let component: PlayerOpponentsComponent;

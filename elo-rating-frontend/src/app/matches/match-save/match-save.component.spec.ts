@@ -1,25 +1,24 @@
-import { LeagueServiceStub } from './../../testing/league-stubs';
-import { LeagueService } from './../../leagues/shared/league.service';
-import { LEAGUES } from './../../testing/data/leagues';
-import { BtnSpinnerDirective } from './../../core/directives/btn-spinner/btn-spinner.directive';
-import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { HttpModule } from '@angular/http';
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { MatchServiceStub } from './../../testing/match-stubs';
-import { MatchService } from './../shared/match.service';
-import { Player } from './../../players/shared/player.model';
-import { RouterTestingModule } from '@angular/router/testing';
-import { By } from '@angular/platform-browser';
-import { NgbTypeahead, NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PlayerServiceStub } from './../../testing/player-stubs';
-import { PlayerService } from './../../players/shared/player.service';
-import { ActivatedRouteStub, RouterStub } from './../../testing/routing-stubs';
-import { async, ComponentFixture, TestBed, tick, fakeAsync, inject } from '@angular/core/testing';
+import {LeagueServiceStub} from './../../testing/league-stubs';
+import {LeagueService} from './../../leagues/shared/league.service';
+import {LEAGUES} from './../../testing/data/leagues';
+import {BtnSpinnerDirective} from './../../core/directives/btn-spinner/btn-spinner.directive';
+import {GoogleAuthServiceStub} from './../../testing/google-stubs';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {MatchServiceStub} from './../../testing/match-stubs';
+import {MatchService} from './../shared/match.service';
+import {Player} from './../../players/shared/player.model';
+import {RouterTestingModule} from '@angular/router/testing';
+import {By} from '@angular/platform-browser';
+import {NgbModule, NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
+import {FormsModule} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {PlayerServiceStub} from './../../testing/player-stubs';
+import {PlayerService} from './../../players/shared/player.service';
+import {ActivatedRouteStub} from './../../testing/routing-stubs';
+import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
 
-import { MatchSaveComponent } from './match-save.component';
+import {MatchSaveComponent} from './match-save.component';
 
 describe('MatchSaveComponent', () => {
   let component: MatchSaveComponent;
@@ -143,20 +142,6 @@ describe('MatchSaveComponent', () => {
     component.setMatchScore();
     fixture.detectChanges();
     expect(component.formValid()).toBeTruthy();
-  }));
-
-  it('should validate match time', fakeAsync(() => {
-    createComponent();
-    component.match.completed = false;
-    fixture.detectChanges();
-    expect(component.isTimeValid()).toBeTruthy();
-    let date = new Date();
-    component.time = {hour: date.getHours(), minute: date.getMinutes() - 10}
-    fixture.detectChanges();
-    expect(component.isTimeValid()).toBeFalsy();    
-    component.time = {hour: date.getHours(), minute: date.getMinutes() + 10}
-    fixture.detectChanges();   
-    expect(component.isTimeValid()).toBeTruthy();    
   }));
 
   it('should create match and go to matches list', inject([Router], fakeAsync((router: Router) => {

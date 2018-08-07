@@ -1,15 +1,14 @@
-import { RouterStub, ActivatedRouteStub } from './../../testing/routing-stubs';
-import { UserServiceStub } from './../../testing/user-stubs';
-import { UserService } from './../shared/user.service';
-import { GoogleAuthServiceStub } from './../../testing/google-stubs';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Player } from './../../players/shared/player.model';
-import { User } from './../shared/user.model';
-import { By } from '@angular/platform-browser';
-import { GoogleAuthService } from './../../auth/shared/google-auth.service';
-import { async, ComponentFixture, TestBed, fakeAsync, inject, tick } from '@angular/core/testing';
+import {ActivatedRouteStub, RouterStub} from './../../testing/routing-stubs';
+import {UserServiceStub} from './../../testing/user-stubs';
+import {UserService} from './../shared/user.service';
+import {GoogleAuthServiceStub} from './../../testing/google-stubs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {User} from './../shared/user.model';
+import {By} from '@angular/platform-browser';
+import {GoogleAuthService} from './../../auth/shared/google-auth.service';
+import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
 
-import { UserCreatePlayerComponent } from './user-create-player.component';
+import {UserCreatePlayerComponent} from './user-create-player.component';
 
 describe('UserCreatePlayerComponent', () => {
   let component: UserCreatePlayerComponent;

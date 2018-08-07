@@ -1,16 +1,16 @@
-import { League } from './../../leagues/shared/league.model';
-import { LEAGUES } from './../../testing/data/leagues';
-import { SpinnerComponent } from './../../core/directives/spinner/spinner.component';
-import { By } from '@angular/platform-browser';
-import { PlayerService } from './../shared/player.service';
-import { PlayerServiceStub } from './../../testing/player-stubs';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute } from '@angular/router';
-import { ActivatedRouteStub } from './../../testing/routing-stubs';
-import { async, ComponentFixture, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import {League} from './../../leagues/shared/league.model';
+import {LEAGUES} from './../../testing/data/leagues';
+import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
+import {By} from '@angular/platform-browser';
+import {PlayerService} from './../shared/player.service';
+import {PlayerServiceStub} from './../../testing/player-stubs';
+import {RouterTestingModule} from '@angular/router/testing';
+import {ActivatedRoute} from '@angular/router';
+import {ActivatedRouteStub} from './../../testing/routing-stubs';
+import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
 
-import { PlayerRankingComponent } from './player-ranking.component';
-import { LeagueSettings } from '../../leagues/shared/league-settings';
+import {PlayerRankingComponent} from './player-ranking.component';
+import {LeagueSettings} from '../../leagues/shared/league-settings';
 
 describe('PlayerRankingComponent', () => {
   let component: PlayerRankingComponent;

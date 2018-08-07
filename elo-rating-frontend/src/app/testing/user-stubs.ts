@@ -1,9 +1,9 @@
-import { UserProfileEmailsNotificationsComponent } from './../users/user-profile-emails-notifications/user-profile-emails-notifications.component';
-import { USERS } from './data/users';
-import { Player } from './../players/shared/player.model';
-import { League } from './../leagues/shared/league.model';
-import { User } from './../users/shared/user.model';
-import { Injectable, Component, Input, OnInit } from '@angular/core';
+import {USERS} from './data/users';
+import {Player} from './../players/shared/player.model';
+import {League} from './../leagues/shared/league.model';
+import {User} from './../users/shared/user.model';
+import {Component, Injectable, Input, OnInit} from '@angular/core';
+import {EmailsNotifications} from '../users/shared/emailsNotifications.model';
 
 @Injectable()
 export class UserServiceStub {
@@ -53,10 +53,14 @@ export class UserServiceStub {
     return user;
   }
 
-  updateTimezone(userId: string, timezone: string): User {
+  updateEmailNotifications(userId: string, emailNotifications: EmailsNotifications): Promise<User> {
+    return Promise.resolve(USERS[0]);
+  }
+
+  updateTimezone(userId: string, timezone: string): Promise<User> {
     let user = USERS[0];
     user.timezone = timezone;
-    return user;
+    return Promise.resolve(user);
   }
 }
 

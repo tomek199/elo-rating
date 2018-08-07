@@ -1,5 +1,4 @@
-import { Injectable, Component, Input, OnInit } from '@angular/core';
-import { NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
+import {Component, Input, OnInit} from '@angular/core';
 
 
 @Component({

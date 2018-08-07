@@ -1,9 +1,9 @@
-import { Observable } from 'rxjs/Observable';
-import { OpponentStats } from './../players/shared/opponent-stats.model';
-import { Match } from './../matches/shared/match.model';
-import { PLAYERS} from './data/players';
-import { Player } from './../players/shared/player.model';
-import { Injectable, OnInit, Component, Input, OnChanges } from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {OpponentStats} from './../players/shared/opponent-stats.model';
+import {Match} from './../matches/shared/match.model';
+import {PLAYERS} from './data/players';
+import {Player} from './../players/shared/player.model';
+import {Component, Injectable, Input, OnChanges, OnInit} from '@angular/core';
 
 @Injectable()
 export class PlayerServiceStub {
@@ -23,21 +23,24 @@ export class PlayerServiceStub {
   }
 
   addPlayer(leagueId: string, player: Player): Promise<Player> {
-    player.id = '111';
+    let lastId = PLAYERS[PLAYERS.length - 1].id;
+    player.id = lastId;
     player.rating = 1000;
     PLAYERS.push(player);
     return Promise.resolve(player);
   }
 
   delete(leagueId: string, playerId: string): Promise<boolean> {
-    PLAYERS.splice(0, 1);
+    let index = PLAYERS.findIndex(player => player.id == playerId);
+    PLAYERS.splice(index, 1);
     return Promise.resolve(true);
   }
 
   update(leagueId: string, player: Player): Promise<Player> {
-    let playerToUpdate = PLAYERS.find(p => p.id == player.id)
+    let playerToUpdate = new Player();
     playerToUpdate.username = player.username;
     playerToUpdate.rating = player.rating;
+    playerToUpdate.active = player.active;
     return Promise.resolve(playerToUpdate);
   }
 

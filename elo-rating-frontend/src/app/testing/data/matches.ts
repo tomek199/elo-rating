@@ -1,6 +1,5 @@
-import { League } from './../../leagues/shared/league.model';
-import { Match } from "app/matches/shared/match.model";
-import { LEAGUES } from "./leagues";
+import {Match} from "app/matches/shared/match.model";
+import {LEAGUES} from "./leagues";
 
 let playerOne = {
   id: '111',
@@ -122,10 +121,19 @@ match8.playerTwo = playerFour;
 match8.date = futureDate;
 match8.completed = false;
 
+let match9 = new Match();
+match9.id = '777';
+match9.league = LEAGUES[0];
+match9.playerTwo = undefined;
+match9.playerOne = undefined;
+match9.scores = { '': 2 };
+match9.date = new Date();
+match9.completed = true;
+
 export const SCHEDULED_MATCHES: Match[] = [
   match5
 ]
 
 export const MATCHES: Match[] = [
-  match1, match2, match3, match4, match5, match6, match7, match8
+  match1, match2, match3, match4, match5, match6, match7, match8, match9
 ];

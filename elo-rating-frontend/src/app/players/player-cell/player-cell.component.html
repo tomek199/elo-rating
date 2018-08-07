@@ -8,13 +8,13 @@
     <a *ngSwitchDefault [routerLink]="['/leagues', match.league.id, 'players', player.id]">{{player.username}}</a>
   </ng-container>
   <ng-container *ngIf="!match.completed">
-    <span class="small" ngbTooltip="Actual rating">{{player?.rating}}</span>
-    <span class="badge badge-light" [ngbTooltip]="forecastTooltip" placement="right" (mouseover)="getForecast()">Forecast</span>
+    &nbsp;<span class="small" ngbTooltip="Actual rating">{{player?.rating}}</span>
+    &nbsp;<span class="badge badge-light" [ngbTooltip]="forecastTooltip" placement="right" (mouseover)="getForecast()">Forecast</span>
   </ng-container>
   <ng-container *ngIf="match.completed">
-    <span class="small" ngbTooltip="Rating after match">{{getRating()}}</span>
-    <span class="octicon small" [ngClass]="{'octicon-triangle-up text-success': getDelta() > 0, 'octicon-triangle-down text-danger': getDelta() < 0}"></span>
-    <span class="small" *ngIf="getDelta() != 0">{{getDelta()}}</span>
+    &nbsp;<span class="small" ngbTooltip="Rating after match">{{getRating()}}</span>
+    &nbsp;<span class="octicon small" [ngClass]="{'octicon-triangle-up text-success': getDelta() > 0, 'octicon-triangle-down text-danger': getDelta() < 0}"></span>
+    <span class="small text-secondary" *ngIf="getDelta() != 0">{{getDelta()}}</span>
   </ng-container> 
 </ng-container>
 <ng-template #forecastTooltip>

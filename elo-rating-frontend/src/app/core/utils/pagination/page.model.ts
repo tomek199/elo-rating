@@ -1,4 +1,5 @@
-import { Sort } from './sort.model';
+import {Sort} from './sort.model';
+
 export class Page<T> {
   content: Array<T>
   totalElements: number;

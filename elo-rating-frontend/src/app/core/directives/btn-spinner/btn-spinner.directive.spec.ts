@@ -1,9 +1,8 @@
-import { setTimeout } from 'timers';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BtnSpinnerDirective } from './btn-spinner.directive';
-import { Component, DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import {BtnSpinnerDirective} from './btn-spinner.directive';
+import {Component, DebugElement} from '@angular/core';
+import {By} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-test-component',

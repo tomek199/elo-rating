@@ -1,7 +1,7 @@
-import { Match } from './../../matches/shared/match.model';
-import { PlayerService } from './../shared/player.service';
-import { Player } from './../shared/player.model';
-import { Component, OnInit, Input } from '@angular/core';
+import {Match} from './../../matches/shared/match.model';
+import {PlayerService} from './../shared/player.service';
+import {Player} from './../shared/player.model';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-player-forecast',

@@ -1,6 +1,6 @@
-import { USERS } from './data/users';
-import { User } from './../users/shared/user.model';
-import { AfterViewInit, Component, Input, Injectable, Output, EventEmitter } from '@angular/core';
+import {USERS} from './data/users';
+import {User} from './../users/shared/user.model';
+import {AfterViewInit, Component, EventEmitter, Injectable, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-google-auth',

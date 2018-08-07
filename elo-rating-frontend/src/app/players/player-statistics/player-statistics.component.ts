@@ -1,14 +1,12 @@
-import { MatchesStatsChart } from './../../core/utils/charts/matches-stats-chart';
-import { ChartBuilder } from 'app/core/utils/charts/chart-builder';
-import { MatchService } from './../../matches/shared/match.service';
-import { PlayerService } from './../shared/player.service';
-import { RatingHistoryChart } from './../../core/utils/charts/rating-history-chart';
-import { ChartDirector } from './../../core/utils/charts/chart-director';
-import { Chart } from './../../core/utils/charts/chart.model';
-import { Match } from './../../matches/shared/match.model';
-import { Player } from './../shared/player.model';
-import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, Input } from '@angular/core';
+import {MatchesStatsChart} from './../../core/utils/charts/matches-stats-chart';
+import {MatchService} from './../../matches/shared/match.service';
+import {PlayerService} from './../shared/player.service';
+import {RatingHistoryChart} from './../../core/utils/charts/rating-history-chart';
+import {ChartDirector} from './../../core/utils/charts/chart-director';
+import {Chart} from './../../core/utils/charts/chart.model';
+import {Player} from './../shared/player.model';
+import {ActivatedRoute} from '@angular/router';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-player-statistics',
@@ -38,7 +36,7 @@ export class PlayerStatisticsComponent implements OnInit {
 
   ngOnInit() {
     this.getLeagueId();
-    this.getPlayerId();
+    this.getPlayerId(); // TODO remove this
     this.getPlayer();
     this.period = 7;
     this.generateStatistics();
