@@ -3,6 +3,7 @@ package com.elorating.service;
 import com.elorating.model.Match;
 import com.elorating.model.OpponentStats;
 import com.elorating.model.Player;
+import com.elorating.model.RatingHistory;
 import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
 import org.springframework.data.domain.Sort;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,5 +44,28 @@ public class PlayerStatsService {
             opponentStats.add(getOpponentStats(playerId, opponent.getId()));
         }
         return opponentStats;
+    }
+
+    public List<RatingHistory> getRatingHistory(String playerId, Date from, Date to, Sort sort) {
+        List<Match> matches = matchRepository.findCompletedByPlayerIdAndDate(playerId, from, to, sort);
+        return buildRatingHistory(matches, playerId);
+    }
+
+    public List<RatingHistory> getRatingHistory(String playerId, Date from, Sort sort) {
+        List<Match> matches = matchRepository.findCompletedByPlayerIdAndDate(playerId, from, sort);
+        return buildRatingHistory(matches, playerId);
+    }
+
+    public List<RatingHistory> getRatingHistory(String playerId, Sort sort) {
+        List<Match> matches = matchRepository.findCompletedByPlayerId(playerId, sort);
+        return buildRatingHistory(matches, playerId);
+    }
+
+    private List<RatingHistory> buildRatingHistory(List<Match> matches, String playerId) {
+        List<RatingHistory> history = new ArrayList<>();
+        for (Match match : matches) {
+            history.add(new RatingHistory(match, playerId));
+        }
+        return history;
     }
 }

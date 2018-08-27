@@ -129,7 +129,7 @@ public class Match {
     }
 
     public int getRating(Player player) {
-        return ratings.get(player.getId());
+        return ratings.get(player.getId()) != null ? ratings.get(player.getId()) : 0;
     }
 
     public void setRating(Player player, Integer rating) {

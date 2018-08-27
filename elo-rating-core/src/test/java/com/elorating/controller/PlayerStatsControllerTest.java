@@ -5,6 +5,7 @@ import com.elorating.model.Match;
 import com.elorating.model.Player;
 import com.elorating.service.MatchService;
 import com.elorating.service.PlayerService;
+import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,7 +13,10 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -42,12 +46,19 @@ public class PlayerStatsControllerTest extends BaseControllerTest {
         league = leagueService.save(new League(null, "League"));
         player = playerService.save(new Player("Player", league));
         opponents = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, - (RETRIES * 10 + 10));
+        calendar.set(Calendar.HOUR, 8);
         for (int i = 0; i < RETRIES; i++) {
             opponents.add(playerService.save(new Player("Opponent" + i, league)));
+            calendar.add(Calendar.DATE, 10);
             for (int j = 0; j < RETRIES; j++) {
-                matchService.save(new Match(player, opponents.get(i), 2, 0, league));
-                matchService.save(new Match(player, opponents.get(i), 2, 2, league));
-                matchService.save(new Match(player, opponents.get(i), 0, 2, league));
+                calendar.add(Calendar.HOUR,1);
+                matchService.save(new Match(player, opponents.get(i), 2, 0, calendar.getTime()));
+                calendar.add(Calendar.HOUR,1);
+                matchService.save(new Match(player, opponents.get(i), 2, 2, calendar.getTime()));
+                calendar.add(Calendar.HOUR,1);
+                matchService.save(new Match(player, opponents.get(i), 0, 2, calendar.getTime()));
             }
         }
     }
@@ -87,5 +98,30 @@ public class PlayerStatsControllerTest extends BaseControllerTest {
             Assert.assertEquals(RETRIES, stat.get("draw"));
             Assert.assertEquals(-1, stat.get("streak"));
         }
+    }
+
+    @Test
+    public void testGetRatingHistory() throws Exception {
+        LocalDate localDate = LocalDate.now();
+        String dateFrom = localDate.minusDays(21).format(DateTimeFormatter.ISO_DATE);
+        String dateTo = localDate.minusDays(11).format(DateTimeFormatter.ISO_DATE);
+        String url = "/api/players/" + player.getId() + "/rating-history"
+                + "?from=" + dateFrom + "&to=" + dateTo;
+        mockMvc.perform(get(url)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", Matchers.hasSize(9)));
+        dateFrom = localDate.minusDays(21).format(DateTimeFormatter.ISO_DATE);
+        url = "/api/players/" + player.getId() + "/rating-history"
+                + "?from=" + dateFrom;
+        mockMvc.perform(get(url)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", Matchers.hasSize(18)));
+        url = "/api/players/" + player.getId() + "/rating-history";
+        mockMvc.perform(get(url)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", Matchers.hasSize(27)));
     }
 }
