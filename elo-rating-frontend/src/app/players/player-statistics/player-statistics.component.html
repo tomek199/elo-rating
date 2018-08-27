@@ -58,9 +58,9 @@
         <h5>Max rating:</h5>
       </div>
       <div class="col-9">
-        <span ngbTooltip="{{maxMatchDate | date:'yyyy-MM-dd HH:mm'}}">{{maxRating}}</span>&nbsp;
+        <span ngbTooltip="{{minMaxRatingStats.series[0].data.date | date:'yyyy-MM-dd HH:mm'}}">{{minMaxRatingStats.series[0].data.rating}}</span>&nbsp;
         <span class="octicon small octicon-triangle-up text-success"></span>
-        <span class="small">{{getMaxRatingDelta()}}</span>
+        <span class="small">{{minMaxRatingStats.series[0].data.delta}}</span>
       </div>
     </div>
     <div class="row my-2">
@@ -68,9 +68,9 @@
         <h5>Min rating:</h5>
       </div>
       <div class="col-9">
-        <span ngbTooltip="{{minMatchDate | date:'yyyy-MM-dd HH:mm'}}">{{minRating}}</span>&nbsp;
+        <span ngbTooltip="{{minMaxRatingStats.series[1].data.date | date:'yyyy-MM-dd HH:mm'}}">{{minMaxRatingStats.series[1].data.rating}}</span>&nbsp;
         <span class="octicon small octicon-triangle-down text-danger"></span>
-        <span class="small">{{getMinRatingDelta()}}</span>
+        <span class="small">{{minMaxRatingStats.series[1].data.delta}}</span>
       </div>
     </div>
     <div class="row my-2" *ngFor="let series of matchesStats.series">

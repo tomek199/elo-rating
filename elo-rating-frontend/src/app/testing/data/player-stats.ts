@@ -30,7 +30,7 @@ export const MATCHES_STATS = {
   setsWon: 6,
   setsLost: 8,
   maxRating: 1200,
-  minRating: 800,
+  minRating: 900,
   maxRatingDate: new Date(),
-  minRatingDate: new Date,
+  minRatingDate: new Date(),
 };
