@@ -56,6 +56,7 @@ import {LeagueWelcomeComponent} from './leagues/league-welcome/league-welcome.co
 import {UserProfileEmailsNotificationsComponent} from './users/user-profile-emails-notifications/user-profile-emails-notifications.component';
 import {UiSwitchModule} from 'angular2-ui-switch';
 import {RodoComponent} from './core/rodo/rodo.component';
+import {PlayerStatsService} from "./players/shared/player-stats.service";
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import {RodoComponent} from './core/rodo/rodo.component';
     UserService,
     AuthGuardService,
     FeedbackService,
+    PlayerStatsService,
     {
       provide: HighchartsStatic,
       useFactory: highchartsFactory

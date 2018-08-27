@@ -61,11 +61,6 @@ export class PlayerServiceStub {
     return Promise.resolve(matches);
   }
 
-  getOpponentsStats(playerId: string): Promise<OpponentStats[]> {
-    // TODO create mock data for opponents stats
-    return Promise.resolve(null);
-  }
-
   findByUsername(leagueId: string, username: string): Observable<Player[]> {
     return Observable.of(PLAYERS);
   }

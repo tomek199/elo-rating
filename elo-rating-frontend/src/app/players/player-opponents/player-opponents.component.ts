@@ -2,6 +2,7 @@ import {LeagueService} from './../../leagues/shared/league.service';
 import {PlayerService} from './../shared/player.service';
 import {OpponentStats} from './../shared/opponent-stats.model';
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {PlayerStatsService} from "../shared/player-stats.service";
 
 @Component({
   selector: 'app-player-opponents',
@@ -20,7 +21,7 @@ export class PlayerOpponentsComponent implements OnChanges {
 
   constructor(
     private leagueService: LeagueService,
-    private playerService: PlayerService
+    private playerStatsService: PlayerStatsService
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -35,7 +36,7 @@ export class PlayerOpponentsComponent implements OnChanges {
   }
 
   private getStats() {
-    this.playerService.getOpponentsStats(this.playerId)
+    this.playerStatsService.getOpponentsStats(this.playerId)
       .then(opponentsStats => this.opponentsStats = opponentsStats);
   }
 

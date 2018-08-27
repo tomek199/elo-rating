@@ -11,7 +11,7 @@ import {GoogleAuthService} from 'app/auth/shared/google-auth.service';
 @Injectable()
 export class PlayerService extends BaseApiService {
 
-  constructor(private http: Http, protected googleAuthService: GoogleAuthService) { 
+  constructor(private http: Http, protected googleAuthService: GoogleAuthService) {
     super(googleAuthService);
   }
 
@@ -68,14 +68,6 @@ export class PlayerService extends BaseApiService {
     return this.http.get(url)
       .toPromise()
       .then(response => response.json() as Match[])
-      .catch(this.handleError);
-  }
-
-  getOpponentsStats(playerId: string): Promise<OpponentStats[]> {
-    let url = `${this.url}/players/${playerId}/opponents`;
-    return this.http.get(url)
-      .toPromise()
-      .then(response => response.json() as OpponentStats[])
       .catch(this.handleError);
   }
 
