@@ -194,10 +194,11 @@ public class Match {
 
     @JsonIgnore
     public boolean isDraw() {
-        if (scores != null && scores.size() > 0)
-            return Objects.equals(scores.get(playerOne.getId()), scores.get(playerTwo.getId()));
-        else
-            return true;
+        if (scores != null && scores.size() > 0) {
+            Set<Integer> values = new HashSet<>(scores.values());
+            return values.size() == 1;
+        }
+        return true;
     }
 
     public boolean isPlayerInMatch(String pid) {
