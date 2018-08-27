@@ -1,9 +1,6 @@
 package com.elorating.service;
 
-import com.elorating.model.Match;
-import com.elorating.model.OpponentStats;
-import com.elorating.model.Player;
-import com.elorating.model.RatingHistory;
+import com.elorating.model.*;
 import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
 import org.springframework.data.domain.Sort;
@@ -67,5 +64,49 @@ public class PlayerStatsService {
             history.add(new RatingHistory(match, playerId));
         }
         return history;
+    }
+
+    public PlayerMatchesStats getPlayerMatchesStats(String playerId) {
+        PlayerMatchesStats statistics = new PlayerMatchesStats();
+        List<Match> matches = matchRepository.findCompletedByPlayerId(playerId);
+        for (Match match : matches) {
+            getMatchRatio(playerId, statistics, match);
+            getSetsRatio(playerId, statistics, match);
+            setMinMaxRating(playerId, statistics, match);
+        }
+        return statistics;
+    }
+
+    private void getMatchRatio(String playerId, PlayerMatchesStats statistics, Match match) {
+        if (match.isDraw())
+            statistics.addDraw();
+        else if (playerId.equals(match.getWinnerId()))
+            statistics.addWon();
+        else
+            statistics.addLost();
+    }
+
+    private void getSetsRatio(String playerId, PlayerMatchesStats statistics, Match match) {
+        for (String key : match.getScores().keySet()) {
+            int sets = match.getScores().get(key);
+            if (playerId.equals(key))
+                statistics.addSetsWon(sets);
+            else
+                statistics.addSetsLost(sets);
+        }
+    }
+
+    private void setMinMaxRating(String playerId, PlayerMatchesStats statistics, Match match) {
+        Player player = new Player();
+        player.setId(playerId);
+        int rating = match.getRating(player);
+        if (rating > statistics.getMaxRating()) {
+            statistics.setMaxRating(rating);
+            statistics.setMaxRatingDate(match.getDate());
+        }
+        if (rating < statistics.getMinRating()) {
+            statistics.setMinRating(rating);
+            statistics.setMinRatingDate(match.getDate());
+        }
     }
 }

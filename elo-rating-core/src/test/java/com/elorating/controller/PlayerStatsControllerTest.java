@@ -124,4 +124,16 @@ public class PlayerStatsControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(27)));
     }
+
+    @Test
+    public void testGetPlayerMatchesStats() throws Exception {
+        String url = "/api/players/" + player.getId() + "/matches-stats";
+        mockMvc.perform(get(url)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.won", is(9)))
+                .andExpect(jsonPath("$.lost", is(9)))
+                .andExpect(jsonPath("$.setsWon", is(36)))
+                .andExpect(jsonPath("$.setsLost", is(36)));
+    }
 }

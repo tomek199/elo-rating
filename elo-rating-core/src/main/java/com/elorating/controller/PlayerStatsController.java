@@ -1,6 +1,7 @@
 package com.elorating.controller;
 
 import com.elorating.model.OpponentStats;
+import com.elorating.model.PlayerMatchesStats;
 import com.elorating.model.RatingHistory;
 import com.elorating.service.PlayerStatsService;
 import com.elorating.utils.SortUtils;
@@ -65,5 +66,14 @@ public class PlayerStatsController {
             history = playerStatsService.getRatingHistory(playerId, sort);
 
         return new ResponseEntity<>(history, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/players/{playerId}/matches-stats", method = RequestMethod.GET)
+    @ApiOperation(value = "Get player matches statistics",
+            notes = "Return player matches statistics")
+    public ResponseEntity<PlayerMatchesStats> getPlayerMatchesStats(@PathVariable String playerId) {
+        PlayerMatchesStats statistics = playerStatsService.getPlayerMatchesStats(playerId);
+        return new ResponseEntity<>(statistics, HttpStatus.OK);
     }
 }
