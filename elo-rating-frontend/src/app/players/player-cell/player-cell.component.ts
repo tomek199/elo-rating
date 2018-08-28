@@ -84,4 +84,8 @@ export class PlayerCellComponent implements OnInit {
     let secondScore = match.scores[this.getOpponentId()];
     return `${firstScore} : ${secondScore}`;
   }
+
+  showImage(player: Player): boolean {
+    return player != undefined && player.user != undefined && !this.match.completed;
+  }
 }

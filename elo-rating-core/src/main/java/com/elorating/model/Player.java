@@ -1,5 +1,6 @@
 package com.elorating.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -15,7 +16,8 @@ public class Player {
     @JsonIgnoreProperties({"users", "players"})
     protected League league;
     @DBRef
-    @JsonIgnoreProperties({"leagues", "players"})
+    @JsonIgnoreProperties({"googleId", "name", "givenName", "familyName", "invitationToken",
+                "leagues", "players", "emailsNotifications", "timezone"})
     protected User user;
     private PlayerStats statistics;
 
@@ -44,6 +46,7 @@ public class Player {
         return 1 / (1 + Math.pow(10, ((double)(opponent.rating - rating)) / 400));
     }
 
+    @JsonIgnore
     public int getKFactor() {
         if (rating < 2100) {
             return 32;

@@ -13,15 +13,15 @@ public class Match {
     private String id;
 
     @DBRef
-    @JsonIgnoreProperties("users")
+    @JsonIgnoreProperties({"users", "settings"})
     private League league;
 
     @DBRef
-    @JsonIgnoreProperties({"user", "league"})
+    @JsonIgnoreProperties({"league"})
     private Player playerOne;
 
     @DBRef
-    @JsonIgnoreProperties({"user", "league"})
+    @JsonIgnoreProperties({"league"})
     private Player playerTwo;
 
     private Map<String, Integer> scores;
