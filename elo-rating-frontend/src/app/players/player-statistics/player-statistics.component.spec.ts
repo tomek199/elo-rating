@@ -12,6 +12,7 @@ import {async, ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/t
 import {PlayerStatisticsComponent} from './player-statistics.component';
 import {PlayerStatsService} from "../shared/player-stats.service";
 import {PlayerStatsServiceStub} from "../../testing/player-stats.stubs";
+import {PLAYERS} from "../../testing/data/players";
 
 describe('PlayerStatisticsComponent', () => {
   let component: PlayerStatisticsComponent;
@@ -43,7 +44,7 @@ describe('PlayerStatisticsComponent', () => {
     activatedRoute.testParams = {league_id: '123', player_id: '111'};
     fixture.detectChanges();
     tick();
-  };
+  }
 
   it('should create', fakeAsync(() => {
     createComponent();
@@ -71,7 +72,8 @@ describe('PlayerStatisticsComponent', () => {
   it('should present rating history chart', fakeAsync(() => {
     createComponent();
     fixture.detectChanges();
-    let debugElement = fixture.debugElement.query(By.css('div.card div.card-body div.row div.col-8 chart'));    
+    tick();
+    let debugElement = fixture.debugElement.query(By.css('div.card div.card-body div.row div.col-8 chart'));
     expect(debugElement.nativeElement).toBeTruthy();
   }));
 
@@ -109,13 +111,14 @@ describe('PlayerStatisticsComponent', () => {
     createComponent();
     component.ratingHistory.series[0].data = [];
     fixture.detectChanges();
+    tick();
     let debugElement = fixture.debugElement.query(By.css('div.card div.card-body div.row div.col-8 div.alert.alert-info'));
     expect(debugElement.nativeElement).toBeTruthy();
   }));
 
   it('should display alert if rating history chart is empty', fakeAsync(() => {
     createComponent();
-    component.matchesStats.series = [];
+    component.player = PLAYERS.find(player => player.id == '222');
     fixture.detectChanges();
     expect(component.displayAlert()).toBeTruthy();
     let debugElement = fixture.debugElement.query(By.css('div.alert.alert-info'));

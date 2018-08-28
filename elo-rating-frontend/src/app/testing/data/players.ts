@@ -54,6 +54,15 @@ export const PLAYERS: Player[] = [
     active: true, 
     user: null, 
     league: null,
+    statistics: { won: 3, lost: 2, draw: 1 }
+  },
+  {
+    id: '222',
+    username: 'Player for statistics no matches',
+    rating: 1000,
+    active: true,
+    user: null,
+    league: null,
     statistics: { won: 0, lost: 0, draw: 0 }
   },
   {

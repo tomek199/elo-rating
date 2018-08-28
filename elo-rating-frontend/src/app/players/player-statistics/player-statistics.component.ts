@@ -88,13 +88,15 @@ export class PlayerStatisticsComponent implements OnInit {
   }
 
   hasMatches(): boolean {
-    return this.matchesStats != undefined && this.matchesStats.series.length > 0;
+    if (this.player == undefined)
+      return false;
+    return this.player.statistics.won + this.player.statistics.draw + this.player.statistics.lost > 0;
   }
 
   displayAlert(): boolean {
-    if (this.matchesStats)
-      return this.matchesStats.series.length == 0;
-    return false;
+    if (this.player == undefined)
+      return false;
+    return this.player.statistics.won + this.player.statistics.draw + this.player.statistics.lost == 0;
   }
 
   hasRatingHistory(): boolean {
