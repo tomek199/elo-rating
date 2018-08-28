@@ -1,8 +1,6 @@
 package com.elorating.service;
 
-import com.elorating.model.Match;
-import com.elorating.model.OpponentStats;
-import com.elorating.model.Player;
+import com.elorating.model.*;
 import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
 import org.springframework.data.domain.Sort;
@@ -10,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,5 +41,72 @@ public class PlayerStatsService {
             opponentStats.add(getOpponentStats(playerId, opponent.getId()));
         }
         return opponentStats;
+    }
+
+    public List<RatingHistory> getRatingHistory(String playerId, Date from, Date to, Sort sort) {
+        List<Match> matches = matchRepository.findCompletedByPlayerIdAndDate(playerId, from, to, sort);
+        return buildRatingHistory(matches, playerId);
+    }
+
+    public List<RatingHistory> getRatingHistory(String playerId, Date from, Sort sort) {
+        List<Match> matches = matchRepository.findCompletedByPlayerIdAndDate(playerId, from, sort);
+        return buildRatingHistory(matches, playerId);
+    }
+
+    public List<RatingHistory> getRatingHistory(String playerId, Sort sort) {
+        List<Match> matches = matchRepository.findCompletedByPlayerId(playerId, sort);
+        return buildRatingHistory(matches, playerId);
+    }
+
+    private List<RatingHistory> buildRatingHistory(List<Match> matches, String playerId) {
+        List<RatingHistory> history = new ArrayList<>();
+        for (Match match : matches) {
+            history.add(new RatingHistory(match, playerId));
+        }
+        return history;
+    }
+
+    public PlayerMatchesStats getPlayerMatchesStats(String playerId) {
+        PlayerMatchesStats statistics = new PlayerMatchesStats();
+        List<Match> matches = matchRepository.findCompletedByPlayerId(playerId);
+        for (Match match : matches) {
+            getMatchRatio(playerId, statistics, match);
+            getSetsRatio(playerId, statistics, match);
+            setMinMaxRating(playerId, statistics, match);
+        }
+        return statistics;
+    }
+
+    private void getMatchRatio(String playerId, PlayerMatchesStats statistics, Match match) {
+        if (match.isDraw())
+            statistics.addDraw();
+        else if (playerId.equals(match.getWinnerId()))
+            statistics.addWon();
+        else
+            statistics.addLost();
+    }
+
+    private void getSetsRatio(String playerId, PlayerMatchesStats statistics, Match match) {
+        for (String key : match.getScores().keySet()) {
+            int sets = match.getScores().get(key);
+            if (playerId.equals(key))
+                statistics.addSetsWon(sets);
+            else
+                statistics.addSetsLost(sets);
+        }
+    }
+
+    private void setMinMaxRating(String playerId, PlayerMatchesStats statistics, Match match) {
+        Player player = new Player();
+        player.setId(playerId);
+        int rating = match.getRating(player);
+        if (rating > statistics.getMaxRating()) {
+            statistics.setMaxRating(rating);
+            statistics.setMaxRatingDate(match.getDate());
+        }
+        if (rating < statistics.getMinRating()) {
+            statistics.setMinRating(rating);
+            statistics.setMinRatingDate(match.getDate());
+        }
     }
 }

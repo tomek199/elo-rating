@@ -1,5 +1,6 @@
 <ng-container *ngIf="match">
   <ng-container [ngSwitch]="getPlayerType()">
+    <img class="rounded player-image" [src]="player.user.pictureUrl" *ngIf="showImage(player)">&nbsp;
     <em *ngSwitchCase="'deleted'" class="text-warning">deleted player</em>
     <span *ngSwitchCase="'current'">{{player.username}}</span>
     <a *ngSwitchCase="'disabled'" [routerLink]="['/leagues', match.league.id, 'players', player.id]">

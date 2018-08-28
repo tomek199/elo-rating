@@ -13,15 +13,15 @@ public class Match {
     private String id;
 
     @DBRef
-    @JsonIgnoreProperties("users")
+    @JsonIgnoreProperties({"users", "settings"})
     private League league;
 
     @DBRef
-    @JsonIgnoreProperties({"user", "league"})
+    @JsonIgnoreProperties({"league"})
     private Player playerOne;
 
     @DBRef
-    @JsonIgnoreProperties({"user", "league"})
+    @JsonIgnoreProperties({"league"})
     private Player playerTwo;
 
     private Map<String, Integer> scores;
@@ -129,7 +129,7 @@ public class Match {
     }
 
     public int getRating(Player player) {
-        return ratings.get(player.getId());
+        return ratings.get(player.getId()) != null ? ratings.get(player.getId()) : 0;
     }
 
     public void setRating(Player player, Integer rating) {
@@ -194,10 +194,11 @@ public class Match {
 
     @JsonIgnore
     public boolean isDraw() {
-        if (scores != null && scores.size() > 0)
-            return Objects.equals(scores.get(playerOne.getId()), scores.get(playerTwo.getId()));
-        else
-            return true;
+        if (scores != null && scores.size() > 0) {
+            Set<Integer> values = new HashSet<>(scores.values());
+            return values.size() == 1;
+        }
+        return true;
     }
 
     public boolean isPlayerInMatch(String pid) {
