@@ -4,7 +4,6 @@ import com.elorating.model.League;
 import com.elorating.model.Match;
 import com.elorating.model.Player;
 import com.elorating.service.MatchService;
-import com.elorating.service.PlayerMatchesService;
 import com.elorating.service.PlayerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -50,6 +49,15 @@ public class PlayerController {
         Sort sortByRating = new Sort(Sort.Direction.DESC, "rating");
         List<Player> ranking = playerService.getRanking(leagueId, sortByRating);
         return new ResponseEntity<>(ranking, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/leagues/{leagueId}/players/find-by-name", method = RequestMethod.GET)
+    @ApiOperation(value = "Find by name", notes = "Find player by name")
+    public ResponseEntity<List<Player>> findByName(@PathVariable String leagueId,
+                                                   @RequestParam String name) {
+        List<Player> players = playerService.findByLeagueIdAndUsernameRegex(leagueId, name);
+        return new ResponseEntity<>(players, HttpStatus.OK);
     }
 
     @CrossOrigin

@@ -78,6 +78,19 @@ public class PlayerControllerTest extends BaseControllerTest {
     }
 
     @Test
+    public void testFindByName() throws Exception {
+        String playerName = "Player ToFind";
+        Player playerToFind = new Player(playerName, league);
+        playerService.save(playerToFind);
+        String url = "/api/leagues/" + league.getId() + "/players/find-by-name?name=pyTd";
+        mockMvc.perform(get(url)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", Matchers.hasSize(1)))
+                .andExpect(jsonPath("$[0].username", is(playerName)));
+    }
+
+    @Test
     public void testCreate() throws Exception {
         Player player = new Player("testplayer");
         String playerJson = objectMapper.writeValueAsString(player);

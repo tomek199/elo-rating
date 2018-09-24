@@ -19,5 +19,7 @@ public interface PlayerRepository extends MongoRepository<Player, String> {
 
     List<Player> findByLeagueIdAndUsernameLikeIgnoreCase(String leagueId, String username);
 
+    List<Player> findByLeagueIdAndUsernameRegex(String leagueId, String username);
+
     void deleteByLeagueId(String leagueId);
 }

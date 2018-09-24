@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -55,6 +56,17 @@ public class PlayerService implements RepositoryService<Player> {
 
     public List<Player> findByLeagueIdAndUsernameLikeIgnoreCase(String leagueId, String username) {
         return playerRepository.findByLeagueIdAndUsernameLikeIgnoreCase(leagueId, username);
+    }
+
+    public List<Player> findByLeagueIdAndUsernameRegex(String leagueId, String username) {
+        if (username.length() > 1) {
+            StringBuilder regex = new StringBuilder("(?i).*");
+            for (int i = 0; i < username.length(); i++) {
+                regex.append(username.charAt(i)).append(".*");
+            }
+            return playerRepository.findByLeagueIdAndUsernameRegex(leagueId, regex.toString());
+        }
+        return new ArrayList<>();
     }
 
     public void restorePlayers(Match match) {
