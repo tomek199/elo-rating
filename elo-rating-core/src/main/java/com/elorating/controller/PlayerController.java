@@ -60,15 +60,6 @@ public class PlayerController {
     }
 
     @CrossOrigin
-    @RequestMapping(value = "/leagues/{leagueId}/players/find-by-name", method = RequestMethod.GET)
-    @ApiOperation(value = "Find by name", notes = "Find player by name")
-    public ResponseEntity<List<Player>> findByName(@PathVariable String leagueId,
-                                                   @RequestParam String name) {
-        List<Player> players = playerService.findByLeagueIdAndUsernameRegex(leagueId, name);
-        return new ResponseEntity<>(players, HttpStatus.OK);
-    }
-
-    @CrossOrigin
     @RequestMapping(value = "/leagues/{leagueId}/players", method = RequestMethod.POST)
     @ApiOperation(value = "Create player", notes = "Create player")
     public ResponseEntity<Player> create(@PathVariable String leagueId, @RequestBody Player player) {
@@ -109,9 +100,18 @@ public class PlayerController {
     @CrossOrigin
     @RequestMapping(value = "/leagues/{leagueId}/players/find-by-username", method = RequestMethod.GET)
     @ApiOperation(value = "Find by username", notes = "Find player by username and league")
-    public ResponseEntity<List<Player>> findByUsernameAndLeague(@PathVariable String leagueId,
+    public ResponseEntity<List<Player>> findByUsername(@PathVariable String leagueId,
                                                                 @RequestParam String username) {
-        List<Player> players = playerService.findByLeagueIdAndUsernameLikeIgnoreCase(leagueId, username);
+        List<Player> players = playerService.findByLeagueIdAndUsernameRegex(leagueId, username);
+        return new ResponseEntity<>(players, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/leagues/{leagueId}/players/find-active-by-username", method = RequestMethod.GET)
+    @ApiOperation(value = "Find active by username", notes = "Find active player by username and league")
+    public ResponseEntity<List<Player>> findActiveByUsername(@PathVariable String leagueId,
+                                                             @RequestParam String username) {
+        List<Player> players = playerService.findActiveByLeagueIdAndUsernameRegex(leagueId, username);
         return new ResponseEntity<>(players, HttpStatus.OK);
     }
 }

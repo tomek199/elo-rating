@@ -58,19 +58,28 @@ public class PlayerService implements RepositoryService<Player> {
         return playerRepository.getRanking(id, sort);
     }
 
-    public List<Player> findByLeagueIdAndUsernameLikeIgnoreCase(String leagueId, String username) {
-        return playerRepository.findByLeagueIdAndUsernameLikeIgnoreCase(leagueId, username);
-    }
-
     public List<Player> findByLeagueIdAndUsernameRegex(String leagueId, String username) {
-        if (username.length() > 1) {
-            StringBuilder regex = new StringBuilder("(?i).*");
-            for (int i = 0; i < username.length(); i++) {
-                regex.append(username.charAt(i)).append(".*");
-            }
-            return playerRepository.findByLeagueIdAndUsernameRegex(leagueId, regex.toString());
+        if (!username.isEmpty()) {
+            String regex = buildUsernameRegex(username);
+            return playerRepository.findByLeagueIdAndUsernameRegex(leagueId, regex);
         }
         return new ArrayList<>();
+    }
+
+    public List<Player> findActiveByLeagueIdAndUsernameRegex(String leagueId, String username) {
+        if (!username.isEmpty()) {
+            String regex = buildUsernameRegex(username);
+            return playerRepository.findByLeagueIdAndActiveIsTrueAndUsernameRegex(leagueId, regex);
+        }
+        return new ArrayList<>();
+    }
+
+    private String buildUsernameRegex(String username) {
+        StringBuilder regex = new StringBuilder("(?i).*");
+        for (int i = 0; i < username.length(); i++) {
+            regex.append(username.charAt(i)).append(".*");
+        }
+        return regex.toString();
     }
 
     public void restorePlayers(Match match) {

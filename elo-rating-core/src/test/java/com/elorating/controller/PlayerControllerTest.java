@@ -65,9 +65,9 @@ public class PlayerControllerTest extends BaseControllerTest {
 
     @Test
     public void testGetActiveCount() throws Exception {
-        Player notActivePlayer = new Player("Not active player", league);
-        notActivePlayer.setActive(false);
-        playerService.save(notActivePlayer);
+        Player inactivePlayer = new Player("Not active player", league);
+        inactivePlayer.setActive(false);
+        playerService.save(inactivePlayer);
         String url = "/api/leagues/" + league.getId() + "/active-players-count";
         mockMvc.perform(get(url)
                 .contentType(contentType))
@@ -87,19 +87,6 @@ public class PlayerControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$[0].rating", is(1400)))
                 .andExpect(jsonPath("$[1].rating", is(1300)))
                 .andExpect(jsonPath("$[2].rating", is(1200)));
-    }
-
-    @Test
-    public void testFindByName() throws Exception {
-        String playerName = "Player ToFind";
-        Player playerToFind = new Player(playerName, league);
-        playerService.save(playerToFind);
-        String url = "/api/leagues/" + league.getId() + "/players/find-by-name?name=pyTd";
-        mockMvc.perform(get(url)
-                .contentType(contentType))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", Matchers.hasSize(1)))
-                .andExpect(jsonPath("$[0].username", is(playerName)));
     }
 
     @Test
@@ -145,7 +132,7 @@ public class PlayerControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void testFindByUsernameAndLeague() throws Exception {
+    public void testFindByUsername() throws Exception {
         String url = "/api/leagues/" + league.getId() + "/players/find-by-username?username=yer_";
         playerService.save(new Player("Other player", league));
         League otherLeague = leagueService.save(new League(null, "Other league"));
@@ -154,5 +141,21 @@ public class PlayerControllerTest extends BaseControllerTest {
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(RETRIES)));
+    }
+
+    @Test
+    public void testFindActiveByUsername() throws Exception {
+        String playerName = "Player ToFind";
+        Player playerToFind = new Player(playerName, league);
+        playerService.save(playerToFind);
+        Player inactivePlayer = new Player(playerName, league);
+        inactivePlayer.setActive(false);
+        playerService.save(inactivePlayer);
+        String url = "/api/leagues/" + league.getId() + "/players/find-active-by-username?username=pyTd";
+        mockMvc.perform(get(url)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", Matchers.hasSize(1)))
+                .andExpect(jsonPath("$[0].username", is(playerName)));
     }
 }
