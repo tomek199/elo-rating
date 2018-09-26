@@ -43,6 +43,14 @@ public class PlayerController {
     }
 
     @CrossOrigin
+    @RequestMapping(value = "/leagues/{leagueId}/active-players-count", method = RequestMethod.GET)
+    @ApiOperation(value = "Get active players count", notes = "Return active players count")
+    public ResponseEntity<Long> getActiveCount(@PathVariable String leagueId) {
+        Long playersCount = playerService.getActivePlayersCountByLeague(leagueId);
+        return new ResponseEntity<>(playersCount, HttpStatus.OK);
+    }
+
+    @CrossOrigin
     @RequestMapping(value = "/leagues/{leagueId}/players/ranking", method = RequestMethod.GET)
     @ApiOperation(value = "Get players ranking", notes = "Return active players list by league id")
     public ResponseEntity<List<Player>> getRanking(@PathVariable String leagueId) {

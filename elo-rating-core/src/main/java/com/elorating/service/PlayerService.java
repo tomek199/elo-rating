@@ -50,6 +50,10 @@ public class PlayerService implements RepositoryService<Player> {
         return playerRepository.findByLeagueId(id);
     }
 
+    public Long getActivePlayersCountByLeague(String leaugeId) {
+        return playerRepository.countByLeagueIdAndActiveIsTrue(leaugeId);
+    }
+
     public List<Player> getRanking(String id, Sort sort) {
         return playerRepository.getRanking(id, sort);
     }

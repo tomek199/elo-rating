@@ -64,6 +64,18 @@ public class PlayerControllerTest extends BaseControllerTest {
     }
 
     @Test
+    public void testGetActiveCount() throws Exception {
+        Player notActivePlayer = new Player("Not active player", league);
+        notActivePlayer.setActive(false);
+        playerService.save(notActivePlayer);
+        String url = "/api/leagues/" + league.getId() + "/active-players-count";
+        mockMvc.perform(get(url)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(RETRIES)));
+    }
+
+    @Test
     public void testGetRanking() throws Exception {
         Player inactivePlayer = new Player("InactivePlayer", league);
         inactivePlayer.setActive(false);

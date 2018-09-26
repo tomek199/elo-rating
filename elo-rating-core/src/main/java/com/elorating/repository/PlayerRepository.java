@@ -14,6 +14,8 @@ public interface PlayerRepository extends MongoRepository<Player, String> {
 
     List<Player> findByIdNotAndLeagueId(String id, String leagueId);
 
+    Long countByLeagueIdAndActiveIsTrue(String leagueId);
+
     @Query(value = "{'league.id': ?0, 'active': true}")
     List<Player> getRanking(String id, Sort sort);
 
