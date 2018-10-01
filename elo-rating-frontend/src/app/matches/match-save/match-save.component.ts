@@ -20,7 +20,7 @@ export class MatchSaveComponent implements OnInit {
   leagueId: string;
   scores: number[];
   allowDraws: boolean;
-  players: Player[];
+  hasActivePlayers: boolean;
   match: Match;
   playerOneScore: number;
   playerTwoScore: number;
@@ -48,7 +48,7 @@ export class MatchSaveComponent implements OnInit {
   ngOnInit() {
     this.getLeagueId();
     this.setMatch();
-    this.getPlayers();
+    this.getActivePlayersCount()
   }
 
   private getLeagueId() {
@@ -102,16 +102,18 @@ export class MatchSaveComponent implements OnInit {
       });
   }
 
-  private getPlayers() {
-    this.playerService.getPlayers(this.leagueId)
-      .then(players => this.players = players.filter(p => p.active === true));
+  private getActivePlayersCount() {
+    this.playerService.getActiverPlayersCount(this.leagueId)
+      .then(result => {
+        this.hasActivePlayers = (result > 1);
+      });
   }
 
   private getScheduledMatches() {
     this.matchService.getScheduledMatches(this.leagueId)
       .then(matches => {
         this.initScheduledMatches(matches);
-      })
+      });
   }
 
   private initScheduledMatches(matches: Match[]) {
@@ -163,26 +165,22 @@ export class MatchSaveComponent implements OnInit {
 
   searchPlayer = (text$: Observable<string>) =>
     text$
-      .debounceTime(100)
-      .map(term => term === '' ? []
-        : this.players.filter(player => player.username.toLowerCase().includes(term.toLowerCase())));
+      .debounceTime(300)
+      .distinctUntilChanged()
+      .switchMap(term => term.length < 2
+        ? Observable.of([])
+        : this.playerService.findActiveByUsername(this.leagueId, term));
 
   playerFormatter(player: Player): string {
     return player.username ? player.username + " (" + player.rating + ")": '';
   }
 
   hasMinTwoPlayers(): boolean {
-    if (this.players) {
-      return this.players.length > 1;
-    } else {
-      return false;
-    }
+    return this.hasActivePlayers === true;
   }
 
   displayAlert(): boolean {
-    if (this.players)
-      return this.players.length < 2;
-    return false;
+    return this.hasActivePlayers === false;
   }
 
   isCompleteMode(): boolean {

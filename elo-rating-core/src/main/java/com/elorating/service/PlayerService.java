@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -49,12 +50,41 @@ public class PlayerService implements RepositoryService<Player> {
         return playerRepository.findByLeagueId(id);
     }
 
+    public Long getActivePlayersCountByLeague(String leaugeId) {
+        return playerRepository.countByLeagueIdAndActiveIsTrue(leaugeId);
+    }
+
     public List<Player> getRanking(String id, Sort sort) {
         return playerRepository.getRanking(id, sort);
     }
 
-    public List<Player> findByLeagueIdAndUsernameLikeIgnoreCase(String leagueId, String username) {
-        return playerRepository.findByLeagueIdAndUsernameLikeIgnoreCase(leagueId, username);
+    public List<Player> findByLeagueIdAndUsername(String leagueId, String username) {
+        if (username.length() == 2) {
+            String regex = buildInitialsRegex(username);
+            System.out.println(regex);
+            return playerRepository.findByLeagueIdAndUsernameRegex(leagueId, regex);
+        } else if (username.length() > 2) {
+            return playerRepository.findByLeagueIdAndUsernameLikeIgnoreCase(leagueId, username);
+        }
+        return new ArrayList<>();
+    }
+
+    public List<Player> findActiveByLeagueIdAndUsername(String leagueId, String username) {
+        if (username.length() == 2) {
+            String regex = buildInitialsRegex(username);
+            return playerRepository.findByLeagueIdAndActiveIsTrueAndUsernameRegex(leagueId, regex);
+        } else if (username.length() > 2) {
+            return playerRepository.findByLeagueIdAndActiveIsTrueAndUsernameLikeIgnoreCase(leagueId, username);
+        }
+        return new ArrayList<>();
+    }
+
+    private String buildInitialsRegex(String username) {
+        StringBuilder regex = new StringBuilder("(?i)^");
+        String[] split = username.split("");
+        regex.append(split[0]).append(".*\\s");
+        regex.append(split[1]).append(".*");
+        return regex.toString();
     }
 
     public void restorePlayers(Match match) {
