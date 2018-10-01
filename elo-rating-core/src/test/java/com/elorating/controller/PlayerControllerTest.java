@@ -133,14 +133,24 @@ public class PlayerControllerTest extends BaseControllerTest {
 
     @Test
     public void testFindByUsername() throws Exception {
-        String url = "/api/leagues/" + league.getId() + "/players/find-by-username?username=yer_";
         playerService.save(new Player("Other player", league));
         League otherLeague = leagueService.save(new League(null, "Other league"));
         playerService.save(new Player("Player_20", otherLeague));
+        String url = "/api/leagues/" + league.getId() + "/players/find-by-username?username=yer_";
         mockMvc.perform(get(url)
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(RETRIES)));
+    }
+
+    @Test
+    public void testFindByUsernameInitials() throws Exception {
+        playerService.save(new Player("Player Initials", league));
+        String url = "/api/leagues/" + league.getId() + "/players/find-by-username?username=pi";
+        mockMvc.perform(get(url)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", Matchers.hasSize(1)));
     }
 
     @Test
@@ -151,7 +161,19 @@ public class PlayerControllerTest extends BaseControllerTest {
         Player inactivePlayer = new Player(playerName, league);
         inactivePlayer.setActive(false);
         playerService.save(inactivePlayer);
-        String url = "/api/leagues/" + league.getId() + "/players/find-active-by-username?username=pyTd";
+        String url = "/api/leagues/" + league.getId() + "/players/find-active-by-username?username=tofi";
+        mockMvc.perform(get(url)
+                .contentType(contentType))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", Matchers.hasSize(1)))
+                .andExpect(jsonPath("$[0].username", is(playerName)));
+    }
+
+    @Test
+    public void testFindActiveByUsernameInitials() throws Exception {
+        String playerName = "Player ToFind";
+        playerService.save(new Player(playerName, league));
+        String url = "/api/leagues/" + league.getId() + "/players/find-active-by-username?username=pt";
         mockMvc.perform(get(url)
                 .contentType(contentType))
                 .andExpect(status().isOk())

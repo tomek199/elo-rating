@@ -19,6 +19,10 @@ public interface PlayerRepository extends MongoRepository<Player, String> {
     @Query(value = "{'league.id': ?0, 'active': true}")
     List<Player> getRanking(String id, Sort sort);
 
+    List<Player> findByLeagueIdAndUsernameLikeIgnoreCase(String leagueId, String username);
+
+    List<Player> findByLeagueIdAndActiveIsTrueAndUsernameLikeIgnoreCase(String leagueId, String username);
+
     List<Player> findByLeagueIdAndUsernameRegex(String leagueId, String username);
 
     List<Player> findByLeagueIdAndActiveIsTrueAndUsernameRegex(String leagueId, String username);

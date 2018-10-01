@@ -58,27 +58,32 @@ public class PlayerService implements RepositoryService<Player> {
         return playerRepository.getRanking(id, sort);
     }
 
-    public List<Player> findByLeagueIdAndUsernameRegex(String leagueId, String username) {
-        if (!username.isEmpty()) {
-            String regex = buildUsernameRegex(username);
+    public List<Player> findByLeagueIdAndUsername(String leagueId, String username) {
+        if (username.length() == 2) {
+            String regex = buildInitialsRegex(username);
+            System.out.println(regex);
             return playerRepository.findByLeagueIdAndUsernameRegex(leagueId, regex);
+        } else if (username.length() > 2) {
+            return playerRepository.findByLeagueIdAndUsernameLikeIgnoreCase(leagueId, username);
         }
         return new ArrayList<>();
     }
 
-    public List<Player> findActiveByLeagueIdAndUsernameRegex(String leagueId, String username) {
-        if (!username.isEmpty()) {
-            String regex = buildUsernameRegex(username);
+    public List<Player> findActiveByLeagueIdAndUsername(String leagueId, String username) {
+        if (username.length() == 2) {
+            String regex = buildInitialsRegex(username);
             return playerRepository.findByLeagueIdAndActiveIsTrueAndUsernameRegex(leagueId, regex);
+        } else if (username.length() > 2) {
+            return playerRepository.findByLeagueIdAndActiveIsTrueAndUsernameLikeIgnoreCase(leagueId, username);
         }
         return new ArrayList<>();
     }
 
-    private String buildUsernameRegex(String username) {
-        StringBuilder regex = new StringBuilder("(?i).*");
-        for (int i = 0; i < username.length(); i++) {
-            regex.append(username.charAt(i)).append(".*");
-        }
+    private String buildInitialsRegex(String username) {
+        StringBuilder regex = new StringBuilder("(?i)^");
+        String[] split = username.split("");
+        regex.append(split[0]).append(".*\\s");
+        regex.append(split[1]).append(".*");
         return regex.toString();
     }
 

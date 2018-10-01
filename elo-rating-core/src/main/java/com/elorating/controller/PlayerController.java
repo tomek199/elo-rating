@@ -102,7 +102,7 @@ public class PlayerController {
     @ApiOperation(value = "Find by username", notes = "Find player by username and league")
     public ResponseEntity<List<Player>> findByUsername(@PathVariable String leagueId,
                                                                 @RequestParam String username) {
-        List<Player> players = playerService.findByLeagueIdAndUsernameRegex(leagueId, username);
+        List<Player> players = playerService.findByLeagueIdAndUsername(leagueId, username);
         return new ResponseEntity<>(players, HttpStatus.OK);
     }
 
@@ -111,7 +111,7 @@ public class PlayerController {
     @ApiOperation(value = "Find active by username", notes = "Find active player by username and league")
     public ResponseEntity<List<Player>> findActiveByUsername(@PathVariable String leagueId,
                                                              @RequestParam String username) {
-        List<Player> players = playerService.findActiveByLeagueIdAndUsernameRegex(leagueId, username);
+        List<Player> players = playerService.findActiveByLeagueIdAndUsername(leagueId, username);
         return new ResponseEntity<>(players, HttpStatus.OK);
     }
 }
