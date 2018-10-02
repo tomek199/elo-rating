@@ -133,10 +133,10 @@ public class PlayerControllerTest extends BaseControllerTest {
 
     @Test
     public void testFindByUsername() throws Exception {
-        playerService.save(new Player("Other player", league));
+        playerService.save(new Player("Other", league));
         League otherLeague = leagueService.save(new League(null, "Other league"));
         playerService.save(new Player("Player_20", otherLeague));
-        String url = "/api/leagues/" + league.getId() + "/players/find-by-username?username=yer_";
+        String url = "/api/leagues/" + league.getId() + "/players/find-by-username?username=yer";
         mockMvc.perform(get(url)
                 .contentType(contentType))
                 .andExpect(status().isOk())
@@ -151,6 +151,15 @@ public class PlayerControllerTest extends BaseControllerTest {
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(1)));
+    }
+
+    @Test
+    public void testFindByUsernameInitialsIncorrectPattern() throws Exception {
+        String url = "/api/leagues/" + league.getId() + "/players/find-by-username?username=..";
+        mockMvc.perform(get(url)
+                .contentType(contentType))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error[0]", is("Incorrect username pattern")));
     }
 
     @Test
@@ -179,5 +188,14 @@ public class PlayerControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", Matchers.hasSize(1)))
                 .andExpect(jsonPath("$[0].username", is(playerName)));
+    }
+
+    @Test
+    public void testFindActiveByUsernameInitialsIncorrectPattern() throws Exception {
+        String url = "/api/leagues/" + league.getId() + "/players/find-active-by-username?username=..";
+        mockMvc.perform(get(url)
+                .contentType(contentType))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error[0]", is("Incorrect username pattern")));
     }
 }
