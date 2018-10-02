@@ -16,7 +16,7 @@ export class PlayerServiceStub {
     return Promise.resolve(PLAYERS.find(player => player.id === id));
   }
 
-  getActiverPlayersCount(leagueId: string): Promise<number> {
+  getActivePlayersCount(leagueId: string): Promise<number> {
     return Promise.resolve(5);
   }
 

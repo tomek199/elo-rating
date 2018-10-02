@@ -103,7 +103,7 @@ export class MatchSaveComponent implements OnInit {
   }
 
   private getActivePlayersCount() {
-    this.playerService.getActiverPlayersCount(this.leagueId)
+    this.playerService.getActivePlayersCount(this.leagueId)
       .then(result => {
         this.hasActivePlayers = (result > 1);
       });
