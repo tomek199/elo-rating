@@ -34,6 +34,7 @@
     "core-js": "^2.5.3",
     "ng2-cookies": "^1.0.12",
     "ngx-order-pipe": "^2.0.1",
+    "octicons": "^8.1.0",
     "rxjs": "^6.2.1",
     "rxjs-compat": "^6.2.1",
     "ts-helpers": "^1.1.2",
