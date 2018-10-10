@@ -10,3 +10,9 @@
 .nav-link.dropdown-toggle {
     cursor: pointer;
 }
+
+.octicon {
+  display: inline-block;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}

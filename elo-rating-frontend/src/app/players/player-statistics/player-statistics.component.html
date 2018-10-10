@@ -60,7 +60,7 @@
         </div>
         <div class="col-9">
           <span ngbTooltip="{{minMaxRatingStats.series[0].data.date | date:'yyyy-MM-dd HH:mm'}}">{{minMaxRatingStats.series[0].data.rating}}</span>&nbsp;
-          <span class="octicon small octicon-triangle-up text-success"></span>
+          <span appOcticon="triangle-up" class="text-success"></span>
           <span class="small">{{minMaxRatingStats.series[0].data.delta}}</span>
         </div>
       </div>
@@ -70,7 +70,7 @@
         </div>
         <div class="col-9">
           <span ngbTooltip="{{minMaxRatingStats.series[1].data.date | date:'yyyy-MM-dd HH:mm'}}">{{minMaxRatingStats.series[1].data.rating}}</span>&nbsp;
-          <span class="octicon small octicon-triangle-down text-danger"></span>
+          <span appOcticon="triangle-down" class="text-danger"></span>
           <span class="small">{{minMaxRatingStats.series[1].data.delta}}</span>
         </div>
       </div>

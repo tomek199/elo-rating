@@ -66,7 +66,7 @@ describe('PlayerCellComponent', () => {
     let ratingInfo = fixture.debugElement.queryAll(By.css('span.small'));
     expect(ratingInfo[0].nativeElement.textContent).toEqual('1200');    
     expect(ratingInfo[2].nativeElement.textContent).toEqual('20');        
-    let ratingArrow = fixture.debugElement.query(By.css('span.octicon-triangle-up.text-success'));
+    let ratingArrow = fixture.debugElement.query(By.css('span.text-success'));
     expect(ratingArrow).toBeTruthy();
   })
 
@@ -80,7 +80,7 @@ describe('PlayerCellComponent', () => {
     let ratingInfo = fixture.debugElement.queryAll(By.css('span.small'));
     expect(ratingInfo[0].nativeElement.textContent).toEqual('800');    
     expect(ratingInfo[2].nativeElement.textContent).toEqual('-20');        
-    let ratingArrow = fixture.debugElement.query(By.css('span.octicon-triangle-down.text-danger'));
+    let ratingArrow = fixture.debugElement.query(By.css('span.text-danger'));
     expect(ratingArrow).toBeTruthy();
   })
 
@@ -93,7 +93,7 @@ describe('PlayerCellComponent', () => {
     let ratingInfo = fixture.debugElement.queryAll(By.css('span.small'));
     expect(ratingInfo[0].nativeElement.textContent).toEqual('1500');    
     expect(ratingInfo[2].nativeElement.textContent).toEqual('-20');        
-    let ratingArrow = fixture.debugElement.query(By.css('span.octicon-triangle-down.text-danger'));
+    let ratingArrow = fixture.debugElement.query(By.css('span.text-danger'));
     expect(ratingArrow).toBeTruthy();
   })
 
@@ -106,7 +106,7 @@ describe('PlayerCellComponent', () => {
     let ratingInfo = fixture.debugElement.queryAll(By.css('span.small'));
     expect(ratingInfo[0].nativeElement.textContent).toEqual('1700');    
     expect(ratingInfo[2].nativeElement.textContent).toEqual('20');        
-    let ratingArrow = fixture.debugElement.query(By.css('span.octicon-triangle-up.text-success'));
+    let ratingArrow = fixture.debugElement.query(By.css('span.text-success'));
     expect(ratingArrow).toBeTruthy();
   })
 
