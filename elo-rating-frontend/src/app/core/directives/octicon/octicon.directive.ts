@@ -24,21 +24,7 @@ export class OcticonDirective implements OnInit {
   private renderIcon() {
     const el: HTMLElement = this.elementRef.nativeElement;
     el.innerHTML = octicons[this.appOcticon].toSVG();
-    this.setColor(el);
     this.setSize(el);
-  }
-
-  private setColor(element: HTMLElement): void {
-    let computedColor = getComputedStyle(element).color;
-    let rgb = computedColor.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-    if (rgb) {
-      let color = "#" + this.hex(rgb[1]) + this.hex(rgb[2]) + this.hex(rgb[3]);
-      this.renderer.setStyle(element.firstChild, 'color', color);
-    }
-  }
-
-  private hex(x): string {
-    return ("0" + parseInt(x).toString(16)).slice(-2);
   }
 
   private setSize(element: HTMLElement): void {

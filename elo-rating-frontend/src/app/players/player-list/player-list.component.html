@@ -8,7 +8,10 @@
 <div class="mb-3 mt-3" *ngIf="hasActivePlayers()">
   <ul class="nav justify-content-end">
     <li>
-      <a [routerLink]="['/leagues', leagueId, 'players', 'add']" *ngIf="isAuthorized()">Add player</a>
+      <a [routerLink]="['/leagues', leagueId, 'players', 'add']" *ngIf="isAuthorized()">
+        <span appOcticon="plus"></span>
+        Add player
+      </a>
     </li>
   </ul>
 </div>
@@ -59,7 +62,10 @@
 <div class="mb-3 mt-3">
   <ul class="nav justify-content-end">
     <li>
-      <a [routerLink]="['/leagues', leagueId, 'players', 'add']" *ngIf="isAuthorized()">Add player</a>
+      <a [routerLink]="['/leagues', leagueId, 'players', 'add']" *ngIf="isAuthorized()">
+        <span appOcticon="plus"></span>
+        Add player
+      </a>
     </li>
   </ul>
 </div>

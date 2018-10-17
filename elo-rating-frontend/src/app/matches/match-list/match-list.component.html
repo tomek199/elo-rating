@@ -32,11 +32,18 @@
       <app-player-cell [match]="match" [player]="match.playerTwo"></app-player-cell>
     </td>
     <td class="text-right" *ngIf="isAuthorized()">
-      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="editMatch(match.id)">Edit</button>
-      <button type="button" class="btn btn-outline-primary btn-sm ml-1" (click)="completeMatch(match.id)"
-              [disabled]="hasRelatedMatchIncomplete(i)">Complete
+      <button type="button" class="btn btn-outline-secondary btn-sm"
+              (click)="editMatch(match.id)" ngbTooltip="Edit">
+        <span appOcticon="pencil"></span>
       </button>
-      <button type="button" class="btn btn-outline-danger btn-sm ml-1" (click)="openDeleteModal(match.id)">Delete
+      <button type="button" class="btn btn-outline-primary btn-sm ml-1"
+              (click)="completeMatch(match.id)" ngbTooltip="Complete"
+              [disabled]="hasRelatedMatchIncomplete(i)">
+        <span appOcticon="repo-push"></span>
+      </button>
+      <button type="button" class="btn btn-outline-danger btn-sm ml-1"
+              (click)="openDeleteModal(match.id)" ngbTooltip="Delete">
+        <span appOcticon="trashcan"></span>
       </button>
     </td>
   </tr>
@@ -45,7 +52,10 @@
 <app-spinner [resource]="page"></app-spinner>
 <h2 *ngIf="hasCompletedMatches()">
   Completed matches list
-  <a class="btn btn-link float-right" [routerLink]="['/leagues', leagueId, 'matches', 'add']" *ngIf="isAuthorized()">Add match</a>
+  <a class="btn btn-link float-right" [routerLink]="['/leagues', leagueId, 'matches', 'add']" *ngIf="isAuthorized()">
+    <span appOcticon="plus"></span>
+    Add match
+  </a>
 </h2>
 <table id="completedMatches" class="shadedtable table table-bordered" *ngIf="hasCompletedMatches()">
   <thead class="thead-light">
@@ -96,6 +106,9 @@
 </div>
 <ul class="nav justify-content-end">
   <li>
-    <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" *ngIf="isAuthorized()">Add match</a>
+    <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" *ngIf="isAuthorized()">
+      <span appOcticon="plus"></span>
+      Add match
+    </a>
   </li>
 </ul>

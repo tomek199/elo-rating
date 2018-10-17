@@ -27,9 +27,18 @@
             <app-player-cell [match]="match" [player]="match.playerTwo" [currentPlayerId]="playerId"></app-player-cell>
           </td>
           <td class="text-right" *ngIf="isAuthorized()">
-            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="editMatch(match.id)">Edit</button>
-            <button type="button" class="btn btn-outline-primary btn-sm ml-1" (click)="completeMatch(match.id)">Complete</button>
-            <button type="button" class="btn btn-outline-danger btn-sm ml-1" (click)="openDeleteModal(match.id)">Delete</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm"
+                    (click)="editMatch(match.id)" ngbTooltip="Edit">
+              <span appOcticon="pencil"></span>
+            </button>
+            <button type="button" class="btn btn-outline-primary btn-sm ml-1"
+                    (click)="completeMatch(match.id)" ngbTooltip="Complete">
+              <span appOcticon="repo-push"></span>
+            </button>
+            <button type="button" class="btn btn-outline-danger btn-sm ml-1"
+                    (click)="openDeleteModal(match.id)" ngbTooltip="Delete">
+              <span appOcticon="trashcan"></span>
+            </button>
           </td>
         </tr>
       </tbody>
