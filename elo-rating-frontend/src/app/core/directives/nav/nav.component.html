@@ -12,10 +12,19 @@
         <app-queue-list *ngIf="leagueId" [leagueId]="leagueId"></app-queue-list>
       </ul>
       <form id="addMatch" class="form-inline mr-4" *ngIf="isAuthorized()">
-        <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="btn btn-primary btn-sm" role="button">Add match</a>
+        <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="btn btn-primary btn-sm" role="button">
+          <span appOcticon="plus"></span>
+          Add match
+        </a>
       </form>
       <app-league-search [size]="'sm'"></app-league-search>
-      <app-google-auth [leagueId]="leagueId"></app-google-auth> 
+      <ul class="navbar-nav">
+        <li class="nav-item" id="leagueSettingsBtn">
+          <a [routerLink]="['/leagues', leagueId, 'edit']" *ngIf="isAuthorized()"
+             class="nav-link" appOcticon="gear" size="md" ngbTooltip="League settings" placement="bottom"></a>
+        </li>
+      </ul>
+      <app-google-auth [leagueId]="leagueId"></app-google-auth>
     </div>
   </div>
 </nav>

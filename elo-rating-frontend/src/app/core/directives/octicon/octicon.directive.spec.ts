@@ -6,11 +6,7 @@ import {By} from "@angular/platform-browser";
 @Component({
   selector: 'app-test-octicon-component',
   template: `
-    <style>
-      .color-red {color: rgb(255, 0, 0)}
-    </style>
     <span appOcticon="book"></span>
-    <span class="color-red" appOcticon="alert"></span>
     <span appOcticon="gear" size="lg"></span>
     <span appOcticon="no-existing"></span>
   `
@@ -51,15 +47,8 @@ describe('OcticonDirective', () => {
     expect(icon.attributes['appOcticon']).toEqual('book');
   });
 
-  it('should have icon with color inherited from parent element', () => {
-    const icon = icons[1];
-    expect(icon.attributes['appOcticon']).toEqual('alert');
-    let iconColor = getComputedStyle(icon.nativeElement).color;
-    expect(iconColor).toEqual('rgb(255, 0, 0)');
-  });
-
   it('should have icon size large', () => {
-    const icon = icons[2];
+    const icon = icons[1];
     expect(icon.attributes['appOcticon']).toEqual('gear');
     expect(icon.attributes['size']).toEqual('lg');
   });

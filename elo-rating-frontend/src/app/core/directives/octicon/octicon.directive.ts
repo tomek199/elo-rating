@@ -24,22 +24,16 @@ export class OcticonDirective implements OnInit {
   private renderIcon() {
     const el: HTMLElement = this.elementRef.nativeElement;
     el.innerHTML = octicons[this.appOcticon].toSVG();
-    const icon: Node = el.firstChild;
-
-    const computedColor = getComputedStyle(el).color;
-    this.renderer.setStyle(icon, 'color', this.rgb2hex(computedColor).toString());
-
-    if (this.size == 'lg') {
-      this.renderer.setStyle(icon, 'width', '18');
-      this.renderer.setStyle(icon, 'height', '100%');
-    }
+    this.setSize(el);
   }
 
-  private rgb2hex(rgb): string {
-    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-    function hex(x) {
-      return ("0" + parseInt(x).toString(16)).slice(-2);
+  private setSize(element: HTMLElement): void {
+    if (this.size == 'md') {
+      this.renderer.setStyle(element.firstChild, 'width', '18');
+      this.renderer.setStyle(element.firstChild, 'height', '100%');
+    } else if (this.size == 'lg') {
+      this.renderer.setStyle(element.firstChild, 'width', '24');
+      this.renderer.setStyle(element.firstChild, 'height', '100%');
     }
-    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
   }
 }

@@ -15,7 +15,6 @@
         <div class=" dropdown-divider"></div>
         <a [routerLink]="['leagues', leagueId, 'players', getCurrentPlayerId()]" class="dropdown-item" *ngIf="getCurrentPlayerId()">Your player</a>
         <a [routerLink]="['leagues', leagueId, 'users', 'invite']" class="dropdown-item" *ngIf="isAuthorized()">Invite user</a>
-        <a [routerLink]="['leagues', leagueId, 'edit']" class="dropdown-item" *ngIf="isAuthorized()">League settings</a>
         <div class=" dropdown-divider" *ngIf="isAuthorized()"></div>
         <a [routerLink]="getProfileUrl()" class="dropdown-item" *ngIf="isAuthenticated()">Your profile</a>        
         <button class="dropdown-item" (click)="signOut()">Sign out</button>
