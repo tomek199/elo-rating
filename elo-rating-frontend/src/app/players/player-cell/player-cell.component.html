@@ -14,7 +14,8 @@
   </ng-container>
   <ng-container *ngIf="match.completed">
     &nbsp;<span class="small" ngbTooltip="Rating after match">{{getRating()}}</span>
-    &nbsp;<span class="octicon small" [ngClass]="{'octicon-triangle-up text-success': getDelta() > 0, 'octicon-triangle-down text-danger': getDelta() < 0}"></span>
+    &nbsp;<span class="small text-success" appOcticon="triangle-up" *ngIf="getDelta() > 0"></span>
+    &nbsp;<span class="small text-danger" appOcticon="triangle-down" *ngIf="getDelta() < 0"></span>
     <span class="small text-secondary" *ngIf="getDelta() != 0">{{getDelta()}}</span>
   </ng-container> 
 </ng-container>
@@ -22,8 +23,9 @@
   <app-small-spinner *ngIf="forecast === undefined"></app-small-spinner>
   <ng-container *ngIf="forecast !== undefined">
     <div *ngFor="let match of forecast">
-      <span>{{getMatchScore(match)}} &nbsp;</span>
-      <span class="octicon" [ngClass]="{'octicon-triangle-up text-success': match.ratingDelta > 0, 'octicon-triangle-down text-danger': match.ratingDelta < 0}"></span>
+      <span>{{getMatchScore(match)}}</span>
+      &nbsp;<span class="small text-success" appOcticon="triangle-up" *ngIf="match.ratingDelta > 0"></span>
+      &nbsp;<span class="small text-danger" appOcticon="triangle-down" *ngIf="match.ratingDelta < 0"></span>
       <span [ngClass]="{'text-success': match.ratingDelta > 0, 'text-danger': match.ratingDelta < 0}">{{match.ratingDelta}}</span>
     </div>
   </ng-container>

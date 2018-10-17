@@ -7,7 +7,6 @@ import {GoogleAuthService} from './../../auth/shared/google-auth.service';
 import {SpinnerComponent} from './../../core/directives/spinner/spinner.component';
 import {MatchServiceStub} from './../../testing/match-stubs';
 import {MatchService} from './../shared/match.service';
-import {Player} from './../../players/shared/player.model';
 import {RouterTestingModule} from '@angular/router/testing';
 import {By} from '@angular/platform-browser';
 import {NgbModule, NgbTypeahead} from '@ng-bootstrap/ng-bootstrap';
@@ -19,6 +18,7 @@ import {ActivatedRouteStub} from './../../testing/routing-stubs';
 import {async, ComponentFixture, fakeAsync, inject, TestBed, tick} from '@angular/core/testing';
 
 import {MatchSaveComponent} from './match-save.component';
+import {PLAYERS} from "../../testing/data/players";
 
 describe('MatchSaveComponent', () => {
   let component: MatchSaveComponent;
@@ -113,15 +113,14 @@ describe('MatchSaveComponent', () => {
     expect(component.time.minute).toEqual(component.match.date.getMinutes());    
   }));
 
-  it('should have players list', fakeAsync(() => {
+  it('should check if has active players', fakeAsync(() => {
     createComponent();
-    expect(component.players.length).toBeGreaterThan(0);
+    expect(component.hasMinTwoPlayers()).toBeTruthy();
   }));
 
-  it('should display alert if players are less than two', fakeAsync(() => {
+  it('should display alert if does not have at least two active players', fakeAsync(() => {
     createComponent();
-    let playersCount = component.players.length;
-    component.players = [new Player()];
+    component.hasActivePlayers = false;
     fixture.detectChanges();
     let debugElement = fixture.debugElement.query(By.css('div.alert.alert-info'));
     expect(component.displayAlert()).toBeTruthy();
@@ -131,14 +130,14 @@ describe('MatchSaveComponent', () => {
   it('should validate Match model', fakeAsync(() => {
     createComponent();
     expect(component.formValid()).toBeFalsy();
-    component.match.playerOne = component.players[0];
-    component.match.playerTwo = component.players[0];
+    component.match.playerOne = PLAYERS[0];
+    component.match.playerTwo = PLAYERS[0];
     component.match.completed = true;
     component.playerOneScore = 2;
     component.playerTwoScore = 1;
     fixture.detectChanges();
     expect(component.formValid()).toBeFalsy();
-    component.match.playerTwo = component.players[1];
+    component.match.playerTwo = PLAYERS[1];
     component.setMatchScore();
     fixture.detectChanges();
     expect(component.formValid()).toBeTruthy();
@@ -147,8 +146,8 @@ describe('MatchSaveComponent', () => {
   it('should create match and go to matches list', inject([Router], fakeAsync((router: Router) => {
     createComponent();
     const spy = spyOn(router, 'navigate');
-    component.match.playerOne = component.players[0];
-    component.match.playerTwo = component.players[1];
+    component.match.playerOne = PLAYERS[0];
+    component.match.playerTwo = PLAYERS[1];
     component.playerOneScore = 2;
     component.playerTwoScore = 1;
     component.setMatchScore();

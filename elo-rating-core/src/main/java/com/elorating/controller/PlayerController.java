@@ -4,7 +4,6 @@ import com.elorating.model.League;
 import com.elorating.model.Match;
 import com.elorating.model.Player;
 import com.elorating.service.MatchService;
-import com.elorating.service.PlayerMatchesService;
 import com.elorating.service.PlayerService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -12,14 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api")
+@Validated
 @Api(value = "players", description = "Players API")
 public class PlayerController {
+
+    private static final String USERNAME_REGEX = "[0-9a-zA-Z\\s]+";
 
     @Autowired
     private PlayerService playerService;
@@ -41,6 +45,14 @@ public class PlayerController {
     public ResponseEntity<Player> getById(@PathVariable String id) {
         Player player = playerService.getById(id);
         return new ResponseEntity<>(player, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/leagues/{leagueId}/active-players-count", method = RequestMethod.GET)
+    @ApiOperation(value = "Get active players count", notes = "Return active players count")
+    public ResponseEntity<Long> getActiveCount(@PathVariable String leagueId) {
+        Long playersCount = playerService.getActivePlayersCountByLeague(leagueId);
+        return new ResponseEntity<>(playersCount, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -93,9 +105,20 @@ public class PlayerController {
     @CrossOrigin
     @RequestMapping(value = "/leagues/{leagueId}/players/find-by-username", method = RequestMethod.GET)
     @ApiOperation(value = "Find by username", notes = "Find player by username and league")
-    public ResponseEntity<List<Player>> findByUsernameAndLeague(@PathVariable String leagueId,
-                                                                @RequestParam String username) {
-        List<Player> players = playerService.findByLeagueIdAndUsernameLikeIgnoreCase(leagueId, username);
+    public ResponseEntity<List<Player>> findByUsername(@PathVariable String leagueId,
+                                @Pattern(regexp = USERNAME_REGEX, message = "Incorrect username pattern")
+                                @RequestParam String username) {
+        List<Player> players = playerService.findByLeagueIdAndUsername(leagueId, username);
+        return new ResponseEntity<>(players, HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/leagues/{leagueId}/players/find-active-by-username", method = RequestMethod.GET)
+    @ApiOperation(value = "Find active by username", notes = "Find active player by username and league")
+    public ResponseEntity<List<Player>> findActiveByUsername(@PathVariable String leagueId,
+                                @Pattern(regexp = USERNAME_REGEX, message = "Incorrect username pattern")
+                                @RequestParam String username) {
+        List<Player> players = playerService.findActiveByLeagueIdAndUsername(leagueId, username);
         return new ResponseEntity<>(players, HttpStatus.OK);
     }
 }

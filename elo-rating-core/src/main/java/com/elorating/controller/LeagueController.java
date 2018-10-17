@@ -63,10 +63,6 @@ public class LeagueController {
                 notes = "Return leagues list filtered by league name")
     public ResponseEntity<List<League>> findByName(@RequestParam String name) {
         List<League> leagues = leagueService.findByName(name);
-        if (leagues.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-
         return new ResponseEntity<>(leagues, HttpStatus.OK);
     }
 

@@ -16,6 +16,10 @@ export class PlayerServiceStub {
     return Promise.resolve(PLAYERS.find(player => player.id === id));
   }
 
+  getActivePlayersCount(leagueId: string): Promise<number> {
+    return Promise.resolve(5);
+  }
+
   getRanking(leagueId: string): Promise<Player[]> {
     return Promise.resolve(PLAYERS
       .sort((playerOne, playerTwo) => playerTwo.rating - playerOne.rating)
@@ -62,6 +66,10 @@ export class PlayerServiceStub {
   }
 
   findByUsername(leagueId: string, username: string): Observable<Player[]> {
+    return Observable.of(PLAYERS);
+  }
+
+  findActiveByUsername(leagueId: string, username: string): Observable<Player[]> {
     return Observable.of(PLAYERS);
   }
 }

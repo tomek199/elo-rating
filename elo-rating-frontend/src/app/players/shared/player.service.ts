@@ -31,6 +31,14 @@ export class PlayerService extends BaseApiService {
       .catch(this.handleError);
   }
 
+  getActivePlayersCount(leagueId: string): Promise<number> {
+    let url = `${this.url}/leagues/${leagueId}/active-players-count`;
+    return this.http.get(url)
+      .toPromise()
+      .then(response => response.json() as number)
+      .catch(this.handleError);
+  }
+
   addPlayer(leagueId: string, player: Player): Promise<Player> {
     let url = `${this.url}/leagues/${leagueId}/players`;
     return this.http.post(url, JSON.stringify(player), { headers: this.generateHeaders() })
@@ -75,5 +83,17 @@ export class PlayerService extends BaseApiService {
     let url = `${this.url}/leagues/${leagueId}/players/find-by-username?username=${username}`;
     return this.http.get(url)
       .map(response => response.json() as Player[])
+      .catch(this.handleValidationError);
+  }
+
+  findActiveByUsername(leagueId: string, username: string): Observable<Player[]> {
+    let url = `${this.url}/leagues/${leagueId}/players/find-active-by-username?username=${username}`;
+    return this.http.get(url)
+      .map(response => response.json() as Player[])
+      .catch(this.handleValidationError);
+  }
+
+  private handleValidationError(): Observable<any> {
+    return Observable.of([]);
   }
 }

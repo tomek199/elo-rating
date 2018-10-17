@@ -57,6 +57,7 @@ import {UserProfileEmailsNotificationsComponent} from './users/user-profile-emai
 import {UiSwitchModule} from 'angular2-ui-switch';
 import {RodoComponent} from './core/rodo/rodo.component';
 import {PlayerStatsService} from "./players/shared/player-stats.service";
+import { OcticonDirective } from './core/directives/octicon/octicon.directive';
 
 @NgModule({
   declarations: [
@@ -98,7 +99,8 @@ import {PlayerStatsService} from "./players/shared/player-stats.service";
     LeagueWelcomeComponent,
     UserProfileLeaguesComponent,
     UserProfileEmailsNotificationsComponent,
-    RodoComponent
+    RodoComponent,
+    OcticonDirective
   ],
   imports: [
     BrowserModule,
