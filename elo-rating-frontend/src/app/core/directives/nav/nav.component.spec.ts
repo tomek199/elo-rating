@@ -9,6 +9,7 @@ import {By} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
 import {NavComponent} from './nav.component';
 import {QueueListComponentStub} from './../../../testing/queue-stubs';
+import {debug} from "util";
 
 describe('NavComponent', () => {
   let component: NavComponent;
@@ -72,14 +73,19 @@ describe('NavComponent', () => {
   it('should have "Add match" button', fakeAsync(() => {
     let debugElement = fixture.debugElement.query(By.css('nav form#addMatch a'));
     expect(debugElement).toBeTruthy();
-    expect(debugElement.nativeElement.textContent).toEqual('Add match');
+    expect(debugElement.nativeElement.textContent).toContain('Add match');
   }));
 
-  it('should have app-league-search component for not selected league', () => {
+  it('should have app-league-search component league', () => {
     component.leagueId = undefined;
     component.ngOnChanges();
     fixture.detectChanges();
     let debugElement = fixture.debugElement.query(By.directive(LeagueSearchComponentStub));
+    expect(debugElement).toBeTruthy();
+  });
+
+  it('should have league settings button', () => {
+    let debugElement = fixture.debugElement.query(By.css('nav ul li#leagueSettingsBtn'));
     expect(debugElement).toBeTruthy();
   });
 
