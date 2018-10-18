@@ -29,22 +29,34 @@
     </li>
   </ul>
   <ngb-tabset>
-    <ngb-tab title="Matches">
+    <ngb-tab>
+      <ng-template ngbTabTitle>
+        <span appOcticon="list-unordered"></span>&nbsp;Matches
+      </ng-template>
       <ng-template ngbTabContent>
         <app-player-matches [leagueId]="leagueId" [playerId]="player.id"></app-player-matches>    
       </ng-template>
     </ngb-tab>
-    <ngb-tab title="Statistics">
+    <ngb-tab>
+      <ng-template ngbTabTitle>
+        <span appOcticon="graph"></span>&nbsp;Statistics
+      </ng-template>
       <ng-template ngbTabContent>
         <app-player-statistics [leagueId]="leagueId" [playerId]="player.id"></app-player-statistics>    
       </ng-template>
     </ngb-tab>
-    <ngb-tab title="Forecast">
+    <ngb-tab>
+      <ng-template ngbTabTitle>
+        <span appOcticon="pulse"></span>&nbsp;Forecast
+      </ng-template>
       <ng-template ngbTabContent>
         <app-player-forecast [leagueId]="leagueId" [playerId]="player.id"></app-player-forecast>    
       </ng-template>
     </ngb-tab>
-    <ngb-tab title="Opponents">
+    <ngb-tab>
+      <ng-template ngbTabTitle>
+        <span appOcticon="organization"></span>&nbsp;Opponents
+      </ng-template>
       <ng-template ngbTabContent>
         <app-player-opponents [leagueId]="leagueId" [playerId]="player.id"></app-player-opponents>
       </ng-template>

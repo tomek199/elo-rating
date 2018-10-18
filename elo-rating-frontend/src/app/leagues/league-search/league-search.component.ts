@@ -7,6 +7,7 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/Rx';
+import {of} from "rxjs";
 
 @Component({
   selector: 'app-league-search',
@@ -39,7 +40,7 @@ export class LeagueSearchComponent implements OnInit {
       .distinctUntilChanged()
       .switchMap(term => term.length > 1
       ? this.leagueService.findByName(term)
-      : Observable.of([]))
+      : of([]))
 
   leagueFormatter(league: League): string {
     return league.name ? league.name : '';

@@ -12,6 +12,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {PlayerService} from '../shared/player.service';
+import {of} from "rxjs";
 
 @Component({
   selector: 'app-player-matches',
@@ -170,7 +171,7 @@ export class PlayerMatchesComponent implements OnInit, OnChanges, OnDestroy {
       .debounceTime(300)
       .distinctUntilChanged()
       .switchMap(term => term.length < 2 
-        ? Observable.of([]) 
+        ? of([])
         : this.playerService.findByUsername(this.leagueId, term));
 
   playerFormatter(player: Player): string {
