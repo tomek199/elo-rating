@@ -4,6 +4,7 @@ import {League} from './../leagues/shared/league.model';
 import {Observable} from 'rxjs/Observable';
 import {Component, Injectable, Input, OnChanges, OnInit} from '@angular/core';
 import 'rxjs/add/observable/of';
+import {of} from "rxjs";
 
 @Injectable()
 export class LeagueServiceStub {
@@ -26,7 +27,7 @@ export class LeagueServiceStub {
   }
 
   findByName(name: string): Observable<League[]> {
-    return Observable.of(LEAGUES.filter(league => league.name.includes(name)));
+    return of(LEAGUES.filter(league => league.name.includes(name)));
   }
 
   create(league: League) {

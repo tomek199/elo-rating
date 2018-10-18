@@ -10,6 +10,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import 'rxjs/add/operator/debounceTime';
 import {NgbPopover} from "@ng-bootstrap/ng-bootstrap";
+import {of} from "rxjs";
 
 @Component({
   selector: 'app-match-save',
@@ -168,7 +169,7 @@ export class MatchSaveComponent implements OnInit {
       .debounceTime(300)
       .distinctUntilChanged()
       .switchMap(term => term.length < 2
-        ? Observable.of([])
+        ? of([])
         : this.playerService.findActiveByUsername(this.leagueId, term));
 
   playerFormatter(player: Player): string {

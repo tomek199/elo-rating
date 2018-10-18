@@ -1,11 +1,11 @@
 import {Observable} from 'rxjs/Observable';
 import {Match} from './../../matches/shared/match.model';
-import {OpponentStats} from './opponent-stats.model';
 import {Http} from '@angular/http';
 import {Player} from './player.model';
 import {Injectable} from '@angular/core';
 import {BaseApiService} from "../../core/shared/base-api.service";
 import {GoogleAuthService} from 'app/auth/shared/google-auth.service';
+import {of} from "rxjs";
 
 
 @Injectable()
@@ -94,6 +94,6 @@ export class PlayerService extends BaseApiService {
   }
 
   private handleValidationError(): Observable<any> {
-    return Observable.of([]);
+    return of([]);
   }
 }
