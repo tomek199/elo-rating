@@ -33,8 +33,8 @@ public class MatchController {
     @RequestMapping(value = "/matches/{matchId}", method = RequestMethod.GET)
     @ApiOperation(value = "Get match", notes = "Return match by match id")
     public ResponseEntity<Match> getMatch(@PathVariable("matchId") String matchId) {
-        Match match = matchService.getById(matchId);
-        return new ResponseEntity<Match>(match, HttpStatus.OK);
+        Match match = matchService.getById(matchId).orElse(null);
+        return new ResponseEntity<>(match, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -42,8 +42,8 @@ public class MatchController {
     @ApiOperation(value = "Get matches list", notes = "Return all matches list by league id")
     public ResponseEntity<List<Match>> get(@PathVariable String leagueId) {
         Sort sortByDate = SortUtils.getSortDescending();
-        List<Match> matches = ((MatchService) matchService).findByLeagueId(leagueId, sortByDate);
-        return new ResponseEntity<List<Match>>(matches, HttpStatus.OK);
+        List<Match> matches = matchService.findByLeagueId(leagueId, sortByDate);
+        return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -56,7 +56,7 @@ public class MatchController {
                                                     @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
         PageRequest pageRequest = new PageRequest(page, pageSize, sortByDate);
-        Page<Match> matches = ((MatchService) matchService).findByLeagueIdAndCompletedIsTrue(leagueId, pageRequest);
+        Page<Match> matches = matchService.findByLeagueIdAndCompletedIsTrue(leagueId, pageRequest);
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 
@@ -67,7 +67,7 @@ public class MatchController {
     public ResponseEntity<List<Match>> getScheduled(@PathVariable String leagueId,
                                                     @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
-        List<Match> matches = ((MatchService) matchService).findByLeagueIdAndCompletedIsFalse(leagueId, sortByDate);
+        List<Match> matches = matchService.findByLeagueIdAndCompletedIsFalse(leagueId, sortByDate);
         return new ResponseEntity<List<Match>>(matches, HttpStatus.OK);
     }
 
@@ -113,10 +113,11 @@ public class MatchController {
     @ApiOperation(value = "Revert match",
                 notes = "Delete match and revert players rating to previous state")
     public ResponseEntity<Match> revert(@PathVariable String id) {
-        Match match = matchService.getById(id);
-        playerService.restorePlayers(match);
-        matchService.deleteById(match.getId());
-        return new ResponseEntity<>(match, HttpStatus.OK);
+        matchService.getById(id).ifPresent(match -> {
+            playerService.restorePlayers(match);
+            matchService.deleteById(match.getId());
+        });
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     private String getOriginUrl(HttpServletRequest request) {
