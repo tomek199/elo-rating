@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PlayerService implements RepositoryService<Player> {
@@ -17,8 +18,8 @@ public class PlayerService implements RepositoryService<Player> {
     private PlayerRepository playerRepository;
 
     @Override
-    public Player getById(String id) {
-        return playerRepository.findOne(id);
+    public Optional<Player> getById(String id) {
+        return playerRepository.findById(id);
     }
 
     @Override
@@ -33,12 +34,12 @@ public class PlayerService implements RepositoryService<Player> {
 
     @Override
     public List<Player> save(Iterable<Player> players) {
-        return playerRepository.save(players);
+        return playerRepository.saveAll(players);
     }
 
     @Override
     public void deleteById(String id) {
-        playerRepository.delete(id);
+        playerRepository.deleteById(id);
     }
 
     @Override
@@ -88,11 +89,13 @@ public class PlayerService implements RepositoryService<Player> {
     }
 
     public void restorePlayers(Match match) {
-        Player playerOne = playerRepository.findOne(match.getPlayerOne().getId());
-        playerOne.restore(match.getRatingDelta(), match.isDraw());
-        playerRepository.save(playerOne);
-        Player playerTwo = playerRepository.findOne(match.getPlayerTwo().getId());
-        playerTwo.restore(-match.getRatingDelta(), match.isDraw());
-        playerRepository.save(playerTwo);
+        getById(match.getPlayerOne().getId()).ifPresent(playerOne -> {
+            playerOne.restore(match.getRatingDelta(), match.isDraw());
+            playerRepository.save(playerOne);
+        });
+        getById(match.getPlayerTwo().getId()).ifPresent(playerTwo -> {
+            playerTwo.restore(-match.getRatingDelta(), match.isDraw());
+            playerRepository.save(playerTwo);
+        });
     }
 }

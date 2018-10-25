@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
 import java.util.TimeZone;
 import java.util.UUID;
 
@@ -31,8 +32,8 @@ public class UserService implements RepositoryService<User> {
     private EmailService emailService;
 
     @Override
-    public User getById(String id) {
-        return userRepository.findOne(id);
+    public Optional<User> getById(String id) {
+        return userRepository.findById(id);
     }
 
     @Override
@@ -47,12 +48,12 @@ public class UserService implements RepositoryService<User> {
 
     @Override
     public List<User> save(Iterable<User> users) {
-        return userRepository.save(users);
+        return userRepository.saveAll(users);
     }
 
     @Override
     public void deleteById(String id) {
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 
     @Override
@@ -81,17 +82,19 @@ public class UserService implements RepositoryService<User> {
 
     public User connectUserToLeague(User user) {
         String leagueId = user.getLeagues().get(0).getId();
-        League league = leagueRepository.findOne(leagueId);
-        league.getUsers().add(user);
-        leagueRepository.save(league);
+        leagueRepository.findById(leagueId).ifPresent(league -> {
+            league.getUsers().add(user);
+            leagueRepository.save(league);
+        });
         return user;
     }
 
     public User connectUserToPlayer(User user) {
         String playerId = user.getPlayers().get(0).getId();
-        Player player = playerRepository.findOne(playerId);
-        player.setUser(user);
-        playerRepository.save(player);
+        playerRepository.findById(playerId).ifPresent(player -> {
+            player.setUser(user);
+            playerRepository.save(player);
+        });
         return user;
     }
 
@@ -153,31 +156,36 @@ public class UserService implements RepositoryService<User> {
     }
 
     public User connectUserAndLeague(String userId, String leagueId) {
-        User user = userRepository.findOne(userId);
-        League league = leagueRepository.findOne(leagueId);
-        user.addLeague(league);
-        userRepository.save(user);
-        league.addUser(user);
-        leagueRepository.save(league);
-        return user;
+        Optional<User> user = userRepository.findById(userId);
+        Optional<League> league = leagueRepository.findById(leagueId);
+        if (user.isPresent() && league.isPresent()) {
+            user.get().addLeague(league.get());
+            userRepository.save(user.get());
+            league.get().addUser(user.get());
+            leagueRepository.save(league.get());
+        }
+        return user.orElse(null);
     }
 
     public User connectUserAndPlayer(String userId, String playerId) {
-        User user = userRepository.findOne(userId);
-        Player player = playerRepository.findOne(playerId);
-        user.addPlayer(player);
-        userRepository.save(user);
-        player.setUser(user);
-        playerRepository.save(player);
-        return user;
+        Optional<User> user = userRepository.findById(userId);
+        Optional<Player> player = playerRepository.findById(playerId);
+        if (user.isPresent() && player.isPresent()) {
+            user.get().addPlayer(player.get());
+            userRepository.save(user.get());
+            player.get().setUser(user.get());
+            playerRepository.save(player.get());
+        }
+        return user.orElse(null);
     }
 
     public Player createPlayerForUser(String userId, String leagueId) {
-        User currentUser = userRepository.findOne(userId);
-        League league = new League(leagueId);
-        Player player = new Player(currentUser.getName(), league);
-        playerRepository.save(player);
-        return player;
+        return userRepository.findById(userId).map(currentUser -> {
+            League league = new League(leagueId);
+            Player player = new Player(currentUser.getName(), league);
+            playerRepository.save(player);
+            return player;
+        }).orElse(null);
     }
 
     private void sendEmail(EmailBuilder emailBuilder) {

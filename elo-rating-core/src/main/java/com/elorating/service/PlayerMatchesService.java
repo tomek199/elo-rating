@@ -5,12 +5,12 @@ import com.elorating.model.Match;
 import com.elorating.model.Player;
 import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,10 +18,10 @@ import java.util.List;
 @Service
 public class PlayerMatchesService {
 
-    @Autowired
+    @Resource
     private PlayerRepository playerRepository;
 
-    @Autowired
+    @Resource
     private MatchRepository matchRepository;
 
     public List<Match> findByPlayerId(String playerId, Sort sort) {
@@ -57,8 +57,8 @@ public class PlayerMatchesService {
     }
 
     public List<Match> getMatchForecast(String playerId, String opponentId) {
-        Player player = playerRepository.findOne(playerId);
-        Player opponent = playerRepository.findOne(opponentId);
+        Player player = playerRepository.findById(playerId).orElseGet(Player::new);
+        Player opponent = playerRepository.findById(opponentId).orElseGet(Player::new);
         return generateForecastMatches(player, opponent);
     }
 

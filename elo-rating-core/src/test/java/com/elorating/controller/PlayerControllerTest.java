@@ -128,7 +128,7 @@ public class PlayerControllerTest extends BaseControllerTest {
         mockMvc.perform(delete(url)
                 .contentType(contentType))
                 .andExpect(status().isOk());
-        Assert.assertNull(playerService.getById(player.getId()));
+        Assert.assertFalse(playerService.getById(player.getId()).isPresent());
     }
 
     @Test
