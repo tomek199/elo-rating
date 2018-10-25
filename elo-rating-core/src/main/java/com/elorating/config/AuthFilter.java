@@ -10,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.annotation.Resource;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,17 +20,16 @@ import java.io.IOException;
 @Component
 public class AuthFilter extends OncePerRequestFilter {
 
-    public static final String X_AUTHORIZATION = "X-Authorization";
-
-    public static final String ERROR_MESSAGE = "You are not authorized to this league";
+    private static final String X_AUTHORIZATION = "X-Authorization";
+    private static final String ERROR_MESSAGE = "You are not authorized to this league";
 
     @Autowired
     private GoogleAuthService googleAuthService;
 
-    @Autowired
+    @Resource
     private LeagueRepository leagueRepository;
 
-    @Autowired
+    @Resource
     private UserRepository userRepository;
 
     @Override
@@ -44,9 +44,10 @@ public class AuthFilter extends OncePerRequestFilter {
     }
 
     private boolean isAuthorized(HttpServletRequest request) {
-        if (!isMethodToAuthorize(request) || getLeagueId(request.getRequestURI()) == null)
+        String leagueId = getLeagueId(request.getRequestURI());
+        if (!isMethodToAuthorize(request) || leagueId == null)
             return true;
-        League league = leagueRepository.findOne(getLeagueId(request.getRequestURI()));
+        League league = leagueRepository.findById(leagueId).orElseGet(League::new);
         if (!league.isAssigned())
             return true;
         String token = request.getHeader(X_AUTHORIZATION);
