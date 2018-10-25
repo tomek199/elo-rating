@@ -1,14 +1,12 @@
 package com.elorating.config;
 
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.boot.web.servlet.ErrorPage;
+import org.springframework.boot.web.server.ErrorPage;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 
-/**
- * Created by pokor on 10.06.2017.
- */
 @Configuration
 public class AppConfig {
 
@@ -17,7 +15,7 @@ public class AppConfig {
      * @return error page which redirect to /
      */
     @Bean
-    public EmbeddedServletContainerCustomizer pageNotFoundHandler() {
+    public WebServerFactoryCustomizer<ConfigurableServletWebServerFactory> pageNotFoundHandler() {
         return container -> container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/"));
     }
 }

@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by pokor on 10.06.2017.
@@ -25,22 +26,26 @@ public class PlayerStatsService {
 
     public OpponentStats getOpponentStats(String playerId, String opponentId) {
         Sort sortByDate = new Sort(Sort.Direction.DESC, "date");
-        Player player = playerRepository.findOne(playerId);
-        Player opponent = playerRepository.findOne(opponentId);
-        List<Match> matches = matchRepository.findCompletedByPlayerIds(playerId, opponentId, sortByDate);
-        OpponentStats opponentStats = new OpponentStats(player, opponent);
-        opponentStats.setStats(matches);
-        return opponentStats;
+        Optional<Player> player = playerRepository.findById(playerId);
+        Optional<Player> opponent = playerRepository.findById(opponentId);
+        if (player.isPresent() && opponent.isPresent()) {
+            List<Match> matches = matchRepository.findCompletedByPlayerIds(playerId, opponentId, sortByDate);
+            OpponentStats opponentStats = new OpponentStats(player.get(), opponent.get());
+            opponentStats.setStats(matches);
+            return opponentStats;
+        }
+        return null;
     }
 
     public List<OpponentStats> getOpponentsStats(String playerId) {
-        Player player = playerRepository.findOne(playerId);
-        List<Player> opponents = playerRepository.findByIdNotAndLeagueId(playerId, player.getLeague().getId());
-        ArrayList<OpponentStats> opponentStats = new ArrayList<>(opponents.size());
-        for (Player opponent : opponents) {
-            opponentStats.add(getOpponentStats(playerId, opponent.getId()));
-        }
-        return opponentStats;
+        return playerRepository.findById(playerId).map(player -> {
+            List<Player> opponents = playerRepository.findByIdNotAndLeagueId(playerId, player.getLeague().getId());
+            ArrayList<OpponentStats> opponentStats = new ArrayList<>(opponents.size());
+            for (Player opponent : opponents) {
+                opponentStats.add(getOpponentStats(playerId, opponent.getId()));
+            }
+            return opponentStats;
+        }).orElseGet(ArrayList::new);
     }
 
     public List<RatingHistory> getRatingHistory(String playerId, Date from, Date to, Sort sort) {

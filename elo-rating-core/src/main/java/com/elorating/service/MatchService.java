@@ -19,6 +19,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MatchService implements RepositoryService<Match> {
@@ -38,8 +39,8 @@ public class MatchService implements RepositoryService<Match> {
     private EmailGenerator emailGenerator;
 
     @Override
-    public Match getById(String id) {
-        return matchRepository.findOne(id);
+    public Optional<Match> getById(String id) {
+        return matchRepository.findById(id);
     }
 
     @Override
@@ -54,12 +55,12 @@ public class MatchService implements RepositoryService<Match> {
 
     @Override
     public List<Match> save(Iterable<Match> matches) {
-        return matchRepository.save(matches);
+        return matchRepository.saveAll(matches);
     }
 
     @Override
     public void deleteById(String id) {
-        matchRepository.delete(id);
+        matchRepository.deleteById(id);
     }
 
     @Override
@@ -79,20 +80,21 @@ public class MatchService implements RepositoryService<Match> {
         match = save(match);
         match = fulfillPlayersInfo(match);
         if (update) {
-            this.emailService.sendEmails(emailGenerator.generateEmails(matchRepository.findOne(match.getId()), emailGenerator.EDIT_MATCH, originUrl));
+            this.emailService.sendEmails(emailGenerator.generateEmails(match, emailGenerator.EDIT_MATCH, originUrl));
         } else {
-            this.emailService.sendEmails(emailGenerator.generateEmails(matchRepository.findOne(match.getId()), emailGenerator.SCHEDULE_MATCH, originUrl));
+            this.emailService.sendEmails(emailGenerator.generateEmails(match, emailGenerator.SCHEDULE_MATCH, originUrl));
         }
         return match;
     }
 
     public void deleteByIdWithNotification(String id, String originUrl) {
-        Match matchToDelete = matchRepository.findOne(id);
-        matchRepository.delete(id);
-        matchToDelete = fulfillPlayersInfo(matchToDelete);
-        if (matchRepository.findOne(id) == null) {
-            this.emailService.sendEmails(emailGenerator.generateEmails(matchToDelete, emailGenerator.CANCEL_MATCH, originUrl));
-        }
+        matchRepository.findById(id).ifPresent(matchToDelete -> {
+            matchRepository.deleteById(id);
+            matchToDelete = fulfillPlayersInfo(matchToDelete);
+            if (!matchRepository.findById(id).isPresent()) {
+                this.emailService.sendEmails(emailGenerator.generateEmails(matchToDelete, emailGenerator.CANCEL_MATCH, originUrl));
+            }
+        });
     }
 
     public Match saveMatchWithPlayers(Match match) {
@@ -108,10 +110,11 @@ public class MatchService implements RepositoryService<Match> {
     }
 
     private void updatePlayer(Player player, String winnerId) {
-        Player playerToUpdate = playerRepository.findOne(player.getId());
-        playerToUpdate.setRating(player.getRating());
-        playerToUpdate.updateStatistics(winnerId);
-        playerRepository.save(playerToUpdate);
+        playerRepository.findById(player.getId()).ifPresent(playerToUpdate -> {
+            playerToUpdate.setRating(player.getRating());
+            playerToUpdate.updateStatistics(winnerId);
+            playerRepository.save(playerToUpdate);
+        });
     }
 
     public List<Match> findByLeagueId(String leagueId, Sort sortByDate) {
@@ -171,8 +174,10 @@ public class MatchService implements RepositoryService<Match> {
     }
 
     private Match fulfillPlayersInfo(Match match) {
-        match.setPlayerOne(playerRepository.findOne(match.getPlayerOne().getId()));
-        match.setPlayerTwo(playerRepository.findOne(match.getPlayerTwo().getId()));
+        Optional<Player> playerOne = playerRepository.findById(match.getPlayerOne().getId());
+        match.setPlayerOne(playerOne.orElseGet(Player::new));
+        Optional<Player> playerTwo = playerRepository.findById(match.getPlayerTwo().getId());
+        match.setPlayerTwo(playerTwo.orElseGet(Player::new));
         return match;
     }
 }

@@ -29,7 +29,7 @@ public class LeagueController {
     @RequestMapping(value = "/leagues/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "Get league", notes = "Return league by league id")
     public ResponseEntity<League> get(@PathVariable String id) {
-        League league = leagueService.getById(id);
+        League league = leagueService.getById(id).orElse(null);
         return new ResponseEntity<>(league, HttpStatus.OK);
     }
 

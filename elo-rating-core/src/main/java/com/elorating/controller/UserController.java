@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 import java.util.TimeZone;
 
 @RestController
@@ -36,7 +37,7 @@ public class UserController {
     @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "Get user", notes = "Get user by id")
     public ResponseEntity<User> get(@PathVariable String id) {
-        User user = userService.getById(id);
+        User user = userService.getById(id).orElse(null);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -58,9 +59,10 @@ public class UserController {
     @RequestMapping(value = "/users/emails-notifications", method = RequestMethod.POST)
     @ApiOperation(value = "Update user", notes = "Update user settings")
     public ResponseEntity<User> updateEmailNotifications(@RequestParam("user_id") String id, @RequestBody EmailsNotifications emailsNotifications) {
-        User userToUpdate = userService.getById(id);
-        userToUpdate.setEmailNotifications(emailsNotifications);
-        userToUpdate = userService.saveOrUpdateUser(userToUpdate);
+        User userToUpdate = userService.getById(id).map(user -> {
+            user.setEmailNotifications(emailsNotifications);
+            return userService.saveOrUpdateUser(user);
+        }).orElse(null);
         return new ResponseEntity<>(userToUpdate, HttpStatus.OK);
     }
 
@@ -125,13 +127,15 @@ public class UserController {
     public ResponseEntity<User> inviteUser(HttpServletRequest request,
                                            @PathVariable String id,
                                            @RequestBody User requestUser) {
-        User currentUser = userService.getById(id);
-        String originUrl = request.getHeader("Origin");
-        User userFromDB = userService.findByEmail(requestUser.getEmail());
-        if (userFromDB == null)
-            requestUser = userService.inviteNewUser(currentUser.getName(), requestUser, originUrl);
-        else
-            requestUser = userService.inviteExistingUser(currentUser.getName(), requestUser, originUrl);
+        Optional<User> currentUser = userService.getById(id);
+        if (currentUser.isPresent()) {
+            String originUrl = request.getHeader("Origin");
+            User userFromDB = userService.findByEmail(requestUser.getEmail());
+            if (userFromDB == null)
+                requestUser = userService.inviteNewUser(currentUser.get().getName(), requestUser, originUrl);
+            else
+                requestUser = userService.inviteExistingUser(currentUser.get().getName(), requestUser, originUrl);
+        }
         return new ResponseEntity<>(requestUser, HttpStatus.OK);
     }
 
@@ -139,14 +143,14 @@ public class UserController {
     @RequestMapping(value = "/users/timezone", method = RequestMethod.POST)
     @ApiOperation(value = "Update user timezone", notes = "Update user timezone")
     public ResponseEntity<User> updateUserTimezone(@RequestParam("user_id") String id, @RequestBody String timezone) {
-        User user = userService.getById(id);
-
         if (!DateUtils.validateTimezone(timezone)) {
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }
+        User user = userService.getById(id).map(userToUpdate -> {
+            userToUpdate.setTimezone(timezone);
+            return userService.saveOrUpdateUser(userToUpdate);
 
-        user.setTimezone(timezone);
-        user = userService.saveOrUpdateUser(user);
+        }).orElse(null);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

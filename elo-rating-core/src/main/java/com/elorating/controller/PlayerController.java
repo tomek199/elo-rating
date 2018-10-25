@@ -43,7 +43,7 @@ public class PlayerController {
     @RequestMapping(value = "/players/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "Get player", notes = "Return player by player id")
     public ResponseEntity<Player> getById(@PathVariable String id) {
-        Player player = playerService.getById(id);
+        Player player = playerService.getById(id).orElse(null);
         return new ResponseEntity<>(player, HttpStatus.OK);
     }
 
@@ -77,9 +77,10 @@ public class PlayerController {
     @RequestMapping(value = "/leagues/{leagueId}/players/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "Edit player", notes = "Edit player by player id")
     public ResponseEntity<Player> edit(@PathVariable String id, @RequestBody Player player) {
-        Player currentPlayer = playerService.getById(id);;
-        player.setLeague(currentPlayer.getLeague());
-        player = playerService.save(player);
+        playerService.getById(id).ifPresent(currentPlayer -> {
+            player.setLeague(currentPlayer.getLeague());
+            playerService.save(player);
+        });
         return new ResponseEntity<>(player, HttpStatus.OK);
     }
 

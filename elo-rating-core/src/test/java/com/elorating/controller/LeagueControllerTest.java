@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Matchers.any;
@@ -50,7 +51,7 @@ public class LeagueControllerTest extends BaseControllerTest {
 
     @Test
     public void testGet() throws Exception {
-        when(leagueService.getById(league.getId())).thenReturn(league);
+        when(leagueService.getById(league.getId())).thenReturn(Optional.of(league));
         mockMvc.perform(get("/api/leagues/" + league.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(league.getId())))

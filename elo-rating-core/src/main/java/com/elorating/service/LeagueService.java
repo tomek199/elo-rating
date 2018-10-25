@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LeagueService implements RepositoryService<League> {
@@ -24,8 +25,8 @@ public class LeagueService implements RepositoryService<League> {
     private PlayerRepository playerRepository;
 
     @Override
-    public League getById(String id) {
-        return leagueRepository.findOne(id);
+    public Optional<League> getById(String id) {
+        return leagueRepository.findById(id);
     }
 
     @Override
@@ -40,7 +41,7 @@ public class LeagueService implements RepositoryService<League> {
 
     @Override
     public List<League> save(Iterable<League> leagues) {
-        return leagueRepository.save(leagues);
+        return leagueRepository.saveAll(leagues);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class LeagueService implements RepositoryService<League> {
     {
         matchRepository.deleteByLeagueId(id);
         playerRepository.deleteByLeagueId(id);
-        leagueRepository.delete(id);
+        leagueRepository.deleteById(id);
     }
 
     @Override
@@ -61,11 +62,12 @@ public class LeagueService implements RepositoryService<League> {
     }
 
     public League update(League league) {
-        League dbLeague = leagueRepository.findOne(league.getId());
-        dbLeague.setName(league.getName());
-        dbLeague.setSettings(league.getSettings());
-        leagueRepository.save(dbLeague);
-        return dbLeague;
+        return leagueRepository.findById(league.getId()).map(dbLeague -> {
+            dbLeague.setName(league.getName());
+            dbLeague.setSettings(league.getSettings());
+            leagueRepository.save(dbLeague);
+            return dbLeague;
+        }).orElse(null);
     }
 
     public List<League> findUnassignedLeagues() {
@@ -77,10 +79,8 @@ public class LeagueService implements RepositoryService<League> {
     }
 
     public LeagueSettings getLeagueSettings(String id) {
-        League league = leagueRepository.findOne(id);
-        if (league != null && league.getSettings() != null)
-            return league.getSettings();
-        else
-            return null;
+        return leagueRepository.findById(id)
+                .map(League::getSettings)
+                .orElse(null);
     }
 }

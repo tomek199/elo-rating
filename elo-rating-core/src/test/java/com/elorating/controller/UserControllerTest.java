@@ -7,14 +7,12 @@ import com.elorating.model.User;
 import com.elorating.service.PlayerService;
 import com.elorating.service.UserService;
 import org.hamcrest.Matchers;
-import org.json.JSONArray;
 import org.junit.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
 
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.isA;
 import static org.hamcrest.Matchers.isEmptyOrNullString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -77,7 +75,7 @@ public class UserControllerTest extends BaseControllerTest {
                 .contentType(contentType))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.leagues", Matchers.hasSize(2)));
-        League updatedLeague = leagueService.getById(leagueToAssign.getId());
+        League updatedLeague = leagueService.getById(leagueToAssign.getId()).get();
         Assert.assertTrue(updatedLeague.getUsers().size() == 1);
     }
 
@@ -113,7 +111,7 @@ public class UserControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$.id", is(userToInvite.getId())))
                 .andExpect(jsonPath("$.email", is(userToInvite.getEmail())))
                 .andExpect(jsonPath("$.leagues[0].id", is(league.getId())));
-        League updatedLeague = leagueService.getById(league.getId());
+        League updatedLeague = leagueService.getById(league.getId()).get();
         Assert.assertEquals(updatedLeague.getUsers().size(), 1);
     }
 
@@ -157,8 +155,8 @@ public class UserControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$.email", is(userToInvite.getEmail())))
                 .andExpect(jsonPath("$.leagues[0].id", is(league.getId())))
                 .andExpect(jsonPath("$.players[0].id", is(player.getId())));
-        League updatedLeague = leagueService.getById(league.getId());
-        Player updatedPlayer = playerService.getById(player.getId());
+        League updatedLeague = leagueService.getById(league.getId()).get();
+        Player updatedPlayer = playerService.getById(player.getId()).get();
         Assert.assertEquals(updatedLeague.getUsers().size(), 1);
         Assert.assertEquals(updatedPlayer.getUser().getId(), userToInvite.getId());
     }
