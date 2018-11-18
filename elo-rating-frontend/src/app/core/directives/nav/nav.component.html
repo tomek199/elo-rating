@@ -4,13 +4,11 @@
       <img src="assets/img/favicon.png" id="elo-favicon"/>
       {{title}}
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-            (click)="isCollapsed = !isCollapsed">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="isCollapsed = !isCollapsed">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent" [collapse]="isCollapsed">
+    <div class="collapse navbar-collapse" [collapse]="isCollapsed">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" *ngFor="let nav of navbar">
           <a class="nav-link" [routerLink]="nav.url">{{nav.title}}</a>
