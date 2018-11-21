@@ -33,6 +33,7 @@
     "chart.js": "^2.7.1",
     "core-js": "^2.5.3",
     "ng2-cookies": "^1.0.12",
+    "ngx-bootstrap": "^3.1.1",
     "ngx-order-pipe": "^2.0.1",
     "octicons": "^8.1.0",
     "rxjs": "^6.2.1",

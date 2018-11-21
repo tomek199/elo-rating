@@ -1,29 +1,35 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <div class="container">
     <a class="navbar-brand" [routerLink]="'/leagues'">
       <img src="assets/img/favicon.png" id="elo-favicon"/>
       {{title}}
     </a>
-    <div class="collapse navbar-collapse">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" (click)="isCollapsed = !isCollapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" [collapse]="isCollapsed">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" *ngFor="let nav of navbar">
           <a class="nav-link" [routerLink]="nav.url">{{nav.title}}</a>
         </li>
         <app-queue-list *ngIf="leagueId" [leagueId]="leagueId"></app-queue-list>
       </ul>
-      <form id="addMatch" class="form-inline mr-4" *ngIf="isAuthorized()">
-        <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="btn btn-primary btn-sm" role="button">
-          <span appOcticon="plus"></span>
-          Add match
-        </a>
-      </form>
+      <div class="d-flex">
+        <form id="addMatch" class="form-inline ml-0 mr-auto" *ngIf="isAuthorized()">
+          <a [routerLink]="['/leagues', leagueId, 'matches', 'add']" class="btn btn-primary btn-sm" role="button">
+            <span appOcticon="plus"></span>
+            Add match
+          </a>
+        </form>
+        <ul class="navbar-nav">
+          <li class="nav-item" id="leagueSettingsBtn">
+            <a [routerLink]="['/leagues', leagueId, 'edit']" *ngIf="isAuthorized()"
+               class="nav-link" appOcticon="gear" size="md" ngbTooltip="League settings" placement="bottom"></a>
+          </li>
+        </ul>
+      </div>
       <app-league-search [size]="'sm'"></app-league-search>
-      <ul class="navbar-nav">
-        <li class="nav-item" id="leagueSettingsBtn">
-          <a [routerLink]="['/leagues', leagueId, 'edit']" *ngIf="isAuthorized()"
-             class="nav-link" appOcticon="gear" size="md" ngbTooltip="League settings" placement="bottom"></a>
-        </li>
-      </ul>
       <app-google-auth [leagueId]="leagueId"></app-google-auth>
     </div>
   </div>

@@ -1,3 +1,4 @@
+import { CollapseModule } from 'ngx-bootstrap';
 import {GoogleAuthService} from './../../../auth/shared/google-auth.service';
 import {GoogleAuthComponentStub, GoogleAuthServiceStub} from './../../../testing/google-stubs';
 import {RouterLinkStub} from './../../../testing/routing-stubs';
@@ -9,7 +10,7 @@ import {By} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
 import {NavComponent} from './nav.component';
 import {QueueListComponentStub} from './../../../testing/queue-stubs';
-import {debug} from "util";
+import {debug} from 'util';
 
 describe('NavComponent', () => {
   let component: NavComponent;
@@ -21,13 +22,14 @@ describe('NavComponent', () => {
         NavComponent,
         QueueListComponentStub,
         LeagueSearchComponentStub,
-        RouterLinkStub, 
+        RouterLinkStub,
         GoogleAuthComponentStub
       ],
       imports: [
         FormsModule,
         HttpModule,
-        NgbModule.forRoot()
+        NgbModule.forRoot(),
+        CollapseModule
       ],
       providers: [
         {provide: GoogleAuthService, useClass: GoogleAuthServiceStub}
@@ -36,13 +38,13 @@ describe('NavComponent', () => {
       .compileComponents();
   }));
 
-  beforeEach(() =>{
+  beforeEach(() => {
     fixture = TestBed.createComponent(NavComponent);
     component = fixture.componentInstance;
     component.leagueId = '123';
     fixture.detectChanges();
-  }); 
-    
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

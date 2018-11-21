@@ -7,9 +7,11 @@ import {Component, Input, OnChanges} from '@angular/core';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnChanges {
-  title = "EloRating";
+  title = 'EloRating';
   @Input() leagueId: string;
   navbar;
+
+  isCollapsed = true;
 
   constructor(private googleAuthService: GoogleAuthService) { }
 
