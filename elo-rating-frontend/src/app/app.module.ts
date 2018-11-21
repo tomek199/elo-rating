@@ -32,7 +32,7 @@ import {MatchListComponent} from './matches/match-list/match-list.component';
 import {PlayerRankingComponent} from './players/player-ranking/player-ranking.component';
 import {PlayerMatchesComponent} from './players/player-matches/player-matches.component';
 import {PlayerStatisticsComponent} from './players/player-statistics/player-statistics.component';
-import {HighchartsStatic} from "angular2-highcharts/dist/HighchartsService";
+import {HighchartsStatic} from 'angular2-highcharts/dist/HighchartsService';
 import {SmallSpinnerComponent} from './core/directives/small-spinner/small-spinner.component';
 import {PageSizeComponent} from './core/directives/page-size/page-size.component';
 import {PlayerForecastComponent} from './players/player-forecast/player-forecast.component';
@@ -53,11 +53,13 @@ import {UserProfileComponent} from './users/user-profile/user-profile.component'
 import {UserProfileInfoComponent} from './users/user-profile-info/user-profile-info.component';
 import {UserProfileLeaguesComponent} from './users/user-profile-leagues/user-profile-leagues.component';
 import {LeagueWelcomeComponent} from './leagues/league-welcome/league-welcome.component';
-import {UserProfileEmailsNotificationsComponent} from './users/user-profile-emails-notifications/user-profile-emails-notifications.component';
+import {UserProfileEmailsNotificationsComponent}
+  from './users/user-profile-emails-notifications/user-profile-emails-notifications.component';
 import {UiSwitchModule} from 'angular2-ui-switch';
 import {RodoComponent} from './core/rodo/rodo.component';
-import {PlayerStatsService} from "./players/shared/player-stats.service";
+import {PlayerStatsService} from './players/shared/player-stats.service';
 import { OcticonDirective } from './core/directives/octicon/octicon.directive';
+import {CollapseModule} from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [
@@ -110,7 +112,8 @@ import { OcticonDirective } from './core/directives/octicon/octicon.directive';
     NgbModule.forRoot(),
     ChartModule,
     OrderModule,
-    UiSwitchModule
+    UiSwitchModule,
+    CollapseModule
   ],
   providers: [
     LeagueService,
