@@ -1,0 +1,69 @@
+buildscript {
+	ext {
+		springBootVersion = '2.0.6.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "com.moowork.gradle:gradle-node-plugin:1.2.0"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.moowork.node'
+
+group = 'com.elorating'
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = 9
+
+def webappDir = "$projectDir/src/main/webapp"
+
+node {
+    download = true
+    version = '8.12.0'
+    workDir = file("${webappDir}/node")
+    npmWorkDir = file("{$webappDir}/npm")
+    nodeModulesDir = file(webappDir)
+}
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation('org.springframework.boot:spring-boot-starter-data-mongodb')
+	implementation('org.springframework.boot:spring-boot-starter-mail')
+	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+	implementation('org.springframework.boot:spring-boot-starter-security')
+	implementation('io.springfox:springfox-swagger2:2.6.1')
+	implementation('io.springfox:springfox-swagger-ui:2.6.1')
+	implementation('com.google.api-client:google-api-client:1.22.0')
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ["$webappDir/dist", "$projectDir/src/main/resources"]
+        }
+    }
+}
+
+processResources {
+    dependsOn 'npm_run_build'
+}
+
+npm_run_build {
+    dependsOn 'npmInstall'
+}
