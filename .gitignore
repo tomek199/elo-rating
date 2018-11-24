@@ -1,5 +1,7 @@
-target/
-!.mvn/wrapper/maven-wrapper.jar
+### Gradle ###
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
 
 ### STS ###
 .apt_generated
@@ -14,11 +16,11 @@ target/
 *.iws
 *.iml
 *.ipr
+/out/
 
-### NetBeans ###
-nbproject/private/
-build/
-nbbuild/
-dist/
-nbdist/
-.nb-gradle/
+### Angular ###
+/src/main/webapp/node
+/src/main/webapp/node_modules
+/src/main/webapp/dist
+/src/main/webapp/tmp
+/src/main/webapp/out-tsc
