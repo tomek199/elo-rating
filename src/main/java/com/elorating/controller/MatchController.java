@@ -114,8 +114,8 @@ public class MatchController {
                 notes = "Delete match and revert players rating to previous state")
     public ResponseEntity<Match> revert(@PathVariable String id) {
         matchService.getById(id).ifPresent(match -> {
-            playerService.restorePlayers(match);
             matchService.deleteById(match.getId());
+            playerService.restorePlayers(match);
         });
         return new ResponseEntity<>(HttpStatus.OK);
     }

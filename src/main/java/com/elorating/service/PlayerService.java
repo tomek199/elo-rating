@@ -2,12 +2,16 @@ package com.elorating.service;
 
 import com.elorating.model.Match;
 import com.elorating.model.Player;
+import com.elorating.repository.MatchRepository;
 import com.elorating.repository.PlayerRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +20,9 @@ public class PlayerService implements RepositoryService<Player> {
 
     @Resource
     private PlayerRepository playerRepository;
+
+    @Resource
+    private MatchRepository matchRepository;
 
     @Override
     public Optional<Player> getById(String id) {
@@ -90,12 +97,25 @@ public class PlayerService implements RepositoryService<Player> {
 
     public void restorePlayers(Match match) {
         getById(match.getPlayerOne().getId()).ifPresent(playerOne -> {
-            playerOne.restore(match.getRatingDelta(), match.isDraw());
+            playerOne.restoreRating(match.getRatingDelta(), match.isDraw());
+            Date playerLastMatchDate = getPlayerLastMatchDate(playerOne.getId());
+            playerOne.getStatistics().setLastMatchDate(playerLastMatchDate);
             playerRepository.save(playerOne);
         });
         getById(match.getPlayerTwo().getId()).ifPresent(playerTwo -> {
-            playerTwo.restore(-match.getRatingDelta(), match.isDraw());
+            playerTwo.restoreRating(-match.getRatingDelta(), match.isDraw());
+            Date playerLastMatchDate = getPlayerLastMatchDate(playerTwo.getId());
+            playerTwo.getStatistics().setLastMatchDate(playerLastMatchDate);
             playerRepository.save(playerTwo);
         });
+    }
+
+    private Date getPlayerLastMatchDate(String playerId) {
+        String dateFieldToSort = "date";
+        Sort sort = new Sort(Sort.Direction.DESC, dateFieldToSort);
+        PageRequest pageRequest = PageRequest.of(0, 1, sort);
+        Page<Match> page = matchRepository.findCompletedByPlayerId(playerId, pageRequest);
+        Optional<Date> date = page.stream().findFirst().map(Match::getDate);
+        return date.orElse(null);
     }
 }
