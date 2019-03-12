@@ -1,10 +1,13 @@
 package com.elorating.model;
 
+import java.util.Date;
+
 public class PlayerStats {
 
     protected int won;
     protected int lost;
     protected int draw;
+    protected Date lastMatchDate;
 
     public PlayerStats() {
         this.won = 0;
@@ -46,5 +49,13 @@ public class PlayerStats {
 
     public void setDraw(int draw) {
         this.draw = draw;
+    }
+
+    public Date getLastMatchDate() {
+        return lastMatchDate;
+    }
+
+    public void setLastMatchDate(Date lastMatchDate) {
+        this.lastMatchDate = lastMatchDate;
     }
 }

@@ -44,7 +44,7 @@ public class PlayerMatchesController {
                                                                  @RequestParam(defaultValue = "10") int pageSize,
                                                                  @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
-        PageRequest pageRequest = new PageRequest(page, pageSize, sortByDate);
+        PageRequest pageRequest = PageRequest.of(page, pageSize, sortByDate);
         Page<Match> matches = playerMatchesService.findCompletedByPlayerId(playerId, pageRequest);
         return new ResponseEntity<>(matches, HttpStatus.OK);
 
@@ -61,7 +61,7 @@ public class PlayerMatchesController {
                                             @RequestParam(defaultValue = "10") int pageSize,
                                             @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
-        PageRequest pageRequest = new PageRequest(page, pageSize, sortByDate);
+        PageRequest pageRequest = PageRequest.of(page, pageSize, sortByDate);
         Page<Match> matches = playerMatchesService.findCompletedByPlayerIds(playerId, opponentId, pageRequest);
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }

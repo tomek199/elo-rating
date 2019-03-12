@@ -55,7 +55,7 @@ public class MatchController {
                                                     @RequestParam(defaultValue = "10") int pageSize,
                                                     @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
-        PageRequest pageRequest = new PageRequest(page, pageSize, sortByDate);
+        PageRequest pageRequest = PageRequest.of(page, pageSize, sortByDate);
         Page<Match> matches = matchService.findByLeagueIdAndCompletedIsTrue(leagueId, pageRequest);
         return new ResponseEntity<>(matches, HttpStatus.OK);
     }
@@ -68,7 +68,7 @@ public class MatchController {
                                                     @RequestParam(required = false) String sort) {
         Sort sortByDate = SortUtils.getSort(sort);
         List<Match> matches = matchService.findByLeagueIdAndCompletedIsFalse(leagueId, sortByDate);
-        return new ResponseEntity<List<Match>>(matches, HttpStatus.OK);
+        return new ResponseEntity<>(matches, HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -105,7 +105,7 @@ public class MatchController {
     @ApiOperation(value = "Delete match", notes = "Delete match by match id")
     public ResponseEntity<Match> delete(HttpServletRequest request, @PathVariable String id) {
         matchService.deleteByIdWithNotification(id, getOriginUrl(request));
-        return new ResponseEntity<Match>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @CrossOrigin
@@ -114,8 +114,8 @@ public class MatchController {
                 notes = "Delete match and revert players rating to previous state")
     public ResponseEntity<Match> revert(@PathVariable String id) {
         matchService.getById(id).ifPresent(match -> {
-            playerService.restorePlayers(match);
             matchService.deleteById(match.getId());
+            playerService.restorePlayers(match);
         });
         return new ResponseEntity<>(HttpStatus.OK);
     }
