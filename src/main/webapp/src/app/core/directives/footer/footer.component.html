@@ -1,0 +1,28 @@
+<footer class="pt-3 mt-4 bg-light border-top border-bottom text-secondary">
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+        <p>Copyright &copy; {{getYear()}} EloRating</p>
+      </div>
+      <div class="col-4 text-center">
+        <p>
+          <a href="https://github.com/tomek199" class="text-secondary">
+            See on <span appOcticon="logo-github"></span>
+          </a>
+        </p>
+      </div>
+      <div class="col-4 text-right">
+        <p>
+          <a [routerLink]="['leagues', 'feedback', 'send']" role="button"
+             class="btn btn-sm btn-outline-info" ngbTooltip="Send feedback">
+            <span appOcticon="comment"></span> Feedback
+          </a>
+          <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RRJ7FVNSV87HJ&source=url"
+             class="btn btn-sm btn-outline-dark mx-2" ngbTooltip="Donate by PayPal">
+            <span appOcticon="heart"></span> Donate
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
