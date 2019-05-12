@@ -46,8 +46,13 @@
       <div [ngbPopover]="queuePopContent" popoverTitle="Queue" #queuePopover="ngbPopover" triggers="manual" placement="bottom"></div>
     </div>
   </div>
-  <button type="submit" id="matchSaveBtn" class="btn btn-success float-right" [disabled]="!formValid()" (click)="save()" [btnSpinner]="savePromise">Save</button>
-  <button type="button" class="btn btn-link float-right" (click)="goToList()">Back to list</button>
+  <div class="form-group row">
+    <div class="col-9"></div>
+    <div class="col-3">
+      <button type="submit" id="matchSaveBtn" class="btn btn-success float-right" [disabled]="!formValid()" (click)="save()" [btnSpinner]="savePromise">Save</button>
+      <button type="button" class="btn btn-link float-right" (click)="goToList()">Back to list</button>
+    </div>
+  </div>
 </form>
 <ng-template #queuePopContent>
   <div *ngFor="let match of getQueueMatches()">
