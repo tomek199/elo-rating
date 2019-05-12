@@ -12,6 +12,7 @@ import {async, fakeAsync, TestBed, tick} from '@angular/core/testing';
 import {By} from '@angular/platform-browser';
 import {Router} from '@angular/router';
 import {AppComponent} from './app.component';
+import {FooterComponentStub} from "./testing/footer-stubs";
 
 describe('AppComponent', () => {
   let routerStub: RouterStub;
@@ -24,6 +25,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         NavComponentStub,
+        FooterComponentStub,
         RouterOutletStub,
         RouterLinkStub
       ],
@@ -75,5 +77,12 @@ describe('AppComponent', () => {
     fixture.detectChanges();    
     tick();
     expect(fixture.componentInstance.leagueId).toEqual(LEAGUE_ID);
+  }));
+
+  it('should contain FooterComponent', fakeAsync(() => {
+    let fixture = TestBed.createComponent(AppComponent);
+    fixture.detectChanges();
+    let footer = fixture.debugElement.query(By.directive(FooterComponentStub));
+    expect(footer).toBeTruthy();
   }));
 });

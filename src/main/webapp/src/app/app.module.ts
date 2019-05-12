@@ -60,6 +60,7 @@ import {RodoComponent} from './core/rodo/rodo.component';
 import {PlayerStatsService} from './players/shared/player-stats.service';
 import { OcticonDirective } from './core/directives/octicon/octicon.directive';
 import {CollapseModule} from 'ngx-bootstrap';
+import { FooterComponent } from './core/directives/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -102,7 +103,8 @@ import {CollapseModule} from 'ngx-bootstrap';
     UserProfileLeaguesComponent,
     UserProfileEmailsNotificationsComponent,
     RodoComponent,
-    OcticonDirective
+    OcticonDirective,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
