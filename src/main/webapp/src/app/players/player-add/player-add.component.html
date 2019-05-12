@@ -6,6 +6,11 @@
       <input type="text" name="username" [(ngModel)]="player.username" #username="ngModel" class="form-control" required>
     </div>
   </div>
-  <button type="submit" class="btn btn-success float-right" [disabled]="!playerAdd.form.valid" (click)="addPlayer()">Create</button>
-  <button type="button" class="btn btn-link float-right" (click)="goToList()">Back to list</button>
+  <div class="form-group row">
+    <div class="col-6"></div>
+    <div class="col-6">
+      <button type="submit" class="btn btn-success float-right" [disabled]="!playerAdd.form.valid" (click)="addPlayer()">Create</button>
+      <button type="button" class="btn btn-link float-right" (click)="goToList()">Back to list</button>
+    </div>
+  </div>
 </form>
