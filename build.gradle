@@ -22,7 +22,7 @@ apply plugin: 'com.moowork.node'
 
 group = 'com.elorating'
 version = '1.0.0-SNAPSHOT'
-sourceCompatibility = 9
+sourceCompatibility = 8
 
 def webappDir = "$projectDir/src/main/webapp"
 
